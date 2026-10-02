@@ -92,24 +92,22 @@ export function diagnoseMockExamPerformance(
     .filter((w) => w.status !== 'proficient')
     .map((w) => w.category)
 
-  let targetedPool: TheoryQuestion[] = []
-
-  if (weakCategoryKeys.length > 0) {
-    targetedPool = SRI_LANKA_DMT_QUESTION_BANK.filter((q) =>
-      weakCategoryKeys.includes(q.category),
-    )
-  } else {
-    // If user is proficient in all, pick from challenging priority & regulatory questions
-    targetedPool = SRI_LANKA_DMT_QUESTION_BANK.filter(
-      (q) => q.category === 'priority_and_junctions' || q.category === 'road_signs_regulatory',
-    )
-  }
+  const targetedPool: TheoryQuestion[] =
+    weakCategoryKeys.length > 0
+      ? SRI_LANKA_DMT_QUESTION_BANK.filter((q) =>
+          weakCategoryKeys.includes(q.category),
+        )
+      : SRI_LANKA_DMT_QUESTION_BANK.filter(
+          (q) =>
+            q.category === 'priority_and_junctions' ||
+            q.category === 'road_signs_regulatory',
+        )
 
   // Shuffle and take up to 10 questions for the adaptive remedial quiz
   const shuffled = [...targetedPool].sort(() => 0.5 - Math.random())
   const remedialQuizQuestions = shuffled.slice(0, Math.min(10, shuffled.length))
 
-  let aiSummaryRecommendation = ''
+  let aiSummaryRecommendation: string
   const critical = identifiedWeaknesses.filter((w) => w.status === 'critical_weakness')
   if (critical.length > 0) {
     const list = critical.map((c) => c.categoryLabel).join(', ')

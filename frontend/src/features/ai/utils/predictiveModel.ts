@@ -113,7 +113,7 @@ export function predictTrialOutcome(params: {
   const confidenceScore = Math.min(95, Math.round(70 + practicalHours * 1.5))
   const recommendedMockSessionsCount = passProbability >= 85 ? 1 : passProbability >= 65 ? 2 : 4
 
-  let keyInsight = ''
+  let keyInsight: string
   if (passProbability >= 85) {
     keyInsight = 'Candidate exhibits high practical vehicle mastery and strong readiness across all key DMT checkpoints.'
   } else if (passProbability >= 65) {

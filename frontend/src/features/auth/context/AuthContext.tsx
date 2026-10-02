@@ -188,7 +188,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   const effectiveDrivingSchoolId = useMemo(() => {
     if (profile?.driving_school_id) return profile.driving_school_id
     return demoSchoolId
-  }, [profile?.driving_school_id, demoSchoolId])
+  }, [profile, demoSchoolId])
 
   const isAuthenticated = useMemo(() => {
     return Boolean(session || demoRole)
@@ -230,6 +230,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function useAuth(): AuthContextType {
   const context = useContext(AuthContext)
   if (!context) {

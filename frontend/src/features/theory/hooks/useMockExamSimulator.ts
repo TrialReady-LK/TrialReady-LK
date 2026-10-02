@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { getTheoryQuestions, recordMockExamAttempt } from '../services/theoryService'
 import type {
   MockExamAttempt,
@@ -26,6 +26,18 @@ export function useMockExamSimulator(
   const [isLoading, setIsLoading] = useState(true)
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
+  const questionsRef = useRef(questions)
+  const selectedAnswersRef = useRef(selectedAnswers)
+  const timeRemainingRef = useRef(timeRemainingSeconds)
+  const isSubmittedRef = useRef(isSubmitted)
+
+  useEffect(() => {
+    questionsRef.current = questions
+    selectedAnswersRef.current = selectedAnswers
+    timeRemainingRef.current = timeRemainingSeconds
+    isSubmittedRef.current = isSubmitted
+  })
+
   // Initialize exam
   const startExam = useCallback(async () => {
     try {
@@ -52,59 +64,20 @@ export function useMockExamSimulator(
     }
   }, [])
 
-  useEffect(() => {
-    startExam()
-  }, [startExam])
-
-  // Timer Tick
-  useEffect(() => {
-    if (!isTimerActive || isSubmitted) return
-
-    const interval = setInterval(() => {
-      setTimeRemainingSeconds((prev) => {
-        if (prev <= 1) {
-          clearInterval(interval)
-          // Time expired -> auto-submit
-          submitExam()
-          return 0
-        }
-        return prev - 1
-      })
-    }, 1000)
-
-    return () => clearInterval(interval)
-  }, [isTimerActive, isSubmitted])
-
-  const selectOption = useCallback(
-    (questionId: string, optionIndex: number) => {
-      if (isSubmitted) return
-      setSelectedAnswers((prev) => ({ ...prev, [questionId]: optionIndex }))
-    },
-    [isSubmitted],
-  )
-
-  const nextQuestion = useCallback(() => {
-    setCurrentIndex((prev) => Math.min(questions.length - 1, prev + 1))
-  }, [questions.length])
-
-  const prevQuestion = useCallback(() => {
-    setCurrentIndex((prev) => Math.max(0, prev - 1))
-  }, [])
-
-  const goToQuestion = useCallback((index: number) => {
-    setCurrentIndex(index)
-  }, [])
-
   const submitExam = useCallback(async () => {
-    if (isSubmitted) return
+    if (isSubmittedRef.current) return
     setIsTimerActive(false)
     setIsSubmitted(true)
+
+    const currentQuestions = questionsRef.current
+    const currentSelected = selectedAnswersRef.current
+    const remainingTime = timeRemainingRef.current
 
     let correctCount = 0
     const answers: StudentAnswer[] = []
 
-    for (const q of questions) {
-      const selected = selectedAnswers[q.id] !== undefined ? selectedAnswers[q.id] : null
+    for (const q of currentQuestions) {
+      const selected = currentSelected[q.id] !== undefined ? currentSelected[q.id] : null
       const isCorrect = selected === q.correct_option_index
       if (isCorrect) correctCount++
 
@@ -115,10 +88,10 @@ export function useMockExamSimulator(
       })
     }
 
-    const totalQ = questions.length
+    const totalQ = currentQuestions.length
     const scorePercentage = totalQ > 0 ? Number(((correctCount / totalQ) * 100).toFixed(1)) : 0
     const passed = scorePercentage >= 75 // 75% pass mark in Sri Lanka DMT
-    const timeSpent = EXAM_DURATION_SECONDS - timeRemainingSeconds
+    const timeSpent = EXAM_DURATION_SECONDS - remainingTime
 
     const resultPayload: MockExamAttempt = {
       driving_school_id: drivingSchoolId,
@@ -149,14 +122,49 @@ export function useMockExamSimulator(
     } catch (e) {
       console.error('Failed to persist mock exam attempt:', e)
     }
-  }, [
-    isSubmitted,
-    questions,
-    selectedAnswers,
-    timeRemainingSeconds,
-    drivingSchoolId,
-    studentId,
-  ])
+  }, [drivingSchoolId, studentId])
+
+  useEffect(() => {
+    void startExam()
+  }, [startExam])
+
+  // Timer Tick
+  useEffect(() => {
+    if (!isTimerActive || isSubmitted) return
+
+    const interval = setInterval(() => {
+      setTimeRemainingSeconds((prev) => {
+        if (prev <= 1) {
+          clearInterval(interval)
+          void submitExam()
+          return 0
+        }
+        return prev - 1
+      })
+    }, 1000)
+
+    return () => clearInterval(interval)
+  }, [isTimerActive, isSubmitted, submitExam])
+
+  const selectOption = useCallback(
+    (questionId: string, optionIndex: number) => {
+      if (isSubmitted) return
+      setSelectedAnswers((prev) => ({ ...prev, [questionId]: optionIndex }))
+    },
+    [isSubmitted],
+  )
+
+  const nextQuestion = useCallback(() => {
+    setCurrentIndex((prev) => Math.min(questions.length - 1, prev + 1))
+  }, [questions.length])
+
+  const prevQuestion = useCallback(() => {
+    setCurrentIndex((prev) => Math.max(0, prev - 1))
+  }, [])
+
+  const goToQuestion = useCallback((index: number) => {
+    setCurrentIndex(index)
+  }, [])
 
   return {
     questions,

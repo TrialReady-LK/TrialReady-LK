@@ -38,7 +38,7 @@ export function generateAiSessionFeedback(input: SessionFeedbackInput): Generate
   }
 
   // 1. Summary narrative
-  let summaryParagraph = ''
+  let summaryParagraph: string
   if (performanceTone === 'excellent') {
     summaryParagraph = `${studentName} demonstrated strong driving competence and confident vehicle control during today's ${hours}-hour session on ${sessionDate}. Successfully executed key maneuvers (${skillsList}) with smooth clutch transition and sharp situational awareness.`
   } else if (performanceTone === 'satisfactory') {

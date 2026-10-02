@@ -85,8 +85,8 @@ export function evaluateStudentTrialReadiness(data: {
   // -------------------------------------------------------------
   // Factor 1: NTMI Medical Clearance (15 Points)
   // -------------------------------------------------------------
-  let medicalScore = 0
-  let medicalStatus: ReadinessFactor['status'] = 'pending'
+  let medicalScore: number
+  let medicalStatus: ReadinessFactor['status']
   let medicalDetail = 'No NTMI medical record found.'
 
   if (medical?.status === 'passed') {
@@ -126,8 +126,8 @@ export function evaluateStudentTrialReadiness(data: {
   // -------------------------------------------------------------
   // Factor 2: DMT Learner\'s Permit (15 Points)
   // -------------------------------------------------------------
-  let permitScore = 0
-  let permitFactorStatus: ReadinessFactor['status'] = 'pending'
+  let permitScore: number
+  let permitFactorStatus: ReadinessFactor['status']
   let permitDetail = "No learner's permit recorded."
 
   if (permit) {
@@ -168,8 +168,8 @@ export function evaluateStudentTrialReadiness(data: {
   // -------------------------------------------------------------
   // Factor 3: DMT Theory Exam (15 Points)
   // -------------------------------------------------------------
-  let theoryScore = 0
-  let theoryFactorStatus: ReadinessFactor['status'] = 'pending'
+  let theoryScore: number
+  let theoryFactorStatus: ReadinessFactor['status']
   let theoryDetail = 'DMT computerized theory exam pending.'
 
   const passedTheory = theoryExams.find((e) => e.status === 'passed')
@@ -204,8 +204,8 @@ export function evaluateStudentTrialReadiness(data: {
   // Factor 4: Practical Lessons & Hours (25 Points)
   // -------------------------------------------------------------
   const completedCount = completedSessions.length
-  let practicalScore = 0
-  let practicalFactorStatus: ReadinessFactor['status'] = 'pending'
+  let practicalScore: number
+  let practicalFactorStatus: ReadinessFactor['status']
   const estimatedHours = completedCount * 1.25 // avg ~1.25 hr per session
 
   if (completedCount >= 12 || estimatedHours >= 15) {
@@ -331,8 +331,8 @@ export function evaluateStudentTrialReadiness(data: {
   let totalScore = factors.reduce((sum, f) => sum + f.score, 0)
   totalScore = Math.max(0, Math.min(100, totalScore))
 
-  let readinessTier: ReadinessTier = 'not_ready'
-  let recommendationSummary = ''
+  let readinessTier: ReadinessTier
+  let recommendationSummary: string
 
   if (totalScore >= 85) {
     readinessTier = 'trial_ready'

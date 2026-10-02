@@ -19,7 +19,7 @@ export const AiCopilotWidget: React.FC = () => {
       sender: 'ai',
       text:
         '👋 Ayubowan / Vanakkam! I am your **TrialReady AI Copilot**. Ask me anything about the Sri Lanka Highway Code, DMT practical trial maneuvers (Hill Start, Reverse S-Bend), or permit regulations in English, Sinhala, or Tamil!',
-      timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      timestamp: 'Just now',
     },
   ])
   const [isTyping, setIsTyping] = useState(false)
@@ -35,11 +35,12 @@ export const AiCopilotWidget: React.FC = () => {
     const query = (textToSend || inputQuery).trim()
     if (!query) return
 
+    const now = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
     const userMsg: ChatMessage = {
-      id: `user-${Date.now()}`,
+      id: `user-${crypto.randomUUID()}`,
       sender: 'user',
       text: query,
-      timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      timestamp: now,
     }
 
     setMessages((prev) => [...prev, userMsg])
@@ -53,7 +54,7 @@ export const AiCopilotWidget: React.FC = () => {
         item.keywords.some((kw) => lowerQuery.includes(kw.toLowerCase())),
       )
 
-      let aiResponseText = ''
+      let aiResponseText: string
       if (matched) {
         aiResponseText = matched.answer[language] || matched.answer.en
       } else {
@@ -67,7 +68,7 @@ export const AiCopilotWidget: React.FC = () => {
       }
 
       const aiMsg: ChatMessage = {
-        id: `ai-${Date.now()}`,
+        id: `ai-${crypto.randomUUID()}`,
         sender: 'ai',
         text: aiResponseText,
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),

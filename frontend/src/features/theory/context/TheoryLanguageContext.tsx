@@ -58,6 +58,7 @@ export const TheoryLanguageProvider: React.FC<{
   )
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function useTheoryLanguage() {
   const context = useContext(TheoryLanguageContext)
   if (!context) {
