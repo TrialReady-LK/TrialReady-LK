@@ -36,9 +36,19 @@ export function useInstructorPortal(drivingSchoolId: string) {
       const filteredToday = sessionsData.filter(
         (s) => s.session_date === todayStr,
       )
+      const displaySessions =
+        filteredToday.length > 0
+          ? filteredToday
+          : sessionsData.filter(
+              (s) => s.status === 'scheduled' || s.attendance_status === 'unmarked',
+            ).length > 0
+          ? sessionsData.filter(
+              (s) => s.status === 'scheduled' || s.attendance_status === 'unmarked',
+            )
+          : sessionsData.slice(0, 3)
 
       setAllSessions(sessionsData)
-      setTodaySessions(filteredToday)
+      setTodaySessions(displaySessions)
       setStudents(studentsData)
     } catch (err) {
       setErrorMessage(
@@ -64,9 +74,19 @@ export function useInstructorPortal(drivingSchoolId: string) {
           const filteredToday = sessionsData.filter(
             (s) => s.session_date === todayStr,
           )
+          const displaySessions =
+            filteredToday.length > 0
+              ? filteredToday
+              : sessionsData.filter(
+                  (s) => s.status === 'scheduled' || s.attendance_status === 'unmarked',
+                ).length > 0
+              ? sessionsData.filter(
+                  (s) => s.status === 'scheduled' || s.attendance_status === 'unmarked',
+                )
+              : sessionsData.slice(0, 3)
 
           setAllSessions(sessionsData)
-          setTodaySessions(filteredToday)
+          setTodaySessions(displaySessions)
           setStudents(studentsData)
           setErrorMessage(null)
         }

@@ -26,7 +26,7 @@ import VehicleManagementPage from '../features/vehicles/pages/VehicleManagementP
 import NotFoundPage from '../features/layout/pages/NotFoundPage'
 
 export const AppRoutes: React.FC = () => {
-  const { drivingSchoolId } = useAuth()
+  const { drivingSchoolId, role } = useAuth()
 
   return (
     <Routes>
@@ -42,8 +42,35 @@ export const AppRoutes: React.FC = () => {
           </ProtectedRoute>
         }
       >
-        <Route path="/" element={<Navigate to="/dashboard" replace />} />
-        <Route path="/dashboard" element={<AdminDashboardPage />} />
+        <Route
+          path="/"
+          element={
+            role === 'student' ? (
+              <Navigate to="/student/portal" replace />
+            ) : role === 'instructor' ? (
+              <Navigate to="/instructor/portal" replace />
+            ) : (
+              <Navigate to="/dashboard" replace />
+            )
+          }
+        />
+        <Route
+          path="/dashboard"
+          element={
+            role === 'student' ? (
+              <Navigate to="/student/portal" replace />
+            ) : role === 'instructor' ? (
+              <Navigate to="/instructor/portal" replace />
+            ) : (
+              <AdminDashboardPage />
+            )
+          }
+        />
+
+        {/* Portal Route Aliases */}
+        <Route path="/portal/instructor" element={<Navigate to="/instructor/portal" replace />} />
+        <Route path="/portal/student" element={<Navigate to="/student/portal" replace />} />
+        <Route path="/portal/admin" element={<Navigate to="/dashboard" replace />} />
 
         {/* Learner Journey & Compliance */}
         <Route

@@ -19,6 +19,7 @@ const NAV_ITEMS: NavItem[] = [
     label: 'Dashboard',
     to: '/dashboard',
     icon: '📊',
+    roles: ['administrator'],
   },
   {
     label: 'Sessions & Calendar',

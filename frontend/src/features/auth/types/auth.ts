@@ -23,6 +23,20 @@ export interface UserProfile {
   driving_school?: DrivingSchoolSummary | null
 }
 
+export interface SystemTestAccount {
+  role: AppRole
+  email: string
+  password: string
+  name: string
+  badge: string
+  portalPath: string
+  profileId: string
+  phone: string
+  branchId: string
+  description: string
+  credentialsNote: string
+}
+
 export interface AuthState {
   user: User | null
   session: Session | null

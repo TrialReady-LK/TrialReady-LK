@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useAuth } from '../../../auth/context/AuthContext'
 import { DmtLogbookModal } from '../../../logbook/components/DmtLogbookModal'
 import { DmtTrialSlipModal } from '../../../logbook/components/DmtTrialSlipModal'
 import { useStudentLogbook } from '../../../logbook/hooks/useStudentLogbook'
@@ -17,6 +18,10 @@ export const StudentPortalPage: React.FC<StudentPortalPageProps> = ({
   drivingSchoolId,
   studentId,
 }) => {
+  const { profile, role } = useAuth()
+  const effectiveStudentId =
+    studentId || (role === 'student' ? profile?.id : undefined)
+
   const {
     journey,
     ledger,
@@ -25,9 +30,13 @@ export const StudentPortalPage: React.FC<StudentPortalPageProps> = ({
     completedSessionsCount,
     isLoading,
     errorMessage,
-  } = useStudentPortal(drivingSchoolId, studentId)
+  } = useStudentPortal(drivingSchoolId, effectiveStudentId)
 
-  const { logbookData, getTrialSlipData } = useStudentLogbook(drivingSchoolId, studentId || '')
+  const activeStudentId = effectiveStudentId || journey?.student?.id || ''
+  const { logbookData, getTrialSlipData } = useStudentLogbook(
+    drivingSchoolId,
+    activeStudentId,
+  )
   const [showLogbook, setShowLogbook] = useState(false)
   const [showTrialSlip, setShowTrialSlip] = useState(false)
 

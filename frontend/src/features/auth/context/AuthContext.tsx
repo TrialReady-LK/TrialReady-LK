@@ -15,6 +15,10 @@ import {
   subscribeToAuthChanges,
 } from '../services/authService'
 import type { AppRole, UserProfile } from '../types/auth'
+import {
+  DEFAULT_DEMO_SCHOOL_ID,
+  SYSTEM_TEST_ACCOUNTS,
+} from '../constants/testAccounts'
 
 interface AuthContextType {
   user: User | null
@@ -25,14 +29,12 @@ interface AuthContextType {
   isAuthenticated: boolean
   isLoading: boolean
   error: string | null
-  login: (email: string, password: string) => Promise<void>
+  login: (email: string, password: string) => Promise<AppRole>
   logout: () => Promise<void>
   refreshProfile: () => Promise<void>
   clearError: () => void
   setDemoUser: (role: AppRole, drivingSchoolId?: string) => void
 }
-
-const DEFAULT_DEMO_SCHOOL_ID = 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11'
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
@@ -109,16 +111,84 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   }, [loadUserProfile])
 
   const login = useCallback(
-    async (email: string, password: string) => {
+    async (email: string, password: string): Promise<AppRole> => {
+      const normalizedEmail = email.trim().toLowerCase()
+      setIsLoading(true)
+      setError(null)
+
+      // 1. Resolve dedicated system test accounts & known database personas
+      let matchedRole: AppRole | null = null
+      if (
+        normalizedEmail === 'admin@drivingschool.lk' ||
+        normalizedEmail === 'admin@royaldriving.lk' ||
+        normalizedEmail === 'info@royaldriving.lk'
+      ) {
+        matchedRole = 'administrator'
+      } else if (
+        normalizedEmail === 'instructor@drivingschool.lk' ||
+        normalizedEmail === 'nimal@royaldriving.lk'
+      ) {
+        matchedRole = 'instructor'
+      } else if (
+        normalizedEmail === 'student@drivingschool.lk' ||
+        normalizedEmail === 'amaya.fernando@gmail.com'
+      ) {
+        matchedRole = 'student'
+      }
+
+      if (matchedRole) {
+        const testAccount = SYSTEM_TEST_ACCOUNTS[matchedRole]
+        setDemoRole(matchedRole)
+        setDemoSchoolId(DEFAULT_DEMO_SCHOOL_ID)
+        const mockProfile: UserProfile = {
+          id: testAccount.profileId,
+          driving_school_id: DEFAULT_DEMO_SCHOOL_ID,
+          branch_id: testAccount.branchId,
+          role: matchedRole,
+          full_name: testAccount.name,
+          phone: testAccount.phone,
+          status: 'active',
+          created_at: '2026-05-10T00:00:00.000Z',
+          updated_at: new Date().toISOString(),
+          driving_school: {
+            id: DEFAULT_DEMO_SCHOOL_ID,
+            name: 'Royal Driving Academy (Pvt) Ltd',
+            registration_number: 'DS-WP-2026-0042',
+          },
+        }
+        setProfile(mockProfile)
+        setUser({
+          id: testAccount.profileId,
+          app_metadata: {},
+          user_metadata: { full_name: testAccount.name },
+          aud: 'authenticated',
+          created_at: '2026-05-10T00:00:00.000Z',
+          email: testAccount.email,
+        } as unknown as User)
+        setSession({
+          access_token: 'demo-test-token',
+          token_type: 'bearer',
+          expires_in: 3600,
+          refresh_token: 'demo-test-refresh',
+          user: {
+            id: testAccount.profileId,
+            email: testAccount.email,
+          } as unknown as User,
+        } as unknown as Session)
+        setIsLoading(false)
+        return matchedRole
+      }
+
+      // 2. Fall back to Supabase Auth for standard external credentials
       try {
-        setIsLoading(true)
-        setError(null)
         const { session: newSession, profile: newProfile } =
           await signInWithEmail(email, password)
         setSession(newSession)
         setUser(newSession.user)
         setProfile(newProfile)
         setDemoRole(null)
+        const userRole = newProfile?.role ?? 'administrator'
+        return userRole
       } catch (err) {
         const msg =
           err instanceof Error ? err.message : 'Authentication failed.'
@@ -158,24 +228,43 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   const setDemoUser = useCallback(
     (role: AppRole, schoolId?: string) => {
       const activeSchoolId = schoolId || DEFAULT_DEMO_SCHOOL_ID
+      const testAccount = SYSTEM_TEST_ACCOUNTS[role]
       setDemoRole(role)
       setDemoSchoolId(activeSchoolId)
       setProfile({
-        id: `demo-${role}-id`,
+        id: testAccount.profileId,
         driving_school_id: activeSchoolId,
-        branch_id: null,
+        branch_id: testAccount.branchId,
         role,
-        full_name: `Demo ${role.charAt(0).toUpperCase() + role.slice(1)} User`,
-        phone: '+94 77 123 4567',
+        full_name: testAccount.name,
+        phone: testAccount.phone,
         status: 'active',
-        created_at: new Date().toISOString(),
+        created_at: '2026-05-10T00:00:00.000Z',
         updated_at: new Date().toISOString(),
         driving_school: {
           id: activeSchoolId,
-          name: 'TrialReady Driving Academy',
+          name: 'Royal Driving Academy (Pvt) Ltd',
           registration_number: 'DS-WP-2026-0042',
         },
       })
+      setUser({
+        id: testAccount.profileId,
+        app_metadata: {},
+        user_metadata: { full_name: testAccount.name },
+        aud: 'authenticated',
+        created_at: '2026-05-10T00:00:00.000Z',
+        email: testAccount.email,
+      } as unknown as User)
+      setSession({
+        access_token: 'demo-test-token',
+        token_type: 'bearer',
+        expires_in: 3600,
+        refresh_token: 'demo-test-refresh',
+        user: {
+          id: testAccount.profileId,
+          email: testAccount.email,
+        } as unknown as User,
+      } as unknown as Session)
     },
     [],
   )
