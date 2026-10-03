@@ -3,7 +3,15 @@ import { LoginForm } from '../components/LoginForm'
 
 export const LoginPage: React.FC = () => {
   return (
-    <div className="relative min-h-screen w-full bg-[#08152c] bg-[url('/login-cover.png')] bg-cover bg-center bg-no-repeat flex items-center justify-center lg:justify-end p-4 sm:p-6 lg:p-12 xl:p-16 overflow-y-auto">
+    <div
+      style={{
+        backgroundImage: "url('/login-cover.png')",
+        backgroundSize: 'cover',
+        backgroundPosition: 'center center',
+        backgroundRepeat: 'no-repeat',
+      }}
+      className="relative min-h-screen w-full bg-[#08152c] flex items-center justify-center lg:justify-end p-4 sm:p-6 lg:p-12 xl:p-16 overflow-y-auto antialiased"
+    >
       {/* Background soft ambient gradient layer for mobile contrast */}
       <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-slate-950/40 lg:hidden pointer-events-none" />
 
