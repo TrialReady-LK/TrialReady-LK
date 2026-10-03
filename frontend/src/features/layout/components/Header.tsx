@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { Sparkles } from 'lucide-react'
 import { useAuth } from '../../auth/context/AuthContext'
 import { DemoSeederModal } from '../../demo/components/DemoSeederModal'
@@ -12,6 +13,13 @@ interface HeaderProps {
 export const Header: React.FC<HeaderProps> = ({ onToggleSidebar }) => {
   const { profile, role, drivingSchoolId, logout } = useAuth()
   const [isDemoModalOpen, setIsDemoModalOpen] = useState(false)
+
+  const dashboardRoute =
+    role === 'instructor'
+      ? '/instructor/portal'
+      : role === 'student'
+        ? '/student/portal'
+        : '/dashboard'
 
   const getRoleBadgeStyle = (r: string | null) => {
     switch (r) {
@@ -52,14 +60,18 @@ export const Header: React.FC<HeaderProps> = ({ onToggleSidebar }) => {
         </button>
 
         {/* Driving School Badge */}
-        <div className="flex items-center gap-2">
+        <Link
+          to={dashboardRoute}
+          className="flex items-center gap-2 group cursor-pointer transition-opacity hover:opacity-85 focus:outline-none"
+          title="Go to Dashboard"
+        >
           <img
             src="/logo-icon.png"
             alt="TrialReady"
-            className="hidden sm:block h-8 w-8 object-contain shrink-0"
+            className="hidden sm:block h-8 w-8 object-contain shrink-0 transition-transform group-hover:scale-105"
           />
           <div>
-            <p className="text-xs font-bold text-slate-900">
+            <p className="text-xs font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
               {profile?.driving_school?.name ?? 'TrialReady Driving Academy'}
             </p>
             <p className="text-[10px] text-slate-500">
@@ -67,7 +79,7 @@ export const Header: React.FC<HeaderProps> = ({ onToggleSidebar }) => {
                 'DS-WP-2026-0042'}
             </p>
           </div>
-        </div>
+        </Link>
       </div>
 
       {/* User Actions & Profile */}

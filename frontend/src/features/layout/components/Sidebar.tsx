@@ -1,5 +1,5 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, Link } from 'react-router-dom'
 import {
   LayoutDashboard,
   Calendar,
@@ -126,6 +126,13 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
     return item.roles.includes(role)
   })
 
+  const dashboardRoute =
+    role === 'instructor'
+      ? '/instructor/portal'
+      : role === 'student'
+        ? '/student/portal'
+        : '/dashboard'
+
   return (
     <>
       {/* Mobile Backdrop Overlay */}
@@ -144,21 +151,26 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
       >
         {/* Brand Header */}
         <div className="flex h-16 items-center justify-between border-b border-slate-200 px-6">
-          <div className="flex items-center gap-2.5">
+          <Link
+            to={dashboardRoute}
+            onClick={onClose}
+            className="flex items-center gap-2.5 group cursor-pointer transition-opacity hover:opacity-85 focus:outline-none"
+            title="Go to Dashboard"
+          >
             <img
               src="/logo-icon.png"
               alt="TrialReady LK Logo"
-              className="h-9 w-9 object-contain shrink-0"
+              className="h-9 w-9 object-contain shrink-0 transition-transform group-hover:scale-105"
             />
             <div>
-              <span className="text-base font-extrabold tracking-tight text-slate-900">
+              <span className="text-base font-extrabold tracking-tight text-slate-900 group-hover:text-blue-600 transition-colors">
                 TrialReady<span className="text-blue-600">.LK</span>
               </span>
               <p className="text-[10px] font-medium text-slate-500 uppercase tracking-widest">
                 Operations
               </p>
             </div>
-          </div>
+          </Link>
 
           {/* Close button on mobile */}
           <button
