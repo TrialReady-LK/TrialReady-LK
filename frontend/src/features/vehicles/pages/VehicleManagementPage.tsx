@@ -84,6 +84,7 @@ export const VehicleManagementPage: React.FC<VehicleManagementPageProps> = ({
       } else {
         await createVehicle(input as CreateVehicleInput)
         setSuccessMessage('Vehicle registered to fleet successfully.')
+        resetFilters()
       }
       await reloadVehicles()
       returnToList()

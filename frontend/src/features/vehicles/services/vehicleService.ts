@@ -113,8 +113,33 @@ export async function createVehicle(
       internal_notes: payload.internal_notes || null,
       deactivation_reason: null,
       deactivated_at: null,
-      branch: null,
-      licence_category: null,
+      branch: payload.branch_id
+        ? {
+            id: payload.branch_id,
+            name: payload.branch_id.includes('2222')
+              ? 'Gampaha Branch (Yakkala)'
+              : payload.branch_id.includes('3333')
+              ? 'Kandy City Branch (Peradeniya)'
+              : 'Colombo Central (Nugegoda)',
+          }
+        : { id: 'ba111111-1111-1111-1111-111111111111', name: 'Colombo Central (Nugegoda)' },
+      licence_category: payload.licence_category_id
+        ? {
+            id: payload.licence_category_id,
+            code: payload.licence_category_id.includes('2222')
+              ? 'B1'
+              : payload.licence_category_id.includes('3333')
+              ? 'A'
+              : payload.licence_category_id.includes('4444')
+              ? 'C'
+              : 'B',
+            name: 'Dual Purpose / Light Motor Car (Auto & Manual)',
+          }
+        : {
+            id: 'ca111111-1111-1111-1111-111111111111',
+            code: 'B',
+            name: 'Dual Purpose / Light Motor Car (Auto & Manual)',
+          },
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
     }
