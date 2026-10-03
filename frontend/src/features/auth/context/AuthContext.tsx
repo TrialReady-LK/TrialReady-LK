@@ -19,6 +19,20 @@ import {
   DEFAULT_DEMO_SCHOOL_ID,
   SYSTEM_TEST_ACCOUNTS,
 } from '../constants/testAccounts'
+import {
+  getStoredData,
+  removeStoredData,
+  setStoredData,
+  STORAGE_KEYS,
+} from '../../../lib/persistentStorage'
+
+interface StoredAuthSession {
+  user: User | null
+  session: Session | null
+  profile: UserProfile | null
+  role: AppRole | null
+  drivingSchoolId: string
+}
 
 interface AuthContextType {
   user: User | null
@@ -41,14 +55,25 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined)
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [user, setUser] = useState<User | null>(null)
-  const [session, setSession] = useState<Session | null>(null)
-  const [profile, setProfile] = useState<UserProfile | null>(null)
-  const [isLoading, setIsLoading] = useState(true)
+  const initialStored = getStoredData<StoredAuthSession | null>(
+    STORAGE_KEYS.AUTH_SESSION,
+    null,
+  )
+
+  const [user, setUser] = useState<User | null>(initialStored?.user ?? null)
+  const [session, setSession] = useState<Session | null>(
+    initialStored?.session ?? null,
+  )
+  const [profile, setProfile] = useState<UserProfile | null>(
+    initialStored?.profile ?? null,
+  )
+  const [isLoading, setIsLoading] = useState(!initialStored)
   const [error, setError] = useState<string | null>(null)
-  const [demoRole, setDemoRole] = useState<AppRole | null>(null)
+  const [demoRole, setDemoRole] = useState<AppRole | null>(
+    initialStored?.role ?? null,
+  )
   const [demoSchoolId, setDemoSchoolId] = useState<string>(
-    DEFAULT_DEMO_SCHOOL_ID,
+    initialStored?.drivingSchoolId ?? DEFAULT_DEMO_SCHOOL_ID,
   )
 
   const loadUserProfile = useCallback(async (userId: string) => {
@@ -156,25 +181,33 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
             registration_number: 'DS-WP-2026-0042',
           },
         }
-        setProfile(mockProfile)
-        setUser({
+        const userObj = {
           id: testAccount.profileId,
           app_metadata: {},
           user_metadata: { full_name: testAccount.name },
           aud: 'authenticated',
           created_at: '2026-05-10T00:00:00.000Z',
           email: testAccount.email,
-        } as unknown as User)
-        setSession({
+        } as unknown as User
+
+        const sessionObj = {
           access_token: 'demo-test-token',
           token_type: 'bearer',
           expires_in: 3600,
           refresh_token: 'demo-test-refresh',
-          user: {
-            id: testAccount.profileId,
-            email: testAccount.email,
-          } as unknown as User,
-        } as unknown as Session)
+          user: userObj,
+        } as unknown as Session
+
+        setProfile(mockProfile)
+        setUser(userObj)
+        setSession(sessionObj)
+        setStoredData<StoredAuthSession>(STORAGE_KEYS.AUTH_SESSION, {
+          user: userObj,
+          session: sessionObj,
+          profile: mockProfile,
+          role: matchedRole,
+          drivingSchoolId: DEFAULT_DEMO_SCHOOL_ID,
+        })
         setIsLoading(false)
         return matchedRole
       }
@@ -188,6 +221,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         setProfile(newProfile)
         setDemoRole(null)
         const userRole = newProfile?.role ?? 'administrator'
+        setStoredData<StoredAuthSession>(STORAGE_KEYS.AUTH_SESSION, {
+          user: newSession.user,
+          session: newSession,
+          profile: newProfile,
+          role: userRole,
+          drivingSchoolId: newProfile?.driving_school_id ?? DEFAULT_DEMO_SCHOOL_ID,
+        })
         return userRole
       } catch (err) {
         const msg =
@@ -204,6 +244,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   const logout = useCallback(async () => {
     try {
       setIsLoading(true)
+      removeStoredData(STORAGE_KEYS.AUTH_SESSION)
       await signOutUser()
     } finally {
       setUser(null)
@@ -231,7 +272,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       const testAccount = SYSTEM_TEST_ACCOUNTS[role]
       setDemoRole(role)
       setDemoSchoolId(activeSchoolId)
-      setProfile({
+      const mockProfile: UserProfile = {
         id: testAccount.profileId,
         driving_school_id: activeSchoolId,
         branch_id: testAccount.branchId,
@@ -246,25 +287,33 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
           name: 'Royal Driving Academy (Pvt) Ltd',
           registration_number: 'DS-WP-2026-0042',
         },
-      })
-      setUser({
+      }
+      const userObj = {
         id: testAccount.profileId,
         app_metadata: {},
         user_metadata: { full_name: testAccount.name },
         aud: 'authenticated',
         created_at: '2026-05-10T00:00:00.000Z',
         email: testAccount.email,
-      } as unknown as User)
-      setSession({
+      } as unknown as User
+      const sessionObj = {
         access_token: 'demo-test-token',
         token_type: 'bearer',
         expires_in: 3600,
         refresh_token: 'demo-test-refresh',
-        user: {
-          id: testAccount.profileId,
-          email: testAccount.email,
-        } as unknown as User,
-      } as unknown as Session)
+        user: userObj,
+      } as unknown as Session
+
+      setProfile(mockProfile)
+      setUser(userObj)
+      setSession(sessionObj)
+      setStoredData<StoredAuthSession>(STORAGE_KEYS.AUTH_SESSION, {
+        user: userObj,
+        session: sessionObj,
+        profile: mockProfile,
+        role,
+        drivingSchoolId: activeSchoolId,
+      })
     },
     [],
   )

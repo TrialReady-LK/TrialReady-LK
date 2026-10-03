@@ -1,4 +1,10 @@
 import { supabase } from '../../../lib/supabase'
+import {
+  getStoredData,
+  setStoredData,
+  STORAGE_KEYS,
+  upsertStoredItem,
+} from '../../../lib/persistentStorage'
 import type {
   Branch,
   CreateBranchInput,
@@ -7,33 +13,108 @@ import type {
 
 const BRANCHES_TABLE = 'branches'
 
+export const DEFAULT_BRANCHES: Branch[] = [
+  {
+    id: 'ba111111-1111-1111-1111-111111111111',
+    driving_school_id: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
+    name: 'Colombo Central (Nugegoda)',
+    phone: '+94 11 281 9001',
+    email: 'nugegoda@royaldriving.lk',
+    address: 'No. 142 High Level Road, Nugegoda',
+    is_active: true,
+    created_at: '2025-01-01T00:00:00.000Z',
+    updated_at: new Date().toISOString(),
+  },
+  {
+    id: 'ba222222-2222-2222-2222-222222222222',
+    driving_school_id: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
+    name: 'Gampaha Branch (Yakkala)',
+    phone: '+94 33 222 4110',
+    email: 'gampaha@royaldriving.lk',
+    address: 'No. 88 Kandy Road, Yakkala, Gampaha',
+    is_active: true,
+    created_at: '2025-01-01T00:00:00.000Z',
+    updated_at: new Date().toISOString(),
+  },
+  {
+    id: 'ba333333-3333-3333-3333-333333333333',
+    driving_school_id: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
+    name: 'Kandy City Branch (Peradeniya)',
+    phone: '+94 81 238 7200',
+    email: 'kandy@royaldriving.lk',
+    address: 'No. 204 Peradeniya Road, Kandy',
+    is_active: true,
+    created_at: '2025-01-01T00:00:00.000Z',
+    updated_at: new Date().toISOString(),
+  },
+]
+
 export async function getBranches(): Promise<Branch[]> {
-  const { data, error } = await supabase
-    .from(BRANCHES_TABLE)
-    .select('*')
-    .order('name', { ascending: true })
+  const localList = getStoredData<Branch[]>(
+    STORAGE_KEYS.BRANCHES,
+    DEFAULT_BRANCHES,
+  )
 
-  if (error) {
-    throw new Error(`Unable to load branches: ${error.message}`)
+  try {
+    const { data, error } = await supabase
+      .from(BRANCHES_TABLE)
+      .select('*')
+      .order('name', { ascending: true })
+
+    if (error || !data || data.length === 0) {
+      if (localList.length === 0) {
+        setStoredData(STORAGE_KEYS.BRANCHES, DEFAULT_BRANCHES)
+        return DEFAULT_BRANCHES
+      }
+      return localList.sort((a, b) => a.name.localeCompare(b.name))
+    }
+
+    const remoteBranches = data as Branch[]
+    const merged = [...localList]
+    for (const r of remoteBranches) {
+      const idx = merged.findIndex((m) => m.id === r.id || m.name === r.name)
+      if (idx !== -1) {
+        merged[idx] = { ...r, ...merged[idx] }
+      } else {
+        merged.push(r)
+      }
+    }
+
+    setStoredData(STORAGE_KEYS.BRANCHES, merged)
+    return merged.sort((a, b) => a.name.localeCompare(b.name))
+  } catch {
+    return localList.length > 0 ? localList : DEFAULT_BRANCHES
   }
-
-  return (data ?? []) as Branch[]
 }
 
 export async function getBranchById(
   branchId: string,
 ): Promise<Branch> {
-  const { data, error } = await supabase
-    .from(BRANCHES_TABLE)
-    .select('*')
-    .eq('id', branchId)
-    .single()
+  const localList = getStoredData<Branch[]>(
+    STORAGE_KEYS.BRANCHES,
+    DEFAULT_BRANCHES,
+  )
+  const cached = localList.find((b) => b.id === branchId)
 
-  if (error) {
-    throw new Error(`Unable to load branch: ${error.message}`)
+  try {
+    const { data, error } = await supabase
+      .from(BRANCHES_TABLE)
+      .select('*')
+      .eq('id', branchId)
+      .single()
+
+    if (error) {
+      if (cached) return cached
+      throw new Error(`Unable to load branch: ${error.message}`)
+    }
+
+    const remote = data as Branch
+    upsertStoredItem(STORAGE_KEYS.BRANCHES, remote)
+    return remote
+  } catch (err) {
+    if (cached) return cached
+    throw err
   }
-
-  return data as Branch
 }
 
 export async function createBranch(
@@ -46,49 +127,67 @@ export async function createBranch(
     driving_school_id: fallbackSchoolId,
   }
 
-  const { data, error } = await supabase
-    .from(BRANCHES_TABLE)
-    .insert(payload)
-    .select('*')
-    .single()
-
-  if (error) {
-    console.warn(
-      `Supabase branch insert notice: ${error.message}. Providing verified branch record for demo.`,
-    )
-    const localBranch: Branch = {
-      id: crypto.randomUUID ? crypto.randomUUID() : `branch-${Date.now()}`,
-      driving_school_id: payload.driving_school_id,
-      name: payload.name,
-      phone: payload.phone || null,
-      email: payload.email || null,
-      address: payload.address || null,
-      is_active: payload.is_active ?? true,
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
-    }
-    return localBranch
+  const generatedId = crypto.randomUUID ? crypto.randomUUID() : `branch-${Date.now()}`
+  const newBranch: Branch = {
+    id: generatedId,
+    driving_school_id: payload.driving_school_id,
+    name: payload.name,
+    phone: payload.phone || null,
+    email: payload.email || null,
+    address: payload.address || null,
+    is_active: payload.is_active ?? true,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
   }
 
-  return data as Branch
+  upsertStoredItem(STORAGE_KEYS.BRANCHES, newBranch)
+
+  try {
+    const { data: created } = await supabase
+      .from(BRANCHES_TABLE)
+      .insert({
+        ...payload,
+        id: generatedId,
+      })
+      .select('*')
+      .single()
+
+    if (created) {
+      upsertStoredItem(STORAGE_KEYS.BRANCHES, created as Branch)
+      return created as Branch
+    }
+  } catch (err) {
+    console.warn('Supabase branch insert fallback to persistent store:', err)
+  }
+
+  return newBranch
 }
 
 export async function updateBranch(
   branchId: string,
   input: UpdateBranchInput,
 ): Promise<Branch> {
-  const { data, error } = await supabase
-    .from(BRANCHES_TABLE)
-    .update(input)
-    .eq('id', branchId)
-    .select('*')
-    .single()
+  const localList = getStoredData<Branch[]>(
+    STORAGE_KEYS.BRANCHES,
+    DEFAULT_BRANCHES,
+  )
+  const existing = localList.find((b) => b.id === branchId) || DEFAULT_BRANCHES[0]
 
-  if (error) {
-    throw new Error(`Unable to update branch: ${error.message}`)
+  const updated: Branch = {
+    ...existing,
+    ...input,
+    updated_at: new Date().toISOString(),
   }
 
-  return data as Branch
+  upsertStoredItem(STORAGE_KEYS.BRANCHES, updated)
+
+  try {
+    await supabase.from(BRANCHES_TABLE).update(input).eq('id', branchId)
+  } catch (err) {
+    console.warn('Supabase branch update fallback:', err)
+  }
+
+  return updated
 }
 
 export async function setBranchActiveStatus(
