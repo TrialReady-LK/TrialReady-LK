@@ -21,6 +21,98 @@ interface ChatMessage {
   suggestions?: string[]
 }
 
+const FormattedMessageText: React.FC<{ text: string; isUser: boolean }> = ({
+  text,
+  isUser,
+}) => {
+  const cleanText = text
+    .replace(/\$\\ge\$/g, '≥')
+    .replace(/\$\\le\$/g, '≤')
+    .replace(/\$\\rightarrow\$/g, '→')
+    .replace(/\\`/g, '`')
+
+  const lines = cleanText.split('\n')
+
+  return (
+    <div className="space-y-1.5 text-xs leading-relaxed">
+      {lines.map((line, idx) => {
+        const trimmed = line.trim()
+        if (!trimmed) {
+          return <div key={idx} className="h-1" />
+        }
+
+        const renderInline = (content: string) => {
+          const parts = content.split(/(\*\*.*?\*\*|`.*?`)/g)
+          return parts.map((part, pIdx) => {
+            if (part.startsWith('**') && part.endsWith('**')) {
+              return (
+                <strong
+                  key={pIdx}
+                  className={`font-bold ${
+                    isUser ? 'text-white' : 'text-slate-900'
+                  }`}
+                >
+                  {part.slice(2, -2)}
+                </strong>
+              )
+            }
+            if (part.startsWith('`') && part.endsWith('`')) {
+              return (
+                <code
+                  key={pIdx}
+                  className={`rounded px-1 py-0.5 font-mono text-[10px] ${
+                    isUser
+                      ? 'bg-blue-700 text-blue-100'
+                      : 'bg-blue-50 text-blue-700 border border-blue-200'
+                  }`}
+                >
+                  {part.slice(1, -1)}
+                </code>
+              )
+            }
+            return part
+          })
+        }
+
+        if (trimmed.startsWith('• ') || trimmed.startsWith('- ')) {
+          return (
+            <div key={idx} className="flex items-start gap-1.5 pl-0.5">
+              <span
+                className={`shrink-0 font-bold ${
+                  isUser ? 'text-blue-200' : 'text-blue-600'
+                }`}
+              >
+                •
+              </span>
+              <div className="flex-1">{renderInline(trimmed.slice(2))}</div>
+            </div>
+          )
+        }
+
+        if (/^\d+\.\s/.test(trimmed)) {
+          const match = trimmed.match(/^(\d+\.)\s(.*)$/)
+          if (match) {
+            return (
+              <div key={idx} className="flex items-start gap-1.5 pl-0.5">
+                <span
+                  className={`shrink-0 text-[11px] font-bold ${
+                    isUser ? 'text-blue-200' : 'text-blue-600'
+                  }`}
+                >
+                  {match[1]}
+                </span>
+                <div className="flex-1">{renderInline(match[2])}</div>
+              </div>
+            )
+          }
+        }
+
+        return <p key={idx}>{renderInline(line)}</p>
+      })}
+    </div>
+  )
+}
+
 export const AiCopilotWidget: React.FC = () => {
   const { profile, role } = useAuth()
   const [isOpen, setIsOpen] = useState(false)
@@ -229,7 +321,10 @@ export const AiCopilotWidget: React.FC = () => {
                       : 'bg-white text-slate-800 border border-slate-200 rounded-bl-xs'
                   }`}
                 >
-                  <p className="whitespace-pre-line">{msg.text}</p>
+                  <FormattedMessageText
+                    text={msg.text}
+                    isUser={msg.sender === 'user'}
+                  />
                 </div>
                 <span className="text-[9px] text-slate-400 mt-1 px-1">
                   {msg.timestamp}
