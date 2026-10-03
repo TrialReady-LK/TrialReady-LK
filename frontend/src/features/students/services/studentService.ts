@@ -10,6 +10,7 @@ import type {
   Student,
   UpdateStudentInput,
 } from '../types/student'
+import { generate100SriLankanStudents } from '../../demo/data/generateDemo100Data'
 
 const STUDENTS_TABLE = 'students'
 
@@ -112,10 +113,27 @@ export const DEFAULT_STUDENTS: Student[] = [
 ]
 
 export async function getStudents(): Promise<Student[]> {
-  const localList = getStoredData<Student[]>(
+  let localList = getStoredData<Student[]>(
     STORAGE_KEYS.STUDENTS,
-    DEFAULT_STUDENTS,
+    [],
   )
+
+  if (localList.length < 100) {
+    const branches = getStoredData<any[]>(STORAGE_KEYS.BRANCHES, [])
+    const instructors = getStoredData<any[]>(STORAGE_KEYS.INSTRUCTORS, [])
+    const schoolId = 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11'
+    const full100 = generate100SriLankanStudents(
+      schoolId,
+      branches,
+      instructors,
+    ) as Student[]
+
+    const mergedMap = new Map<string, Student>()
+    full100.forEach((st) => mergedMap.set(st.student_code || st.id, st))
+    localList.forEach((st) => mergedMap.set(st.student_code || st.id, st))
+    localList = Array.from(mergedMap.values())
+    setStoredData(STORAGE_KEYS.STUDENTS, localList)
+  }
 
   try {
     const { data, error } = await supabase
@@ -124,10 +142,6 @@ export async function getStudents(): Promise<Student[]> {
       .order('full_name', { ascending: true })
 
     if (error || !data || data.length === 0) {
-      if (localList.length === 0) {
-        setStoredData(STORAGE_KEYS.STUDENTS, DEFAULT_STUDENTS)
-        return DEFAULT_STUDENTS
-      }
       return localList.sort((a, b) => a.full_name.localeCompare(b.full_name))
     }
 
@@ -135,7 +149,9 @@ export async function getStudents(): Promise<Student[]> {
     const merged = [...localList]
     for (const r of remoteStudents) {
       const idx = merged.findIndex(
-        (m) => m.id === r.id || (m.student_code && m.student_code === r.student_code),
+        (m) =>
+          m.id === r.id ||
+          (m.student_code && m.student_code === r.student_code),
       )
       if (idx !== -1) {
         merged[idx] = { ...r, ...merged[idx] }
@@ -147,7 +163,7 @@ export async function getStudents(): Promise<Student[]> {
     setStoredData(STORAGE_KEYS.STUDENTS, merged)
     return merged.sort((a, b) => a.full_name.localeCompare(b.full_name))
   } catch {
-    return localList.length > 0 ? localList : DEFAULT_STUDENTS
+    return localList.sort((a, b) => a.full_name.localeCompare(b.full_name))
   }
 }
 
