@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Download } from 'lucide-react'
 import { DmtAuditExportModal } from '../components/DmtAuditExportModal'
 import { FleetCostUtilizationCard } from '../components/FleetCostUtilizationCard'
 import { InstructorPerformanceTable } from '../components/InstructorPerformanceTable'
@@ -62,7 +63,8 @@ export const ExecutiveAnalyticsPage: React.FC<ExecutiveAnalyticsPageProps> = ({
             onClick={() => setIsExportModalOpen(true)}
             className="rounded-xl bg-blue-600 px-4 py-2 text-xs font-bold text-white shadow-xs hover:bg-blue-700 transition-all cursor-pointer flex items-center gap-1.5"
           >
-            <span>📥</span> Export Audit Reports (CSV)
+            <Download className="h-4 w-4" />
+            <span>Export Audit Reports (CSV)</span>
           </button>
         </div>
       </div>

@@ -1,4 +1,5 @@
 import React from 'react'
+import { FileText, Activity, BookOpen } from 'lucide-react'
 import type { StudentExamTrial, StudentMedicalRecord, StudentPermit } from '../../../journey/types/journey'
 import { calculatePermitValidity } from '../../../journey/utils/journeyUtils'
 
@@ -57,7 +58,9 @@ export const StudentJourneyHeroCard: React.FC<StudentJourneyHeroCardProps> = ({
         {/* 1. Learner Permit */}
         <div className="rounded-2xl bg-white/10 p-4 backdrop-blur-xs border border-white/10 space-y-1">
           <div className="flex items-center justify-between text-xs">
-            <span className="text-slate-300 font-semibold">📄 DMT Permit</span>
+            <span className="text-slate-300 font-semibold flex items-center gap-1.5">
+              <FileText className="h-3.5 w-3.5" /> DMT Permit
+            </span>
             <span
               className={`rounded px-1.5 py-0.2 text-[10px] font-bold ${
                 permitVal.state === 'valid'
@@ -81,7 +84,9 @@ export const StudentJourneyHeroCard: React.FC<StudentJourneyHeroCardProps> = ({
         {/* 2. NTMI Medical */}
         <div className="rounded-2xl bg-white/10 p-4 backdrop-blur-xs border border-white/10 space-y-1">
           <div className="flex items-center justify-between text-xs">
-            <span className="text-slate-300 font-semibold">🏥 NTMI Medical</span>
+            <span className="text-slate-300 font-semibold flex items-center gap-1.5">
+              <Activity className="h-3.5 w-3.5" /> NTMI Medical
+            </span>
             <span
               className={`rounded px-1.5 py-0.2 text-[10px] font-bold ${
                 medical?.status === 'passed'
@@ -89,7 +94,7 @@ export const StudentJourneyHeroCard: React.FC<StudentJourneyHeroCardProps> = ({
                   : 'bg-slate-400/20 text-slate-300'
               }`}
             >
-              {medical?.status === 'passed' ? '✓ Cleared' : 'Pending'}
+              {medical?.status === 'passed' ? 'Cleared' : 'Pending'}
             </span>
           </div>
           <p className="font-mono font-bold text-white text-sm">
@@ -103,7 +108,9 @@ export const StudentJourneyHeroCard: React.FC<StudentJourneyHeroCardProps> = ({
         {/* 3. Theory Exam */}
         <div className="rounded-2xl bg-white/10 p-4 backdrop-blur-xs border border-white/10 space-y-1">
           <div className="flex items-center justify-between text-xs">
-            <span className="text-slate-300 font-semibold">📖 Theory Exam</span>
+            <span className="text-slate-300 font-semibold flex items-center gap-1.5">
+              <BookOpen className="h-3.5 w-3.5" /> Theory Exam
+            </span>
             <span
               className={`rounded px-1.5 py-0.2 text-[10px] font-bold ${
                 passedTheory
@@ -111,7 +118,7 @@ export const StudentJourneyHeroCard: React.FC<StudentJourneyHeroCardProps> = ({
                   : 'bg-blue-400/20 text-blue-300'
               }`}
             >
-              {passedTheory ? '✓ Passed' : 'In Progress'}
+              {passedTheory ? 'Passed' : 'In Progress'}
             </span>
           </div>
           <p className="font-bold text-white text-sm">

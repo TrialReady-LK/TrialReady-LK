@@ -1,4 +1,5 @@
 import React from 'react'
+import { Download, X, FileText, CreditCard, UserCheck } from 'lucide-react'
 
 interface DmtAuditExportModalProps {
   isOpen: boolean
@@ -21,8 +22,10 @@ export const DmtAuditExportModal: React.FC<DmtAuditExportModalProps> = ({
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 p-4 backdrop-blur-xs">
       <div className="w-full max-w-xl rounded-3xl bg-white p-6 shadow-2xl border border-slate-200 space-y-6 sm:p-8">
         <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-          <div className="flex items-center gap-2">
-            <span className="text-2xl">📥</span>
+          <div className="flex items-center gap-2.5">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-50 text-indigo-600">
+              <Download className="h-5 w-5" />
+            </div>
             <div>
               <h3 className="text-base font-bold text-slate-900">
                 Export Compliance & Audit Reports
@@ -37,7 +40,7 @@ export const DmtAuditExportModal: React.FC<DmtAuditExportModalProps> = ({
             onClick={onClose}
             className="rounded-lg p-1 text-slate-400 hover:bg-slate-100 hover:text-slate-700 cursor-pointer"
           >
-            ✕
+            <X className="h-4 w-4" />
           </button>
         </div>
 
@@ -46,8 +49,8 @@ export const DmtAuditExportModal: React.FC<DmtAuditExportModalProps> = ({
           {/* 1. DMT Student Audit Log */}
           <div className="flex items-center justify-between rounded-2xl border border-slate-200 bg-slate-50/70 p-4 hover:border-blue-300 transition-colors">
             <div className="space-y-0.5">
-              <span className="font-bold text-slate-900 text-xs sm:text-sm">
-                📄 DMT Candidate Compliance Audit Log
+              <span className="font-bold text-slate-900 text-xs sm:text-sm flex items-center gap-1.5">
+                <FileText className="h-4 w-4 text-blue-600" /> DMT Candidate Compliance Audit Log
               </span>
               <p className="text-[11px] text-slate-500 max-w-sm">
                 Full student roster with NIC, DMT 6-month permit #, expiry dates, NTMI medical clearance, theory status, and AI trial readiness scores.
@@ -68,8 +71,8 @@ export const DmtAuditExportModal: React.FC<DmtAuditExportModalProps> = ({
           {/* 2. Financial Ledger */}
           <div className="flex items-center justify-between rounded-2xl border border-slate-200 bg-slate-50/70 p-4 hover:border-emerald-300 transition-colors">
             <div className="space-y-0.5">
-              <span className="font-bold text-slate-900 text-xs sm:text-sm">
-                💳 Academy Revenue & Payment Ledger
+              <span className="font-bold text-slate-900 text-xs sm:text-sm flex items-center gap-1.5">
+                <CreditCard className="h-4 w-4 text-emerald-600" /> Academy Revenue & Payment Ledger
               </span>
               <p className="text-[11px] text-slate-500 max-w-sm">
                 Official receipts log, enrolled packages, payment methods (Cash, Card, Transfer), and student instalment payment histories.
@@ -90,8 +93,8 @@ export const DmtAuditExportModal: React.FC<DmtAuditExportModalProps> = ({
           {/* 3. Instructor Performance */}
           <div className="flex items-center justify-between rounded-2xl border border-slate-200 bg-slate-50/70 p-4 hover:border-purple-300 transition-colors">
             <div className="space-y-0.5">
-              <span className="font-bold text-slate-900 text-xs sm:text-sm">
-                👨‍🏫 Instructor Performance & Pass Rate Audit
+              <span className="font-bold text-slate-900 text-xs sm:text-sm flex items-center gap-1.5">
+                <UserCheck className="h-4 w-4 text-purple-600" /> Instructor Performance & Pass Rate Audit
               </span>
               <p className="text-[11px] text-slate-500 max-w-sm">
                 Staff training hours, assigned student volume, trial pass rates %, and student satisfaction ratings.

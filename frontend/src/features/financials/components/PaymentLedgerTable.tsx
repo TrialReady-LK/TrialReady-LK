@@ -53,7 +53,7 @@ export const PaymentLedgerTable: React.FC<PaymentLedgerTableProps> = ({
               className="w-full rounded-xl border border-slate-300 bg-white px-2.5 py-1.5 text-xs text-slate-900 outline-none focus:border-blue-500"
             >
               <option value="all">All Payment Statuses</option>
-              <option value="fully_paid">✓ Fully Paid</option>
+              <option value="fully_paid">Fully Paid</option>
               <option value="partially_paid">Partially Paid</option>
               <option value="unpaid">Unpaid</option>
             </select>

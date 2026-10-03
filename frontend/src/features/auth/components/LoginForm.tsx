@@ -1,6 +1,14 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
+  ShieldCheck,
+  UserCheck,
+  GraduationCap,
+  Key,
+  Check,
+  X,
+} from 'lucide-react'
+import {
   SYSTEM_TEST_ACCOUNTS,
   getPortalRouteForRole,
 } from '../constants/testAccounts'
@@ -83,7 +91,7 @@ export const LoginForm: React.FC = () => {
 
         {localError && (
           <div className="mb-4 rounded-xl border border-red-200 bg-red-50 p-3 text-xs text-red-700 flex items-start gap-2">
-            <span className="font-bold text-red-600">✕</span>
+            <X className="h-4 w-4 shrink-0 text-red-600 mt-0.5" />
             <span>{localError}</span>
           </div>
         )}
@@ -91,7 +99,8 @@ export const LoginForm: React.FC = () => {
         {filledRole && (
           <div className="mb-4 rounded-xl border border-blue-200 bg-blue-50/70 p-2.5 text-xs text-blue-800 flex items-center justify-between">
             <span className="flex items-center gap-1.5 font-medium">
-              <span>✓</span> Loaded {SYSTEM_TEST_ACCOUNTS[filledRole].name} credentials
+              <Check className="h-4 w-4 shrink-0 text-blue-600" />
+              <span>Loaded {SYSTEM_TEST_ACCOUNTS[filledRole].name} credentials</span>
             </span>
             <span className="text-[10px] font-mono font-bold bg-blue-200/70 px-1.5 py-0.5 rounded">
               {SYSTEM_TEST_ACCOUNTS[filledRole].portalPath}
@@ -159,8 +168,9 @@ export const LoginForm: React.FC = () => {
         {/* Dedicated Test Accounts for Examiners & Evaluators */}
         <div className="mt-6 border-t border-slate-100 pt-4">
           <div className="flex items-center justify-between mb-2.5">
-            <span className="text-[11px] font-bold tracking-wider text-slate-500 uppercase flex items-center gap-1">
-              <span>🔑</span> Dedicated Portal Test Accounts
+            <span className="text-[11px] font-bold tracking-wider text-slate-500 uppercase flex items-center gap-1.5">
+              <Key className="h-3.5 w-3.5 text-slate-500" />
+              <span>Dedicated Portal Test Accounts</span>
             </span>
             <span className="text-[10px] text-slate-400">Click to fill or login</span>
           </div>
@@ -171,7 +181,7 @@ export const LoginForm: React.FC = () => {
               <div className="flex items-start justify-between gap-2">
                 <div className="min-w-0">
                   <div className="flex items-center gap-1.5 flex-wrap">
-                    <span className="text-xs">👑</span>
+                    <ShieldCheck className="h-4 w-4 text-blue-600" />
                     <span className="text-xs font-bold text-slate-900">Admin Portal</span>
                     <span className="rounded bg-blue-100 px-1.5 py-0.2 text-[10px] font-mono font-semibold text-blue-700">
                       /dashboard
@@ -207,7 +217,7 @@ export const LoginForm: React.FC = () => {
               <div className="flex items-start justify-between gap-2">
                 <div className="min-w-0">
                   <div className="flex items-center gap-1.5 flex-wrap">
-                    <span className="text-xs">👨‍🏫</span>
+                    <UserCheck className="h-4 w-4 text-emerald-600" />
                     <span className="text-xs font-bold text-slate-900">Instructor Portal</span>
                     <span className="rounded bg-emerald-100 px-1.5 py-0.2 text-[10px] font-mono font-semibold text-emerald-700">
                       /instructor/portal
@@ -243,7 +253,7 @@ export const LoginForm: React.FC = () => {
               <div className="flex items-start justify-between gap-2">
                 <div className="min-w-0">
                   <div className="flex items-center gap-1.5 flex-wrap">
-                    <span className="text-xs">👨‍🎓</span>
+                    <GraduationCap className="h-4 w-4 text-purple-600" />
                     <span className="text-xs font-bold text-slate-900">Student Portal</span>
                     <span className="rounded bg-purple-100 px-1.5 py-0.2 text-[10px] font-mono font-semibold text-purple-700">
                       /student/portal

@@ -1,4 +1,5 @@
 import React from 'react'
+import { Star } from 'lucide-react'
 import type { InstructorPerformanceMetric } from '../types/analytics'
 
 interface InstructorPerformanceTableProps {
@@ -72,7 +73,10 @@ export const InstructorPerformanceTable: React.FC<
                   </span>
                 </td>
                 <td className="px-4 py-3 text-right font-black text-amber-600">
-                  {inst.averageStudentRating} ★
+                  <span className="inline-flex items-center justify-end gap-1">
+                    <span>{inst.averageStudentRating}</span>
+                    <Star className="h-3.5 w-3.5 fill-amber-400 text-amber-500" />
+                  </span>
                 </td>
               </tr>
             ))}

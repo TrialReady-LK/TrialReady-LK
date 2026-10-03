@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Calendar, List, Plus, X } from 'lucide-react'
 import { SessionAttendanceModal } from '../components/SessionAttendanceModal'
 import { SessionBookingModal } from '../components/SessionBookingModal'
 import { SessionCalendarView } from '../components/SessionCalendarView'
@@ -119,24 +120,26 @@ export const PracticalSessionManagementPage: React.FC<
             <button
               type="button"
               onClick={() => setViewMode('calendar')}
-              className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition-all cursor-pointer ${
+              className={`inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold transition-all cursor-pointer ${
                 viewMode === 'calendar'
                   ? 'bg-white text-blue-600 shadow-xs'
                   : 'text-slate-600 hover:text-slate-900'
               }`}
             >
-              📅 Calendar
+              <Calendar className="h-3.5 w-3.5" />
+              <span>Calendar</span>
             </button>
             <button
               type="button"
               onClick={() => setViewMode('list')}
-              className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition-all cursor-pointer ${
+              className={`inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold transition-all cursor-pointer ${
                 viewMode === 'list'
                   ? 'bg-white text-blue-600 shadow-xs'
                   : 'text-slate-600 hover:text-slate-900'
               }`}
             >
-              📋 List View
+              <List className="h-3.5 w-3.5" />
+              <span>List View</span>
             </button>
           </div>
 
@@ -144,9 +147,10 @@ export const PracticalSessionManagementPage: React.FC<
           <button
             type="button"
             onClick={() => handleOpenNewBooking()}
-            className="rounded-xl bg-blue-600 px-4 py-2 text-xs font-bold text-white shadow-xs hover:bg-blue-700 transition-all cursor-pointer"
+            className="inline-flex items-center gap-1.5 rounded-xl bg-blue-600 px-4 py-2 text-xs font-bold text-white shadow-xs hover:bg-blue-700 transition-all cursor-pointer"
           >
-            + Schedule Lesson
+            <Plus className="h-3.5 w-3.5" />
+            <span>Schedule Lesson</span>
           </button>
         </div>
       </div>
@@ -209,9 +213,9 @@ export const PracticalSessionManagementPage: React.FC<
           <button
             type="button"
             onClick={() => setErrorMessage(null)}
-            className="font-bold text-red-500 hover:text-red-700"
+            className="p-1 text-red-500 hover:text-red-700 transition-colors cursor-pointer"
           >
-            ✕
+            <X className="h-4 w-4" />
           </button>
         </div>
       )}
@@ -222,9 +226,9 @@ export const PracticalSessionManagementPage: React.FC<
           <button
             type="button"
             onClick={() => setSuccessMessage(null)}
-            className="font-bold text-emerald-500 hover:text-emerald-700"
+            className="p-1 text-emerald-500 hover:text-emerald-700 transition-colors cursor-pointer"
           >
-            ✕
+            <X className="h-4 w-4" />
           </button>
         </div>
       )}

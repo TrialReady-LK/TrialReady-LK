@@ -1,4 +1,5 @@
 import React from 'react'
+import { Trophy, AlertTriangle, Search, RotateCcw, ArrowLeft } from 'lucide-react'
 import type { MockExamAttempt } from '../types/theory'
 
 interface ExamResultSummaryModalProps {
@@ -21,13 +22,17 @@ export const ExamResultSummaryModal: React.FC<
         {/* Pass / Fail Icon & Banner */}
         <div className="flex flex-col items-center justify-center">
           <div
-            className={`flex h-20 w-20 items-center justify-center rounded-full text-4xl shadow-inner ${
+            className={`flex h-20 w-20 items-center justify-center rounded-full shadow-inner ${
               result.passed
                 ? 'bg-emerald-100 text-emerald-600 border-4 border-emerald-300'
                 : 'bg-red-100 text-red-600 border-4 border-red-300'
             }`}
           >
-            {result.passed ? '🏆' : '⚠️'}
+            {result.passed ? (
+              <Trophy className="h-10 w-10 text-emerald-600" />
+            ) : (
+              <AlertTriangle className="h-10 w-10 text-red-600" />
+            )}
           </div>
 
           <h2 className="mt-4 text-2xl font-black tracking-tight text-slate-900">
@@ -79,26 +84,29 @@ export const ExamResultSummaryModal: React.FC<
           <button
             type="button"
             onClick={onReview}
-            className="w-full rounded-2xl bg-blue-600 py-3 text-xs font-bold text-white shadow-xs hover:bg-blue-700 transition-all cursor-pointer"
+            className="w-full inline-flex items-center justify-center gap-2 rounded-2xl bg-blue-600 py-3 text-xs font-bold text-white shadow-xs hover:bg-blue-700 transition-all cursor-pointer"
           >
-            🔍 Review All Questions & Explanations
+            <Search className="h-4 w-4" />
+            <span>Review All Questions & Explanations</span>
           </button>
 
           <div className="grid grid-cols-2 gap-2">
             <button
               type="button"
               onClick={onRetake}
-              className="rounded-2xl border border-slate-300 py-2.5 text-xs font-semibold text-slate-700 hover:bg-slate-50 transition-all cursor-pointer"
+              className="inline-flex items-center justify-center gap-1.5 rounded-2xl border border-slate-300 py-2.5 text-xs font-semibold text-slate-700 hover:bg-slate-50 transition-all cursor-pointer"
             >
-              🔄 Retake Test
+              <RotateCcw className="h-3.5 w-3.5" />
+              <span>Retake Test</span>
             </button>
 
             <button
               type="button"
               onClick={onExit}
-              className="rounded-2xl border border-slate-300 py-2.5 text-xs font-semibold text-slate-700 hover:bg-slate-50 transition-all cursor-pointer"
+              className="inline-flex items-center justify-center gap-1.5 rounded-2xl border border-slate-300 py-2.5 text-xs font-semibold text-slate-700 hover:bg-slate-50 transition-all cursor-pointer"
             >
-              ← Exit to Hub
+              <ArrowLeft className="h-3.5 w-3.5" />
+              <span>Exit to Hub</span>
             </button>
           </div>
         </div>

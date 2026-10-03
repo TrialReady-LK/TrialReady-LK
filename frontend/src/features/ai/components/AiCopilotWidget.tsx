@@ -1,4 +1,13 @@
 import React, { useState } from 'react'
+import {
+  Bot,
+  Send,
+  X,
+  RotateCw,
+  TrendingUp,
+  Calendar,
+  Undo2,
+} from 'lucide-react'
 import { COPILOT_KNOWLEDGE_BASE } from '../data/copilotKnowledgeBase'
 import type { TheoryLanguage } from '../../theory/types/theory'
 
@@ -18,17 +27,17 @@ export const AiCopilotWidget: React.FC = () => {
       id: 'msg-0',
       sender: 'ai',
       text:
-        '👋 Ayubowan / Vanakkam! I am your **TrialReady AI Copilot**. Ask me anything about the Sri Lanka Highway Code, DMT practical trial maneuvers (Hill Start, Reverse S-Bend), or permit regulations in English, Sinhala, or Tamil!',
+        'Ayubowan / Vanakkam! I am your **TrialReady AI Copilot**. Ask me anything about the Sri Lanka Highway Code, DMT practical trial maneuvers (Hill Start, Reverse S-Bend), or permit regulations in English, Sinhala, or Tamil!',
       timestamp: 'Just now',
     },
   ])
   const [isTyping, setIsTyping] = useState(false)
 
   const quickPrompts = [
-    { label: '🔄 Roundabout Priority', query: 'Who has right of way at a roundabout?' },
-    { label: '⛰️ Hill Start Tips', query: 'How do I do a perfect Hill Start without rollback?' },
-    { label: '📅 6-Month Permit Rules', query: 'How long is a DMT Learner Permit valid?' },
-    { label: '↩️ Reverse S-Bend', query: 'What are the examiner checkpoints for Reverse S-Bend?' },
+    { label: 'Roundabout Priority', icon: RotateCw, query: 'Who has right of way at a roundabout?' },
+    { label: 'Hill Start Tips', icon: TrendingUp, query: 'How do I do a perfect Hill Start without rollback?' },
+    { label: 'Permit Rules', icon: Calendar, query: 'How long is a DMT Learner Permit valid?' },
+    { label: 'Reverse S-Bend', icon: Undo2, query: 'What are the examiner checkpoints for Reverse S-Bend?' },
   ]
 
   const handleSend = (textToSend?: string) => {
@@ -59,11 +68,11 @@ export const AiCopilotWidget: React.FC = () => {
         aiResponseText = matched.answer[language] || matched.answer.en
       } else {
         if (language === 'si') {
-          aiResponseText = `🤖 මම ඔබේ ප්‍රශ්නය විශ්ලේෂණය කළෙමි: "${query}". ශ්‍රී ලංකා DMT මාර්ග නීති සංග්‍රහයට අනුව, මාර්ග සංඥා සහ ආරක්ෂිත දුර පිළිබඳ නීති පිළිපදින්න. කරුණාකර Theory Practice Hub වෙතින් වැඩිදුර පුහුණුවන්න.`
+          aiResponseText = `මම ඔබේ ප්‍රශ්නය විශ්ලේෂණය කළෙමි: "${query}". ශ්‍රී ලංකා DMT මාර්ග නීති සංග්‍රහයට අනුව, මාර්ග සංඥා සහ ආරක්ෂිත දුර පිළිබඳ නීති පිළිපදින්න. කරුණාකර Theory Practice Hub වෙතින් වැඩිදුර පුහුණුවන්න.`
         } else if (language === 'ta') {
-          aiResponseText = `🤖 உங்கள் கேள்வியை ஆய்வு செய்தேன்: "${query}". இலங்கை DMT போக்குவரத்து விதிகளின்படி, போக்குவரத்து அடையாளங்கள் மற்றும் வேக வரம்புகளைப் பின்பற்றுங்கள்.`
+          aiResponseText = `உங்கள் கேள்வியை ஆய்வு செய்தேன்: "${query}". இலங்கை DMT போக்குவரத்து விதிகளின்படி, போக்குவரத்து அடையாளங்கள் மற்றும் வேக வரம்புகளைப் பின்பற்றுங்கள்.`
         } else {
-          aiResponseText = `🤖 AI Analysis: "${query}". According to the Sri Lanka Motor Traffic Act & Highway Code, ensure strict adherence to road signs, speed limits, and 2-second following distance. Practice additional mock questions in the Theory Hub for optimal preparation!`
+          aiResponseText = `AI Analysis: "${query}". According to the Sri Lanka Motor Traffic Act & Highway Code, ensure strict adherence to road signs, speed limits, and 2-second following distance. Practice additional mock questions in the Theory Hub for optimal preparation!`
         }
       }
 
@@ -88,7 +97,7 @@ export const AiCopilotWidget: React.FC = () => {
           onClick={() => setIsOpen(true)}
           className="group flex items-center gap-2.5 rounded-full bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 px-5 py-3 text-white shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 cursor-pointer border border-white/20"
         >
-          <span className="text-xl animate-bounce">🤖</span>
+          <Bot className="h-5 w-5 text-white animate-pulse" />
           <div className="text-left">
             <p className="text-xs font-black tracking-wide leading-none">AI Copilot</p>
             <p className="text-[10px] text-blue-100 font-medium leading-tight">Highway Code Assistant</p>
@@ -103,8 +112,8 @@ export const AiCopilotWidget: React.FC = () => {
           {/* Header */}
           <div className="bg-gradient-to-r from-slate-900 via-blue-950 to-indigo-950 px-5 py-4 text-white flex items-center justify-between shadow-md">
             <div className="flex items-center gap-2.5">
-              <div className="h-9 w-9 rounded-xl bg-blue-500/20 border border-blue-400/30 flex items-center justify-center text-lg shadow-inner">
-                🤖
+              <div className="h-9 w-9 rounded-xl bg-blue-500/20 border border-blue-400/30 flex items-center justify-center text-blue-300 shadow-inner">
+                <Bot className="h-5 w-5" />
               </div>
               <div>
                 <h3 className="text-xs font-black tracking-tight flex items-center gap-1.5">
@@ -137,25 +146,30 @@ export const AiCopilotWidget: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setIsOpen(false)}
+                aria-label="Close Copilot"
                 className="h-7 w-7 rounded-lg bg-slate-800 text-slate-400 hover:text-white flex items-center justify-center transition-colors cursor-pointer text-xs"
               >
-                ✕
+                <X className="h-4 w-4" />
               </button>
             </div>
           </div>
 
           {/* Quick Prompts Bar */}
           <div className="flex gap-1.5 overflow-x-auto p-2 bg-slate-50 border-b border-slate-200 no-scrollbar">
-            {quickPrompts.map((p, i) => (
-              <button
-                key={i}
-                type="button"
-                onClick={() => handleSend(p.query)}
-                className="shrink-0 rounded-full border border-slate-300 bg-white px-2.5 py-1 text-[10px] font-semibold text-slate-700 hover:border-blue-400 hover:bg-blue-50 transition-all cursor-pointer shadow-2xs"
-              >
-                {p.label}
-              </button>
-            ))}
+            {quickPrompts.map((p, i) => {
+              const PromptIcon = p.icon
+              return (
+                <button
+                  key={i}
+                  type="button"
+                  onClick={() => handleSend(p.query)}
+                  className="shrink-0 flex items-center gap-1.5 rounded-full border border-slate-300 bg-white px-2.5 py-1 text-[10px] font-semibold text-slate-700 hover:border-blue-400 hover:bg-blue-50 transition-all cursor-pointer shadow-2xs"
+                >
+                  <PromptIcon className="h-3 w-3 text-blue-600" />
+                  <span>{p.label}</span>
+                </button>
+              )
+            })}
           </div>
 
           {/* Messages Feed */}
@@ -211,9 +225,10 @@ export const AiCopilotWidget: React.FC = () => {
             <button
               type="submit"
               disabled={!inputQuery.trim() || isTyping}
-              className="rounded-xl bg-blue-600 px-3.5 py-2 text-xs font-bold text-white hover:bg-blue-700 disabled:opacity-50 transition-all cursor-pointer shadow-xs"
+              aria-label="Send Message"
+              className="rounded-xl bg-blue-600 px-3.5 py-2 text-xs font-bold text-white hover:bg-blue-700 disabled:opacity-50 transition-all cursor-pointer shadow-xs flex items-center justify-center"
             >
-              ➤
+              <Send className="h-3.5 w-3.5" />
             </button>
           </form>
         </div>

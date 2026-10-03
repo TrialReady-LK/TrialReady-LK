@@ -1,4 +1,5 @@
 import React from 'react'
+import { Pin, X } from 'lucide-react'
 import type { AcademyAnnouncement } from '../types/notifications'
 
 interface NoticeBoardCardProps {
@@ -33,8 +34,8 @@ export const NoticeBoardCard: React.FC<NoticeBoardCardProps> = ({
           <div className="flex items-start justify-between gap-3">
             <div className="flex flex-wrap items-center gap-2">
               {ann.is_pinned && (
-                <span className="rounded-md bg-amber-200 px-2 py-0.5 text-[10px] font-black text-amber-900 border border-amber-300">
-                  📌 Pinned Notice
+                <span className="inline-flex items-center gap-1 rounded-md bg-amber-200 px-2 py-0.5 text-[10px] font-black text-amber-900 border border-amber-300">
+                  <Pin className="h-3 w-3" /> Pinned Notice
                 </span>
               )}
 
@@ -54,7 +55,7 @@ export const NoticeBoardCard: React.FC<NoticeBoardCardProps> = ({
                 className="text-slate-400 hover:text-red-600 cursor-pointer p-1 rounded-md"
                 title="Delete Announcement"
               >
-                ✕
+                <X className="h-3.5 w-3.5" />
               </button>
             )}
           </div>

@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { FileText, Printer, Ticket } from 'lucide-react'
 import { useAuth } from '../../../auth/context/AuthContext'
 import { DmtLogbookModal } from '../../../logbook/components/DmtLogbookModal'
 import { DmtTrialSlipModal } from '../../../logbook/components/DmtTrialSlipModal'
@@ -99,21 +100,26 @@ export const StudentPortalPage: React.FC<StudentPortalPageProps> = ({
       {/* 4. DMT Document Quick Actions */}
       {logbookData && (
         <div className="rounded-2xl border border-slate-200 bg-white p-5 space-y-3">
-          <h3 className="text-sm font-bold text-slate-900">📋 My Official DMT Documents</h3>
+          <h3 className="text-sm font-bold text-slate-900 flex items-center gap-1.5">
+            <FileText className="h-4 w-4 text-slate-600" />
+            <span>My Official DMT Documents</span>
+          </h3>
           <div className="flex flex-wrap gap-2">
             <button
               type="button"
               onClick={() => setShowLogbook(true)}
               className="rounded-xl bg-blue-600 px-4 py-2 text-xs font-bold text-white hover:bg-blue-700 transition-all cursor-pointer flex items-center gap-1.5"
             >
-              📄 View / Print DMT Logbook
+              <Printer className="h-3.5 w-3.5" />
+              <span>View / Print DMT Logbook</span>
             </button>
             <button
               type="button"
               onClick={() => setShowTrialSlip(true)}
               className="rounded-xl bg-emerald-600 px-4 py-2 text-xs font-bold text-white hover:bg-emerald-700 transition-all cursor-pointer flex items-center gap-1.5"
             >
-              🎫 Print Trial Admission Slip
+              <Ticket className="h-3.5 w-3.5" />
+              <span>Print Trial Admission Slip</span>
             </button>
           </div>
         </div>

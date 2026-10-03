@@ -1,4 +1,5 @@
 import React from 'react'
+import { Check, AlertTriangle, X, Clock } from 'lucide-react'
 import type { ReadinessFactor } from '../types/readiness'
 
 interface ReadinessFactorChecklistProps {
@@ -12,26 +13,26 @@ export const ReadinessFactorChecklist: React.FC<
     switch (status) {
       case 'passed':
         return (
-          <span className="flex h-6 w-6 items-center justify-center rounded-full bg-emerald-100 text-xs font-bold text-emerald-700">
-            ✓
+          <span className="flex h-6 w-6 items-center justify-center rounded-full bg-emerald-100">
+            <Check className="h-3.5 w-3.5 text-emerald-700" />
           </span>
         )
       case 'warning':
         return (
-          <span className="flex h-6 w-6 items-center justify-center rounded-full bg-amber-100 text-xs font-bold text-amber-800">
-            !
+          <span className="flex h-6 w-6 items-center justify-center rounded-full bg-amber-100">
+            <AlertTriangle className="h-3.5 w-3.5 text-amber-800" />
           </span>
         )
       case 'failed':
         return (
-          <span className="flex h-6 w-6 items-center justify-center rounded-full bg-red-100 text-xs font-bold text-red-700">
-            ✕
+          <span className="flex h-6 w-6 items-center justify-center rounded-full bg-red-100">
+            <X className="h-3.5 w-3.5 text-red-700" />
           </span>
         )
       case 'pending':
         return (
-          <span className="flex h-6 w-6 items-center justify-center rounded-full bg-slate-100 text-xs font-bold text-slate-500">
-            ○
+          <span className="flex h-6 w-6 items-center justify-center rounded-full bg-slate-100">
+            <Clock className="h-3.5 w-3.5 text-slate-500" />
           </span>
         )
     }

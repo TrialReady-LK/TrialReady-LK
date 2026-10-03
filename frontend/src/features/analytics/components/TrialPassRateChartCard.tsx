@@ -1,4 +1,5 @@
 import React from 'react'
+import { Trophy, AlertTriangle } from 'lucide-react'
 import type { DmtTrialAnalytics } from '../types/analytics'
 
 interface TrialPassRateChartCardProps {
@@ -21,8 +22,9 @@ export const TrialPassRateChartCard: React.FC<TrialPassRateChartCardProps> = ({
           </p>
         </div>
 
-        <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-black text-emerald-800 border border-emerald-200">
-          🏆 {analytics.overallPassRate}% Success Rate
+        <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-100 px-3 py-1 text-xs font-black text-emerald-800 border border-emerald-200">
+          <Trophy className="h-3.5 w-3.5 text-emerald-700" />
+          <span>{analytics.overallPassRate}% Success Rate</span>
         </span>
       </div>
 
@@ -67,8 +69,8 @@ export const TrialPassRateChartCard: React.FC<TrialPassRateChartCardProps> = ({
 
       {/* Root-Cause Failure Analysis */}
       <div className="space-y-3 pt-2">
-        <h4 className="text-xs font-bold uppercase tracking-wider text-slate-700">
-          ⚠️ Common DMT Trial Failure Points & Maneuvers
+        <h4 className="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
+          <AlertTriangle className="h-4 w-4 text-amber-600" /> Common DMT Trial Failure Points & Maneuvers
         </h4>
 
         <div className="space-y-2.5">

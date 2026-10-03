@@ -1,5 +1,6 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
+import { ShieldAlert } from 'lucide-react'
 import { useAuth } from '../context/AuthContext'
 
 export const UnauthorizedPage: React.FC = () => {
@@ -9,8 +10,8 @@ export const UnauthorizedPage: React.FC = () => {
   return (
     <div className="flex min-h-screen items-center justify-center bg-slate-100 p-4">
       <div className="w-full max-w-md rounded-2xl bg-white p-8 text-center shadow-lg border border-slate-200">
-        <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-amber-100 text-amber-700 text-3xl font-bold">
-          🛡️
+        <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-amber-100 text-amber-700">
+          <ShieldAlert className="h-7 w-7" />
         </div>
 
         <h1 className="text-2xl font-bold text-slate-900">Access Restricted</h1>

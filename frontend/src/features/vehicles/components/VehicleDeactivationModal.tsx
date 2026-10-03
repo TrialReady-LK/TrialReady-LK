@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { X } from 'lucide-react'
 import type {
   VehicleOperationalStatus,
   VehicleWithRelations,
@@ -70,9 +71,9 @@ export const VehicleDeactivationModal: React.FC<
           <button
             type="button"
             onClick={onClose}
-            className="text-slate-400 hover:text-slate-600 text-lg leading-none"
+            className="text-slate-400 hover:text-slate-600 transition-colors p-1"
           >
-            ✕
+            <X className="h-4 w-4" />
           </button>
         </div>
 

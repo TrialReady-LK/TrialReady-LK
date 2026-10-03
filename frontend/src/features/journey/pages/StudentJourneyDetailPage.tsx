@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
+import { BookOpen, Ticket, X } from 'lucide-react'
 import { useAuth } from '../../auth/context/AuthContext'
 import { DmtLogbookModal } from '../../logbook/components/DmtLogbookModal'
 import { DmtTrialSlipModal } from '../../logbook/components/DmtTrialSlipModal'
@@ -94,14 +95,16 @@ export const StudentJourneyDetailPage: React.FC = () => {
                   onClick={() => setShowLogbook(true)}
                   className="rounded-xl border border-blue-300 bg-blue-50 px-3.5 py-1.5 text-xs font-semibold text-blue-700 hover:bg-blue-100 transition-all cursor-pointer flex items-center gap-1.5"
                 >
-                  📄 View DMT Logbook
+                  <BookOpen className="h-4 w-4" />
+                  <span>View DMT Logbook</span>
                 </button>
                 <button
                   type="button"
                   onClick={() => setShowTrialSlip(true)}
                   className="rounded-xl border border-emerald-300 bg-emerald-50 px-3.5 py-1.5 text-xs font-semibold text-emerald-700 hover:bg-emerald-100 transition-all cursor-pointer flex items-center gap-1.5"
                 >
-                  🎫 Print Trial Pass
+                  <Ticket className="h-4 w-4" />
+                  <span>Print Trial Pass</span>
                 </button>
               </>
             )}
@@ -122,9 +125,9 @@ export const StudentJourneyDetailPage: React.FC = () => {
           <button
             type="button"
             onClick={() => setErrorMessage(null)}
-            className="font-bold text-red-500 hover:text-red-700"
+            className="p-1 text-red-500 hover:text-red-700 transition-colors cursor-pointer"
           >
-            ✕
+            <X className="h-4 w-4" />
           </button>
         </div>
       )}
@@ -135,9 +138,9 @@ export const StudentJourneyDetailPage: React.FC = () => {
           <button
             type="button"
             onClick={() => setSuccessMessage(null)}
-            className="font-bold text-emerald-500 hover:text-emerald-700"
+            className="p-1 text-emerald-500 hover:text-emerald-700 transition-colors cursor-pointer"
           >
-            ✕
+            <X className="h-4 w-4" />
           </button>
         </div>
       )}

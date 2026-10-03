@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Activity, Check } from 'lucide-react'
 import type { SaveMedicalInput, StudentMedicalRecord } from '../types/journey'
 import { calculatePermitValidity } from '../utils/journeyUtils'
 import MedicalModal from './MedicalModal'
@@ -36,8 +37,8 @@ export const MedicalStatusCard: React.FC<MedicalStatusCardProps> = ({
         )
       }
       return (
-        <span className="rounded-full border border-emerald-200 bg-emerald-100 px-2.5 py-0.5 text-xs font-bold text-emerald-800">
-          ✓ Fitness Cleared
+        <span className="inline-flex items-center gap-1 rounded-full border border-emerald-200 bg-emerald-100 px-2.5 py-0.5 text-xs font-bold text-emerald-800">
+          <Check className="h-3 w-3" /> Fitness Cleared
         </span>
       )
     }
@@ -60,8 +61,8 @@ export const MedicalStatusCard: React.FC<MedicalStatusCardProps> = ({
       {/* Header */}
       <div className="flex items-start justify-between gap-2">
         <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-50 text-xl border border-emerald-100">
-            🏥
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-50 border border-emerald-100">
+            <Activity className="h-5 w-5 text-emerald-600" />
           </div>
           <div>
             <h3 className="text-sm font-bold text-slate-900">

@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
+import { Printer, X } from 'lucide-react'
 import { useAuth } from '../../auth/context/AuthContext'
 import PaymentReceiptModal from '../components/PaymentReceiptModal'
 import RecordPaymentModal from '../components/RecordPaymentModal'
@@ -104,9 +105,9 @@ export const StudentPaymentDetailPage: React.FC = () => {
           <button
             type="button"
             onClick={() => setErrorMessage(null)}
-            className="font-bold text-red-500 hover:text-red-700"
+            className="p-1 text-red-500 hover:text-red-700 cursor-pointer"
           >
-            ✕
+            <X className="h-4 w-4" />
           </button>
         </div>
       )}
@@ -117,9 +118,9 @@ export const StudentPaymentDetailPage: React.FC = () => {
           <button
             type="button"
             onClick={() => setSuccessMessage(null)}
-            className="font-bold text-emerald-500 hover:text-emerald-700"
+            className="p-1 text-emerald-500 hover:text-emerald-700 cursor-pointer"
           >
-            ✕
+            <X className="h-4 w-4" />
           </button>
         </div>
       )}
@@ -249,9 +250,10 @@ export const StudentPaymentDetailPage: React.FC = () => {
                         <button
                           type="button"
                           onClick={() => handleOpenReceipt(p)}
-                          className="rounded-lg bg-blue-50 px-2.5 py-1 text-xs font-bold text-blue-700 hover:bg-blue-100 transition-all cursor-pointer"
+                          className="inline-flex items-center gap-1.5 rounded-lg bg-blue-50 px-2.5 py-1 text-xs font-bold text-blue-700 hover:bg-blue-100 transition-all cursor-pointer"
                         >
-                          🖨️ Receipt
+                          <Printer className="h-3.5 w-3.5" />
+                          <span>Receipt</span>
                         </button>
 
                         <button

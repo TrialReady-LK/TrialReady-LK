@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { Users, Check, Trophy } from 'lucide-react'
 import { useJourneyOverview } from '../hooks/useJourneyOverview'
 import { calculatePermitValidity } from '../utils/journeyUtils'
 
@@ -43,7 +44,8 @@ export const StudentJourneyOverviewPage: React.FC<
           to="/students"
           className="inline-flex items-center gap-1.5 rounded-xl border border-slate-300 bg-white px-4 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50 transition-all cursor-pointer"
         >
-          👨‍🎓 Manage Students
+          <Users className="h-4 w-4" />
+          <span>Manage Students</span>
         </Link>
       </div>
 
@@ -285,8 +287,9 @@ export const StudentJourneyOverviewPage: React.FC<
 
                         <td className="px-4 py-3 whitespace-nowrap">
                           {j.medical?.status === 'passed' ? (
-                            <span className="inline-flex rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] font-bold text-emerald-800 border border-emerald-200">
-                              ✓ Cleared
+                            <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] font-bold text-emerald-800 border border-emerald-200">
+                              <Check className="h-3 w-3" />
+                              <span>Cleared</span>
                             </span>
                           ) : j.medical?.status === 'appointment_booked' ? (
                             <span className="inline-flex rounded-full bg-blue-50 px-2 py-0.5 text-[10px] font-medium text-blue-800 border border-blue-200">
@@ -301,8 +304,9 @@ export const StudentJourneyOverviewPage: React.FC<
 
                         <td className="px-4 py-3 whitespace-nowrap">
                           {passedTheory ? (
-                            <span className="inline-flex rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] font-bold text-emerald-800 border border-emerald-200">
-                              ✓ Passed
+                            <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] font-bold text-emerald-800 border border-emerald-200">
+                              <Check className="h-3 w-3" />
+                              <span>Passed</span>
                             </span>
                           ) : j.theoryExams.length > 0 ? (
                             <span className="inline-flex rounded-full bg-blue-50 px-2 py-0.5 text-[10px] font-medium text-blue-800 border border-blue-200">
@@ -317,8 +321,9 @@ export const StudentJourneyOverviewPage: React.FC<
 
                         <td className="px-4 py-3 whitespace-nowrap">
                           {passedTrial ? (
-                            <span className="inline-flex rounded-full bg-indigo-50 px-2 py-0.5 text-[10px] font-bold text-indigo-800 border border-indigo-200">
-                              🏆 Passed
+                            <span className="inline-flex items-center gap-1 rounded-full bg-indigo-50 px-2 py-0.5 text-[10px] font-bold text-indigo-800 border border-indigo-200">
+                              <Trophy className="h-3 w-3 text-indigo-600" />
+                              <span>Passed</span>
                             </span>
                           ) : j.practicalTrials.length > 0 ? (
                             <span className="inline-flex rounded-full bg-amber-50 px-2 py-0.5 text-[10px] font-medium text-amber-800 border border-amber-200">

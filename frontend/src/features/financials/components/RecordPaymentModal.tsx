@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { X } from 'lucide-react'
 import type { PaymentMethod, RecordPaymentInput, StudentFinancialLedger } from '../types/financials'
 import { formatLKR, generateReceiptNumber } from '../utils/financialUtils'
 
@@ -105,7 +106,7 @@ export const RecordPaymentModal: React.FC<RecordPaymentModalProps> = ({
             onClick={onClose}
             className="rounded-lg p-1.5 text-slate-400 hover:bg-slate-100 cursor-pointer"
           >
-            ✕
+            <X className="h-4 w-4" />
           </button>
         </div>
 
@@ -178,11 +179,11 @@ export const RecordPaymentModal: React.FC<RecordPaymentModalProps> = ({
                 }
                 className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-xs text-slate-900 outline-none focus:border-blue-500"
               >
-                <option value="cash">💵 Cash</option>
-                <option value="bank_transfer">🏦 Bank Transfer</option>
-                <option value="card">💳 Card Payment</option>
-                <option value="cheque">📄 Cheque</option>
-                <option value="online">🌐 Online Transfer</option>
+                <option value="cash">Cash</option>
+                <option value="bank_transfer">Bank Transfer</option>
+                <option value="card">Card Payment</option>
+                <option value="cheque">Cheque</option>
+                <option value="online">Online Transfer</option>
               </select>
             </div>
 

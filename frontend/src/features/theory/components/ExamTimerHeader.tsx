@@ -1,4 +1,5 @@
 import React from 'react'
+import { Clock } from 'lucide-react'
 
 interface ExamTimerHeaderProps {
   timeRemainingSeconds: number
@@ -51,7 +52,7 @@ export const ExamTimerHeader: React.FC<ExamTimerHeaderProps> = ({
                   : 'border-slate-200 bg-slate-50 text-slate-800'
               }`}
             >
-              <span>⏱️</span>
+              <Clock className="h-4 w-4 shrink-0" />
               <span>{formattedTime}</span>
             </div>
           )}

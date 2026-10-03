@@ -62,7 +62,7 @@ describe('logbook domain models', () => {
       totalPracticalHours: 15.0,
       totalCompletedSessions: 10,
       aiReadinessScore: 92,
-      readinessTier: '🏆 Trial Ready',
+      readinessTier: 'Trial Ready',
     }
 
     expect(mockLogbook.school.registrationNumber).toBe('DS-WP-2026-0042')
@@ -96,7 +96,7 @@ describe('logbook domain models', () => {
       },
       totalPracticalHours: 15.0,
       aiReadinessScore: 90,
-      readinessTier: '🏆 Trial Ready',
+      readinessTier: 'Trial Ready',
       trialGroundLocation: 'DMT Werahera Practical Test Ground',
       reportingTime: '07:30 AM',
       trialDate: '2026-09-14',

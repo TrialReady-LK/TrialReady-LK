@@ -1,4 +1,5 @@
 import { Component, type ErrorInfo, type ReactNode } from 'react'
+import { AlertTriangle, RotateCcw, Home } from 'lucide-react'
 
 interface Props {
   children: ReactNode
@@ -49,8 +50,8 @@ export class ErrorBoundary extends Component<Props, State> {
       return (
         <div className="min-h-screen flex items-center justify-center bg-slate-900 px-4 py-12">
           <div className="max-w-lg w-full bg-slate-800 border border-slate-700 rounded-3xl p-8 shadow-2xl text-center space-y-6">
-            <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-400 text-4xl shadow-inner mx-auto">
-              ⚠️
+            <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-400 shadow-inner mx-auto">
+              <AlertTriangle className="h-10 w-10 text-amber-400" />
             </div>
 
             <div className="space-y-2">
@@ -74,17 +75,19 @@ export class ErrorBoundary extends Component<Props, State> {
               <button
                 type="button"
                 onClick={this.handleReset}
-                className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs transition-all shadow-md cursor-pointer"
+                className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs transition-all shadow-md cursor-pointer flex items-center justify-center gap-2"
               >
-                🔄 Try Again
+                <RotateCcw className="h-4 w-4" />
+                <span>Try Again</span>
               </button>
 
               <button
                 type="button"
                 onClick={this.handleGoHome}
-                className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-slate-700 hover:bg-slate-600 text-slate-200 font-semibold text-xs transition-all cursor-pointer"
+                className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-slate-700 hover:bg-slate-600 text-slate-200 font-semibold text-xs transition-all cursor-pointer flex items-center justify-center gap-2"
               >
-                🏠 Go to Dashboard
+                <Home className="h-4 w-4" />
+                <span>Go to Dashboard</span>
               </button>
 
               <button

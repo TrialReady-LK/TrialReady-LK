@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { CreditCard, Package as PackageIcon, X } from 'lucide-react'
 import { FinancialSummaryCards } from '../components/FinancialSummaryCards'
 import { PackageCard } from '../components/PackageCard'
 import { PackageModal } from '../components/PackageModal'
@@ -96,24 +97,26 @@ export const FinancialManagementPage: React.FC<
             <button
               type="button"
               onClick={() => setActiveTab('ledgers')}
-              className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition-all cursor-pointer ${
+              className={`inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold transition-all cursor-pointer ${
                 activeTab === 'ledgers'
                   ? 'bg-white text-blue-600 shadow-xs'
                   : 'text-slate-600 hover:text-slate-900'
               }`}
             >
-              💳 Student Ledgers
+              <CreditCard className="h-3.5 w-3.5" />
+              <span>Student Ledgers</span>
             </button>
             <button
               type="button"
               onClick={() => setActiveTab('packages')}
-              className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition-all cursor-pointer ${
+              className={`inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold transition-all cursor-pointer ${
                 activeTab === 'packages'
                   ? 'bg-white text-blue-600 shadow-xs'
                   : 'text-slate-600 hover:text-slate-900'
               }`}
             >
-              📦 Course Packages
+              <PackageIcon className="h-3.5 w-3.5" />
+              <span>Course Packages</span>
             </button>
           </div>
 
@@ -153,9 +156,9 @@ export const FinancialManagementPage: React.FC<
           <button
             type="button"
             onClick={() => setActionSuccess(null)}
-            className="font-bold text-emerald-600 hover:text-emerald-800 cursor-pointer"
+            className="p-1 text-emerald-600 hover:text-emerald-800 cursor-pointer"
           >
-            ✕
+            <X className="h-3.5 w-3.5" />
           </button>
         </div>
       )}

@@ -26,28 +26,28 @@ export function getReadinessTierInfo(tier: ReadinessTier): {
   switch (tier) {
     case 'trial_ready':
       return {
-        label: '🏆 Trial Ready',
+        label: 'Trial Ready',
         badgeClass: 'bg-emerald-100 text-emerald-800 border-emerald-300 font-black',
         description: 'Candidate meets all DMT requirements and demonstrates high practical proficiency.',
         color: '#059669',
       }
     case 'nearly_ready':
       return {
-        label: '⚡ Nearly Ready',
+        label: 'Nearly Ready',
         badgeClass: 'bg-blue-100 text-blue-800 border-blue-300 font-bold',
         description: 'Candidate is close to trial readiness. 1–2 targeted mock sessions recommended.',
         color: '#2563eb',
       }
     case 'needs_practice':
       return {
-        label: '🚗 Needs Practice',
+        label: 'Needs Practice',
         badgeClass: 'bg-amber-100 text-amber-900 border-amber-300 font-semibold',
         description: 'Student is actively training. Additional practical driving hours required.',
         color: '#d97706',
       }
     case 'not_ready':
       return {
-        label: '⚠️ Not Ready',
+        label: 'Not Ready',
         badgeClass: 'bg-red-100 text-red-800 border-red-300 font-semibold',
         description: 'Prerequisites missing (e.g. medical, permit, or theory test).',
         color: '#dc2626',

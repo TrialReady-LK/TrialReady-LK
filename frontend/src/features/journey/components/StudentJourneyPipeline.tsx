@@ -1,4 +1,14 @@
 import React from 'react'
+import {
+  UserCheck,
+  Activity,
+  FileText,
+  BookOpen,
+  Car,
+  Target,
+  Trophy,
+  Check,
+} from 'lucide-react'
 import type { JourneyStageInfo } from '../types/journey'
 
 interface StudentJourneyPipelineProps {
@@ -12,22 +22,22 @@ export const StudentJourneyPipeline: React.FC<StudentJourneyPipelineProps> = ({
   overallPercentage,
   currentStageName,
 }) => {
-  const getStageIcon = (key: JourneyStageInfo['key']) => {
+  const renderStageIcon = (key: JourneyStageInfo['key']) => {
     switch (key) {
       case 'registration':
-        return '📝'
+        return <UserCheck className="h-4 w-4 text-slate-600" />
       case 'medical':
-        return '🏥'
+        return <Activity className="h-4 w-4 text-emerald-600" />
       case 'permit':
-        return '📄'
+        return <FileText className="h-4 w-4 text-blue-600" />
       case 'theory':
-        return '📖'
+        return <BookOpen className="h-4 w-4 text-purple-600" />
       case 'lessons':
-        return '🚗'
+        return <Car className="h-4 w-4 text-indigo-600" />
       case 'trial':
-        return '🎯'
+        return <Target className="h-4 w-4 text-amber-600" />
       case 'licence':
-        return '🏆'
+        return <Trophy className="h-4 w-4 text-emerald-600" />
     }
   }
 
@@ -108,9 +118,9 @@ export const StudentJourneyPipeline: React.FC<StudentJourneyPipelineProps> = ({
                   <div
                     className={`flex h-7 w-7 items-center justify-center rounded-full text-xs font-bold transition-all ${style.circle}`}
                   >
-                    {stage.status === 'completed' ? '✓' : idx + 1}
+                    {stage.status === 'completed' ? <Check className="h-3.5 w-3.5" /> : idx + 1}
                   </div>
-                  <span className="text-base">{getStageIcon(stage.key)}</span>
+                  <div className="flex items-center justify-center">{renderStageIcon(stage.key)}</div>
                 </div>
 
                 {/* Title */}

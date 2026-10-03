@@ -1,4 +1,5 @@
 import React from 'react'
+import { BarChart3, DollarSign, Clock, TrendingUp } from 'lucide-react'
 import { formatLKR } from '../utils/financialUtils'
 
 interface FinancialSummaryCardsProps {
@@ -25,7 +26,9 @@ export const FinancialSummaryCards: React.FC<FinancialSummaryCardsProps> = ({
           <span className="text-xs font-semibold text-slate-500">
             Total Revenue Billed
           </span>
-          <span className="rounded-lg bg-blue-50 p-1.5 text-base">📊</span>
+          <div className="rounded-lg bg-blue-50 p-2 text-blue-600">
+            <BarChart3 className="h-4 w-4" />
+          </div>
         </div>
         <p className="mt-2 text-2xl font-black text-slate-900">
           {formatLKR(metrics.totalBilled)}
@@ -41,7 +44,9 @@ export const FinancialSummaryCards: React.FC<FinancialSummaryCardsProps> = ({
           <span className="text-xs font-semibold text-slate-500">
             Total Collected Revenue
           </span>
-          <span className="rounded-lg bg-emerald-50 p-1.5 text-base">💰</span>
+          <div className="rounded-lg bg-emerald-50 p-2 text-emerald-600">
+            <DollarSign className="h-4 w-4" />
+          </div>
         </div>
         <p className="mt-2 text-2xl font-black text-emerald-700">
           {formatLKR(metrics.totalCollected)}
@@ -62,7 +67,9 @@ export const FinancialSummaryCards: React.FC<FinancialSummaryCardsProps> = ({
           <span className="text-xs font-semibold text-slate-500">
             Outstanding Balances
           </span>
-          <span className="rounded-lg bg-amber-50 p-1.5 text-base">⏳</span>
+          <div className="rounded-lg bg-amber-50 p-2 text-amber-600">
+            <Clock className="h-4 w-4" />
+          </div>
         </div>
         <p className="mt-2 text-2xl font-black text-amber-900">
           {formatLKR(metrics.totalOutstanding)}
@@ -79,7 +86,9 @@ export const FinancialSummaryCards: React.FC<FinancialSummaryCardsProps> = ({
             <span className="text-xs font-semibold text-slate-500">
               Settlement Rate
             </span>
-            <span className="rounded-lg bg-indigo-50 p-1.5 text-base">📈</span>
+            <div className="rounded-lg bg-indigo-50 p-2 text-indigo-600">
+              <TrendingUp className="h-4 w-4" />
+            </div>
           </div>
           <div className="mt-2 flex items-baseline gap-1">
             <span className="text-2xl font-black text-indigo-700">

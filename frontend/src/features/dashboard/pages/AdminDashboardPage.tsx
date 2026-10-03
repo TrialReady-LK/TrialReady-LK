@@ -1,5 +1,20 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import {
+  BarChart3,
+  BookOpen,
+  Target,
+  CreditCard,
+  GraduationCap,
+  Calendar,
+  Car,
+  Users,
+  UserCheck,
+  Building2,
+  ShieldCheck,
+  FileCheck,
+  ArrowRight,
+} from 'lucide-react'
 import { useAuth } from '../../auth/context/AuthContext'
 import { supabase } from '../../../lib/supabase'
 
@@ -101,70 +116,70 @@ export const AdminDashboardPage: React.FC = () => {
       title: 'Executive Analytics',
       description: 'DMT trial pass rates, instructor benchmarks & CSV audit exports',
       to: '/analytics',
-      icon: '📊',
+      icon: BarChart3,
       color: 'bg-blue-500/10 text-blue-700 border-blue-200',
     },
     {
       title: 'Mock Theory Exam',
       description: 'DMT Highway Code 40-question computerized practice test',
       to: '/theory',
-      icon: '📖',
+      icon: BookOpen,
       color: 'bg-amber-500/10 text-amber-700 border-amber-200',
     },
     {
       title: 'Trial Readiness (AI)',
       description: 'AI trial evaluation, DMT skills & candidate selection',
       to: '/readiness',
-      icon: '🎯',
+      icon: Target,
       color: 'bg-purple-500/10 text-purple-600 border-purple-200',
     },
     {
       title: 'Payments & Fees',
       description: 'Fee instalments, outstanding balances & receipts',
       to: '/financials',
-      icon: '💳',
+      icon: CreditCard,
       color: 'bg-emerald-500/10 text-emerald-600 border-emerald-200',
     },
     {
       title: 'Learner Journey',
       description: 'DMT permits, NTMI medicals & exam trial milestones',
       to: '/journey',
-      icon: '🎓',
+      icon: GraduationCap,
       color: 'bg-blue-500/10 text-blue-600 border-blue-200',
     },
     {
       title: 'Practical Sessions',
       description: 'Schedule driving lessons & manage calendar slots',
       to: '/sessions',
-      icon: '📅',
+      icon: Calendar,
       color: 'bg-indigo-500/10 text-indigo-600 border-indigo-200',
     },
     {
       title: 'Vehicle Management',
       description: 'Fleet tracking, documents, maintenance & availability',
       to: '/vehicles',
-      icon: '🚗',
+      icon: Car,
       color: 'bg-blue-500/10 text-blue-600 border-blue-200',
     },
     {
       title: 'Student Management',
       description: 'Registration, licence categories & progress',
       to: '/students',
-      icon: '👨‍🎓',
+      icon: Users,
       color: 'bg-purple-500/10 text-purple-600 border-purple-200',
     },
     {
       title: 'Instructor Management',
       description: 'Instructor records & licence category qualifications',
       to: '/instructors',
-      icon: '👨‍🏫',
+      icon: UserCheck,
       color: 'bg-emerald-500/10 text-emerald-600 border-emerald-200',
     },
     {
       title: 'Branch Management',
       description: 'Branch locations, contact details & status toggles',
       to: '/branches',
-      icon: '🏢',
+      icon: Building2,
       color: 'bg-amber-500/10 text-amber-600 border-amber-200',
     },
   ]
@@ -176,7 +191,7 @@ export const AdminDashboardPage: React.FC = () => {
         <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
           <div className="min-w-0">
             <div className="inline-flex items-center gap-1.5 rounded-full bg-white/20 px-2.5 py-0.5 text-xs font-semibold backdrop-blur-xs mb-2">
-              <span>👑</span>
+              <ShieldCheck className="h-3.5 w-3.5 text-amber-300" />
               <span className="capitalize">{role ?? 'Administrator'} Workspace</span>
             </div>
             <h1 className="text-xl font-black tracking-tight sm:text-2xl md:text-3xl break-words">
@@ -209,7 +224,9 @@ export const AdminDashboardPage: React.FC = () => {
         <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-xs">
           <div className="flex items-center justify-between">
             <span className="text-xs font-medium text-slate-500">Fleet Vehicles</span>
-            <span className="rounded-lg bg-blue-50 p-2 text-sm">🚗</span>
+            <span className="rounded-lg bg-blue-50 p-2 text-blue-600">
+              <Car className="h-4 w-4" />
+            </span>
           </div>
           <p className="mt-2 text-3xl font-black text-slate-900">
             {isLoadingStats ? '—' : stats.vehicles}
@@ -220,7 +237,9 @@ export const AdminDashboardPage: React.FC = () => {
         <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-xs">
           <div className="flex items-center justify-between">
             <span className="text-xs font-medium text-slate-500">Students</span>
-            <span className="rounded-lg bg-purple-50 p-2 text-sm">👨‍🎓</span>
+            <span className="rounded-lg bg-purple-50 p-2 text-purple-600">
+              <Users className="h-4 w-4" />
+            </span>
           </div>
           <p className="mt-2 text-3xl font-black text-slate-900">
             {isLoadingStats ? '—' : stats.students}
@@ -231,7 +250,9 @@ export const AdminDashboardPage: React.FC = () => {
         <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-xs">
           <div className="flex items-center justify-between">
             <span className="text-xs font-medium text-slate-500">Instructors</span>
-            <span className="rounded-lg bg-emerald-50 p-2 text-sm">👨‍🏫</span>
+            <span className="rounded-lg bg-emerald-50 p-2 text-emerald-600">
+              <UserCheck className="h-4 w-4" />
+            </span>
           </div>
           <p className="mt-2 text-3xl font-black text-slate-900">
             {isLoadingStats ? '—' : stats.instructors}
@@ -242,7 +263,9 @@ export const AdminDashboardPage: React.FC = () => {
         <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-xs">
           <div className="flex items-center justify-between">
             <span className="text-xs font-medium text-slate-500">Branch Offices</span>
-            <span className="rounded-lg bg-amber-50 p-2 text-sm">🏢</span>
+            <span className="rounded-lg bg-amber-50 p-2 text-amber-600">
+              <Building2 className="h-4 w-4" />
+            </span>
           </div>
           <p className="mt-2 text-3xl font-black text-slate-900">
             {isLoadingStats ? '—' : stats.branches}
@@ -253,7 +276,9 @@ export const AdminDashboardPage: React.FC = () => {
         <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-xs">
           <div className="flex items-center justify-between">
             <span className="text-xs font-medium text-slate-500">Sessions</span>
-            <span className="rounded-lg bg-indigo-50 p-2 text-sm">📅</span>
+            <span className="rounded-lg bg-indigo-50 p-2 text-indigo-600">
+              <Calendar className="h-4 w-4" />
+            </span>
           </div>
           <p className="mt-2 text-3xl font-black text-slate-900">
             {isLoadingStats ? '—' : stats.sessions}
@@ -264,7 +289,9 @@ export const AdminDashboardPage: React.FC = () => {
         <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-xs">
           <div className="flex items-center justify-between">
             <span className="text-xs font-medium text-slate-500">DMT Permits</span>
-            <span className="rounded-lg bg-teal-50 p-2 text-sm">🪪</span>
+            <span className="rounded-lg bg-teal-50 p-2 text-teal-600">
+              <FileCheck className="h-4 w-4" />
+            </span>
           </div>
           <p className="mt-2 text-3xl font-black text-slate-900">
             {isLoadingStats ? '—' : stats.permits}
@@ -280,30 +307,33 @@ export const AdminDashboardPage: React.FC = () => {
         </h2>
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {quickActions.map((action) => (
-            <Link
-              key={action.to}
-              to={action.to}
-              className="group flex flex-col justify-between rounded-2xl border border-slate-200 bg-white p-5 shadow-xs transition-all hover:-translate-y-0.5 hover:border-blue-300 hover:shadow-md cursor-pointer"
-            >
-              <div>
-                <div className={`mb-3 inline-flex h-10 w-10 items-center justify-center rounded-xl border text-xl ${action.color}`}>
-                  {action.icon}
+          {quickActions.map((action) => {
+            const Icon = action.icon
+            return (
+              <Link
+                key={action.to}
+                to={action.to}
+                className="group flex flex-col justify-between rounded-2xl border border-slate-200 bg-white p-5 shadow-xs transition-all hover:-translate-y-0.5 hover:border-blue-300 hover:shadow-md cursor-pointer"
+              >
+                <div>
+                  <div className={`mb-3 inline-flex h-10 w-10 items-center justify-center rounded-xl border ${action.color}`}>
+                    <Icon className="h-5 w-5" />
+                  </div>
+                  <h3 className="text-sm font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
+                    {action.title}
+                  </h3>
+                  <p className="mt-1 text-xs text-slate-500 leading-relaxed">
+                    {action.description}
+                  </p>
                 </div>
-                <h3 className="text-sm font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
-                  {action.title}
-                </h3>
-                <p className="mt-1 text-xs text-slate-500 leading-relaxed">
-                  {action.description}
-                </p>
-              </div>
 
-              <div className="mt-4 flex items-center gap-1 text-xs font-bold text-blue-600">
-                <span>Manage</span>
-                <span className="transition-transform group-hover:translate-x-1">→</span>
-              </div>
-            </Link>
-          ))}
+                <div className="mt-4 flex items-center gap-1 text-xs font-bold text-blue-600">
+                  <span>Manage</span>
+                  <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
+                </div>
+              </Link>
+            )
+          })}
         </div>
       </section>
     </div>
@@ -311,3 +341,5 @@ export const AdminDashboardPage: React.FC = () => {
 }
 
 export default AdminDashboardPage
+
+

@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { Search, RotateCcw, ChevronLeft, ChevronRight } from 'lucide-react'
 import { useAuth } from '../../auth/context/AuthContext'
 import { ExamResultSummaryModal } from '../components/ExamResultSummaryModal'
 import { ExamTimerHeader } from '../components/ExamTimerHeader'
@@ -115,16 +116,18 @@ export const MockExamSessionContent: React.FC = () => {
       {/* Review Mode Banner */}
       {isReviewMode && (
         <div className="flex items-center justify-between rounded-2xl border border-blue-200 bg-blue-50 p-4 text-xs text-blue-900">
-          <span className="font-bold">
-            🔍 Review Mode: Showing correct answers and Highway Code explanations
+          <span className="font-bold inline-flex items-center gap-1.5">
+            <Search className="h-4 w-4 text-blue-700 shrink-0" />
+            <span>Review Mode: Showing correct answers and Highway Code explanations</span>
           </span>
           <div className="flex gap-2">
             <button
               type="button"
               onClick={handleRetakeExam}
-              className="rounded-lg bg-blue-600 px-3 py-1 text-xs font-bold text-white hover:bg-blue-700 cursor-pointer"
+              className="inline-flex items-center gap-1 rounded-lg bg-blue-600 px-3 py-1 text-xs font-bold text-white hover:bg-blue-700 cursor-pointer"
             >
-              🔄 Retake Test
+              <RotateCcw className="h-3 w-3" />
+              <span>Retake Test</span>
             </button>
             <button
               type="button"
@@ -155,9 +158,10 @@ export const MockExamSessionContent: React.FC = () => {
             type="button"
             onClick={prevQuestion}
             disabled={currentIndex === 0}
-            className="rounded-2xl border border-slate-300 bg-white px-5 py-2.5 text-xs font-semibold text-slate-700 hover:bg-slate-50 transition-all disabled:opacity-40 cursor-pointer"
+            className="inline-flex items-center gap-1 rounded-2xl border border-slate-300 bg-white px-5 py-2.5 text-xs font-semibold text-slate-700 hover:bg-slate-50 transition-all disabled:opacity-40 cursor-pointer"
           >
-            ← Previous Question
+            <ChevronLeft className="h-3.5 w-3.5" />
+            <span>Previous Question</span>
           </button>
 
           <span className="text-xs font-mono font-bold text-slate-500">
@@ -168,9 +172,10 @@ export const MockExamSessionContent: React.FC = () => {
             type="button"
             onClick={nextQuestion}
             disabled={currentIndex === questions.length - 1}
-            className="rounded-2xl bg-blue-600 px-6 py-2.5 text-xs font-bold text-white shadow-xs hover:bg-blue-700 transition-all disabled:opacity-40 cursor-pointer"
+            className="inline-flex items-center gap-1 rounded-2xl bg-blue-600 px-6 py-2.5 text-xs font-bold text-white shadow-xs hover:bg-blue-700 transition-all disabled:opacity-40 cursor-pointer"
           >
-            Next Question →
+            <span>Next Question</span>
+            <ChevronRight className="h-3.5 w-3.5" />
           </button>
         </div>
 

@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { Sparkles, FileText, Octagon, History, Check, X } from 'lucide-react'
 import { AiRemedialQuizModal } from '../../ai/components/AiRemedialQuizModal'
 import { useAuth } from '../../auth/context/AuthContext'
 import { LanguageSelectorPill } from '../components/LanguageSelectorPill'
@@ -57,13 +58,15 @@ export const TheoryPracticeHubContent: React.FC<
             onClick={() => setShowRemedialModal(true)}
             className="inline-flex items-center gap-2 rounded-2xl bg-indigo-600 px-5 py-3.5 text-xs font-black text-white shadow-lg hover:bg-indigo-500 hover:scale-105 transition-all cursor-pointer border border-indigo-400/40"
           >
-            <span>🧠</span> AI Weakness Quiz
+            <Sparkles className="h-4 w-4" />
+            <span>AI Weakness Quiz</span>
           </button>
           <Link
             to="/theory/exam"
             className="inline-flex items-center gap-2 rounded-2xl bg-emerald-500 px-5 py-3.5 text-xs font-black text-slate-900 shadow-lg hover:bg-emerald-400 hover:scale-105 transition-all cursor-pointer"
           >
-            <span>📝</span> Start Mock Exam
+            <FileText className="h-4 w-4" />
+            <span>Start Mock Exam</span>
           </Link>
         </div>
       </div>
@@ -120,24 +123,26 @@ export const TheoryPracticeHubContent: React.FC<
         <button
           type="button"
           onClick={() => setActiveTab('flashcards')}
-          className={`rounded-xl px-4 py-2 text-xs font-bold transition-all cursor-pointer ${
+          className={`inline-flex items-center gap-1.5 rounded-xl px-4 py-2 text-xs font-bold transition-all cursor-pointer ${
             activeTab === 'flashcards'
               ? 'bg-blue-600 text-white shadow-xs'
               : 'text-slate-600 hover:bg-slate-100'
           }`}
         >
-          🛑 Road Signs Flashcards & Learning
+          <Octagon className="h-3.5 w-3.5" />
+          <span>Road Signs Flashcards & Learning</span>
         </button>
         <button
           type="button"
           onClick={() => setActiveTab('history')}
-          className={`rounded-xl px-4 py-2 text-xs font-bold transition-all cursor-pointer ${
+          className={`inline-flex items-center gap-1.5 rounded-xl px-4 py-2 text-xs font-bold transition-all cursor-pointer ${
             activeTab === 'history'
               ? 'bg-blue-600 text-white shadow-xs'
               : 'text-slate-600 hover:bg-slate-100'
           }`}
         >
-          📋 Past Mock Test History
+          <History className="h-3.5 w-3.5" />
+          <span>Past Mock Test History</span>
         </button>
       </div>
 
@@ -182,13 +187,23 @@ export const TheoryPracticeHubContent: React.FC<
                     </td>
                     <td className="px-4 py-3 text-right">
                       <span
-                        className={`rounded-full px-2.5 py-0.5 text-[10px] font-bold ${
+                        className={`inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[10px] font-bold ${
                           att.passed
                             ? 'bg-emerald-100 text-emerald-800'
                             : 'bg-red-100 text-red-800'
                         }`}
                       >
-                        {att.passed ? '✓ PASSED' : '✕ FAILED'}
+                        {att.passed ? (
+                          <>
+                            <Check className="h-3 w-3" />
+                            <span>PASSED</span>
+                          </>
+                        ) : (
+                          <>
+                            <X className="h-3 w-3" />
+                            <span>FAILED</span>
+                          </>
+                        )}
                       </span>
                     </td>
                   </tr>

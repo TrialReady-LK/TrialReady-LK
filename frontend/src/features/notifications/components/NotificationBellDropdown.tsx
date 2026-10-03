@@ -1,8 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { Bell } from 'lucide-react'
 import { useAuth } from '../../auth/context/AuthContext'
 import { useNotifications } from '../hooks/useNotifications'
-import { formatNotificationTypeIcon } from '../utils/alertEngine'
+import { NotificationTypeIcon } from './NotificationTypeIcon'
 
 export const NotificationBellDropdown: React.FC = () => {
   const { drivingSchoolId } = useAuth()
@@ -35,7 +36,7 @@ export const NotificationBellDropdown: React.FC = () => {
         className="relative flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-600 hover:bg-slate-50 transition-all cursor-pointer"
         aria-label="View notifications"
       >
-        <span className="text-lg">🔔</span>
+        <Bell className="h-4.5 w-4.5 text-slate-700" />
         {unreadCount > 0 && (
           <span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-red-600 text-[10px] font-black text-white shadow-xs">
             {unreadCount > 9 ? '9+' : unreadCount}
@@ -85,9 +86,9 @@ export const NotificationBellDropdown: React.FC = () => {
                     n.status === 'unread' ? 'bg-blue-50/60' : 'hover:bg-slate-50'
                   }`}
                 >
-                  <span className="text-base shrink-0 mt-0.5">
-                    {formatNotificationTypeIcon(n.type)}
-                  </span>
+                  <div className="shrink-0 mt-0.5 rounded-lg bg-slate-100 p-1.5">
+                    <NotificationTypeIcon type={n.type} className="h-4 w-4" />
+                  </div>
                   <div className="flex-1 space-y-0.5">
                     <p className="text-xs font-bold text-slate-900 line-clamp-1">
                       {n.title}

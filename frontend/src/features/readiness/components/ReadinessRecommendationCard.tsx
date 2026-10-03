@@ -1,4 +1,5 @@
 import React from 'react'
+import { Lightbulb, Save, AlertTriangle, ListChecks, Target } from 'lucide-react'
 import type { ReadinessEvaluation } from '../types/readiness'
 import { getReadinessTierInfo } from '../utils/readinessEngine'
 
@@ -17,8 +18,10 @@ export const ReadinessRecommendationCard: React.FC<
     <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-xs space-y-5">
       {/* Top Banner */}
       <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-        <div className="flex items-center gap-2">
-          <span className="text-lg">💡</span>
+        <div className="flex items-center gap-2.5">
+          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-amber-50 text-amber-600">
+            <Lightbulb className="h-5 w-5" />
+          </div>
           <div>
             <div className="flex items-center gap-2">
               <h3 className="text-sm font-bold text-slate-900">
@@ -39,9 +42,10 @@ export const ReadinessRecommendationCard: React.FC<
             type="button"
             onClick={onSave}
             disabled={isSaving}
-            className="rounded-xl border border-slate-300 bg-white px-3.5 py-1.5 text-xs font-semibold text-slate-700 hover:bg-slate-50 transition-all disabled:opacity-50 cursor-pointer"
+            className="inline-flex items-center gap-1.5 rounded-xl border border-slate-300 bg-white px-3.5 py-1.5 text-xs font-semibold text-slate-700 hover:bg-slate-50 transition-all disabled:opacity-50 cursor-pointer"
           >
-            {isSaving ? 'Saving...' : '💾 Save Snapshot'}
+            <Save className="h-3.5 w-3.5 text-slate-600" />
+            <span>{isSaving ? 'Saving...' : 'Save Snapshot'}</span>
           </button>
         )}
       </div>
@@ -60,7 +64,8 @@ export const ReadinessRecommendationCard: React.FC<
       {evaluation.risk_warnings.length > 0 && (
         <div className="space-y-2">
           <span className="text-xs font-bold text-amber-900 flex items-center gap-1.5">
-            <span>⚠️</span> Critical Risk Flags & Pre-conditions
+            <AlertTriangle className="h-4 w-4 text-amber-600" />
+            <span>Critical Risk Flags & Pre-conditions</span>
           </span>
           <div className="space-y-1.5">
             {evaluation.risk_warnings.map((risk, i) => (
@@ -80,7 +85,8 @@ export const ReadinessRecommendationCard: React.FC<
       {evaluation.action_items.length > 0 && (
         <div className="space-y-2">
           <span className="text-xs font-bold text-slate-900 flex items-center gap-1.5">
-            <span>📋</span> Recommended Next Action Steps
+            <ListChecks className="h-4 w-4 text-blue-600" />
+            <span>Recommended Next Action Steps</span>
           </span>
           <div className="space-y-1.5">
             {evaluation.action_items.map((item, i) => (
@@ -101,8 +107,9 @@ export const ReadinessRecommendationCard: React.FC<
       {/* Missing Skills Tags (if any) */}
       {evaluation.skills_missing.length > 0 && (
         <div>
-          <span className="text-xs font-bold text-slate-700 block mb-1.5">
-            🎯 Specific Maneuvers to Practice:
+          <span className="text-xs font-bold text-slate-700 flex items-center gap-1.5 mb-1.5">
+            <Target className="h-4 w-4 text-purple-600" />
+            <span>Specific Maneuvers to Practice:</span>
           </span>
           <div className="flex flex-wrap gap-1.5">
             {evaluation.skills_missing.map((skill) => (

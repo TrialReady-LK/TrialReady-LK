@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { X } from 'lucide-react'
 import type { SavePermitInput, StudentPermit } from '../types/journey'
 import { calculateDefaultPermitExpiry } from '../utils/journeyUtils'
 
@@ -106,7 +107,7 @@ export const PermitModal: React.FC<PermitModalProps> = ({
             onClick={onClose}
             className="rounded-lg p-1.5 text-slate-400 hover:bg-slate-100 cursor-pointer"
           >
-            ✕
+            <X className="h-4 w-4" />
           </button>
         </div>
 

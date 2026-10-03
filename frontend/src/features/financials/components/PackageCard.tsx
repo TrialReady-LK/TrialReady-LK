@@ -1,4 +1,5 @@
 import React from 'react'
+import { Car, BookOpen } from 'lucide-react'
 import type { Package } from '../types/financials'
 import { formatLKR } from '../utils/financialUtils'
 
@@ -48,11 +49,13 @@ export const PackageCard: React.FC<PackageCardProps> = ({
 
         {/* Features / Inclusions */}
         <div className="mt-4 flex flex-wrap gap-2 text-xs">
-          <span className="inline-flex items-center gap-1 rounded-lg bg-slate-50 px-2.5 py-1 text-slate-700 font-medium border border-slate-200">
-            🚗 {pkg.practical_hours_included} Practical Hours
+          <span className="inline-flex items-center gap-1.5 rounded-lg bg-slate-50 px-2.5 py-1 text-slate-700 font-medium border border-slate-200">
+            <Car className="h-3.5 w-3.5 text-blue-600" />
+            <span>{pkg.practical_hours_included} Practical Hours</span>
           </span>
-          <span className="inline-flex items-center gap-1 rounded-lg bg-slate-50 px-2.5 py-1 text-slate-700 font-medium border border-slate-200">
-            📖 {pkg.theory_classes_included} Theory Classes
+          <span className="inline-flex items-center gap-1.5 rounded-lg bg-slate-50 px-2.5 py-1 text-slate-700 font-medium border border-slate-200">
+            <BookOpen className="h-3.5 w-3.5 text-indigo-600" />
+            <span>{pkg.theory_classes_included} Theory Classes</span>
           </span>
         </div>
 

@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react'
+import { X, AlertTriangle, Check, Plus } from 'lucide-react'
 import type {
   CreatePracticalSessionInput,
   PracticalSessionWithRelations,
@@ -222,7 +223,7 @@ export const SessionBookingModal: React.FC<SessionBookingModalProps> = ({
             onClick={onClose}
             className="rounded-lg p-1.5 text-slate-400 hover:bg-slate-200 hover:text-slate-700 transition-all cursor-pointer"
           >
-            ✕
+            <X className="h-4 w-4" />
           </button>
         </div>
 
@@ -230,7 +231,7 @@ export const SessionBookingModal: React.FC<SessionBookingModalProps> = ({
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
           {submitError && (
             <div className="rounded-xl border border-red-200 bg-red-50 p-3 text-xs text-red-700 flex items-start gap-2">
-              <span className="font-bold text-red-600">✕</span>
+              <X className="h-4 w-4 text-red-600 shrink-0 mt-0.5" />
               <span>{submitError}</span>
             </div>
           )}
@@ -239,7 +240,7 @@ export const SessionBookingModal: React.FC<SessionBookingModalProps> = ({
           {conflicts.length > 0 && (
             <div className="rounded-xl border border-amber-300 bg-amber-50 p-3.5 text-xs text-amber-900 space-y-1.5 animate-pulse">
               <div className="flex items-center gap-2 font-bold text-amber-800">
-                <span>⚠️</span>
+                <AlertTriangle className="h-4 w-4 text-amber-600 shrink-0" />
                 <span>Schedule Conflict Detected</span>
               </div>
               <ul className="list-disc list-inside space-y-0.5 text-[11px] text-amber-900">
@@ -465,14 +466,18 @@ export const SessionBookingModal: React.FC<SessionBookingModalProps> = ({
                     type="button"
                     key={skill}
                     onClick={() => handleToggleSkill(skill)}
-                    className={`rounded-lg px-2.5 py-1 text-xs font-medium transition-all cursor-pointer ${
+                    className={`inline-flex items-center gap-1 rounded-lg px-2.5 py-1 text-xs font-medium transition-all cursor-pointer ${
                       isSelected
                         ? 'bg-blue-600 text-white shadow-xs'
                         : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
                     }`}
                   >
-                    {isSelected ? '✓ ' : '+ '}
-                    {skill}
+                    {isSelected ? (
+                      <Check className="h-3 w-3" />
+                    ) : (
+                      <Plus className="h-3 w-3 opacity-60" />
+                    )}
+                    <span>{skill}</span>
                   </button>
                 )
               })}

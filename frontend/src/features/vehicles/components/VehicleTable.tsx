@@ -1,4 +1,5 @@
 import React from 'react'
+import { Check } from 'lucide-react'
 import type { VehicleFilters, VehicleSortOption } from '../hooks/useVehicles'
 import type {
   VehicleAvailabilityStatus,
@@ -384,8 +385,8 @@ export const VehicleTable: React.FC<VehicleTableProps> = ({
                           {formatStatusText(vehicle.operational_status)}
                         </span>
                         {vehicle.training_use_enabled ? (
-                          <span className="text-[11px] text-green-600 font-medium">
-                            ✓ Training enabled
+                          <span className="inline-flex items-center gap-1 text-[11px] text-green-600 font-medium">
+                            <Check className="h-3 w-3" /> Training enabled
                           </span>
                         ) : (
                           <span className="text-[11px] text-slate-400 font-medium">

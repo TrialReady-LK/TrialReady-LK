@@ -27,7 +27,7 @@ export function getPaymentStatus(
   if (totalFee > 0 && totalPaid >= totalFee) {
     return {
       status: 'fully_paid',
-      label: '✓ Fully Paid',
+      label: 'Fully Paid',
       badgeClass: 'bg-emerald-100 text-emerald-800 border-emerald-300 font-bold',
     }
   }
@@ -50,15 +50,15 @@ export function getPaymentStatus(
 export function formatPaymentMethod(method: PaymentMethod): string {
   switch (method) {
     case 'cash':
-      return '💵 Cash'
+      return 'Cash'
     case 'bank_transfer':
-      return '🏦 Bank Transfer'
+      return 'Bank Transfer'
     case 'card':
-      return '💳 Card Payment'
+      return 'Card Payment'
     case 'cheque':
-      return '📄 Cheque'
+      return 'Cheque'
     case 'online':
-      return '🌐 Online Payment'
+      return 'Online Payment'
     default:
       return method
   }

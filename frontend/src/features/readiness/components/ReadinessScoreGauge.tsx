@@ -1,4 +1,5 @@
 import React from 'react'
+import { Sparkles } from 'lucide-react'
 import type { ReadinessTier } from '../types/readiness'
 import { getReadinessTierInfo } from '../utils/readinessEngine'
 
@@ -23,8 +24,9 @@ export const ReadinessScoreGauge: React.FC<ReadinessScoreGaugeProps> = ({
   return (
     <div className="flex flex-col items-center justify-center rounded-2xl border border-slate-200 bg-white p-6 shadow-xs text-center">
       {/* Top Header Badge */}
-      <span className="inline-flex items-center gap-1 rounded-full bg-slate-100 px-3 py-1 text-[11px] font-bold text-slate-700">
-        <span>🤖</span> AI Trial Readiness Evaluation
+      <span className="inline-flex items-center gap-1.5 rounded-full bg-slate-100 px-3 py-1 text-[11px] font-bold text-slate-700">
+        <Sparkles className="h-3.5 w-3.5 text-blue-600" />
+        <span>AI Trial Readiness Evaluation</span>
       </span>
 
       {/* SVG Circular Radial Gauge */}

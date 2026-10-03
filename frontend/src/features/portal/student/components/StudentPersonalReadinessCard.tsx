@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { Sparkles, Car, Target } from 'lucide-react'
 import type { StudentReadinessProfile } from '../../../readiness/types/readiness'
 import { getReadinessTierInfo } from '../../../readiness/utils/readinessEngine'
 
@@ -27,8 +28,10 @@ export const StudentPersonalReadinessCard: React.FC<
   return (
     <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-xs space-y-4">
       <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-        <div className="flex items-center gap-2">
-          <span className="text-lg">🤖</span>
+        <div className="flex items-center gap-2.5">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-50 text-blue-600">
+            <Sparkles className="h-4 w-4" />
+          </div>
           <div>
             <h3 className="text-sm font-bold text-slate-900">
               Personal DMT Trial Readiness
@@ -62,9 +65,15 @@ export const StudentPersonalReadinessCard: React.FC<
             {tierInfo.description}
           </p>
           <div className="flex flex-wrap gap-2 text-[11px] text-slate-500">
-            <span>🚗 {evaluation.practical_hours_completed} Practical Hours</span>
+            <span className="inline-flex items-center gap-1">
+              <Car className="h-3 w-3 text-blue-600" />
+              <span>{evaluation.practical_hours_completed} Practical Hours</span>
+            </span>
             <span>•</span>
-            <span>🎯 {evaluation.skills_mastered_count} / 7 Core Skills Mastered</span>
+            <span className="inline-flex items-center gap-1">
+              <Target className="h-3 w-3 text-amber-600" />
+              <span>{evaluation.skills_mastered_count} / 7 Core Skills Mastered</span>
+            </span>
           </div>
         </div>
       </div>

@@ -122,7 +122,7 @@ export function exportInstructorPerformanceCsv(instructors: any[]) {
     inst.trialsPresented || 6,
     inst.trialsPassed || 5,
     `${inst.trialPassRate}%`,
-    `${inst.averageStudentRating} ★`,
+    `${inst.averageStudentRating} / 5.0`,
   ])
 
   downloadCsv(

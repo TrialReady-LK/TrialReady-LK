@@ -50,10 +50,10 @@ export const ReadinessOverviewTable: React.FC<ReadinessOverviewTableProps> = ({
               className="w-full rounded-xl border border-slate-300 bg-white px-2.5 py-1.5 text-xs text-slate-900 outline-none focus:border-blue-500"
             >
               <option value="all">All Candidates</option>
-              <option value="trial_ready">🏆 Trial Ready (≥ 85%)</option>
-              <option value="nearly_ready">⚡ Nearly Ready (70–84%)</option>
-              <option value="needs_practice">🚗 Needs Practice (50–69%)</option>
-              <option value="not_ready">⚠️ Not Ready (&lt; 50%)</option>
+              <option value="trial_ready">Trial Ready (≥ 85%)</option>
+              <option value="nearly_ready">Nearly Ready (70–84%)</option>
+              <option value="needs_practice">Needs Practice (50–69%)</option>
+              <option value="not_ready">Not Ready (&lt; 50%)</option>
             </select>
           </div>
         </div>

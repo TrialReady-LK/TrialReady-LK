@@ -1,5 +1,6 @@
 import React from 'react'
 import { Navigate, useLocation } from 'react-router-dom'
+import { AlertTriangle } from 'lucide-react'
 import { useAuth } from '../context/AuthContext'
 import type { AppRole } from '../types/auth'
 
@@ -36,8 +37,8 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
     return (
       <div className="flex min-h-screen items-center justify-center bg-slate-50 p-4">
         <div className="w-full max-w-md rounded-2xl bg-white p-6 text-center shadow-lg border border-red-200">
-          <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-red-100 text-red-600 text-2xl font-bold">
-            ⚠️
+          <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-red-100 text-red-600">
+            <AlertTriangle className="h-6 w-6" />
           </div>
           <h2 className="text-xl font-bold text-slate-900">
             Account {profile.status.toUpperCase()}

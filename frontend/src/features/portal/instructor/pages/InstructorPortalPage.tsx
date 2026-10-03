@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { Calendar, Target, X } from 'lucide-react'
 import { AiSessionFeedbackModal } from '../../../ai/components/AiSessionFeedbackModal'
 import { SessionAttendanceModal } from '../../../sessions/components/SessionAttendanceModal'
 import type {
@@ -87,15 +88,17 @@ export const InstructorPortalPage: React.FC<InstructorPortalPageProps> = ({
         <div className="flex items-center gap-2">
           <Link
             to="/sessions"
-            className="rounded-xl border border-slate-300 bg-white px-4 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50 transition-all cursor-pointer"
+            className="inline-flex items-center gap-1.5 rounded-xl border border-slate-300 bg-white px-4 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50 transition-all cursor-pointer"
           >
-            📅 Full Calendar
+            <Calendar className="h-3.5 w-3.5" />
+            <span>Full Calendar</span>
           </Link>
           <Link
             to="/readiness"
-            className="rounded-xl bg-blue-600 px-4 py-2 text-xs font-bold text-white shadow-xs hover:bg-blue-700 transition-all cursor-pointer"
+            className="inline-flex items-center gap-1.5 rounded-xl bg-blue-600 px-4 py-2 text-xs font-bold text-white shadow-xs hover:bg-blue-700 transition-all cursor-pointer"
           >
-            🎯 Trial Candidates Hub
+            <Target className="h-3.5 w-3.5" />
+            <span>Trial Candidates Hub</span>
           </Link>
         </div>
       </div>
@@ -110,9 +113,9 @@ export const InstructorPortalPage: React.FC<InstructorPortalPageProps> = ({
           <button
             type="button"
             onClick={() => setErrorMessage(null)}
-            className="font-bold text-red-500 hover:text-red-700 cursor-pointer"
+            className="p-1 text-red-500 hover:text-red-700 cursor-pointer"
           >
-            ✕
+            <X className="h-4 w-4" />
           </button>
         </div>
       )}
@@ -123,9 +126,9 @@ export const InstructorPortalPage: React.FC<InstructorPortalPageProps> = ({
           <button
             type="button"
             onClick={() => setSuccessMessage(null)}
-            className="font-bold text-emerald-500 hover:text-emerald-700 cursor-pointer"
+            className="p-1 text-emerald-500 hover:text-emerald-700 cursor-pointer"
           >
-            ✕
+            <X className="h-4 w-4" />
           </button>
         </div>
       )}

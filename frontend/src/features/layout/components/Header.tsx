@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Sparkles } from 'lucide-react'
 import { useAuth } from '../../auth/context/AuthContext'
 import { DemoSeederModal } from '../../demo/components/DemoSeederModal'
 import { NotificationBellDropdown } from '../../notifications/components/NotificationBellDropdown'
@@ -76,7 +77,7 @@ export const Header: React.FC<HeaderProps> = ({ onToggleSidebar }) => {
           className="hidden sm:flex items-center gap-1.5 rounded-xl border border-emerald-300 bg-emerald-50/80 px-3 py-1.5 text-xs font-black text-emerald-800 hover:bg-emerald-100 transition-all cursor-pointer shadow-2xs"
           title="Load Full Sri Lanka Demo Academy Data"
         >
-          <span>🌱</span>
+          <Sparkles className="h-3.5 w-3.5 text-emerald-600" />
           <span>Demo Data</span>
         </button>
 

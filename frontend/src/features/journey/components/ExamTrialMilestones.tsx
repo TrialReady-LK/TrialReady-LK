@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { BookOpen, Target, Check, X } from 'lucide-react'
 import type {
   ExamType,
   SaveExamTrialInput,
@@ -35,14 +36,14 @@ export const ExamTrialMilestones: React.FC<ExamTrialMilestonesProps> = ({
     switch (status) {
       case 'passed':
         return (
-          <span className="rounded-full bg-emerald-100 px-2 py-0.5 text-[10px] font-bold text-emerald-800">
-            ✓ Passed
+          <span className="inline-flex items-center gap-1 rounded-full bg-emerald-100 px-2 py-0.5 text-[10px] font-bold text-emerald-800">
+            <Check className="h-3 w-3" /> Passed
           </span>
         )
       case 'failed':
         return (
-          <span className="rounded-full bg-red-100 px-2 py-0.5 text-[10px] font-bold text-red-800">
-            ✕ Failed
+          <span className="inline-flex items-center gap-1 rounded-full bg-red-100 px-2 py-0.5 text-[10px] font-bold text-red-800">
+            <X className="h-3 w-3" /> Failed
           </span>
         )
       case 'scheduled':
@@ -66,8 +67,8 @@ export const ExamTrialMilestones: React.FC<ExamTrialMilestonesProps> = ({
       <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-xs space-y-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-purple-50 text-xl border border-purple-100">
-              📖
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-purple-50 border border-purple-100">
+              <BookOpen className="h-5 w-5 text-purple-600" />
             </div>
             <div>
               <h3 className="text-sm font-bold text-slate-900">
@@ -119,8 +120,8 @@ export const ExamTrialMilestones: React.FC<ExamTrialMilestonesProps> = ({
       <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-xs space-y-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-amber-50 text-xl border border-amber-100">
-              🎯
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-amber-50 border border-amber-100">
+              <Target className="h-5 w-5 text-amber-600" />
             </div>
             <div>
               <h3 className="text-sm font-bold text-slate-900">

@@ -1,12 +1,13 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { AlertOctagon, Home, GraduationCap } from 'lucide-react'
 
 export const NotFoundPage: React.FC = () => {
   return (
     <div className="min-h-[70vh] flex items-center justify-center p-4">
       <div className="max-w-md w-full text-center space-y-6">
-        <div className="inline-flex items-center justify-center w-24 h-24 rounded-3xl bg-blue-50 border border-blue-200 text-5xl shadow-sm mx-auto">
-          ⛔
+        <div className="inline-flex items-center justify-center w-24 h-24 rounded-3xl bg-rose-50 border border-rose-200 shadow-sm mx-auto">
+          <AlertOctagon className="h-12 w-12 text-rose-500" />
         </div>
 
         <div className="space-y-2">
@@ -26,13 +27,13 @@ export const NotFoundPage: React.FC = () => {
             to="/dashboard"
             className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs transition-all shadow-xs cursor-pointer inline-flex items-center justify-center gap-1.5"
           >
-            <span>🏠</span> Return to Dashboard
+            <Home className="h-4 w-4" /> Return to Dashboard
           </Link>
           <Link
             to="/students"
             className="w-full sm:w-auto px-5 py-2.5 rounded-xl border border-slate-300 hover:bg-slate-50 text-slate-700 font-semibold text-xs transition-all cursor-pointer inline-flex items-center justify-center gap-1.5"
           >
-            <span>👨‍🎓</span> View Students
+            <GraduationCap className="h-4 w-4" /> View Students
           </Link>
         </div>
       </div>

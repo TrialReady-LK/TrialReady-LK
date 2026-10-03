@@ -1,11 +1,12 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { Check, X, Smartphone, MessageSquare, Mail, Bell } from 'lucide-react'
 import type { AppNotification } from '../types/notifications'
 import {
   formatChannelBadge,
-  formatNotificationTypeIcon,
   formatPriorityBadge,
 } from '../utils/alertEngine'
+import { NotificationTypeIcon } from './NotificationTypeIcon'
 
 interface NotificationItemCardProps {
   notification: AppNotification
@@ -20,7 +21,6 @@ export const NotificationItemCard: React.FC<NotificationItemCardProps> = ({
 }) => {
   const channelInfo = formatChannelBadge(notification.channel)
   const priorityInfo = formatPriorityBadge(notification.priority)
-  const icon = formatNotificationTypeIcon(notification.type)
   const isUnread = notification.status === 'unread'
 
   return (
@@ -34,8 +34,8 @@ export const NotificationItemCard: React.FC<NotificationItemCardProps> = ({
       <div className="flex items-start justify-between gap-3">
         {/* Icon & Details */}
         <div className="flex items-start gap-3.5">
-          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white text-xl shadow-2xs border border-slate-200">
-            {icon}
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-slate-50 shadow-2xs border border-slate-200">
+            <NotificationTypeIcon type={notification.type} className="h-5 w-5" />
           </div>
 
           <div className="space-y-1">
@@ -55,9 +55,18 @@ export const NotificationItemCard: React.FC<NotificationItemCardProps> = ({
               </span>
 
               <span
-                className={`rounded-md px-2 py-0.2 text-[10px] border ${channelInfo.badgeClass}`}
+                className={`inline-flex items-center gap-1 rounded-md px-2 py-0.2 text-[10px] border ${channelInfo.badgeClass}`}
               >
-                {channelInfo.icon} {channelInfo.label}
+                {notification.channel === 'whatsapp' ? (
+                  <Smartphone className="h-3 w-3" />
+                ) : notification.channel === 'sms' ? (
+                  <MessageSquare className="h-3 w-3" />
+                ) : notification.channel === 'email' ? (
+                  <Mail className="h-3 w-3" />
+                ) : (
+                  <Bell className="h-3 w-3" />
+                )}
+                <span>{channelInfo.label}</span>
               </span>
             </div>
 
@@ -88,10 +97,11 @@ export const NotificationItemCard: React.FC<NotificationItemCardProps> = ({
             <button
               type="button"
               onClick={() => onMarkRead(notification.id)}
-              className="rounded-lg border border-slate-200 bg-white px-2.5 py-1 text-[11px] font-semibold text-slate-700 hover:bg-slate-100 transition-all cursor-pointer"
+              className="inline-flex items-center gap-1 rounded-lg border border-slate-200 bg-white px-2.5 py-1 text-[11px] font-semibold text-slate-700 hover:bg-slate-100 transition-all cursor-pointer"
               title="Mark as Read"
             >
-              ✓ Mark Read
+              <Check className="h-3 w-3" />
+              <span>Mark Read</span>
             </button>
           )}
 
@@ -101,7 +111,7 @@ export const NotificationItemCard: React.FC<NotificationItemCardProps> = ({
             className="rounded-lg p-1 text-slate-400 hover:bg-red-50 hover:text-red-600 transition-all cursor-pointer"
             title="Dismiss Alert"
           >
-            ✕
+            <X className="h-3.5 w-3.5" />
           </button>
         </div>
       </div>

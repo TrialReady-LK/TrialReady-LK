@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { X, Check, Clock, UserX, Plus, Star } from 'lucide-react'
 import type {
   PracticalSessionWithRelations,
   RecordAttendanceInput,
@@ -87,7 +88,7 @@ export const SessionAttendanceModal: React.FC<SessionAttendanceModalProps> = ({
             onClick={onClose}
             className="rounded-lg p-1.5 text-slate-400 hover:bg-slate-200 hover:text-slate-700 transition-all cursor-pointer"
           >
-            ✕
+            <X className="h-4 w-4" />
           </button>
         </div>
 
@@ -108,37 +109,40 @@ export const SessionAttendanceModal: React.FC<SessionAttendanceModalProps> = ({
               <button
                 type="button"
                 onClick={() => setAttendanceStatus('present')}
-                className={`rounded-xl border p-2.5 text-xs font-bold transition-all cursor-pointer ${
+                className={`flex items-center justify-center gap-1.5 rounded-xl border p-2.5 text-xs font-bold transition-all cursor-pointer ${
                   attendanceStatus === 'present'
                     ? 'border-emerald-500 bg-emerald-50 text-emerald-800 ring-2 ring-emerald-200'
                     : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50'
                 }`}
               >
-                ✓ Present
+                <Check className="h-3.5 w-3.5 text-emerald-600" />
+                <span>Present</span>
               </button>
 
               <button
                 type="button"
                 onClick={() => setAttendanceStatus('late')}
-                className={`rounded-xl border p-2.5 text-xs font-bold transition-all cursor-pointer ${
+                className={`flex items-center justify-center gap-1.5 rounded-xl border p-2.5 text-xs font-bold transition-all cursor-pointer ${
                   attendanceStatus === 'late'
                     ? 'border-blue-500 bg-blue-50 text-blue-800 ring-2 ring-blue-200'
                     : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50'
                 }`}
               >
-                ⏱ Late
+                <Clock className="h-3.5 w-3.5 text-blue-600" />
+                <span>Late</span>
               </button>
 
               <button
                 type="button"
                 onClick={() => setAttendanceStatus('absent')}
-                className={`rounded-xl border p-2.5 text-xs font-bold transition-all cursor-pointer ${
+                className={`flex items-center justify-center gap-1.5 rounded-xl border p-2.5 text-xs font-bold transition-all cursor-pointer ${
                   attendanceStatus === 'absent'
                     ? 'border-red-500 bg-red-50 text-red-800 ring-2 ring-red-200'
                     : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50'
                 }`}
               >
-                ✕ Absent / No-Show
+                <UserX className="h-3.5 w-3.5 text-red-600" />
+                <span>Absent / No-Show</span>
               </button>
             </div>
           </div>
@@ -158,14 +162,18 @@ export const SessionAttendanceModal: React.FC<SessionAttendanceModalProps> = ({
                         type="button"
                         key={skill}
                         onClick={() => handleToggleSkill(skill)}
-                        className={`rounded-lg px-2.5 py-1 text-xs font-medium transition-all cursor-pointer ${
+                        className={`inline-flex items-center gap-1 rounded-lg px-2.5 py-1 text-xs font-medium transition-all cursor-pointer ${
                           isChecked
                             ? 'bg-blue-600 text-white shadow-xs'
                             : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-100'
                         }`}
                       >
-                        {isChecked ? '✓ ' : '+ '}
-                        {skill}
+                        {isChecked ? (
+                          <Check className="h-3 w-3" />
+                        ) : (
+                          <Plus className="h-3 w-3 opacity-60" />
+                        )}
+                        <span>{skill}</span>
                       </button>
                     )
                   })}
@@ -183,13 +191,13 @@ export const SessionAttendanceModal: React.FC<SessionAttendanceModalProps> = ({
                       type="button"
                       key={star}
                       onClick={() => setStudentRating(star)}
-                      className={`h-8 w-8 rounded-lg text-sm font-bold transition-all cursor-pointer ${
+                      className={`inline-flex items-center justify-center h-8 w-8 rounded-lg text-sm font-bold transition-all cursor-pointer ${
                         (studentRating || 0) >= star
                           ? 'bg-amber-400 text-white shadow-xs'
                           : 'bg-slate-100 text-slate-400 hover:bg-slate-200'
                       }`}
                     >
-                      ★
+                      <Star className="h-4 w-4 fill-current" />
                     </button>
                   ))}
                   <span className="text-xs text-slate-500 ml-2">

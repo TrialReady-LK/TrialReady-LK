@@ -1,4 +1,12 @@
 import React, { useState } from 'react'
+import {
+  Check,
+  Bell,
+  Megaphone,
+  AlertTriangle,
+  Smartphone,
+  MessageSquare,
+} from 'lucide-react'
 import { AnnouncementModal } from '../components/AnnouncementModal'
 import { NoticeBoardCard } from '../components/NoticeBoardCard'
 import { NotificationItemCard } from '../components/NotificationItemCard'
@@ -67,9 +75,10 @@ export const NotificationsCenterPage: React.FC<
             <button
               type="button"
               onClick={handleMarkAllRead}
-              className="rounded-xl border border-slate-300 bg-white px-4 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50 transition-all cursor-pointer"
+              className="inline-flex items-center gap-1.5 rounded-xl border border-slate-300 bg-white px-4 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50 transition-all cursor-pointer"
             >
-              ✓ Mark All Read
+              <Check className="h-3.5 w-3.5" />
+              <span>Mark All Read</span>
             </button>
           )}
 
@@ -94,7 +103,7 @@ export const NotificationsCenterPage: React.FC<
               : 'text-slate-600 hover:bg-slate-100'
           }`}
         >
-          <span>🔔</span>
+          <Bell className="h-4 w-4" />
           <span>Alerts & Deadlines ({notifications.length})</span>
         </button>
 
@@ -107,7 +116,7 @@ export const NotificationsCenterPage: React.FC<
               : 'text-slate-600 hover:bg-slate-100'
           }`}
         >
-          <span>📢</span>
+          <Megaphone className="h-4 w-4" />
           <span>Academy Notice Board ({announcements.length})</span>
         </button>
       </div>
@@ -144,37 +153,40 @@ export const NotificationsCenterPage: React.FC<
             <button
               type="button"
               onClick={() => setFilterType('urgent')}
-              className={`rounded-lg px-3 py-1 text-xs font-semibold cursor-pointer ${
+              className={`inline-flex items-center gap-1.5 rounded-lg px-3 py-1 text-xs font-semibold cursor-pointer ${
                 filterType === 'urgent'
                   ? 'bg-slate-900 text-white'
                   : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
               }`}
             >
-              🚨 Urgent Only
+              <AlertTriangle className="h-3.5 w-3.5 text-rose-500" />
+              <span>Urgent Only</span>
             </button>
 
             <button
               type="button"
               onClick={() => setFilterType('whatsapp')}
-              className={`rounded-lg px-3 py-1 text-xs font-semibold cursor-pointer ${
+              className={`inline-flex items-center gap-1.5 rounded-lg px-3 py-1 text-xs font-semibold cursor-pointer ${
                 filterType === 'whatsapp'
                   ? 'bg-slate-900 text-white'
                   : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
               }`}
             >
-              📱 WhatsApp Simulated
+              <Smartphone className="h-3.5 w-3.5 text-emerald-500" />
+              <span>WhatsApp Simulated</span>
             </button>
 
             <button
               type="button"
               onClick={() => setFilterType('sms')}
-              className={`rounded-lg px-3 py-1 text-xs font-semibold cursor-pointer ${
+              className={`inline-flex items-center gap-1.5 rounded-lg px-3 py-1 text-xs font-semibold cursor-pointer ${
                 filterType === 'sms'
                   ? 'bg-slate-900 text-white'
                   : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
               }`}
             >
-              💬 SMS Text
+              <MessageSquare className="h-3.5 w-3.5 text-blue-500" />
+              <span>SMS Text</span>
             </button>
           </div>
 

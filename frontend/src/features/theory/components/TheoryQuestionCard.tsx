@@ -1,4 +1,16 @@
 import React from 'react'
+import {
+  Octagon,
+  AlertTriangle,
+  Info,
+  Car,
+  Shield,
+  Settings2,
+  Check,
+  X,
+  Lightbulb,
+} from 'lucide-react'
+import { RoadSignIllustration } from './RoadSignIllustration'
 import { useTheoryLanguage } from '../context/TheoryLanguageContext'
 import type { TheoryQuestion } from '../types/theory'
 
@@ -22,46 +34,88 @@ export const TheoryQuestionCard: React.FC<TheoryQuestionCardProps> = ({
   const { getLocalizedQuestion, language } = useTheoryLanguage()
   const localized = getLocalizedQuestion(question)
 
-  const getCategoryLabel = (cat: string) => {
+  const renderCategoryBadge = (cat: string) => {
     switch (cat) {
       case 'road_signs_regulatory':
-        return language === 'si'
-          ? '🛑 නියාමන මාර්ග සංඥා'
-          : language === 'ta'
-            ? '🛑 ஒழுங்குமுறை சைகைகள்'
-            : '🛑 Regulatory Road Signs'
+        return (
+          <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-red-700">
+            <Octagon className="h-3.5 w-3.5" />
+            <span>
+              {language === 'si'
+                ? 'නියාමන මාර්ග සංඥා'
+                : language === 'ta'
+                  ? 'ஒழுங்குமுறை சைகைகள்'
+                  : 'Regulatory Road Signs'}
+            </span>
+          </span>
+        )
       case 'road_signs_warning':
-        return language === 'si'
-          ? '⚠️ අනතුරු ඇඟවීමේ සංඥා'
-          : language === 'ta'
-            ? '⚠️ எச்சரிக்கை சைகைகள்'
-            : '⚠️ Warning Road Signs'
+        return (
+          <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-amber-700">
+            <AlertTriangle className="h-3.5 w-3.5" />
+            <span>
+              {language === 'si'
+                ? 'අනතුරු ඇඟවීමේ සංඥා'
+                : language === 'ta'
+                  ? 'எச்சரிக்கை சைகைகள்'
+                  : 'Warning Road Signs'}
+            </span>
+          </span>
+        )
       case 'road_signs_informative':
-        return language === 'si'
-          ? 'ℹ️ තොරතුරු සංඥා'
-          : language === 'ta'
-            ? 'ℹ️ தகவல் சைகைகள்'
-            : 'ℹ️ Informative Signs'
+        return (
+          <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-blue-700">
+            <Info className="h-3.5 w-3.5" />
+            <span>
+              {language === 'si'
+                ? 'තොරතුරු සංඥා'
+                : language === 'ta'
+                  ? 'தகவல் சைகைகள்'
+                  : 'Informative Signs'}
+            </span>
+          </span>
+        )
       case 'priority_and_junctions':
-        return language === 'si'
-          ? '🚗 ප්‍රමුඛතා නීති හා මංසන්ධි'
-          : language === 'ta'
-            ? '🚗 முன்னுரிமை & சந்திப்புகள்'
-            : '🚗 Priority & Right of Way'
+        return (
+          <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-indigo-700">
+            <Car className="h-3.5 w-3.5" />
+            <span>
+              {language === 'si'
+                ? 'ප්‍රමුඛතා නීති හා මංසන්ධි'
+                : language === 'ta'
+                  ? 'முன்னுரிமை & சந்திப்புகள்'
+                  : 'Priority & Right of Way'}
+            </span>
+          </span>
+        )
       case 'general_road_safety':
-        return language === 'si'
-          ? '🛡️ මාර්ග ආරක්ෂාව හා නීති'
-          : language === 'ta'
-            ? '🛡️ வீதி பாதுகாப்பு & சட்டங்கள்'
-            : '🛡️ General Road Safety & DMT Laws'
+        return (
+          <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-700">
+            <Shield className="h-3.5 w-3.5" />
+            <span>
+              {language === 'si'
+                ? 'මාර්ග ආරක්ෂාව හා නීති'
+                : language === 'ta'
+                  ? 'வீதி பாதுகாப்பு & சட்டங்கள்'
+                  : 'General Road Safety & DMT Laws'}
+            </span>
+          </span>
+        )
       case 'vehicle_mechanics_controls':
-        return language === 'si'
-          ? '⚙️ වාහන පාලනය හා යාන්ත්‍රික කරුණු'
-          : language === 'ta'
-            ? '⚙️ வாகனக் கட்டுப்பாடுகள்'
-            : '⚙️ Vehicle Controls & Mechanics'
+        return (
+          <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-700">
+            <Settings2 className="h-3.5 w-3.5" />
+            <span>
+              {language === 'si'
+                ? 'වාහන පාලනය හා යාන්ත්‍රික කරුණු'
+                : language === 'ta'
+                  ? 'வாகனக் கட்டுப்பாடுகள்'
+                  : 'Vehicle Controls & Mechanics'}
+            </span>
+          </span>
+        )
       default:
-        return cat
+        return <span className="text-xs font-semibold text-slate-500">{cat}</span>
     }
   }
 
@@ -75,18 +129,17 @@ export const TheoryQuestionCard: React.FC<TheoryQuestionCardProps> = ({
           Question {questionNumber} of {totalQuestions}
         </span>
 
-        <span className="text-xs font-semibold text-slate-500">
-          {getCategoryLabel(question.category)}
-        </span>
+        {renderCategoryBadge(question.category)}
       </div>
 
       {/* Question Text & Sign */}
       <div className="space-y-4">
         {question.image_url && (
           <div className="flex justify-center">
-            <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-slate-100 text-4xl border border-slate-200 shadow-2xs">
-              {question.image_url}
-            </div>
+            <RoadSignIllustration
+              signCode={question.image_url}
+              className="h-24 w-24"
+            />
           </div>
         )}
 
@@ -146,13 +199,15 @@ export const TheoryQuestionCard: React.FC<TheoryQuestionCardProps> = ({
               {isReviewMode && (
                 <div>
                   {isCorrect && (
-                    <span className="rounded-full bg-emerald-100 px-2 py-0.5 text-[10px] font-bold text-emerald-800">
-                      ✓ Correct
+                    <span className="inline-flex items-center gap-1 rounded-full bg-emerald-100 px-2 py-0.5 text-[10px] font-bold text-emerald-800">
+                      <Check className="h-3 w-3" />
+                      <span>Correct</span>
                     </span>
                   )}
                   {isSelected && !isCorrect && (
-                    <span className="rounded-full bg-red-100 px-2 py-0.5 text-[10px] font-bold text-red-800">
-                      ✕ Your Choice
+                    <span className="inline-flex items-center gap-1 rounded-full bg-red-100 px-2 py-0.5 text-[10px] font-bold text-red-800">
+                      <X className="h-3 w-3" />
+                      <span>Your Choice</span>
                     </span>
                   )}
                 </div>
@@ -165,8 +220,9 @@ export const TheoryQuestionCard: React.FC<TheoryQuestionCardProps> = ({
       {/* Post-exam Explanation Box */}
       {isReviewMode && (
         <div className="rounded-2xl border border-blue-100 bg-blue-50/60 p-4 text-xs text-slate-700">
-          <strong className="block text-blue-900 font-bold mb-1">
-            💡 DMT Highway Code Explanation:
+          <strong className="flex items-center gap-1.5 text-blue-900 font-bold mb-1">
+            <Lightbulb className="h-4 w-4 text-amber-500 shrink-0" />
+            <span>DMT Highway Code Explanation:</span>
           </strong>
           {localized.explanation}
         </div>

@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { FileText, AlertTriangle, AlertOctagon } from 'lucide-react'
 import type { SavePermitInput, StudentPermit } from '../types/journey'
 import { calculatePermitValidity } from '../utils/journeyUtils'
 import PermitModal from './PermitModal'
@@ -24,8 +25,8 @@ export const PermitTrackerCard: React.FC<PermitTrackerCardProps> = ({
       {/* Header */}
       <div className="flex items-start justify-between gap-2">
         <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 text-xl border border-blue-100">
-            📄
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 border border-blue-100">
+            <FileText className="h-5 w-5 text-blue-600" />
           </div>
           <div>
             <h3 className="text-sm font-bold text-slate-900">
@@ -83,7 +84,7 @@ export const PermitTrackerCard: React.FC<PermitTrackerCardProps> = ({
 
           {validity.state === 'expiring_soon' && (
             <div className="rounded-lg bg-amber-50 border border-amber-200 p-2.5 text-xs text-amber-900 flex items-center gap-2">
-              <span>⚠️</span>
+              <AlertTriangle className="h-4 w-4 text-amber-600 shrink-0" />
               <span>
                 Permit expires in {validity.daysLeft} days. Advise student to
                 renew or complete trial before expiry!
@@ -93,7 +94,7 @@ export const PermitTrackerCard: React.FC<PermitTrackerCardProps> = ({
 
           {validity.state === 'expired' && (
             <div className="rounded-lg bg-red-50 border border-red-200 p-2.5 text-xs text-red-900 flex items-center gap-2">
-              <span>🚨</span>
+              <AlertOctagon className="h-4 w-4 text-red-600 shrink-0" />
               <span>
                 Permit has expired! Practical training and trial exams are
                 blocked until renewed.

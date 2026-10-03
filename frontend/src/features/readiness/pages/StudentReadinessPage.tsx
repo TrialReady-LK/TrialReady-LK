@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
+import { Printer, GraduationCap, CreditCard, X } from 'lucide-react'
 import { useAuth } from '../../auth/context/AuthContext'
 import { AiTrialPredictorCard } from '../../ai/components/AiTrialPredictorCard'
 import { DmtLogbookModal } from '../../logbook/components/DmtLogbookModal'
@@ -90,20 +91,23 @@ export const StudentReadinessPage: React.FC = () => {
                 onClick={() => setShowLogbook(true)}
                 className="rounded-xl border border-blue-300 bg-blue-50 px-3.5 py-1.5 text-xs font-semibold text-blue-700 hover:bg-blue-100 transition-all cursor-pointer flex items-center gap-1.5"
               >
-                📄 Print DMT Logbook
+                <Printer className="h-3.5 w-3.5" />
+                <span>Print DMT Logbook</span>
               </button>
             )}
             <Link
               to={`/students/${profile.student.id}/journey`}
-              className="rounded-xl border border-slate-300 bg-white px-3.5 py-1.5 text-xs font-semibold text-slate-700 hover:bg-slate-50 transition-all cursor-pointer"
+              className="inline-flex items-center gap-1.5 rounded-xl border border-slate-300 bg-white px-3.5 py-1.5 text-xs font-semibold text-slate-700 hover:bg-slate-50 transition-all cursor-pointer"
             >
-              🎓 View Journey
+              <GraduationCap className="h-3.5 w-3.5 text-slate-600" />
+              <span>View Journey</span>
             </Link>
             <Link
               to={`/students/${profile.student.id}/payments`}
-              className="rounded-xl border border-slate-300 bg-white px-3.5 py-1.5 text-xs font-semibold text-slate-700 hover:bg-slate-50 transition-all cursor-pointer"
+              className="inline-flex items-center gap-1.5 rounded-xl border border-slate-300 bg-white px-3.5 py-1.5 text-xs font-semibold text-slate-700 hover:bg-slate-50 transition-all cursor-pointer"
             >
-              💳 View Payments
+              <CreditCard className="h-3.5 w-3.5 text-slate-600" />
+              <span>View Payments</span>
             </Link>
           </div>
         </div>
@@ -116,9 +120,9 @@ export const StudentReadinessPage: React.FC = () => {
           <button
             type="button"
             onClick={() => setErrorMessage(null)}
-            className="font-bold text-red-500 hover:text-red-700"
+            className="p-1 text-red-500 hover:text-red-700 cursor-pointer"
           >
-            ✕
+            <X className="h-4 w-4" />
           </button>
         </div>
       )}
@@ -129,9 +133,9 @@ export const StudentReadinessPage: React.FC = () => {
           <button
             type="button"
             onClick={() => setSuccessMessage(null)}
-            className="font-bold text-emerald-500 hover:text-emerald-700"
+            className="p-1 text-emerald-500 hover:text-emerald-700 cursor-pointer"
           >
-            ✕
+            <X className="h-4 w-4" />
           </button>
         </div>
       )}

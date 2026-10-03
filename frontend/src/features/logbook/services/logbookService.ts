@@ -293,12 +293,12 @@ export async function fetchStudentLogbookData(
 
   const readinessTier =
     aiReadinessScore >= 85
-      ? '🏆 Trial Ready'
+      ? 'Trial Ready'
       : aiReadinessScore >= 65
-        ? '⚡ Nearly Ready'
+        ? 'Nearly Ready'
         : aiReadinessScore >= 40
-          ? '🚗 In Training'
-          : '⚠️ Not Ready'
+          ? 'In Training'
+          : 'Not Ready'
 
   return {
     school,
@@ -311,6 +311,6 @@ export async function fetchStudentLogbookData(
     totalPracticalHours: totalPracticalHours || 20,
     totalCompletedSessions: sessions.length || 15,
     aiReadinessScore: aiReadinessScore || 88,
-    readinessTier: readinessTier || '🏆 Trial Ready',
+    readinessTier: readinessTier || 'Trial Ready',
   }
 }

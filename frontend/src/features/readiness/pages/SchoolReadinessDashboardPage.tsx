@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { GraduationCap } from 'lucide-react'
 import { ReadinessOverviewTable } from '../components/ReadinessOverviewTable'
 import { useSchoolReadinessOverview } from '../hooks/useSchoolReadinessOverview'
 
@@ -37,7 +38,8 @@ export const SchoolReadinessDashboardPage: React.FC<
           to="/journey"
           className="inline-flex items-center gap-1.5 rounded-xl border border-slate-300 bg-white px-4 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50 transition-all cursor-pointer"
         >
-          🎓 Learner Journey Overview
+          <GraduationCap className="h-4 w-4 text-slate-600" />
+          <span>Learner Journey Overview</span>
         </Link>
       </div>
 

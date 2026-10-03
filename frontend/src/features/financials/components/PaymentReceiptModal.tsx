@@ -1,4 +1,5 @@
 import React from 'react'
+import { Printer, X } from 'lucide-react'
 import type { StudentFinancialLedger, StudentPayment } from '../types/financials'
 import { formatLKR, formatPaymentMethod } from '../utils/financialUtils'
 
@@ -41,16 +42,17 @@ export const PaymentReceiptModal: React.FC<PaymentReceiptModalProps> = ({
             <button
               type="button"
               onClick={handlePrint}
-              className="rounded-lg bg-blue-600 px-3 py-1.5 text-xs font-bold text-white hover:bg-blue-700 cursor-pointer"
+              className="inline-flex items-center gap-1.5 rounded-lg bg-blue-600 px-3 py-1.5 text-xs font-bold text-white hover:bg-blue-700 cursor-pointer"
             >
-              🖨️ Print Receipt
+              <Printer className="h-3.5 w-3.5" />
+              <span>Print Receipt</span>
             </button>
             <button
               type="button"
               onClick={onClose}
               className="rounded-lg p-1.5 text-slate-400 hover:bg-slate-200 cursor-pointer"
             >
-              ✕
+              <X className="h-4 w-4" />
             </button>
           </div>
         </div>

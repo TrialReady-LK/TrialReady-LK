@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { X } from 'lucide-react'
 import type {
   ExamType,
   SaveExamTrialInput,
@@ -108,7 +109,7 @@ export const ExamTrialModal: React.FC<ExamTrialModalProps> = ({
             onClick={onClose}
             className="rounded-lg p-1.5 text-slate-400 hover:bg-slate-100 cursor-pointer"
           >
-            ✕
+            <X className="h-4 w-4" />
           </button>
         </div>
 
@@ -130,8 +131,8 @@ export const ExamTrialModal: React.FC<ExamTrialModalProps> = ({
                 onChange={(e) => setExamType(e.target.value as ExamType)}
                 className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-xs text-slate-900 outline-none focus:border-blue-500"
               >
-                <option value="theory">📖 DMT Theory Exam</option>
-                <option value="practical_trial">🎯 Practical Trial Exam</option>
+                <option value="theory">DMT Theory Exam</option>
+                <option value="practical_trial">Practical Trial Exam</option>
               </select>
             </div>
 
@@ -178,8 +179,8 @@ export const ExamTrialModal: React.FC<ExamTrialModalProps> = ({
                 className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-xs text-slate-900 outline-none focus:border-blue-500"
               >
                 <option value="scheduled">Scheduled (Pending)</option>
-                <option value="passed">✓ Passed</option>
-                <option value="failed">✕ Failed</option>
+                <option value="passed">Passed</option>
+                <option value="failed">Failed</option>
                 <option value="absent">Absent / No Show</option>
                 <option value="cancelled">Cancelled</option>
               </select>

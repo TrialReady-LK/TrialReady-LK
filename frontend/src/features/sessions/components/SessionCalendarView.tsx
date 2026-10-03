@@ -1,4 +1,13 @@
 import React, { useMemo } from 'react'
+import {
+  ChevronLeft,
+  ChevronRight,
+  Plus,
+  UserCheck,
+  Car,
+  Check,
+  X,
+} from 'lucide-react'
 import type { PracticalSessionWithRelations } from '../types/session'
 import {
   formatSessionDuration,
@@ -100,7 +109,7 @@ export const SessionCalendarView: React.FC<SessionCalendarViewProps> = ({
             aria-label="Previous Week"
             className="rounded-lg border border-slate-300 bg-white p-1.5 text-slate-700 hover:bg-slate-100 transition-all cursor-pointer"
           >
-            ←
+            <ChevronLeft className="h-4 w-4" />
           </button>
           <button
             type="button"
@@ -115,7 +124,7 @@ export const SessionCalendarView: React.FC<SessionCalendarViewProps> = ({
             aria-label="Next Week"
             className="rounded-lg border border-slate-300 bg-white p-1.5 text-slate-700 hover:bg-slate-100 transition-all cursor-pointer"
           >
-            →
+            <ChevronRight className="h-4 w-4" />
           </button>
 
           <span className="text-sm font-bold text-slate-900 ml-2">
@@ -126,9 +135,10 @@ export const SessionCalendarView: React.FC<SessionCalendarViewProps> = ({
         <button
           type="button"
           onClick={() => onOpenBooking(formatDateISO(new Date()), '09:00')}
-          className="rounded-xl bg-blue-600 px-3.5 py-1.5 text-xs font-semibold text-white shadow-xs hover:bg-blue-700 transition-all cursor-pointer"
+          className="inline-flex items-center gap-1.5 rounded-xl bg-blue-600 px-3.5 py-1.5 text-xs font-semibold text-white shadow-xs hover:bg-blue-700 transition-all cursor-pointer"
         >
-          + Book Lesson
+          <Plus className="h-3.5 w-3.5" />
+          <span>Book Lesson</span>
         </button>
       </div>
 
@@ -197,20 +207,32 @@ export const SessionCalendarView: React.FC<SessionCalendarViewProps> = ({
 
                       {/* Instructor & Vehicle summary */}
                       <div className="mt-1 text-[10px] space-y-0.5 opacity-80">
-                        <p className="truncate">👨‍🏫 {sess.instructor?.full_name}</p>
+                        <p className="truncate flex items-center gap-1">
+                          <UserCheck className="h-3 w-3 shrink-0" />
+                          <span>{sess.instructor?.full_name}</span>
+                        </p>
                         {sess.vehicle && (
-                          <p className="truncate">🚗 {sess.vehicle.registration_number}</p>
+                          <p className="truncate flex items-center gap-1">
+                            <Car className="h-3 w-3 shrink-0" />
+                            <span>{sess.vehicle.registration_number}</span>
+                          </p>
                         )}
                       </div>
 
                       {/* Status / Attendance Action Button */}
                       <div className="mt-2 flex items-center justify-between border-t border-slate-200/50 pt-1.5">
                         <span className="text-[9px] font-bold uppercase tracking-wider">
-                          {sess.status === 'completed'
-                            ? '✓ Done'
-                            : sess.status === 'cancelled'
-                              ? '✕ Cancelled'
-                              : duration}
+                          {sess.status === 'completed' ? (
+                            <span className="inline-flex items-center gap-0.5 text-emerald-700">
+                              <Check className="h-3 w-3" /> Done
+                            </span>
+                          ) : sess.status === 'cancelled' ? (
+                            <span className="inline-flex items-center gap-0.5 text-red-700">
+                              <X className="h-3 w-3" /> Cancelled
+                            </span>
+                          ) : (
+                            duration
+                          )}
                         </span>
 
                         {sess.status === 'scheduled' && (

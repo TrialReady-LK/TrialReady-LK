@@ -33,8 +33,8 @@ describe('ErrorBoundary', () => {
 
     expect(screen.getByText('Unexpected Roadblock')).toBeInTheDocument()
     expect(screen.getByText('Test Crash in Driving Academy Component')).toBeInTheDocument()
-    expect(screen.getByText('🔄 Try Again')).toBeInTheDocument()
-    expect(screen.getByText('🏠 Go to Dashboard')).toBeInTheDocument()
+    expect(screen.getByText('Try Again')).toBeInTheDocument()
+    expect(screen.getByText('Go to Dashboard')).toBeInTheDocument()
 
     spy.mockRestore()
   })

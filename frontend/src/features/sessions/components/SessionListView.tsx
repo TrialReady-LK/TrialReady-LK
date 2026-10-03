@@ -1,4 +1,5 @@
 import React from 'react'
+import { Check } from 'lucide-react'
 import type { SessionFilters } from '../hooks/usePracticalSessions'
 import type {
   PracticalSessionWithRelations,
@@ -51,8 +52,9 @@ export const SessionListView: React.FC<SessionListViewProps> = ({
     }
     if (status === 'completed' || attendance === 'present') {
       return (
-        <span className="inline-flex rounded-full bg-emerald-100 px-2 py-0.5 text-[10px] font-bold text-emerald-800">
-          ✓ Completed
+        <span className="inline-flex items-center gap-1 rounded-full bg-emerald-100 px-2 py-0.5 text-[10px] font-bold text-emerald-800">
+          <Check className="h-3 w-3" />
+          <span>Completed</span>
         </span>
       )
     }

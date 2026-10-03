@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { FileText, CheckCircle2, Target, Lightbulb, RotateCw, Copy, Check, X } from 'lucide-react'
 import { generateAiSessionFeedback, type GeneratedFeedback } from '../utils/feedbackGenerator'
 
 interface AiSessionFeedbackModalProps {
@@ -40,7 +41,7 @@ export const AiSessionFeedbackModal: React.FC<AiSessionFeedbackModalProps> = ({
   if (!isOpen) return null
 
   const handleCopy = () => {
-    const textToCopy = `📋 SESSION EVALUATION REPORT\nStudent: ${studentName}\nDate: ${sessionDate} (${(durationMinutes / 60).toFixed(1)} hrs)\n\n${feedback.summaryParagraph}\n\nSTRENGTHS:\n${feedback.strengths.map((s) => `• ${s}`).join('\n')}\n\nFOCUS AREAS:\n${feedback.focusAreasForNextLesson.map((f) => `• ${f}`).join('\n')}\n\nRECOMMENDED REVISION:\n${feedback.homeworkRecommendation}\n\nLOGBOOK NOTE:\n${feedback.formalInstructorNote}`
+    const textToCopy = `SESSION EVALUATION REPORT\nStudent: ${studentName}\nDate: ${sessionDate} (${(durationMinutes / 60).toFixed(1)} hrs)\n\n${feedback.summaryParagraph}\n\nSTRENGTHS:\n${feedback.strengths.map((s) => `• ${s}`).join('\n')}\n\nFOCUS AREAS:\n${feedback.focusAreasForNextLesson.map((f) => `• ${f}`).join('\n')}\n\nRECOMMENDED REVISION:\n${feedback.homeworkRecommendation}\n\nLOGBOOK NOTE:\n${feedback.formalInstructorNote}`
 
     void navigator.clipboard.writeText(textToCopy)
     setIsCopied(true)
@@ -67,7 +68,9 @@ export const AiSessionFeedbackModal: React.FC<AiSessionFeedbackModalProps> = ({
         {/* Header */}
         <div className="flex items-center justify-between border-b border-slate-200 pb-4">
           <div className="flex items-center gap-2.5">
-            <span className="text-2xl">📝</span>
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-50 text-indigo-600">
+              <FileText className="h-5 w-5" />
+            </div>
             <div>
               <h3 className="text-base font-black text-slate-900">
                 AI Practical Session Evaluation Synthesizer
@@ -82,7 +85,7 @@ export const AiSessionFeedbackModal: React.FC<AiSessionFeedbackModalProps> = ({
             onClick={onClose}
             className="rounded-lg p-1.5 text-slate-400 hover:bg-slate-100 hover:text-slate-700 cursor-pointer"
           >
-            ✕
+            <X className="h-4 w-4" />
           </button>
         </div>
 
@@ -100,7 +103,7 @@ export const AiSessionFeedbackModal: React.FC<AiSessionFeedbackModalProps> = ({
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="rounded-2xl border border-emerald-200 bg-emerald-50/40 p-4 space-y-2">
             <h4 className="text-xs font-bold text-emerald-900 flex items-center gap-1.5 uppercase tracking-wider">
-              <span>✓</span> Strengths Observed
+              <CheckCircle2 className="h-4 w-4 text-emerald-600" /> Strengths Observed
             </h4>
             <ul className="text-xs text-emerald-950 space-y-1">
               {feedback.strengths.map((s, i) => (
@@ -114,7 +117,7 @@ export const AiSessionFeedbackModal: React.FC<AiSessionFeedbackModalProps> = ({
 
           <div className="rounded-2xl border border-amber-200 bg-amber-50/40 p-4 space-y-2">
             <h4 className="text-xs font-bold text-amber-900 flex items-center gap-1.5 uppercase tracking-wider">
-              <span>🎯</span> Next Lesson Focus Drill
+              <Target className="h-4 w-4 text-amber-600" /> Next Lesson Focus Drill
             </h4>
             <ul className="text-xs text-amber-950 space-y-1">
               {feedback.focusAreasForNextLesson.map((f, i) => (
@@ -129,8 +132,8 @@ export const AiSessionFeedbackModal: React.FC<AiSessionFeedbackModalProps> = ({
 
         {/* Homework Recommendation */}
         <div className="rounded-2xl bg-blue-50 border border-blue-200 p-3.5 text-xs text-blue-900 space-y-1">
-          <span className="font-bold text-[10px] uppercase tracking-wider text-blue-800 block">
-            💡 Recommended Student Homework:
+          <span className="font-bold text-[10px] uppercase tracking-wider text-blue-800 flex items-center gap-1.5">
+            <Lightbulb className="h-3.5 w-3.5 text-blue-600" /> Recommended Student Homework:
           </span>
           <p>{feedback.homeworkRecommendation}</p>
         </div>
@@ -152,7 +155,7 @@ export const AiSessionFeedbackModal: React.FC<AiSessionFeedbackModalProps> = ({
             onClick={handleRegenerate}
             className="rounded-xl border border-slate-300 bg-white px-3.5 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50 transition-all cursor-pointer flex items-center gap-1.5"
           >
-            <span>🔄</span> Regenerate
+            <RotateCw className="h-3.5 w-3.5" /> Regenerate
           </button>
 
           <div className="flex items-center gap-2">
@@ -161,7 +164,7 @@ export const AiSessionFeedbackModal: React.FC<AiSessionFeedbackModalProps> = ({
               onClick={handleCopy}
               className="rounded-xl bg-indigo-600 px-4 py-2 text-xs font-bold text-white hover:bg-indigo-700 transition-all cursor-pointer flex items-center gap-1.5 shadow-xs"
             >
-              <span>{isCopied ? '✓' : '📋'}</span>
+              {isCopied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
               <span>{isCopied ? 'Copied to Clipboard!' : 'Copy Complete Report'}</span>
             </button>
             <button

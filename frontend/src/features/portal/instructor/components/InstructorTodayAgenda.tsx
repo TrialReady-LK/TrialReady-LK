@@ -1,4 +1,5 @@
 import React from 'react'
+import { Check, Star, Sparkles } from 'lucide-react'
 import type { PracticalSessionWithRelations } from '../../../sessions/types/session'
 
 interface InstructorTodayAgendaProps {
@@ -16,8 +17,8 @@ export const InstructorTodayAgenda: React.FC<InstructorTodayAgendaProps> = ({
     switch (status) {
       case 'completed':
         return (
-          <span className="rounded-full bg-emerald-100 px-2.5 py-0.5 text-[10px] font-bold text-emerald-800">
-            ✓ Completed
+          <span className="inline-flex items-center gap-1 rounded-full bg-emerald-100 px-2.5 py-0.5 text-[10px] font-bold text-emerald-800">
+            <Check className="h-3 w-3" /> Completed
           </span>
         )
       case 'in_progress':
@@ -116,8 +117,17 @@ export const InstructorTodayAgenda: React.FC<InstructorTodayAgendaProps> = ({
               {/* Action Button */}
               <div className="flex flex-wrap items-center gap-2 sm:self-center">
                 {sess.status === 'completed' && sess.student_rating && (
-                  <span className="text-xs font-bold text-amber-500 mr-2">
-                    {'★'.repeat(sess.student_rating)}{'☆'.repeat(5 - sess.student_rating)}
+                  <span className="inline-flex items-center gap-0.5 mr-2">
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <Star
+                        key={i}
+                        className={`h-3.5 w-3.5 ${
+                          i < sess.student_rating!
+                            ? 'fill-amber-400 text-amber-500'
+                            : 'text-slate-300'
+                        }`}
+                      />
+                    ))}
                   </span>
                 )}
 
@@ -125,9 +135,10 @@ export const InstructorTodayAgenda: React.FC<InstructorTodayAgendaProps> = ({
                   <button
                     type="button"
                     onClick={() => onOpenAiFeedback(sess)}
-                    className="rounded-xl border border-indigo-300 bg-indigo-50 px-3 py-2 text-xs font-bold text-indigo-700 hover:bg-indigo-100 transition-all cursor-pointer whitespace-nowrap flex items-center gap-1"
+                    className="rounded-xl border border-indigo-300 bg-indigo-50 px-3 py-2 text-xs font-bold text-indigo-700 hover:bg-indigo-100 transition-all cursor-pointer whitespace-nowrap flex items-center gap-1.5"
                   >
-                    <span>✨</span> AI Report
+                    <Sparkles className="h-3.5 w-3.5 text-indigo-600" />
+                    <span>AI Report</span>
                   </button>
                 )}
 

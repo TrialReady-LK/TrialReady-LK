@@ -1,4 +1,14 @@
 import React from 'react'
+import {
+  Sparkles,
+  Brain,
+  AlertTriangle,
+  Activity,
+  Trophy,
+  Lightbulb,
+  Calendar,
+  Target,
+} from 'lucide-react'
 import { predictTrialOutcome } from '../utils/predictiveModel'
 
 interface AiTrialPredictorCardProps {
@@ -33,7 +43,7 @@ export const AiTrialPredictorCard: React.FC<AiTrialPredictorCardProps> = ({
       <div className="flex items-start justify-between">
         <div className="space-y-1">
           <div className="flex items-center gap-2">
-            <span className="text-xl">🔮</span>
+            <Sparkles className="h-5 w-5 text-indigo-600" />
             <h3 className="text-base font-black text-slate-900 tracking-tight">
               AI Trial Outcome Predictor & Risk Forecaster
             </h3>
@@ -73,17 +83,24 @@ export const AiTrialPredictorCard: React.FC<AiTrialPredictorCardProps> = ({
             style={{ width: `${prediction.passProbability}%` }}
           />
         </div>
-        <div className="flex justify-between text-[10px] text-slate-400 font-semibold">
-          <span>⚠️ High Risk (&lt;50%)</span>
-          <span>⚡ Moderate (60-79%)</span>
-          <span>🏆 High Probability (80%+)</span>
+        <div className="flex justify-between text-[10px] text-slate-400 font-semibold items-center">
+          <span className="flex items-center gap-1">
+            <AlertTriangle className="h-3 w-3 text-red-500" /> High Risk (&lt;50%)
+          </span>
+          <span className="flex items-center gap-1">
+            <Activity className="h-3 w-3 text-amber-500" /> Moderate (60-79%)
+          </span>
+          <span className="flex items-center gap-1">
+            <Trophy className="h-3 w-3 text-emerald-500" /> High Probability (80%+)
+          </span>
         </div>
       </div>
 
       {/* AI Key Insight */}
       <div className="rounded-2xl bg-indigo-950 text-white p-4 shadow-sm space-y-1">
         <div className="flex items-center gap-1.5 text-[10px] font-bold text-indigo-300 uppercase tracking-wider">
-          <span>🧠</span> AI Behavioral Insight & Readiness Roadmap
+          <Brain className="h-4 w-4 text-indigo-300" />
+          <span>AI Behavioral Insight & Readiness Roadmap</span>
         </div>
         <p className="text-xs text-indigo-100 leading-relaxed">{prediction.keyInsight}</p>
       </div>
@@ -128,8 +145,11 @@ export const AiTrialPredictorCard: React.FC<AiTrialPredictorCardProps> = ({
                 />
               </div>
 
-              <p className="text-[10px] text-slate-500 leading-tight">
-                💡 <span className="font-semibold text-slate-600">Advice:</span> {m.mitigationAdvice}
+              <p className="text-[10px] text-slate-500 leading-tight flex items-start gap-1">
+                <Lightbulb className="h-3 w-3 text-amber-500 shrink-0 mt-0.5" />
+                <span>
+                  <span className="font-semibold text-slate-600">Advice:</span> {m.mitigationAdvice}
+                </span>
               </p>
             </div>
           ))}
@@ -139,7 +159,7 @@ export const AiTrialPredictorCard: React.FC<AiTrialPredictorCardProps> = ({
       {/* Optimal Date Window & Recommendations Footer */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 border-t border-slate-200/80">
         <div className="rounded-2xl bg-white border border-slate-200 p-3 flex items-center gap-3">
-          <span className="text-2xl">📅</span>
+          <Calendar className="h-6 w-6 text-blue-600" />
           <div>
             <span className="text-[10px] font-bold text-slate-500 block uppercase">
               Optimal DMT Trial Window
@@ -151,7 +171,7 @@ export const AiTrialPredictorCard: React.FC<AiTrialPredictorCardProps> = ({
         </div>
 
         <div className="rounded-2xl bg-white border border-slate-200 p-3 flex items-center gap-3">
-          <span className="text-2xl">🎯</span>
+          <Target className="h-6 w-6 text-indigo-600" />
           <div>
             <span className="text-[10px] font-bold text-slate-500 block uppercase">
               Recommended Mock Sessions

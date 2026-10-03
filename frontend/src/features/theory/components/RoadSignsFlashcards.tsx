@@ -1,4 +1,13 @@
 import React, { useState } from 'react'
+import {
+  Octagon,
+  AlertTriangle,
+  Car,
+  Check,
+  ChevronLeft,
+  ChevronRight,
+} from 'lucide-react'
+import { RoadSignIllustration } from './RoadSignIllustration'
 import { useTheoryLanguage } from '../context/TheoryLanguageContext'
 import { SRI_LANKA_DMT_QUESTION_BANK } from '../data/sriLankaQuestionBank'
 
@@ -66,35 +75,38 @@ export const RoadSignsFlashcards: React.FC = () => {
           <button
             type="button"
             onClick={() => handleCategoryChange('road_signs_regulatory')}
-            className={`rounded-lg px-2.5 py-1 text-xs font-semibold cursor-pointer ${
+            className={`inline-flex items-center gap-1 rounded-lg px-2.5 py-1 text-xs font-semibold cursor-pointer ${
               categoryFilter === 'road_signs_regulatory'
                 ? 'bg-blue-600 text-white'
                 : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
             }`}
           >
-            🛑 Regulatory
+            <Octagon className="h-3 w-3" />
+            <span>Regulatory</span>
           </button>
           <button
             type="button"
             onClick={() => handleCategoryChange('road_signs_warning')}
-            className={`rounded-lg px-2.5 py-1 text-xs font-semibold cursor-pointer ${
+            className={`inline-flex items-center gap-1 rounded-lg px-2.5 py-1 text-xs font-semibold cursor-pointer ${
               categoryFilter === 'road_signs_warning'
                 ? 'bg-blue-600 text-white'
                 : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
             }`}
           >
-            ⚠️ Warning
+            <AlertTriangle className="h-3 w-3" />
+            <span>Warning</span>
           </button>
           <button
             type="button"
             onClick={() => handleCategoryChange('priority_and_junctions')}
-            className={`rounded-lg px-2.5 py-1 text-xs font-semibold cursor-pointer ${
+            className={`inline-flex items-center gap-1 rounded-lg px-2.5 py-1 text-xs font-semibold cursor-pointer ${
               categoryFilter === 'priority_and_junctions'
                 ? 'bg-blue-600 text-white'
                 : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
             }`}
           >
-            🚗 Priority
+            <Car className="h-3 w-3" />
+            <span>Priority</span>
           </button>
         </div>
       </div>
@@ -112,9 +124,10 @@ export const RoadSignsFlashcards: React.FC = () => {
           <div className="space-y-4">
             {currentQ.image_url && (
               <div className="flex justify-center">
-                <div className="flex h-24 w-24 items-center justify-center rounded-3xl bg-white text-5xl border border-slate-200 shadow-xs">
-                  {currentQ.image_url}
-                </div>
+                <RoadSignIllustration
+                  signCode={currentQ.image_url}
+                  className="h-28 w-28"
+                />
               </div>
             )}
             <h4 className="text-base font-bold text-slate-900 max-w-md">
@@ -126,8 +139,9 @@ export const RoadSignsFlashcards: React.FC = () => {
           </div>
         ) : (
           <div className="space-y-3 animate-fade-in">
-            <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-black text-emerald-800">
-              ✓ Correct Meaning
+            <span className="inline-flex items-center gap-1 rounded-full bg-emerald-100 px-3 py-1 text-xs font-black text-emerald-800">
+              <Check className="h-3.5 w-3.5" />
+              <span>Correct Meaning</span>
             </span>
             <p className="text-lg font-black text-slate-900 max-w-md">
               {correctOptionText}
@@ -144,9 +158,10 @@ export const RoadSignsFlashcards: React.FC = () => {
         <button
           type="button"
           onClick={handlePrev}
-          className="rounded-2xl border border-slate-300 bg-white px-5 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50 transition-all cursor-pointer"
+          className="inline-flex items-center gap-1.5 rounded-2xl border border-slate-300 bg-white px-5 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50 transition-all cursor-pointer"
         >
-          ← Previous Sign
+          <ChevronLeft className="h-3.5 w-3.5" />
+          <span>Previous Sign</span>
         </button>
 
         <span className="text-xs font-mono font-bold text-slate-500">
@@ -156,9 +171,10 @@ export const RoadSignsFlashcards: React.FC = () => {
         <button
           type="button"
           onClick={handleNext}
-          className="rounded-2xl bg-blue-600 px-6 py-2 text-xs font-bold text-white shadow-xs hover:bg-blue-700 transition-all cursor-pointer"
+          className="inline-flex items-center gap-1.5 rounded-2xl bg-blue-600 px-6 py-2 text-xs font-bold text-white shadow-xs hover:bg-blue-700 transition-all cursor-pointer"
         >
-          Next Sign →
+          <span>Next Sign</span>
+          <ChevronRight className="h-3.5 w-3.5" />
         </button>
       </div>
     </div>

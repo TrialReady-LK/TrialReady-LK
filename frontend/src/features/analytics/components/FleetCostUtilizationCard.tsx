@@ -1,4 +1,5 @@
 import React from 'react'
+import { Car } from 'lucide-react'
 import type { FleetUtilizationMetric } from '../types/analytics'
 
 interface FleetCostUtilizationCardProps {
@@ -30,8 +31,9 @@ export const FleetCostUtilizationCard: React.FC<
         </div>
 
         <div className="flex items-center gap-3">
-          <span className="rounded-lg bg-blue-50 px-2.5 py-1 text-xs font-bold text-blue-800 border border-blue-200">
-            🚗 {totalFleetHours.toFixed(1)} Total Hours Driven
+          <span className="inline-flex items-center gap-1.5 rounded-lg bg-blue-50 px-2.5 py-1 text-xs font-bold text-blue-800 border border-blue-200">
+            <Car className="h-3.5 w-3.5 text-blue-600" />
+            <span>{totalFleetHours.toFixed(1)} Total Hours Driven</span>
           </span>
           <span className="rounded-lg bg-slate-100 px-2.5 py-1 text-xs font-bold text-slate-700">
             Rs. {totalMaintenance.toLocaleString('en-LK')} Maintenance

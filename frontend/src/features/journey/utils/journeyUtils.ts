@@ -88,7 +88,7 @@ export function computeJourneyStages(data: {
     title: 'Registration & Enrolment',
     status: 'completed',
     description: 'Student registration and licence categories confirmed.',
-    badgeText: '✓ Complete',
+    badgeText: 'Complete',
   }
 
   // Stage 2: NTMI Medical
@@ -96,7 +96,7 @@ export function computeJourneyStages(data: {
   let stage2Badge = 'Pending'
   if (medical?.status === 'passed') {
     stage2Status = 'completed'
-    stage2Badge = '✓ Fitness Cleared'
+    stage2Badge = 'Fitness Cleared'
   } else if (medical?.status === 'appointment_booked') {
     stage2Status = 'in_progress'
     stage2Badge = 'Appointment Booked'
@@ -126,10 +126,10 @@ export function computeJourneyStages(data: {
     const validity = calculatePermitValidity(permit.expiry_date)
     if (validity.state === 'expired') {
       stage3Status = 'blocked'
-      stage3Badge = '✕ Expired'
+      stage3Badge = 'Expired'
     } else {
       stage3Status = 'completed'
-      stage3Badge = `✓ ${permit.permit_number}`
+      stage3Badge = permit.permit_number
     }
   } else if (stage2Status === 'completed') {
     stage3Status = 'in_progress'
@@ -153,7 +153,7 @@ export function computeJourneyStages(data: {
   let stage4Badge = 'Pending'
   if (passedTheory) {
     stage4Status = 'completed'
-    stage4Badge = `✓ Passed (${passedTheory.score ?? 100}%)`
+    stage4Badge = `Passed (${passedTheory.score ?? 100}%)`
   } else if (scheduledTheory) {
     stage4Status = 'in_progress'
     stage4Badge = `Exam on ${scheduledTheory.scheduled_date}`
@@ -177,7 +177,7 @@ export function computeJourneyStages(data: {
   let stage5Badge = `${completedLessonsCount} / 10 Lessons`
   if (completedLessonsCount >= 10) {
     stage5Status = 'completed'
-    stage5Badge = `✓ Complete (${completedLessonsCount} Lessons)`
+    stage5Badge = `Complete (${completedLessonsCount} Lessons)`
   } else if (completedLessonsCount > 0) {
     stage5Status = 'in_progress'
     stage5Badge = `${completedLessonsCount} Lessons Logged`
@@ -201,7 +201,7 @@ export function computeJourneyStages(data: {
   let stage6Badge = 'Not Eligible'
   if (passedTrial) {
     stage6Status = 'completed'
-    stage6Badge = '✓ Trial Passed'
+    stage6Badge = 'Trial Passed'
   } else if (scheduledTrial) {
     stage6Status = 'in_progress'
     stage6Badge = `Trial on ${scheduledTrial.scheduled_date}`
@@ -225,7 +225,7 @@ export function computeJourneyStages(data: {
   let stage7Badge = 'Pending Trial'
   if (passedTrial) {
     stage7Status = 'completed'
-    stage7Badge = '🏆 Licence Granted'
+    stage7Badge = 'Licence Granted'
   }
   const stage7: JourneyStageInfo = {
     stageNumber: 7,
