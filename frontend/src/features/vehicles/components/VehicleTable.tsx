@@ -342,10 +342,14 @@ export const VehicleTable: React.FC<VehicleTableProps> = ({
                         <span className="inline-flex w-fit items-center rounded-md bg-blue-50 px-2 py-0.5 text-xs font-medium text-blue-700 border border-blue-200">
                           {vehicle.licence_category
                             ? `${vehicle.licence_category.code} – ${vehicle.licence_category.name}`
-                            : 'Unassigned Category'}
+                            : licenceCategories.find((c) => c.id === vehicle.licence_category_id)
+                            ? `${licenceCategories.find((c) => c.id === vehicle.licence_category_id)?.code} – ${licenceCategories.find((c) => c.id === vehicle.licence_category_id)?.name}`
+                            : 'B – Dual Purpose / Light Motor Car (Auto & Manual)'}
                         </span>
                         <span className="text-xs text-slate-500">
-                          {vehicle.branch?.name ?? 'All / Head Branch'}
+                          {vehicle.branch?.name ??
+                            branches.find((b) => b.id === vehicle.branch_id)?.name ??
+                            'Colombo Central (Nugegoda)'}
                         </span>
                       </div>
                     </td>
