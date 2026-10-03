@@ -5,6 +5,7 @@ import { AiRemedialQuizModal } from '../../ai/components/AiRemedialQuizModal'
 import { useAuth } from '../../auth/context/AuthContext'
 import { LanguageSelectorPill } from '../components/LanguageSelectorPill'
 import { RoadSignsFlashcards } from '../components/RoadSignsFlashcards'
+import { AdminTheoryManagementView } from '../components/AdminTheoryManagementView'
 import { TheoryLanguageProvider } from '../context/TheoryLanguageContext'
 import { useTheoryHistory } from '../hooks/useTheoryHistory'
 
@@ -226,9 +227,15 @@ export const TheoryPracticeHubContent: React.FC<
 export const TheoryPracticeHubPage: React.FC<TheoryPracticeHubPageProps> = (
   props,
 ) => {
+  const { role } = useAuth()
+
   return (
     <TheoryLanguageProvider>
-      <TheoryPracticeHubContent {...props} />
+      {role === 'administrator' ? (
+        <AdminTheoryManagementView drivingSchoolId={props.drivingSchoolId} />
+      ) : (
+        <TheoryPracticeHubContent {...props} />
+      )}
     </TheoryLanguageProvider>
   )
 }
