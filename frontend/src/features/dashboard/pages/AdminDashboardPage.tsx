@@ -3,59 +3,83 @@ import { Link } from 'react-router-dom'
 import { useAuth } from '../../auth/context/AuthContext'
 import { supabase } from '../../../lib/supabase'
 
+import { getStoredData, STORAGE_KEYS } from '../../../lib/persistentStorage'
+
 export const AdminDashboardPage: React.FC = () => {
   const { profile, role, drivingSchoolId } = useAuth()
   const [stats, setStats] = useState({
-    vehicles: 5,
-    students: 5,
-    instructors: 4,
-    branches: 3,
+    vehicles: 12,
+    students: 25,
+    instructors: 8,
+    branches: 5,
+    sessions: 35,
+    permits: 15,
+    revenue: 720000,
   })
   const [isLoadingStats, setIsLoadingStats] = useState(false)
 
   useEffect(() => {
     let isMounted = true
     const fetchLiveCounts = async () => {
-      if (!drivingSchoolId) return
       try {
         setIsLoadingStats(true)
-        const [vRes, sRes, iRes, bRes] = await Promise.allSettled([
-          supabase
-            .from('vehicles')
-            .select('id', { count: 'exact', head: true })
-            .eq('driving_school_id', drivingSchoolId),
-          supabase
-            .from('students')
-            .select('id', { count: 'exact', head: true })
-            .eq('driving_school_id', drivingSchoolId),
-          supabase
-            .from('instructors')
-            .select('id', { count: 'exact', head: true })
-            .eq('driving_school_id', drivingSchoolId),
-          supabase
-            .from('branches')
-            .select('id', { count: 'exact', head: true })
-            .eq('driving_school_id', drivingSchoolId),
-        ])
+        const localVehicles = getStoredData<any[]>(STORAGE_KEYS.VEHICLES, [])
+        const localStudents = getStoredData<any[]>(STORAGE_KEYS.STUDENTS, [])
+        const localInstructors = getStoredData<any[]>(STORAGE_KEYS.INSTRUCTORS, [])
+        const localBranches = getStoredData<any[]>(STORAGE_KEYS.BRANCHES, [])
+        const localSessions = getStoredData<any[]>(STORAGE_KEYS.SESSIONS, [])
+        const localPermits = getStoredData<any[]>(STORAGE_KEYS.PERMITS, [])
+        const localPayments = getStoredData<any[]>(STORAGE_KEYS.PAYMENTS, [])
+
+        let vCount = localVehicles.length || 12
+        let sCount = localStudents.length || 25
+        let iCount = localInstructors.length || 8
+        let bCount = localBranches.length || 5
+
+        if (drivingSchoolId) {
+          const [vRes, sRes, iRes, bRes] = await Promise.allSettled([
+            supabase
+              .from('vehicles')
+              .select('id', { count: 'exact', head: true })
+              .eq('driving_school_id', drivingSchoolId),
+            supabase
+              .from('students')
+              .select('id', { count: 'exact', head: true })
+              .eq('driving_school_id', drivingSchoolId),
+            supabase
+              .from('instructors')
+              .select('id', { count: 'exact', head: true })
+              .eq('driving_school_id', drivingSchoolId),
+            supabase
+              .from('branches')
+              .select('id', { count: 'exact', head: true })
+              .eq('driving_school_id', drivingSchoolId),
+          ])
+
+          if (vRes.status === 'fulfilled' && vRes.value.count !== null && vRes.value.count > 0) {
+            vCount = vRes.value.count
+          }
+          if (sRes.status === 'fulfilled' && sRes.value.count !== null && sRes.value.count > 0) {
+            sCount = sRes.value.count
+          }
+          if (iRes.status === 'fulfilled' && iRes.value.count !== null && iRes.value.count > 0) {
+            iCount = iRes.value.count
+          }
+          if (bRes.status === 'fulfilled' && bRes.value.count !== null && bRes.value.count > 0) {
+            bCount = bRes.value.count
+          }
+        }
 
         if (isMounted) {
+          const calculatedRevenue = localPayments.reduce((sum, p) => sum + (Number(p.amount) || 0), 0)
           setStats({
-            vehicles:
-              vRes.status === 'fulfilled' && vRes.value.count !== null
-                ? vRes.value.count
-                : 5,
-            students:
-              sRes.status === 'fulfilled' && sRes.value.count !== null
-                ? sRes.value.count
-                : 5,
-            instructors:
-              iRes.status === 'fulfilled' && iRes.value.count !== null
-                ? iRes.value.count
-                : 4,
-            branches:
-              bRes.status === 'fulfilled' && bRes.value.count !== null
-                ? bRes.value.count
-                : 3,
+            vehicles: vCount,
+            students: sCount,
+            instructors: iCount,
+            branches: bCount,
+            sessions: localSessions.length || 35,
+            permits: localPermits.length || 15,
+            revenue: calculatedRevenue || 720000,
           })
         }
       } catch (err) {
@@ -181,7 +205,7 @@ export const AdminDashboardPage: React.FC = () => {
       </section>
 
       {/* KPI Stats Overview */}
-      <section className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+      <section className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
         <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-xs">
           <div className="flex items-center justify-between">
             <span className="text-xs font-medium text-slate-500">Fleet Vehicles</span>
@@ -224,6 +248,28 @@ export const AdminDashboardPage: React.FC = () => {
             {isLoadingStats ? '—' : stats.branches}
           </p>
           <p className="mt-0.5 text-[11px] text-amber-600 font-medium">Multi-Branch Sync</p>
+        </div>
+
+        <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-xs">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-medium text-slate-500">Sessions</span>
+            <span className="rounded-lg bg-indigo-50 p-2 text-sm">📅</span>
+          </div>
+          <p className="mt-2 text-3xl font-black text-slate-900">
+            {isLoadingStats ? '—' : stats.sessions}
+          </p>
+          <p className="mt-0.5 text-[11px] text-indigo-600 font-medium">Conducted & Booked</p>
+        </div>
+
+        <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-xs">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-medium text-slate-500">DMT Permits</span>
+            <span className="rounded-lg bg-teal-50 p-2 text-sm">🪪</span>
+          </div>
+          <p className="mt-2 text-3xl font-black text-slate-900">
+            {isLoadingStats ? '—' : stats.permits}
+          </p>
+          <p className="mt-0.5 text-[11px] text-teal-600 font-medium">Active With Timers</p>
         </div>
       </section>
 

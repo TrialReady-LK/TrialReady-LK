@@ -445,6 +445,27 @@ export async function getStudentJourneyOverview(
     if (count !== null && count !== undefined) {
       completedLessonsCount = count
     }
+    const localStudents = getStoredData<any[]>(STORAGE_KEYS.STUDENTS, [])
+    const localS = localStudents.find((st) => st.id === studentId)
+    if (localS) {
+      studentData = {
+        id: localS.id,
+        full_name: localS.full_name,
+        admission_number: localS.student_code ?? 'ADM-2026-0042',
+        phone: localS.phone ?? null,
+        email: localS.email ?? null,
+        registration_date: localS.registration_date ?? '2026-01-10',
+        branch_name: localS.branch?.name ?? 'Colombo Central (Nugegoda)',
+      }
+    }
+
+    const localSessions = getStoredData<any[]>(STORAGE_KEYS.SESSIONS, [])
+    const studentCompletedSessions = localSessions.filter(
+      (ses) => ses.student_id === studentId && ses.status === 'completed',
+    )
+    if (studentCompletedSessions.length > 0) {
+      completedLessonsCount = studentCompletedSessions.length
+    }
   } catch {
     // fallback
   }
@@ -484,6 +505,18 @@ export async function getStudentJourneyOverview(
 export async function getAllStudentJourneys(
   drivingSchoolId: string,
 ): Promise<StudentJourneyOverview[]> {
+  const localStudents = getStoredData<any[]>(STORAGE_KEYS.STUDENTS, [])
+  const fallbackIds =
+    localStudents.length > 0
+      ? localStudents.map((s) => s.id)
+      : [
+          '11111111-1111-1111-1111-111111111111',
+          '11111111-1111-1111-1111-222222222222',
+          '11111111-1111-1111-1111-333333333333',
+          '11111111-1111-1111-1111-444444444444',
+          '11111111-1111-1111-1111-555555555555',
+        ]
+
   try {
     const { data: students, error: studError } = await supabase
       .from('students')
@@ -495,25 +528,15 @@ export async function getAllStudentJourneys(
       .order('full_name', { ascending: true })
 
     if (studError || !students || students.length === 0) {
-      const defaultIds = [
-        '11111111-1111-1111-1111-111111111111',
-        '11111111-1111-1111-1111-222222222222',
-        '11111111-1111-1111-1111-333333333333',
-        '11111111-1111-1111-1111-444444444444',
-        '11111111-1111-1111-1111-555555555555',
-      ]
-      return Promise.all(defaultIds.map((id) => getStudentJourneyOverview(id)))
+      return Promise.all(fallbackIds.map((id) => getStudentJourneyOverview(id)))
     }
 
-    return Promise.all(students.map((s) => getStudentJourneyOverview(s.id)))
+    // Merge remote and local student IDs
+    const combinedIds = Array.from(
+      new Set([...students.map((s) => s.id), ...fallbackIds]),
+    )
+    return Promise.all(combinedIds.map((id) => getStudentJourneyOverview(id)))
   } catch {
-    const defaultIds = [
-      '11111111-1111-1111-1111-111111111111',
-      '11111111-1111-1111-1111-222222222222',
-      '11111111-1111-1111-1111-333333333333',
-      '11111111-1111-1111-1111-444444444444',
-      '11111111-1111-1111-1111-555555555555',
-    ]
-    return Promise.all(defaultIds.map((id) => getStudentJourneyOverview(id)))
+    return Promise.all(fallbackIds.map((id) => getStudentJourneyOverview(id)))
   }
 }

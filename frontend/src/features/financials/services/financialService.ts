@@ -460,7 +460,7 @@ export async function getStudentFinancialLedger(
       .from('students')
       .select('id, full_name, student_code, phone, email, branches(name)')
       .eq('id', studentId)
-      .single()
+      .maybeSingle()
 
     if (s) {
       studentData = {
@@ -471,19 +471,48 @@ export async function getStudentFinancialLedger(
         email: s.email ?? null,
         branch_name: (s.branches as any)?.name ?? 'Colombo Central (Nugegoda)',
       }
+    } else {
+      const localStudents = getStoredData<any[]>(STORAGE_KEYS.STUDENTS, [])
+      const localS = localStudents.find((st) => st.id === studentId)
+      if (localS) {
+        studentData = {
+          id: localS.id,
+          full_name: localS.full_name,
+          admission_number: localS.student_code ?? 'ADM-2026-0042',
+          phone: localS.phone ?? null,
+          email: localS.email ?? null,
+          branch_name: localS.branch?.name ?? 'Colombo Central (Nugegoda)',
+        }
+      }
     }
   } catch {
-    // fallback
+    const localStudents = getStoredData<any[]>(STORAGE_KEYS.STUDENTS, [])
+    const localS = localStudents.find((st) => st.id === studentId)
+    if (localS) {
+      studentData = {
+        id: localS.id,
+        full_name: localS.full_name,
+        admission_number: localS.student_code ?? 'ADM-2026-0042',
+        phone: localS.phone ?? null,
+        email: localS.email ?? null,
+        branch_name: localS.branch?.name ?? 'Colombo Central (Nugegoda)',
+      }
+    }
   }
 
   const totalFee = enrolment
-    ? Math.max(0, Number(enrolment.agreed_total_fee) - Number(enrolment.discount_amount))
+    ? Math.max(
+        0,
+        Number(enrolment.agreed_total_fee) -
+          Number(enrolment.discount_amount || 0),
+      )
     : 65000
 
   const totalPaid = payments.reduce((acc, p) => acc + Number(p.amount), 0)
   const balance = Math.max(0, totalFee - totalPaid)
   const statusInfo = getPaymentStatus(totalFee, totalPaid)
-  const percentagePaid = totalFee > 0 ? Math.min(100, Math.round((totalPaid / totalFee) * 100)) : 0
+  const percentagePaid =
+    totalFee > 0 ? Math.min(100, Math.round((totalPaid / totalFee) * 100)) : 0
 
   return {
     student: studentData,
@@ -500,6 +529,18 @@ export async function getStudentFinancialLedger(
 export async function getAllFinancialLedgers(
   drivingSchoolId: string,
 ): Promise<StudentFinancialLedger[]> {
+  const localStudents = getStoredData<any[]>(STORAGE_KEYS.STUDENTS, [])
+  const fallbackIds =
+    localStudents.length > 0
+      ? localStudents.map((s) => s.id)
+      : [
+          '11111111-1111-1111-1111-111111111111',
+          '11111111-1111-1111-1111-222222222222',
+          '11111111-1111-1111-1111-333333333333',
+          '11111111-1111-1111-1111-444444444444',
+          '11111111-1111-1111-1111-555555555555',
+        ]
+
   try {
     const { data: students, error: studError } = await supabase
       .from('students')
@@ -509,26 +550,15 @@ export async function getAllFinancialLedgers(
       .order('full_name', { ascending: true })
 
     if (studError || !students || students.length === 0) {
-      const defaultIds = [
-        '11111111-1111-1111-1111-111111111111',
-        '11111111-1111-1111-1111-222222222222',
-        '11111111-1111-1111-1111-333333333333',
-        '11111111-1111-1111-1111-444444444444',
-        '11111111-1111-1111-1111-555555555555',
-      ]
-      return Promise.all(defaultIds.map((id) => getStudentFinancialLedger(id)))
+      return Promise.all(fallbackIds.map((id) => getStudentFinancialLedger(id)))
     }
 
-    return Promise.all(students.map((s) => getStudentFinancialLedger(s.id)))
+    const combinedIds = Array.from(
+      new Set([...students.map((s) => s.id), ...fallbackIds]),
+    )
+    return Promise.all(combinedIds.map((id) => getStudentFinancialLedger(id)))
   } catch {
-    const defaultIds = [
-      '11111111-1111-1111-1111-111111111111',
-      '11111111-1111-1111-1111-222222222222',
-      '11111111-1111-1111-1111-333333333333',
-      '11111111-1111-1111-1111-444444444444',
-      '11111111-1111-1111-1111-555555555555',
-    ]
-    return Promise.all(defaultIds.map((id) => getStudentFinancialLedger(id)))
+    return Promise.all(fallbackIds.map((id) => getStudentFinancialLedger(id)))
   }
 }
 

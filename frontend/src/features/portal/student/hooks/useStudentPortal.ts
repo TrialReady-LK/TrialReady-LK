@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 import { supabase } from '../../../../lib/supabase'
+import { getStoredData, STORAGE_KEYS } from '../../../../lib/persistentStorage'
 import { getStudentFinancialLedger } from '../../../financials/services/financialService'
 import type { StudentFinancialLedger } from '../../../financials/types/financials'
 import { getStudentJourneyOverview } from '../../../journey/services/journeyService'
@@ -27,35 +28,42 @@ export function useStudentPortal(drivingSchoolId: string, explicitStudentId?: st
       let targetStudentId = explicitStudentId
 
       if (!targetStudentId) {
-        // Find the first active student in this school
-        const { data: students, error: studErr } = await supabase
-          .from('students')
-          .select('id')
-          .eq('driving_school_id', drivingSchoolId)
-          .eq('is_active', true)
-          .limit(1)
+        const localStudents = getStoredData<any[]>(STORAGE_KEYS.STUDENTS, [])
+        if (localStudents.length > 0) {
+          targetStudentId = localStudents[0].id
+        } else {
+          targetStudentId = '33333333-3333-3333-3333-111111111111'
+        }
 
-        if (studErr) throw new Error(studErr.message)
-        if (students && students.length > 0) {
-          targetStudentId = students[0].id
+        try {
+          const { data: students } = await supabase
+            .from('students')
+            .select('id')
+            .eq('driving_school_id', drivingSchoolId)
+            .eq('is_active', true)
+            .limit(1)
+
+          if (students && students.length > 0) {
+            targetStudentId = students[0].id
+          }
+        } catch {
+          // ignore error and retain targetStudentId
         }
       }
 
-      if (!targetStudentId) {
-        setIsLoading(false)
-        return
-      }
+      const resolvedStudentId: string =
+        targetStudentId || '33333333-3333-3333-3333-111111111111'
 
       const [journeyData, ledgerData, readinessData, allSessions] =
         await Promise.all([
-          getStudentJourneyOverview(targetStudentId),
-          getStudentFinancialLedger(targetStudentId),
-          getStudentReadinessProfile(targetStudentId),
+          getStudentJourneyOverview(resolvedStudentId),
+          getStudentFinancialLedger(resolvedStudentId),
+          getStudentReadinessProfile(resolvedStudentId),
           getPracticalSessions(drivingSchoolId),
         ])
 
       const studentSessions = allSessions.filter(
-        (s: PracticalSessionWithRelations) => s.student_id === targetStudentId,
+        (s: PracticalSessionWithRelations) => s.student_id === resolvedStudentId,
       )
 
       const upcoming = studentSessions.filter(
