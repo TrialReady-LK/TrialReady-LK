@@ -1,4 +1,11 @@
 import { supabase } from '../../../lib/supabase'
+import {
+  getStoredData,
+  setStoredData,
+  mergeAndStoreList,
+  STORAGE_KEYS,
+} from '../../../lib/persistentStorage'
+import { DEFAULT_LICENCE_CATEGORIES } from '../../students/services/studentEnrolmentService'
 import type {
   AssignInstructorLicenceCategoryInput,
   InstructorLicenceCategory,
@@ -7,91 +14,242 @@ import type {
 } from '../types/instructorLicenceCategory'
 
 const LICENCE_CATEGORIES_TABLE = 'licence_categories'
-const INSTRUCTOR_LICENCE_CATEGORIES_TABLE =
-  'instructor_licence_categories'
+const INSTRUCTOR_LICENCE_CATEGORIES_TABLE = 'instructor_licence_categories'
+
+export const DEFAULT_INSTRUCTOR_LICENCE_CATEGORIES: InstructorLicenceCategoryWithDetails[] =
+  [
+    {
+      instructor_id: '11111111-1111-1111-1111-111111111111',
+      licence_category_id: 'ca111111-1111-1111-1111-111111111111',
+      driving_school_id: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
+      created_at: '2026-08-01T00:00:00Z',
+      licence_category: {
+        id: 'ca111111-1111-1111-1111-111111111111',
+        driving_school_id: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
+        code: 'B',
+        name: 'Dual Purpose / Light Motor Car (Auto & Manual)',
+        description:
+          'Motor vehicles with seating capacity not exceeding 9 persons and gross weight up to 3,500 kg',
+        is_active: true,
+        created_at: '2026-08-01T00:00:00Z',
+        updated_at: '2026-08-01T00:00:00Z',
+      },
+    },
+    {
+      instructor_id: '11111111-1111-1111-1111-111111111111',
+      licence_category_id: 'ca222222-2222-2222-2222-222222222222',
+      driving_school_id: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
+      created_at: '2026-08-01T00:00:00Z',
+      licence_category: {
+        id: 'ca222222-2222-2222-2222-222222222222',
+        driving_school_id: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
+        code: 'B1',
+        name: 'Light Motor Cycle & Three Wheeler',
+        description: 'Motor tricycles and light motorcycles',
+        is_active: true,
+        created_at: '2026-08-01T00:00:00Z',
+        updated_at: '2026-08-01T00:00:00Z',
+      },
+    },
+    {
+      instructor_id: '22222222-2222-2222-2222-222222222222',
+      licence_category_id: 'ca111111-1111-1111-1111-111111111111',
+      driving_school_id: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
+      created_at: '2026-08-01T00:00:00Z',
+      licence_category: {
+        id: 'ca111111-1111-1111-1111-111111111111',
+        driving_school_id: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
+        code: 'B',
+        name: 'Dual Purpose / Light Motor Car (Auto & Manual)',
+        description:
+          'Motor vehicles with seating capacity not exceeding 9 persons and gross weight up to 3,500 kg',
+        is_active: true,
+        created_at: '2026-08-01T00:00:00Z',
+        updated_at: '2026-08-01T00:00:00Z',
+      },
+    },
+  ]
 
 export async function getActiveLicenceCategories(
   drivingSchoolId: string,
 ): Promise<LicenceCategory[]> {
-  const { data, error } = await supabase
-    .from(LICENCE_CATEGORIES_TABLE)
-    .select('*')
-    .eq('driving_school_id', drivingSchoolId)
-    .eq('is_active', true)
-    .order('code', { ascending: true })
+  const local = getStoredData<LicenceCategory[]>(
+    STORAGE_KEYS.LICENCE_CATEGORIES,
+    DEFAULT_LICENCE_CATEGORIES,
+  )
 
-  if (error) {
-    throw new Error(
-      `Unable to load licence categories: ${error.message}`,
+  try {
+    const { data, error } = await supabase
+      .from(LICENCE_CATEGORIES_TABLE)
+      .select('*')
+      .eq('driving_school_id', drivingSchoolId)
+      .eq('is_active', true)
+      .order('code', { ascending: true })
+
+    if (!error && data && data.length > 0) {
+      const merged = mergeAndStoreList(
+        STORAGE_KEYS.LICENCE_CATEGORIES,
+        data as LicenceCategory[],
+        'code',
+      )
+      return merged
+    }
+  } catch (err) {
+    console.warn(
+      'Unable to load licence categories from Supabase, using persistent store:',
+      err,
     )
   }
 
-  return (data ?? []) as LicenceCategory[]
+  return local.filter(
+    (c) =>
+      c.driving_school_id === drivingSchoolId ||
+      !c.driving_school_id ||
+      drivingSchoolId === 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
+  )
 }
 
 export async function getInstructorLicenceCategories(
   instructorId: string,
   drivingSchoolId: string,
 ): Promise<InstructorLicenceCategoryWithDetails[]> {
-  const { data, error } = await supabase
-    .from(INSTRUCTOR_LICENCE_CATEGORIES_TABLE)
-    .select(`
-      instructor_id,
-      licence_category_id,
-      driving_school_id,
-      created_at,
-      licence_category:licence_categories (
-        id,
-        driving_school_id,
-        code,
-        name,
-        description,
-        is_active,
-        created_at,
-        updated_at
-      )
-    `)
-    .eq('instructor_id', instructorId)
-    .eq('driving_school_id', drivingSchoolId)
+  const allStored = getStoredData<InstructorLicenceCategoryWithDetails[]>(
+    STORAGE_KEYS.INSTRUCTOR_LICENCE_CATEGORIES,
+    DEFAULT_INSTRUCTOR_LICENCE_CATEGORIES,
+  )
+  const instructorStored = allStored.filter(
+    (item) => item.instructor_id === instructorId,
+  )
 
-  if (error) {
-    throw new Error(
-      `Unable to load instructor licence categories: ${error.message}`,
+  try {
+    const { data, error } = await supabase
+      .from(INSTRUCTOR_LICENCE_CATEGORIES_TABLE)
+      .select(`
+        instructor_id,
+        licence_category_id,
+        driving_school_id,
+        created_at,
+        licence_category:licence_categories (
+          id,
+          driving_school_id,
+          code,
+          name,
+          description,
+          is_active,
+          created_at,
+          updated_at
+        )
+      `)
+      .eq('instructor_id', instructorId)
+      .eq('driving_school_id', drivingSchoolId)
+
+    if (!error && data) {
+      const remote = (data ??
+        []) as unknown as InstructorLicenceCategoryWithDetails[]
+      const remoteMap = new Map(
+        remote.map((item) => [item.licence_category_id, item]),
+      )
+
+      for (const loc of instructorStored) {
+        if (!remoteMap.has(loc.licence_category_id)) {
+          remoteMap.set(loc.licence_category_id, loc)
+        }
+      }
+
+      const combined = Array.from(remoteMap.values()).sort((first, second) =>
+        first.licence_category.code.localeCompare(
+          second.licence_category.code,
+        ),
+      )
+
+      const otherStored = allStored.filter(
+        (item) => item.instructor_id !== instructorId,
+      )
+      setStoredData(STORAGE_KEYS.INSTRUCTOR_LICENCE_CATEGORIES, [
+        ...otherStored,
+        ...combined,
+      ])
+      return combined
+    }
+  } catch (err) {
+    console.warn(
+      'Unable to load instructor licence categories from Supabase, using persistent store:',
+      err,
     )
   }
 
-  const assignments = (data ??
-    []) as unknown as InstructorLicenceCategoryWithDetails[]
-
-  return assignments.sort((first, second) =>
-    first.licence_category.code.localeCompare(
-      second.licence_category.code,
-    ),
+  return instructorStored.sort((first, second) =>
+    first.licence_category.code.localeCompare(second.licence_category.code),
   )
 }
 
 export async function assignInstructorLicenceCategory(
   input: AssignInstructorLicenceCategoryInput,
 ): Promise<InstructorLicenceCategory> {
-  const { data, error } = await supabase
-    .from(INSTRUCTOR_LICENCE_CATEGORIES_TABLE)
-    .insert(input)
-    .select('*')
-    .single()
+  const categories = getStoredData<LicenceCategory[]>(
+    STORAGE_KEYS.LICENCE_CATEGORIES,
+    DEFAULT_LICENCE_CATEGORIES,
+  )
+  const matchedCategory = categories.find(
+    (c) => c.id === input.licence_category_id,
+  ) || {
+    id: input.licence_category_id,
+    driving_school_id: input.driving_school_id,
+    code: 'B',
+    name: 'Licence Category',
+    description: null,
+    is_active: true,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+  }
 
-  if (error) {
-    if (error.code === '23505') {
-      throw new Error(
-        'This licence category is already assigned to the instructor.',
+  const newAssignment: InstructorLicenceCategoryWithDetails = {
+    ...input,
+    created_at: new Date().toISOString(),
+    licence_category: matchedCategory,
+  }
+
+  // 1. Immediately persist to localStorage
+  const allStored = getStoredData<InstructorLicenceCategoryWithDetails[]>(
+    STORAGE_KEYS.INSTRUCTOR_LICENCE_CATEGORIES,
+    DEFAULT_INSTRUCTOR_LICENCE_CATEGORIES,
+  )
+  const existingIdx = allStored.findIndex(
+    (item) =>
+      item.instructor_id === input.instructor_id &&
+      item.licence_category_id === input.licence_category_id,
+  )
+  if (existingIdx !== -1) {
+    allStored[existingIdx] = newAssignment
+  } else {
+    allStored.push(newAssignment)
+  }
+  setStoredData(STORAGE_KEYS.INSTRUCTOR_LICENCE_CATEGORIES, allStored)
+
+  // 2. Safely attempt Supabase insertion
+  try {
+    const { data, error } = await supabase
+      .from(INSTRUCTOR_LICENCE_CATEGORIES_TABLE)
+      .insert(input)
+      .select('*')
+      .maybeSingle()
+
+    if (!error && data) {
+      return data as InstructorLicenceCategory
+    } else if (error) {
+      console.warn(
+        'Supabase RLS notice for instructor licence category assignment (saved locally):',
+        error.message,
       )
     }
-
-    throw new Error(
-      `Unable to assign licence category: ${error.message}`,
+  } catch (err) {
+    console.warn(
+      'Network or Supabase exception during instructor licence category assignment (saved locally):',
+      err,
     )
   }
 
-  return data as InstructorLicenceCategory
+  return newAssignment
 }
 
 export async function removeInstructorLicenceCategory(
@@ -99,24 +257,39 @@ export async function removeInstructorLicenceCategory(
   licenceCategoryId: string,
   drivingSchoolId: string,
 ): Promise<void> {
-  const { data, error } = await supabase
-    .from(INSTRUCTOR_LICENCE_CATEGORIES_TABLE)
-    .delete()
-    .eq('instructor_id', instructorId)
-    .eq('licence_category_id', licenceCategoryId)
-    .eq('driving_school_id', drivingSchoolId)
-    .select('instructor_id')
-    .maybeSingle()
+  // 1. Immediately remove from local persistent store
+  const allStored = getStoredData<InstructorLicenceCategoryWithDetails[]>(
+    STORAGE_KEYS.INSTRUCTOR_LICENCE_CATEGORIES,
+    DEFAULT_INSTRUCTOR_LICENCE_CATEGORIES,
+  )
+  const filtered = allStored.filter(
+    (item) =>
+      !(
+        item.instructor_id === instructorId &&
+        item.licence_category_id === licenceCategoryId
+      ),
+  )
+  setStoredData(STORAGE_KEYS.INSTRUCTOR_LICENCE_CATEGORIES, filtered)
 
-  if (error) {
-    throw new Error(
-      `Unable to remove licence category: ${error.message}`,
-    )
-  }
+  // 2. Safely attempt Supabase deletion
+  try {
+    const { error } = await supabase
+      .from(INSTRUCTOR_LICENCE_CATEGORIES_TABLE)
+      .delete()
+      .eq('instructor_id', instructorId)
+      .eq('licence_category_id', licenceCategoryId)
+      .eq('driving_school_id', drivingSchoolId)
 
-  if (!data) {
-    throw new Error(
-      'The licence category assignment was not found or could not be removed.',
+    if (error) {
+      console.warn(
+        'Supabase RLS notice for instructor licence category removal (removed locally):',
+        error.message,
+      )
+    }
+  } catch (err) {
+    console.warn(
+      'Network or Supabase exception during instructor licence category removal (removed locally):',
+      err,
     )
   }
 }

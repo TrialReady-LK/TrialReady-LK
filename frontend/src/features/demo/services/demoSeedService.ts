@@ -291,6 +291,38 @@ export async function seedDemoAcademyData(
       console.warn('Instructors upsert notice:', e)
     }
 
+    const instructorLicenceCategories = [
+      {
+        instructor_id: '11111111-1111-1111-1111-111111111111',
+        licence_category_id: 'ca111111-1111-1111-1111-111111111111',
+        driving_school_id: drivingSchoolId,
+        created_at: '2026-08-01T00:00:00Z',
+        licence_category: categories[0],
+      },
+      {
+        instructor_id: '11111111-1111-1111-1111-111111111111',
+        licence_category_id: 'ca222222-2222-2222-2222-222222222222',
+        driving_school_id: drivingSchoolId,
+        created_at: '2026-08-01T00:00:00Z',
+        licence_category: categories[1],
+      },
+      {
+        instructor_id: '33333333-3333-3333-3333-222222222222',
+        licence_category_id: 'ca111111-1111-1111-1111-111111111111',
+        driving_school_id: drivingSchoolId,
+        created_at: '2026-08-01T00:00:00Z',
+        licence_category: categories[0],
+      },
+      {
+        instructor_id: '33333333-3333-3333-3333-333333333333',
+        licence_category_id: 'ca333333-3333-3333-3333-333333333333',
+        driving_school_id: drivingSchoolId,
+        created_at: '2026-08-01T00:00:00Z',
+        licence_category: categories[2],
+      },
+    ]
+    setStoredData(STORAGE_KEYS.INSTRUCTOR_LICENCE_CATEGORIES, instructorLicenceCategories)
+
     onProgress?.('Configuring 5 Distinct DMT Learner Personas...', 50)
 
     // 5. Students
@@ -387,6 +419,52 @@ export async function seedDemoAcademyData(
     } catch (e) {
       console.warn('Students upsert notice:', e)
     }
+
+    const studentLicenceEnrolments = [
+      {
+        student_id: '11111111-1111-1111-1111-111111111111',
+        licence_category_id: 'ca111111-1111-1111-1111-111111111111',
+        driving_school_id: drivingSchoolId,
+        enrolled_at: '2026-01-15T00:00:00Z',
+        is_active: true,
+      },
+      {
+        student_id: '11111111-1111-1111-1111-111111111111',
+        licence_category_id: 'ca333333-3333-3333-3333-333333333333',
+        driving_school_id: drivingSchoolId,
+        enrolled_at: '2026-01-15T00:00:00Z',
+        is_active: true,
+      },
+      {
+        student_id: '11111111-1111-1111-1111-222222222222',
+        licence_category_id: 'ca111111-1111-1111-1111-111111111111',
+        driving_school_id: drivingSchoolId,
+        enrolled_at: '2026-01-18T00:00:00Z',
+        is_active: true,
+      },
+      {
+        student_id: '11111111-1111-1111-1111-333333333333',
+        licence_category_id: 'ca222222-2222-2222-2222-222222222222',
+        driving_school_id: drivingSchoolId,
+        enrolled_at: '2026-02-01T00:00:00Z',
+        is_active: true,
+      },
+      {
+        student_id: '11111111-1111-1111-1111-444444444444',
+        licence_category_id: 'ca111111-1111-1111-1111-111111111111',
+        driving_school_id: drivingSchoolId,
+        enrolled_at: '2026-02-10T00:00:00Z',
+        is_active: true,
+      },
+      {
+        student_id: '11111111-1111-1111-1111-444444444444',
+        licence_category_id: 'ca444444-4444-4444-4444-444444444444',
+        driving_school_id: drivingSchoolId,
+        enrolled_at: '2026-02-10T00:00:00Z',
+        is_active: true,
+      },
+    ]
+    setStoredData(STORAGE_KEYS.STUDENT_LICENCE_ENROLMENTS, studentLicenceEnrolments)
 
     onProgress?.('Seeding Official DMT Permits with Countdown Timers...', 65)
 

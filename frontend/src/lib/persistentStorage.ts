@@ -19,6 +19,8 @@ export const STORAGE_KEYS = {
   PAYMENTS: 'trialready_payments',
   ANNOUNCEMENTS: 'trialready_announcements',
   SESSIONS: 'trialready_sessions',
+  STUDENT_LICENCE_ENROLMENTS: 'trialready_student_licence_enrolments',
+  INSTRUCTOR_LICENCE_CATEGORIES: 'trialready_instructor_licence_categories',
 } as const
 
 export function getStoredData<T>(key: string, fallback: T): T {
