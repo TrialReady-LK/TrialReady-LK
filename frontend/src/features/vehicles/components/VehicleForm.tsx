@@ -53,7 +53,7 @@ function getInitialFormState(
     model: initialVehicle?.model ?? '',
     year_of_manufacture: initialVehicle?.year_of_manufacture
       ? String(initialVehicle.year_of_manufacture)
-      : '',
+      : '2024',
     licence_category_id: initialVehicle?.licence_category_id ?? '',
     branch_id: initialVehicle?.branch_id ?? '',
     transmission_type: initialVehicle?.transmission_type ?? 'manual',
@@ -371,13 +371,25 @@ export const VehicleForm: React.FC<VehicleFormProps> = ({
             <input
               id="veh-year"
               type="number"
-              min={1900}
-              max={2100}
+              min={1990}
+              max={2030}
+              step={1}
               value={form.year_of_manufacture}
               onChange={(e) =>
                 updateField('year_of_manufacture', e.target.value)
               }
-              placeholder="e.g. 2020"
+              onKeyDown={(e) => {
+                if (!form.year_of_manufacture) {
+                  if (e.key === 'ArrowUp') {
+                    e.preventDefault()
+                    updateField('year_of_manufacture', '2025')
+                  } else if (e.key === 'ArrowDown') {
+                    e.preventDefault()
+                    updateField('year_of_manufacture', '2024')
+                  }
+                }
+              }}
+              placeholder="e.g. 2024"
               className="w-full rounded-lg border border-slate-300 px-3 py-2 text-slate-900 outline-none focus:border-blue-500"
             />
             {errors.year_of_manufacture && (
