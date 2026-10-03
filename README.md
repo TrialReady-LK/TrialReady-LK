@@ -1,4 +1,4 @@
-# TrialReady LK 🇱🇰
+# TrialReady 🇱🇰
 > **AI-Assisted Driving Academy Management & DMT Practical Trial Readiness System**  
 > *Engineered for Sri Lankan Driving Schools & Motor Traffic Regulatory Compliance*
 
