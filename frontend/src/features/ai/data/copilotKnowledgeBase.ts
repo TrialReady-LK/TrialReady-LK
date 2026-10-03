@@ -14,8 +14,10 @@ export interface KnowledgeItem {
     | 'permits_regulations'
     | 'payments_fees'
     | 'sessions_schedule'
-    | 'instructor_admin'
-    | 'general'
+    | 'emergencies_safety'
+    | 'maintenance_mechanics'
+    | 'insurance_police'
+    | 'general_knowledge'
   keywords: string[]
   question: {
     en: string
@@ -47,7 +49,6 @@ export const COPILOT_KNOWLEDGE_BASE: KnowledgeItem[] = [
       'sup',
       'greetings',
       'kohomada',
-      'vanakkam',
     ],
     question: {
       en: 'Hello! How can you help me today?',
@@ -57,27 +58,30 @@ export const COPILOT_KNOWLEDGE_BASE: KnowledgeItem[] = [
     answer: {
       en: `👋 **Ayubowan / Vanakkam! Welcome to TrialReady.LK AI Copilot!**
 
-I am your 24/7 intelligent driving assistant. Here is what I can help you with:
+I am your 24/7 intelligent driving and general assistant. Here is what I can help you with:
 
-🚗 **Student Portal & Progress:**
-• Check your booked driving lessons, assigned instructor, and vehicles.
+🎓 **Student Portal & Progress:**
+• Check booked driving lessons, assigned instructor, and vehicles.
 • Track your Trial Readiness Score & Learner Journey milestones.
 • View payment plans, installment receipts, and balance dues.
 
 🚦 **Sri Lanka Highway Code & Theory:**
-• Ask about Speed Limits, Traffic Lights, Road Signs, and Roundabout priority.
+• Ask about Speed Limits, Traffic Lights, Road Signs, and Roundabouts.
 • Practice Computerized DMT Mock Exams (40 questions in EN/SI/TA).
 
-🎯 **DMT Practical Trial Mastery:**
+🚗 **DMT Practical Trial Mastery:**
 • Step-by-step techniques for Hill Start, Reverse S-Bend, and 3-Point Turns.
 • Examiner scoring rubrics and common mistakes to avoid on trial day.
 
-What would you like to explore today? Type any question or select a prompt above!`,
+🔧 **Safety, Emergencies & Vehicle Care:**
+• What to do in accidents, brake failures, tyre punctures, jumpstarts, and warning lights.
+
+Feel free to ask me any question!`,
       si: `👋 **ආයුබෝවන්! TrialReady.LK AI Copilot වෙත සාදරයෙන් පිළිගනිමු!**
 
-මම ඔබේ 24/7 බුද්ධිමත් රියදුරු සහායකයා වෙමි. මට ඔබට පහත දෑ සඳහා උදව් කළ හැකිය:
+මම ඔබේ 24/7 බුද්ධිමත් රියදුරු සහ සාමාන්‍ය දැනුම සහායකයා වෙමි:
 
-🚗 **ශිෂ්‍ය පෝර්ටලය (Student Portal) සහ ප්‍රගතිය:**
+🎓 **ශිෂ්‍ය පෝර්ටලය (Student Portal) සහ ප්‍රගතිය:**
 • නියමිත ප්‍රායෝගික පුහුණු සැසි, උපදේශක සහ වාහන තොරතුරු බැලීම.
 • Trial Readiness ලකුණු මට්ටම සහ Learner Journey පියවර පරීක්ෂා කිරීම.
 • ගෙවීම් වාරික, රිසිට්පත් සහ ඉතිරි මුදල් විස්තර.
@@ -86,83 +90,33 @@ What would you like to explore today? Type any question or select a prompt above
 • වේග සීමා, මාර්ග සංඥා, වටරවුම් නීති සහ මාර්ග සලකුණු.
 • DMT ආදර්ශ පරිගණක ප්‍රශ්න පත්‍ර පුහුණුව (ප්‍රශ්න 40 - සිංහල/දෙමළ/ඉංග්‍රීසි).
 
-🎯 **DMT ප්‍රායෝගික පරීක්ෂණය (Practical Trial):**
+🚗 **DMT ප්‍රායෝගික පරීක්ෂණය (Practical Trial):**
 • කඳු නැගීම (Hill Start), ප්‍රතිවිරුද්ධ S-වංගුව (Reverse S-Bend) නිවැරදිව කරන ආකාරය.
-• පරීක්ෂණ දිනයේදී සිදුවන පොදු වැරදි වළක්වා ගැනීම.
 
-ඔබට දැනගැනීමට අවශ්‍ය ඕනෑම දෙයක් අසන්න!`,
+🔧 **හදිසි අවස්ථා සහ වාහන නඩත්තුව:**
+• තිරිංග අක්‍රිය වීම, ටයර් පිපිරීම්, බැටරි ජම්ප් ස්ටාර්ට් සහ අනතුරු අවස්ථා.`,
       ta: `👋 **வணக்கம்! TrialReady.LK AI Copilot இற்கு உங்களை அன்புடன் வரவேற்கிறோம்!**
 
-நான் உங்கள் 24/7 அறிவார்ந்த சாரதி பயிற்றுனர் உதவியாளர். நான் உங்களுக்கு பின்வருவனவற்றில் உதவ முடியும்:
+நான் உங்கள் 24/7 அறிவார்ந்த சாரதி மற்றும் பொது அறிவு உதவியாளர்:
 
-🚗 **மாணவர் போர்ட்டல் (Student Portal) & முன்னேற்றம்:**
-• உங்கள் நடைமுறை ஓட்டுநர் அமர்வுகள், ஒதுக்கப்பட்ட பயிற்றுனர் மற்றும் வாகன விவரங்கள்.
-• Trial Readiness மதிப்பெண் மற்றும் கற்றல் மைல்கற்களைப் பார்வையிடல்.
+🎓 **மாணவர் போர்ட்டல் (Student Portal) & முன்னேற்றம்:**
+• செய்முறை ஓட்டுநர் அமர்வுகள், பயிற்றுனர் மற்றும் வாகன விவரங்கள்.
+• Trial Readiness மதிப்பெண் மற்றும் கற்றல் மைல்கற்கள்.
 • கட்டணத் தவணைகள், பற்றுச்சீட்டுகள் மற்றும் நிலுவைத் தொகை.
 
-🚦 **இலங்கை நெடுஞ்சாலை விதிகள் (Highway Code) & Theory:**
-• வேக வரம்புகள், போக்குவரத்து அடையாளங்கள், வட்டாரப் பாதை விதிகள்.
-• DMT மாதிரி பரீட்சை பயிற்சி (40 வினாக்கள் - தமிழ்/சிங்களம்/ஆங்கிலம்).
+🚦 **இலங்கை நெடுஞ்சாலை விதிகள் & Theory:**
+• வேக வரம்புகள், போக்குவரத்து அடையாளங்கள், DMT மாதிரிப் பரீட்சை.
 
-🎯 **DMT செய்முறைப் பரீட்சை (Practical Trial):**
-• Hill Start, Reverse S-Bend நுட்பங்கள் மற்றும் தவறுகளைத் தவிர்ப்பதற்கான வழிகள்.
+🚗 **செய்முறைப் பரீட்சை (Practical Trial):**
+• Hill Start, Reverse S-Bend நுட்பங்கள் மற்றும் தவறுகளைத் தவிர்த்தல்.
 
-உங்களுக்குத் தேவையான எந்தவொரு கேள்வியையும் கேட்கலாம்!`,
+🔧 **அவசரநிலைகள் & வாகனப் பராமரிப்பு:**
+• விபத்துக்கள், பிரேக் செயலிழப்பு மற்றும் டயர் வெடிப்பு வழிகாட்டல்.`,
     },
-    suggestions: ['Student Portal Features', 'Hill Start Tips', 'Highway Code', 'Mock Exam'],
+    suggestions: ['Student Portal Features', 'Highway Code Rules', 'Hill Start Tips', 'Accident Procedure'],
   },
 
-  {
-    id: 'kb-who-are-you',
-    category: 'greetings',
-    keywords: [
-      'who are you',
-      'what are you',
-      'what can you do',
-      'introduce yourself',
-      'help me',
-      'about you',
-      'chatbot',
-    ],
-    question: {
-      en: 'Who are you and what can you do?',
-      si: 'ඔබ කවුද සහ ඔබට කුමක් කළ හැකිද?',
-      ta: 'நீங்கள் யார் மற்றும் நீங்கள் என்ன செய்ய முடியும்?',
-    },
-    answer: {
-      en: `🤖 **I am the TrialReady.LK AI Driving Assistant & Copilot!**
-
-I am specifically engineered to guide learner drivers, instructors, and driving academies across Sri Lanka.
-
-**My Core Capabilities:**
-1. **Student Portal Guide:** Helping students navigate schedules, payments, attendance, and exam readiness scores.
-2. **Highway Code Expert:** Comprehensive knowledge of Sri Lanka Motor Traffic Act No. 14 of 1951 (and amendments), DMT traffic signs, speed limits, and road regulations.
-3. **Practical Trial Coach:** Step-by-step guidance on DMT maneuvers (Hill Start, Reverse S-Bend, Parallel Parking).
-4. **Trilingual Support:** Fluently answering in English, Sinhala (සිංහල), and Tamil (தமிழ்).
-
-Feel free to ask me anything about your driving academy journey or traffic laws!`,
-      si: `🤖 **මම TrialReady.LK AI රියදුරු සහායක Copilot වෙමි!**
-
-ශ්‍රී ලංකාවේ ආධුනික රියදුරන්, උපදේශකවරුන් සහ රියදුරු පාසල් කළමනාකරණය සඳහා විශේෂයෙන් නිර්මාණය කර ඇත.
-
-**මගේ ප්‍රධාන හැකියාවන්:**
-1. **ශිෂ්‍ය පෝර්ටල් මගපෙන්වීම:** පුහුණු සැසි කාලසටහන, ගෙවීම්, සහ Trial Readiness ලකුණු පරික්ෂාව.
-2. **මාර්ග නීති විශේෂඥතාව:** ශ්‍රී ලංකා මෝටර් රථ ප්‍රවාහන පනත, DMT මාර්ග සංඥා, වේග සීමා සහ රීති.
-3. **ප්‍රායෝගික විභාග පුහුණුව:** Hill Start, Reverse S-Bend, Parallel Parking ක්‍රමවේද.
-4. **භාෂා ත්‍රිත්ව සහාය:** සිංහල, දෙමළ සහ ඉංග්‍රීසි භාෂාවලින් සහාය ලබාදීම.`,
-      ta: `🤖 **நான் TrialReady.LK AI சாரதி உதவியாளர் Copilot ஆவேன்!**
-
-இலங்கையின் பயிலுனர் சாரதிகள் மற்றும் ஓட்டுநர் பாடசாலைகளுக்காக விசேடமாக உருவாக்கப்பட்டுள்ளேன்.
-
-**எனது முக்கிய திறன்கள்:**
-1. **மாணவர் போர்ட்டல் வழிகாட்டல்:** கால அட்டவணை, கட்டணங்கள் மற்றும் தயார்நிலை மதிப்பெண்கள்.
-2. **நெடுஞ்சாலை விதிகள் நிபுணத்துவம்:** இலங்கை மோட்டார் போக்குவரத்து சட்டம், வீதி அடையாளங்கள், வேக வரம்புகள்.
-3. **செய்முறைப் பரீட்சை வழிகாட்டல்:** Hill Start, Reverse S-Bend நுட்பங்கள்.
-4. **மும்மொழி ஆதரவு:** தமிழ், சிங்களம் மற்றும் ஆங்கிலத்தில் பதிலளிக்கும் திறன்.`,
-    },
-  },
-
-  // --- STUDENT PORTAL FEATURES ---
+  // --- STUDENT PORTAL OVERVIEW ---
   {
     id: 'kb-student-portal-overview',
     category: 'student_portal',
@@ -175,6 +129,7 @@ Feel free to ask me anything about your driving academy journey or traffic laws!
       'student view',
       'portal',
       'my portal',
+      'tell me about student portal',
     ],
     question: {
       en: 'What features are available in the Student Portal and how do I use it?',
@@ -189,7 +144,7 @@ The **Student Portal** (\`/student/portal\`) is your personal central dashboard 
 1. **📊 Trial Readiness & Progress Widget:**
    • Displays your current AI Readiness Score (0-100%).
    • Shows completed practical driving hours vs. target requirement (e.g. 15 hours).
-   • Tracks your Learner Journey stage (e.g., Medical Clearance -> Learner Permit -> Practical Training -> Trial Ready).
+   • Tracks your Learner Journey stage (Medical Clearance $\rightarrow$ Learner Permit $\rightarrow$ Practical Training $\rightarrow$ Trial Ready).
 
 2. **📅 Upcoming Practical Sessions:**
    • See your booked driving lessons with assigned instructor name, contact number, vehicle model, and transmission type (Manual/Auto).
@@ -209,39 +164,24 @@ The **Student Portal** (\`/student/portal\`) is your personal central dashboard 
 1. **📊 Trial Readiness සහ ප්‍රගති දර්ශකය:**
    • ඔබේ වත්මන් AI Readiness ප්‍රතිශතය (0-100%).
    • සම්පූර්ණ කළ ප්‍රායෝගික පුහුණු පැය ගණන (උදා: පැය 15).
-   • Learner Journey හි ඔබ සිටින වත්මන් පියවර (වෛද්‍ය සහතිකය -> ආධුනික බලපත්‍රය -> ප්‍රායෝගික පුහුණුව -> විභාගයට සුදානම්).
+   • Learner Journey හි ඔබ සිටින වත්මන් පියවර.
 
 2. **📅 ඉදිරි පුහුණු සැසි (Upcoming Sessions):**
-   • වෙන්කරවා ගත් රියදුරු පාඩම්, උපදේශකගේ නම, දුරකථන අංකය, වාහන අංකය සහ ගියර් වර්ගය (Manual/Auto).
+   • වෙන්කරවා ගත් රියදුරු පාඩම්, උපදේශකගේ නම, දුරකථන අංකය, වාහන අංකය.
 
 3. **🚦 DMT Theory Hub & Mock Exam:**
-   • ප්‍රශ්න 40 කින් සමන්විත පරිගණකගත ආදර්ශ විභාග, මාර්ග සංඥා flashcards.
+   • ප්‍රශ්න 40 කින් සමන්විත පරිගණකගත ආදර්ශ විභාග.
 
 4. **💳 ගෙවීම් සහ රිසිට්පත්:**
-   • පාඨමාලා ගාස්තුව, ගෙවූ වාරික, ඉතිරි මුදල සහ නිල PDF රිසිට්පත් බාගත කිරීම.
-
-5. **📄 නීතිමය වලංගුතාව:**
-   • DMT ආධුනික බලපත්‍රයේ මාස 6ක කාලසීමාව සහ NTMI වෛද්‍ය සහතිකයේ තත්ත්වය.`,
+   • පාඨමාලා ගාස්තුව, ගෙවූ වාරික, ඉතිරි මුදල සහ නිල PDF රිසිට්පත් බාගත කිරීම.`,
       ta: `🎓 **மாணவர் போர்ட்டல் (Student Portal) கண்ணோட்டம்:**
 
 **Student Portal** (\`/student/portal\`) உங்கள் ஓட்டுநர் உரிமப் பயணத்தின் பிரதான பக்கமாகும்:
 
-1. **📊 Trial Readiness மற்றும் முன்னேற்றப் பலகை:**
-   • உங்கள் தற்போதைய AI தயார்நிலை மதிப்பெண் (0-100%).
-   • நிறைவு செய்யப்பட்ட நடைமுறை ஓட்டுநர் மணித்தியாலங்கள்.
-   • உங்கள் கற்றல் பயணத்தின் மைல்கற்கள்.
-
-2. **📅 வரவிருக்கும் செய்முறை அமர்வுகள்:**
-   • பதிவு செய்யப்பட்ட ஓட்டுநர் பாடங்கள், பயிற்றுனர் பெயர், தொடர்பு எண் மற்றும் வாகன விவரங்கள்.
-
-3. **🚦 DMT கணினி மாதிரிப் பரீட்சை:**
-   • 40 வினாக்கள் கொண்ட மாதிரிப் பரீட்சைகள் மற்றும் வீதி அடையாள அட்டைகள்.
-
-4. **💳 கட்டணங்கள் மற்றும் பற்றுச்சீட்டுகள்:**
-   • செலுத்தப்பட்ட தவணைகள், நிலுவைத் தொகை மற்றும் PDF ரசீதுகள்.
-
-5. **📄 ஆவண செல்லுபடித்தன்மை:**
-   • 6 மாத DMT பயிலுனர் அனுமதிப்பத்திரம் மற்றும் NTMI மருத்துவச் சான்றிதழ் நிலை.`,
+1. **📊 Trial Readiness மற்றும் முன்னேற்றப் பலகை:** உங்கள் AI தயார்நிலை மதிப்பெண் (0-100%).
+2. **📅 வரவிருக்கும் செய்முறை அமர்வுகள்:** பதிவு செய்யப்பட்ட ஓட்டுநர் பாடங்கள் மற்றும் பயிற்றுனர் விவரங்கள்.
+3. **🚦 DMT கணினி மாதிரிப் பரீட்சை:** 40 வினாக்கள் கொண்ட மாதிரிப் பரீட்சைகள்.
+4. **💳 கட்டணங்கள் மற்றும் பற்றுச்சீட்டுகள்:** செலுத்தப்பட்ட தவணைகள் மற்றும் PDF ரசீதுகள்.`,
     },
     suggestions: ['How to check my sessions', 'How to view my payments', 'What is Readiness Score'],
   },
@@ -283,22 +223,15 @@ The **Student Portal** (\`/student/portal\`) is your personal central dashboard 
       si: `📅 **ප්‍රායෝගික රියදුරු පුහුණු සැසි පරීක්ෂා කිරීම:**
 
 • **ශිෂ්‍ය පෝර්ටලය තුළින් (\`/student/portal\`):**
-  ප්‍රධාන පුවරුවේ ඇති **"Upcoming Practical Sessions"** කොටසෙන් ඔබේ පුහුණු දිනය, වේලාව (උදා: පෙ.ව. 09:00 - 11:00), උපදේශකවරයා සහ පුහුණු වාහනය බලාගත හැක.
+  ප්‍රධාන පුවරුවේ ඇති **"Upcoming Practical Sessions"** කොටසෙන් ඔබේ පුහුණු දිනය, වේලාව, උපදේශකවරයා සහ පුහුණු වාහනය බලාගත හැක.
 
 • **Sessions & Calendar පිටුවෙන් (\`/sessions\`):**
-  සම්පූර්ණ කළ පුහුණු පැය ගණන, උපදේශකවරයා ලබාදුන් ලකුණු සහ ආවරණය කළ පාඩම් (Hill Start, Reverse S-Bend, නගර ධාවනය) සවිස්තරාත්මකව බැලිය හැක.
-
-• **වේලාව වෙනස් කිරීමට අවශ්‍ය නම්:**
-  පුහුණු සැසියට පැය 24කට පෙර ඔබේ රියදුරු පාසලේ සම්බන්ධීකාරක හෝ උපදේශක අමතන්න.`,
+  සම්පූර්ණ කළ පුහුණු පැය ගණන සහ උපදේශකවරයා ලබාදුන් ලකුණු සවිස්තරාත්මකව බැලිය හැක.`,
       ta: `📅 **செய்முறை ஓட்டுநர் அமர்வுகளைப் பார்வையிடல்:**
 
-• **மாணவர் போர்ட்டலில் (\`/student/portal\`):**
-  **"Upcoming Practical Sessions"** பகுதியில் உறுதிப்படுத்தப்பட்ட திகதி, நேரம், பயிற்றுனர் மற்றும் பயிற்சி வாகனத்தைக் காணலாம்.
-
-• **Sessions Calendar பக்கத்தில் (\`/sessions\`):**
-  நிறைவு செய்யப்பட்ட மணித்தியாலங்கள், பயிற்றுனரின் மதிப்பீடுகள் மற்றும் பயிற்சி தலைப்புகளைப் பார்க்கலாம்.`,
+• **மாணவர் போர்ட்டலில் (\`/student/portal\`):** வரவிருக்கும் பயிற்சி திகதி, நேரம் மற்றும் பயிற்றுனர் விவரங்களைக் காணலாம்.
+• **Sessions Calendar பக்கத்தில் (\`/sessions\`):** நிறைவு செய்யப்பட்ட மணித்தியாலங்கள் மற்றும் மதிப்பீடுகளைப் பார்க்கலாம்.`,
     },
-    suggestions: ['Who is my instructor?', 'How many hours needed before trial?'],
   },
 
   // --- PAYMENTS & FEES ---
@@ -333,27 +266,19 @@ The **Student Portal** (\`/student/portal\`) is your personal central dashboard 
 
 2. **Official Payment Receipts:**
    • Every time an installment is paid (Cash, Bank Transfer, or Card), an official digital receipt is recorded with a unique receipt number (e.g., \`REC-2026-0089\`).
-   • Click the **"View Receipt"** button next to any transaction to preview and print or save the PDF receipt.
-
-3. **Installment Schedules:**
-   • Typical plans include: Initial Registration Deposit (40%), Midway Training Payment (30%), and Final Pre-Trial Clearance (30%).`,
+   • Click the **"View Receipt"** button next to any transaction to preview and print or save the PDF receipt.`,
       si: `💳 **පාඨමාලා ගෙවීම් සහ නිල රිසිට්පත්:**
 
 1. **ගෙවීම් විස්තර බැලීම:**
    • **Student Portal (\`/student/portal\`)** හෝ **Financials (\`/financials\`)** වෙත පිවිසෙන්න.
-   • සම්පූර්ණ පාඨමාලා ගාස්තුව (උදා: රු. 45,000), මේ දක්වා ගෙවූ මුදල සහ ඉතිරි ශේෂය දැකගත හැක.
+   • සම්පූර්ණ පාඨමාලා ගාස්තුව, මේ දක්වා ගෙවූ මුදල සහ ඉතිරි ශේෂය දැකගත හැක.
 
 2. **නිල රිසිට්පත් ලබාගැනීම:**
-   • ඔබ ගෙවන සෑම වාරිකයකටම අදාළව නිල ඩිජිටල් රිසිට්පතක් (උදා: \`REC-2026-0089\`) නිකුත් කෙරේ.
-   • ඕනෑම ගෙවීමක් අසල ඇති **"View Receipt"** බොත්තම ක්ලික් කර PDF රිසිට්පත මුද්‍රණය කරගන්න හෝ බාගත කරගන්න.`,
+   • ඕනෑම ගෙවීමක් අසල ඇති **"View Receipt"** බොත්තම ක්ලික් කර PDF රිසිට්පත බාගත කරගන්න.`,
       ta: `💳 **கட்டணங்கள் மற்றும் உத்தியோகபூர்வ ரசீதுகள்:**
 
-1. **கட்டண விவரங்களைப் பார்க்க:**
-   • **Student Portal (\`/student/portal\`)** அல்லது **Financials (\`/financials\`)** பக்கத்திற்குச் செல்லவும்.
-   • மொத்தக் கட்டணம், செலுத்தப்பட்ட தொகை மற்றும் நிலுவைத் தொகையைப் பார்க்கலாம்.
-
-2. **ரசீதுகளைப் பதிவிறக்க:**
-   • ஒவ்வொரு கட்டணத்திற்கும் உத்தியோகபூர்வ டிஜிட்டல் ரசீது உருவாக்கப்படும். **"View Receipt"** என்பதைக் கிளிக் செய்து PDF ரசீதைப் பெறலாம்.`,
+1. **கட்டண விவரங்களைப் பார்க்க:** **Student Portal (\`/student/portal\`)** அல்லது **Financials (\`/financials\`)** பக்கத்திற்குச் செல்லவும்.
+2. **ரசீதுகளைப் பதிவிறக்க:** **"View Receipt"** என்பதைக் கிளிக் செய்து PDF ரசீதைப் பெறலாம்.`,
     },
   },
 
@@ -395,27 +320,26 @@ Your **Trial Readiness Score** is an automated metric that predicts your likelih
 
 **එය ප්‍රධාන සාධක 4ක් මත පදනම් වේ:**
 1. **ප්‍රායෝගික පුහුණු පැය (35%):** නියමිත පැය 15+ ක පුහුණුව සම්පූර්ණ කිරීම.
-2. **උපදේශක ඇගයීම් (35%):** Hill Start, Reverse S-Bend, Parking සහ ක්ලච් පාලනය පිළිබඳ ප්‍රවීණතාව.
+2. **උපදේශක ඇගයීම් (35%):** Hill Start, Reverse S-Bend, Parking සහ ක්ලච් පාලනය.
 3. **DMT Theory Mock Exam සාමාන්‍යය (20%):** ආදර්ශ විභාගවලින් 30/40 කට වඩා ලබාගැනීම.
 4. **පැමිණීම සහ විනය (10%):** නොකඩවා පුහුණු සැසිවලට සහභාගී වීම.
 
 🎯 **ඉලක්කය:** ලකුණු **$\ge 80\%$** ක් ලබාගත් පසු ඔබව නිල DMT විභාගය සඳහා යොමු කෙරේ!`,
       ta: `📊 **AI Trial Readiness மதிப்பெண் முறைமை:**
 
-உங்கள் **Trial Readiness Score** நீங்கள் முதல் முயற்சியிலேயே DMT செய்முறைப் பரீட்சையில் சித்தியடைவதற்கான வாய்ப்பைக் கணிக்கும்.
+உங்கள் **Trial Readiness Score** நீங்கள் முதல் முயற்சியிலேயே DMT செய்முறைப் பரීட்சையில் சித்தியடைவதற்கான வாய்ப்பைக் கணிக்கும்.
 
 **4 முக்கிய அம்சங்கள்:**
 1. **நடைமுறை பயிற்சி மணித்தியாலங்கள் (35%):** கட்டாய 15+ மணித்தியாலங்கள்.
-2. **பயிற்றுனர் மதிப்பீடுகள் (35%):** Hill Start, Reverse S-Bend, Parking தேர்ச்சி.
+2. **பயிற்றுனர் மதிப்பீடுகள் (35%):** Hill Start, Reverse S-Bend தேர்ச்சி.
 3. **DMT மாதிரிப் பரீட்சை சராசரி (20%):** 30/40 இற்கு மேல் புள்ளிகள்.
 4. **வருகை ஒழுக்கம் (10%):** தொடர்ச்சியான பயிற்சி.
 
 🎯 **இலக்கு:** **$\ge 80\%$** பெற்றவுடன் நீங்கள் அரச பரீட்சைக்குத் தகுதி பெறுவீர்கள்!`,
     },
-    suggestions: ['How to do Hill Start', 'Examiner checkpoints', 'Take Mock Exam'],
   },
 
-  // --- DMT THEORY EXAM & MOCK SIMULATOR ---
+  // --- DMT THEORY EXAM ---
   {
     id: 'kb-theory-exam-overview',
     category: 'theory_hub',
@@ -457,12 +381,6 @@ Your **Trial Readiness Score** is an automated metric that predicts your likelih
 • **ලබාදෙන කාලය:** මිනිත්තු 45.
 • **භාෂා:** සිංහල, දෙමළ සහ ඉංග්‍රීසි.
 
-**ප්‍රධාන විභාග මාතෘකා:**
-1. මාර්ග සංඥා සහ සලකුණු (අනිවාර්ය, අනතුරු ඇඟවීමේ, තොරතුරු).
-2. මාර්ග ප්‍රමුඛතාවය සහ වටරවුම් නීති.
-3. වේග සීමා සහ 2-Second ආරක්ෂිත දුර රීතිය.
-4. මෝටර් රථ ප්‍රවාහන පනතේ නීති රීති සහ දඩ මුදල්.
-
 💡 **පුහුණු වීමට:** TrialReady.LK හි **Theory Hub (\`/theory\`)** හෝ **Mock Exam (\`/theory/exam\`)** වෙත පිවිසෙන්න!`,
       ta: `🚦 **இலங்கை DMT கோட்பாட்டுப் பரீட்சை முறை:**
 
@@ -471,9 +389,8 @@ Your **Trial Readiness Score** is an automated metric that predicts your likelih
 • **நேரம்:** 45 நிமிடங்கள்.
 • **மொழிகள்:** தமிழ், சிங்களம், ஆங்கிலம்.
 
-💡 **பயிற்சி பெற:** TrialReady.LK இன் **Theory Hub (\`/theory\`)** அல்லது **Mock Exam (\`/theory/exam\`)** இற்குச் செல்லுங்கள்!`,
+💡 **பயிற்சி பெற:** **Theory Hub (\`/theory\`)** அல்லது **Mock Exam (\`/theory/exam\`)** இற்குச் செல்லுங்கள்!`,
     },
-    suggestions: ['Highway Code Rules', 'Speed Limits in Sri Lanka', 'Road Signs Difference'],
   },
 
   // --- HIGHWAY CODE & ROAD REGULATIONS ---
@@ -512,14 +429,11 @@ Your **Trial Readiness Score** is an automated metric that predicts your likelih
       si: `🛣️ **ශ්‍රී ලංකා මාර්ග නීති සංග්‍රහයේ (Highway Code) ප්‍රධාන කරුණු:**
 
 1. **වමෙන් ධාවනය කරන්න:** සෑම විටම මාර්ගයේ වම් මංතීරුවේ ධාවනය කරන්න.
-2. **දකුණෙන් ඉස්සර කරන්න:** ඉස්සර කිරීම (Overtaking) කළ යුත්තේ දකුණු පසින් පමණි. වංගුවලදී, කඳු මුදුන්වලදී, සීබ්‍රා ක්‍රොසිං සහ තනි/ද්විත්ව සුදු ඉරි මතින් කිසිවිටෙක ඉස්සර නොකරන්න.
+2. **දකුණෙන් ඉස්සර කරන්න:** ඉස්සර කිරීම කළ යුත්තේ දකුණු පසින් පමණි. වංගුවලදී, කඳු මුදුන්වලදී, සීබ්‍රා ක්‍රොසිං සහ තනි/ද්විත්ව සුදු ඉරි මතින් කිසිවිටෙක ඉස්සර නොකරන්න.
 3. **වටරවුම් ප්‍රමුඛතාව:** වටරවුමක් තුළ ඔබේ **දකුණු පසින්** එන වාහනවලට පළමුව ඉඩ දෙන්න.
 4. **2-Second නීතිය:** ඉදිරියෙන් යන වාහනය සමඟ අවම වශයෙන් තත්පර 2ක ආරක්ෂිත දුරක් තබාගන්න (වැසි දිනවල තත්පර 4ක්).
-5. **වේග සීමා:**
-   • නාගරික ප්‍රදේශ: **50 km/h**
-   • සාමාන්‍ය මහාමාර්ග: **70 km/h** (මෝටර් රථ/වෑන්)
-   • අධිවේගී මාර්ග (Expressways): උපරිම **100 km/h** (අවම 50 km/h)
-6. **ආසන පටි:** රියදුරු සහ ඉදිරිපස මගියා ආසන පටි (Seatbelts) පැළඳීම අනිවාර්ය වේ.
+5. **වේග සීමා:** නාගරික 50 km/h, සාමාන්‍ය මාර්ග 70 km/h, අධිවේගී 100 km/h.
+6. **ආසන පටි:** රියදුරු සහ මගියාට අනිවාර්ය වේ.
 7. **ජංගම දුරකථන:** රිය ධාවනය අතරතුර භාවිතය සපුරා තහනම්ය.`,
       ta: `🛣️ **இலங்கை நெடுஞ்சாலை விதிகளின் முக்கிய அம்சங்கள்:**
 
@@ -527,13 +441,9 @@ Your **Trial Readiness Score** is an automated metric that predicts your likelih
 2. **வலதுபுறமாக முந்துங்கள்:** முந்துவது (Overtake) எப்போதும் வலதுபுறமாக மட்டுமே செய்யப்பட வேண்டும்.
 3. **வட்டாரப் பாதை முன்னுரிமை:** வட்டாரப் பாதையில் உங்கள் **வலதுபுறத்தில்** இருந்து வரும் வாகனங்களுக்கு முன்னுரிமை அளியுங்கள்.
 4. **2-வினாடி விதி:** முன்னால் செல்லும் வாகனத்திற்கும் உங்களுக்கும் இடையில் குறைந்தபட்சம் 2 வினாடி இடைவெளியைப் பேணுங்கள்.
-5. **வேக வரம்புகள்:**
-   • நகரப் பகுதிகள்: **50 km/h**
-   • கிராமப்புற நெடுஞ்சாலைகள்: **70 km/h**
-   • அதிவேக நெடுஞ்சாலைகள்: **100 km/h**
+5. **வேக வரம்புகள்:** நகரங்கள் 50 km/h | நெடுஞ்சாலைகள் 70 km/h | அதிவேக நெடுஞ்சாலைகள் 100 km/h.
 6. **இருக்கைப்பட்டை:** சாரதியும் முன்பக்கப் பயணியும் சீட்பெல்ட் அணிவது கட்டாயம்.`,
     },
-    suggestions: ['Speed Limits in Sri Lanka', 'Roundabout Priority', 'Road Signs Difference'],
   },
 
   // --- SPEED LIMITS ---
@@ -571,40 +481,19 @@ Your **Trial Readiness Score** is an automated metric that predicts your likelih
    • Three-wheelers: **40 km/h**
 
 3. **Expressways (Southern E01, Central E02/E04, Katunayake E03):**
-   • Maximum Speed: **100 km/h**
-   • Minimum Speed: **50 km/h**
+   • Maximum Speed: **100 km/h** | Minimum Speed: **50 km/h**
    • Three-wheelers, Motorcycles $<50\text{cc}$, Tractors, and non-motorized vehicles are **strictly prohibited** on expressways.`,
       si: `⚡ **ශ්‍රී ලංකාවේ නීත්‍යානුකූල වේග සීමා:**
 
-1. **නාගරික / ජනාකීර්ණ ප්‍රදේශ:**
-   • මෝටර් රථ සහ වෑන්: **50 km/h**
-   • යතුරුපැදි: **40 km/h**
-   • බස්, ලොරි සහ ත්‍රිරෝද රථ: **40 km/h**
-
-2. **නාගරික නොවන / සාමාන්‍ය මහාමාර්ග:**
-   • මෝටර් රථ සහ වෑන්: **70 km/h**
-   • යතුරුපැදි: **60 km/h**
-   • බස් සහ ලොරි: **60 km/h**
-   • ත්‍රිරෝද රථ: **40 km/h**
-
-3. **අධිවේගී මාර්ග (Expressways):**
-   • උපරිම වේගය: **100 km/h**
-   • අවම වේගය: **50 km/h**`,
+1. **නාගරික ප්‍රදේශ:** මෝටර් රථ සහ වෑන්: **50 km/h** | යතුරුපැදි, බස්, ලොරි, ත්‍රිරෝද: **40 km/h**
+2. **සාමාන්‍ය මහාමාර්ග:** මෝටර් රථ සහ වෑන්: **70 km/h** | යතුරුපැදි: **60 km/h** | ත්‍රිරෝද: **40 km/h**
+3. **අධිවේගී මාර්ග:** උපරිම **100 km/h** | අවම **50 km/h**`,
       ta: `⚡ **இலங்கையின் சட்டபூர்வ வேக வரம்புகள்:**
 
-1. **நகரப் பகுதிகள்:**
-   • கார்கள் & வான்கள்: **50 km/h**
-   • மோட்டார் சைக்கிள்கள் & முச்சக்கர வண்டிகள்: **40 km/h**
-
-2. **நெடுஞ்சாலைகள்:**
-   • கார்கள் & வான்கள்: **70 km/h**
-   • மோட்டார் சைக்கிள்கள்: **60 km/h**
-   • முச்சக்கர வண்டிகள்: **40 km/h**
-
-3. **அதிவேக நெடுஞ்சாலைகள்:**
-   • அதிகபட்ச வேகம்: **100 km/h** | குறைந்தபட்ச வேகம்: **50 km/h**`,
+1. **நகரப் பகுதிகள்:** கார்கள் & வான்கள்: **50 km/h** | மோட்டார் சைக்கிள்கள் & முச்சக்கர வண்டிகள்: **40 km/h**
+2. **நெடுஞ்சாலைகள்:** கார்கள் & வான்கள்: **70 km/h** | மோட்டார் சைக்கிள்கள்: **60 km/h**
+3. **அதிவேக நெடுஞ்சாலைகள்:** அதிகபட்சம் **100 km/h** | குறைந்தபட்சம் **50 km/h**`,
     },
-    suggestions: ['Traffic Lights Rules', 'Road Signs Difference'],
   },
 
   // --- TRAFFIC LIGHTS ---
@@ -642,33 +531,21 @@ Your **Trial Readiness Score** is an automated metric that predicts your likelih
    • **STOP.** You must stop unless you are so close to the stop line that stopping suddenly would cause a collision.
 
 5. 🟡✨ **Flashing AMBER (Pelican / Pedestrian Crossing):**
-   • **GIVE WAY** to pedestrians who are on the crossing. If no pedestrians, you may proceed with caution.
-
-6. 🟢➡️ **Green Arrow Filter:**
-   • You may proceed in the direction indicated by the arrow, regardless of other signals.`,
+   • **GIVE WAY** to pedestrians who are on the crossing. If no pedestrians, you may proceed with caution.`,
       si: `🚦 **මාර්ග සංඥා ලාම්පු (Traffic Lights) වල අර්ථය:**
 
-1. 🔴 **රතු පැහැය පමණක්:**
-   • **නතර වන්න.** සුදු ඉරෙන් ඉදිරියට නොයන්න.
-
-2. 🔴 + 🟡 **රතු සහ කහ එකවර දැල්වීම:**
-   • **සුදානම් වන්න.** කොළ පැහැය දැල්වීමට ආසන්නයි. කොළ පැහැය ලැබෙන තුරු නොයන්න.
-
-3. 🟢 **කොළ පැහැය:**
-   • **ධාවනය කරන්න.** මංසන්ධිය අවහිර නොවන්නේ නම් ඉදිරියට යන්න.
-
-4. 🟡 **කහ පැහැය පමණක්:**
-   • **නතර වන්න.** හදිසි නැවතීමක් නිසා පිටුපස රථය හැපීමේ අවදානමක් ඇත්නම් පමණක් ප්‍රවේශමෙන් ඉදිරියට යන්න.
-
-5. 🟡✨ **නිවෙමින් දැල්වෙන කහ පැහැය (Flashing Amber):**
-   • පදික මාරුවේ සිටින පදිකයින්ට ප්‍රමුඛතාව දෙන්න. පදිකයින් නොමැති නම් ප්‍රවේශමෙන් ඉදිරියට යන්න.`,
+1. 🔴 **රතු පැහැය පමණක්:** **නතර වන්න.**
+2. 🔴 + 🟡 **රතු සහ කහ එකවර:** **සුදානම් වන්න.** කොළ පැහැය ලැබෙන තුරු නොයන්න.
+3. 🟢 **කොළ පැහැය:** **ධාවනය කරන්න.**
+4. 🟡 **කහ පැහැය පමණක්:** **නතර වන්න.** හදිසි අනතුරු අවදානමක් ඇත්නම් පමණක් ප්‍රවේශමෙන් යන්න.
+5. 🟡✨ **නිවෙමින් දැල්වෙන කහ පැහැය:** පදිකයින්ට ප්‍රමුඛතාව දෙන්න.`,
       ta: `🚦 **போக்குவரத்து சைகை விளக்குகளின் அர்த்தம்:**
 
 1. 🔴 **சிவப்பு:** நில்லுங்கள்.
 2. 🔴 + 🟡 **சிவப்பு & மஞ்சள்:** புறப்படத் தயாராகுங்கள்.
 3. 🟢 **பச்சை:** முன்னோக்கிச் செல்லுங்கள்.
-4. 🟡 **மஞ்சள்:** நில்லுங்கள் (ஆபத்தான சூழல் தவிர).
-5. 🟡✨ **மின்னும் மஞ்சள்:** பாதசாரிகளுக்கு முன்னுரிமை வழங்கி எச்சரிக்கையுடன் செல்லுங்கள்.`,
+4. 🟡 **மஞ்சள்:** நில்லுங்கள்.
+5. 🟡✨ **மின்னும் மஞ்சள்:** பாதசாரிகளுக்கு முன்னுரிமை அளியுங்கள்.`,
     },
   },
 
@@ -707,34 +584,20 @@ Your **Trial Readiness Score** is an automated metric that predicts your likelih
    • Tell you actions you MUST take.
    • *Examples:* Turn Left Only, Keep Left, Pass Either Side.
 
-4. 🟦 / 🟩 **Rectangular / Square Signs = INFORMATORY / GUIDE:**
-   • Provide helpful directions, distances, facilities, and services.
-   • *Examples:* Hospital, Parking Place, Expressway destination boards (Green/Blue background).`,
+4. 🟦 / 🟩 **Rectangular Signs = INFORMATORY / GUIDE:**
+   • Provide helpful directions, distances, facilities, and services (Hospital, Parking, Expressway exit).`,
       si: `🛑 **ශ්‍රී ලංකාවේ මාර්ග සංඥා වර්ගීකරණය:**
 
-1. ⭕ **රතු මායිම් සහිත වෘත්තාකාර සංඥා = අනිවාර්ය / තහනම් නියෝග:**
-   • නීතියෙන් **අනිවාර්යයෙන්ම පිළිපැදිය යුතු** නියෝග වේ.
-   • *උදාහරණ:* ඇතුල්වීම තහනම්, උපරිම වේග සීමා (50), ඉස්සර කිරීම තහනම්, වාහන නැවැත්වීම තහනම්.
-
-2. 🔺 **රතු මායිම් සහිත ත්‍රිකෝණාකාර සංඥා = අනතුරු ඇඟවීමේ සංඥා:**
-   • ඉදිරියේ ඇති අනතුරු පිළිබඳ කල්තියා දැනුම් දෙයි.
-   • *උදාහරණ:* තියුණු වංගු, පදික මාරුවක් ඉදිරියෙන්, පටු පාලමක්, ලිස්සන සුළු මාර්ගය.
-
-3. 🔵 **නිල් පැහැති වෘත්තාකාර සංඥා = අනිවාර්ය ක්‍රියාකාරකම්:**
-   • ඔබ කළ යුතු දේ දක්වයි (වමට පමණක් හැරෙන්න, වම් පසින් ධාවනය කරන්න).
-
-4. 🟦 **සෘජුකෝණාස්‍රාකාර සංඥා = තොරතුරු සංඥා:**
-   • රෝහල්, වාහන නැවතුම්, දුර ප්‍රමාණ සහ දිශා දක්වයි.`,
+1. ⭕ **රතු මායිම් සහිත වෘත්තාකාර සංඥා = අනිවාර්ය / තහනම් නියෝග:** නීතියෙන් අනිවාර්යයෙන්ම පිළිපැදිය යුතුය (ඇතුල්වීම තහනම්, වේග සීමා, ඉස්සර කිරීම තහනම්).
+2. 🔺 **රතු මායිම් සහිත ත්‍රිකෝණාකාර සංඥා = අනතුරු ඇඟවීමේ සංඥා:** ඉදිරියේ ඇති අනතුරු (තියුණු වංගු, පදික මාරුව, පටු පාලම).
+3. 🔵 **නිල් වෘත්තාකාර සංඥා = අනිවාර්ය ක්‍රියාකාරකම්** (වමට පමණක් හැරෙන්න).
+4. 🟦 **සෘජුකෝණාස්‍රාකාර සංඥා = තොරතුරු සංඥා** (රෝහල්, වාහන නැවතුම්).`,
       ta: `🛑 **இலங்கை வீதி அடையாளங்களின் வகைகள்:**
 
-1. ⭕ **சிவப்பு வட்ட அடையாளங்கள் = கட்டாய / தடை உத்தரவுகள்:**
-   • கட்டாயம் பின்பற்ற வேண்டியவை (எ.கா: உட்செல்ல தடை, வேக வரம்பு, முந்த தடை).
-
-2. 🔺 **சிவப்பு முக்கோண அடையாளங்கள் = எச்சரிக்கை அடையாளங்கள்:**
-   • முன்னால் உள்ள ஆபத்துகள் (எ.கா: ஆபத்தான வளைவு, பாதசாரி கடவை, வழுக்கும் வீதி).
-
+1. ⭕ **சிவப்பு வட்ட அடையாளங்கள் = கட்டாய / தடை உத்தரவுகள்:** (எ.கா: உட்செல்ல தடை, வேக வரம்பு).
+2. 🔺 **சிவப்பு முக்கோண அடையாளங்கள் = எச்சரிக்கை அடையாளங்கள்:** (எ.கா: வளைவு, பாதசாரி கடவை).
 3. 🔵 **நீல வட்ட அடையாளங்கள் = கட்டாய திசை அடையாளங்கள்.**
-4. 🟦 **செவ்வக அடையாளங்கள் = தகவல் அடையாளங்கள் (மருத்துவமனை, பார்க்கிங்).**`,
+4. 🟦 **செவ்வக அடையாளங்கள் = தகவல் அடையாளங்கள்.**`,
     },
   },
 
@@ -761,25 +624,22 @@ Your **Trial Readiness Score** is an automated metric that predicts your likelih
 1. **Golden Rule:** Give way to all traffic approaching from your **RIGHT** already circulating within the roundabout.
 
 2. **Lane Discipline & Signaling:**
-   • **Turning Left (1st Exit):** Approach in the LEFT lane, signal LEFT on approach, keep left, exit with left signal.
-   • **Going Straight (2nd Exit):** Approach in the LEFT or CENTER lane, NO signal on approach. Signal LEFT immediately after passing the 1st exit to leave.
-   • **Turning Right or U-Turn (3rd+ Exit):** Approach in the RIGHT lane, signal RIGHT on approach. Keep right in the roundabout, signal LEFT after passing the exit before yours.
-
-3. **Never overtake** or change lanes abruptly inside a roundabout.`,
+   • **Turning Left (1st Exit):** Approach in LEFT lane, signal LEFT on approach, keep left, exit with left signal.
+   • **Going Straight (2nd Exit):** Approach in LEFT or CENTER lane, NO signal on approach. Signal LEFT immediately after passing 1st exit to leave.
+   • **Turning Right or U-Turn (3rd+ Exit):** Approach in RIGHT lane, signal RIGHT on approach. Keep right in roundabout, signal LEFT after passing the exit before yours.`,
       si: `🔄 **ශ්‍රී ලංකාවේ වටරවුම් නීති:**
 
 1. **ප්‍රධාන රීතිය:** වටරවුම තුළ ඔබේ **දකුණු පසින්** පැමිණෙන සියලු රථවාහන සඳහා ප්‍රමුඛතාව ලබාදිය යුතුය.
-
-2. **මංතීරු භාවිතය සහ සංඥා (Indicators):**
-   • **වමට හැරීම (1 වන පිටවීම):** වම් මංතීරුවෙන් ඇතුළු වන්න, වම් සිග්නල් දමන්න, වම් මංතීරුවෙන් පිටවන්න.
-   • **කෙළින්ම ඉදිරියට (2 වන පිටවීම):** වම් හෝ මැද මංතීරුවෙන් ඇතුළු වන්න. ඇතුල්වීමේදී සිග්නල් අවශ්‍ය නොවේ. 1 වන පිටවීම පසුකළ වහාම වම් සිග්නල් දමා පිටවන්න.
-   • **දකුණට හැරීම / U-Turn:** දකුණු මංතීරුවෙන් ඇතුළු වන්න, දකුණු සිග්නල් දමන්න. පිටවීමට පෙර වම් සිග්නල් දමා පිටවන්න.`,
+2. **මංතීරු භාවිතය:**
+   • **වමට (1 වන පිටවීම):** වම් මංතීරුව, වම් සිග්නල්.
+   • **කෙළින්ම (2 වන පිටවීම):** වම් හෝ මැද මංතීරුව, 1 වන පිටවීම පසුකළ පසු වම් සිග්නල්.
+   • **දකුණට / U-Turn:** දකුණු මංතීරුව, දකුණු සිග්නල්.`,
       ta: `🔄 **வட்டாரப் பாதை விதிகள்:**
 
 1. **முக்கிய விதி:** உங்கள் **வலதுபுறத்தில்** இருந்து வரும் வாகனங்களுக்கு முன்னுரிமை கொடுங்கள்.
-2. **இடது திரும்ப:** இடது ஒழுங்கையில் வந்து இடது சைகை காட்டவும்.
-3. **நேராகச் செல்ல:** சைகை இல்லாமல் நுழைந்து, முதல் வெளியேற்றத்தைக் கடந்ததும் இடது சைகை காட்டி வெளியேறவும்.
-4. **வலது திரும்ப:** வலது ஒழுங்கையில் வலது சைகையுடன் நுழைந்து, தேவையான வெளியேற்றத்திற்கு முன் இடது சைகை காட்டி வெளியேறவும்.`,
+2. **இடது திரும்ப:** இடது ஒழுங்கை, இடது சைகை.
+3. **நேராகச் செல்ல:** சைகை இல்லாமல் நுழைந்து, முதல் வெளியேற்றத்தைக் கடந்ததும் இடது சைகை காட்டவும்.
+4. **வலது திரும்ப:** வலது ஒழுங்கை, வலது சைகை.`,
     },
   },
 
@@ -796,6 +656,7 @@ Your **Trial Readiness Score** is an automated metric that predicts your likelih
       'how to hill start',
       'kandu',
       'handbrake',
+      'tell me about hill start',
     ],
     question: {
       en: 'How do I execute a flawless Hill Start without vehicle rollback?',
@@ -813,21 +674,20 @@ Your **Trial Readiness Score** is an automated metric that predicts your likelih
 6. **Smooth Release:** Press the handbrake button, smoothly release the handbrake down. The car will move forward steadily without rolling back an inch!`,
       si: `⛰️ **කඳු නැගීම (Hill Start) නිවැරදිව කරන පියවර:**
 
-1. **රථය නවත්වා තබාගන්න:** හෑන්ඩ්බ්‍රේක් (Handbrake) තදින් යොදන්න. ක්ලච් සහ ෆුට්බ්‍රේක් සම්පූර්ණයෙන්ම පාගන්න.
+1. **රථය නවත්වා තබාගන්න:** හෑන්ඩ්බ්‍රේක් තදින් යොදන්න. ක්ලච් සහ ෆුට්බ්‍රේක් සම්පූර්ණයෙන්ම පාගන්න.
 2. **1 වන ගියරය යොදන්න:** ගියර් ලිවරය 1st Gear වෙත දමන්න.
 3. **ඇක්සලරේටරය සුදානම් කරන්න:** ඇක්සලරේටරය මඳක් පාගා RPM 1500-2000 මට්ටමක ස්ථාවරව තබාගන්න.
-4. **ක්ලච් බයිටිං පොයින්ට් (Biting Point):** ක්ලච් එක සෙමින් උඩට ගන්න. එන්ජින් ශබ්දය මඳක් වෙනස් වී වාහනයේ ඉදිරිපස සුළු වශයෙන් එසවෙන ස්ථානයේදී දෙපා ස්ථාවරව තබාගන්න.
-5. **දෙපස නිරීක්ෂණය:** කණ්නාඩි සහ අන්ධ කලාප (Blind spots) පරීක්ෂා කරන්න.
-6. **හෑන්ඩ්බ්‍රේක් මුදාහරින්න:** හෑන්ඩ්බ්‍රේක් එක පහතට දමන්න. රථය කිසිදු පසුපසට පෙරලීමකින් තොරව ඉදිරියට ගමන් කරනු ඇත!`,
+4. **ක්ලච් බයිටිං පොයින්ට්:** ක්ලච් එක සෙමින් උඩට ගන්න. එන්ජින් ශබ්දය මඳක් වෙනස් වී වාහනයේ ඉදිරිපස එසවෙන ස්ථානයේදී දෙපා ස්ථාවරව තබාගන්න.
+5. **දෙපස නිරීක්ෂණය:** කණ්නාඩි සහ අන්ධ කලාප පරීක්ෂා කරන්න.
+6. **හෑන්ඩ්බ්‍රේක් මුදාහරින්න:** හෑන්ඩ්බ්‍රේක් එක පහතට දමන්න. රථය පසුපසට නොගොස් ඉදිරියට ධාවනය වේ!`,
       ta: `⛰️ **Hill Start மேடேறும் முறை:**
 
 1. ஹேண்ட்பிரேக்கை (Handbrake) உறுதியாக இழுத்து, கிளட்ச் மற்றும் பிரேக்கை அழுத்தவும்.
 2. 1வது கியரில் போடவும்.
 3. எக்ஸிலேட்டரை 1500-2000 RPM வரை மெதுவாக அழுத்தவும்.
 4. கிளட்சை பைட்டிங் பாயிண்ட் (Biting point) வரை மெதுவாக உயர்த்துங்கள்.
-5. கண்ணாடிகளைப் பார்த்துவிட்டு, ஹேண்ட்பிரேக்கை மெதுவாக விடுவிக்கவும். வாகனம் பின்னோக்கிச் செல்லாமல் முன்னோக்கி நகரும்!`,
+5. கண்ணாடிகளைப் பார்த்துவிட்டு, ஹேண்ட்பிரேக்கை மெதுவாக விடுவிக்கவும். வாகனம் பின்னோக்கிச் செல்லாமல் நகரும்!`,
     },
-    suggestions: ['Reverse S-Bend Tips', 'Examiner Failure Criteria'],
   },
 
   // --- REVERSE S-BEND MANEUVER ---
@@ -855,17 +715,12 @@ Your **Trial Readiness Score** is an automated metric that predicts your likelih
 • **Zero Cone Hits:** Touching or knocking down boundary poles/cones is an **instant failure**.
 • **Clutch Crawl Speed:** Maintain a slow, walking-pace speed solely using clutch control.
 • **Mirror & Window Observation:** Check both side mirrors continuously. Never open doors or unbuckle your seatbelt.
-• **Smooth Steering Transfer:** Smooth transition of steering wheel locks between the first arc (left) and second arc (right).
-
-**Pro-Tips:**
-1. Keep the vehicle centered between the boundary cones.
-2. Steer towards the mirror where you see more space between the rear tyre and boundary line.`,
+• **Smooth Steering Transfer:** Smooth transition of steering wheel locks between the first arc (left) and second arc (right).`,
       si: `🔄 **DMT Reverse S-Bend පරීක්ෂණය:**
 
-**පරීක්ෂකවරයා පරීක්ෂා කරන කරුණු:**
-• **කෝන් නොහැපීම:** මායිම් කෝන් හෝ කණු ස්පර්ශ කිරීම හෝ පෙරලීම **ක්ෂණික අසමත්වීමකි (Instant Fail)**.
-• **ක්ලච් මඟින් වේගය පාලනය:** ඉතා අඩු වේගයකින් (ඇවිදින වේගයෙන්) රථය පාලනය කරන්න.
-• **කණ්නාඩි නිරීක්ෂණය:** දෙපස කණ්නාඩි නිරන්තරයෙන් නිරීක්ෂණය කරන්න. දොරවල් විවෘත කිරීම හෝ සීට්බෙල්ට් ගැලවීම නොකරන්න.
+• **කෝන් නොහැපීම:** මායිම් කෝන් හෝ කණු ස්පර්ශ කිරීම ක්ෂණික අසමත්වීමකි (Instant Fail).
+• **ක්ලච් මඟින් වේගය පාලනය:** ඉතා අඩු වේගයකින් රථය පාලනය කරන්න.
+• **කණ්නාඩි නිරීක්ෂණය:** දෙපස කණ්නාඩි නිරන්තරයෙන් නිරීක්ෂණය කරන්න.
 • **සුක්කානම හැසිරවීම:** පළමු වංගුවේ සිට දෙවන වංගුවට සුක්කානම සුමටව කරකවන්න.`,
       ta: `🔄 **Reverse S-Bend பரீட்சை குறிப்புகள்:**
 
@@ -875,66 +730,359 @@ Your **Trial Readiness Score** is an automated metric that predicts your likelih
     },
   },
 
-  // --- DMT PERMIT & REGULATIONS ---
+  // --- CAR EMERGENCIES & ACCIDENTS ---
   {
-    id: 'kb-permits-regulations',
-    category: 'permits_regulations',
+    id: 'kb-accidents-procedure',
+    category: 'emergencies_safety',
     keywords: [
-      'permit',
-      'learner permit',
-      'permit validity',
-      '6 months',
-      'ntmi',
-      'medical',
-      'ntmi medical',
-      'renew permit',
-      'license classes',
-      'class b',
-      'class a',
-      'waiting period',
+      'accident',
+      'car accident',
+      'what to do in accident',
+      'crash',
+      'police 119',
+      'insurance claim',
+      'spot claim',
+      'hit',
     ],
     question: {
-      en: 'What are the rules regarding DMT Learner Permits, NTMI Medical, and license classes in Sri Lanka?',
-      si: 'ශ්‍රී ලංකාවේ DMT ආධුනික බලපත්‍ර, NTMI වෛද්‍ය සහතික සහ බලපත්‍ර පන්ති පිළිබඳ නීති මොනවාද?',
-      ta: 'DMT பயிலுனர் அனுமதிப்பத்திரம், NTMI மருத்துவம் மற்றும் உரிமப் பிரிவுகள் பற்றிய விதிகள் யாவை?',
+      en: 'What should I do immediately after a motor traffic accident in Sri Lanka?',
+      si: 'ශ්‍රී ලංකාවේදී රිය අනතුරක් සිදුවූ වහාම කළ යුත්තේ කුමක්ද?',
+      ta: 'இலங்கையில் மோட்டார் வாகன விபத்து ஏற்பட்டால் உடனடியாக என்ன செய்ய வேண்டும்?',
     },
     answer: {
-      en: `📋 **DMT Permits, Medical & Licensing Regulations in Sri Lanka:**
+      en: `🚨 **What to Do in a Car Accident in Sri Lanka:**
 
-1. **NTMI Medical Certificate:**
-   • Issued by the National Transport Medical Institute (e.g. Nugegoda, Werahara, Kandy).
-   • Valid for **6 months**. Tests eyesight, color blindness, physical coordination, and blood group.
+1. **Stop Immediately & Turn on Hazard Lights:**
+   • Never leave the accident scene (hit-and-run is a severe criminal offense under the Motor Traffic Act).
+   • Set up emergency hazard warning triangles at least 45 meters behind the vehicle.
 
-2. **DMT Learner Permit Validity:**
-   • Valid for **6 months (180 days)** from the date of issue.
-   • Mandatory waiting period: You can appear for your practical trial **3 months** after receiving your learner permit.
-   • If your permit expires, you must renew it at the DMT before taking the trial.
+2. **Check for Injuries:**
+   • If anyone is injured, call **1990 (Suwa Seriya Ambulance)** or **119 (Police Emergency)** immediately.
 
-3. **Common License Classes:**
-   • **Class B:** Dual Purpose Vehicles / Cars up to 3500kg (Manual or Auto).
-   • **Class B1:** Auto-rickshaw (Three-wheeler).
-   • **Class A / A1:** Motorcycles (A: $>100\text{cc}$, A1: $\le 100\text{cc}$).
-   • **Class C / C1:** Commercial Heavy Vehicles / Lorries.`,
-      si: `📋 **DMT ආධුනික බලපත්‍ර සහ වෛද්‍ය සහතික නීති:**
+3. **Call Insurance Hotline on the Spot:**
+   • Contact your insurer's 24/7 hotline (e.g. Sri Lanka Insurance, Ceylinco, Allianz, AIA, Fairfirst) to request an on-site inspection (Spot Claim).
 
-1. **NTMI වෛද්‍ය සහතිකය:**
-   • ජාතික ප්‍රවාහන වෛද්‍ය ආයතනය (NTMI) මඟින් නිකුත් කෙරේ.
-   • වලංගු කාලය: **මාස 6කි**. ඇස් පෙනීම, වර්ණ අන්ධතාව සහ රුධිර ගණය පරීක්ෂා කෙරේ.
+4. **Document the Scene:**
+   • Take clear photos of vehicle positions, number plates, impact points, skid marks, and road surroundings before moving vehicles.
 
-2. **DMT ආධුනික බලපත්‍රය (Learner Permit):**
-   • වලංගු කාලය: **මාස 6කි (දින 180)**.
-   • බලපත්‍රය ලබාගෙන **මාස 3කට පසුව** ප්‍රායෝගික පරීක්ෂණයට (Trial) පෙනී සිටිය හැක.
-   • කල් ඉකුත් වුවහොත් DMT කාර්යාලයෙන් අලුත් කරගත යුතුය.
+5. **Exchange Information:**
+   • Exchange Name, Driver's License Number, NIC, Insurance Policy Number, and Vehicle Registration with the other driver.
 
-3. **ප්‍රධාන බලපත්‍ර පන්ති:**
-   • **Class B:** මෝටර් රථ සහ වෑන් (Manual / Auto).
-   • **Class B1:** ත්‍රිරෝද රථ.
-   • **Class A / A1:** යතුරුපැදි.`,
-      ta: `📋 **DMT பயிலுனர் அனுமதிப்பத்திரம் & மருத்துவ விதிகள்:**
+6. **Do Not Admit Fault:**
+   • Keep calm, do not argue or sign informal liabilities on the road. Let the police and insurance assessors evaluate the scene.`,
+      si: `🚨 **රිය අනතුරක් සිදුවූ විට කළ යුතු දෑ:**
 
-1. **NTMI மருத்துவச் சான்றிதழ்:** 6 மாதங்களுக்குச் செல்லுபடியாகும்.
-2. **பயிலுனர் அனுமதிப்பத்திரம்:** 6 மாதங்கள் (180 நாட்கள்) செல்லுபடியாகும். அனுமதிப்பத்திரம் பெற்று 3 மாதங்களின் பின் செய்முறைப் பரீட்சைக்குத் தோற்றலாம்.
-3. **உரிமப் பிரிவுகள்:** Class B (கார்கள்), Class B1 (முச்சக்கர வண்டி), Class A (மோட்டார் சைக்கிள்).`,
+1. **වහාම රථය නවතා Hazard Lights දල්වන්න:** අනතුර වූ ස්ථානයෙන් පලා නොයන්න.
+2. **තුවාලකරුවන් සිටී නම්:** **1990 සුවසැරිය ගිලන්රථ** සේවය හෝ **119 පොලිස් හදිසි ඇමතුම්** අමතන්න.
+3. **ක්ෂණිකව රක්ෂණ සමාගම අමතන්න:** Spot Claim ලබාගැනීම සඳහා ඔබේ රක්ෂණ සමාගමේ ක්ෂණික ඇමතුම් අංකය අමතන්න.
+4. **ඡායාරූප ලබාගන්න:** වාහනවල පිහිටීම, අංක තහඩු, හානියට පත් ස්ථාන සහ මාර්ගය ඡායාරූපගත කරන්න.
+5. **විස්තර හුවමාරු කරගන්න:** අනෙක් රියදුරුගේ නම, රියදුරු බලපත්‍ර අංකය, ජා.හැ. අංකය සහ රක්ෂණ විස්තර සටහන් කරගන්න.`,
+      ta: `🚨 **விபத்து ஏற்பட்டால் செய்ய வேண்டியவை:**
+
+1. **உடனடியாக நிறுத்தி Hazard விளக்குகளைப் போடுங்கள்:**
+2. **காயமடைந்தவர்கள் இருந்தால்:** **1990 (சுவசரிய அம்புலன்ஸ்)** அல்லது **119 (பொலிஸ்)** அழையுங்கள்.
+3. **காப்புறுதி நிறுவனத்தை அழையுங்கள்:** Spot Claim இற்காக உங்கள் காப்புறுதி நிறுவனத்தை அழையுங்கள்.
+4. **புகைப்படம் எடுங்கள்:** வாகனங்களின் நிலை, இலக்கத் தகடு மற்றும் சேதங்களை புகைப்படம் எடுங்கள்.
+5. **விவரங்களைப் பரிமாறிக் கொள்ளுங்கள்:** சாரதி அனுமதிப்பத்திரம் மற்றும் காப்புறுதி விவரங்கள்.`,
+    },
+    suggestions: ['Brake Failure Emergency', 'Tyre Burst at High Speed', 'Insurance Types'],
+  },
+
+  // --- BRAKE FAILURE EMERGENCY ---
+  {
+    id: 'kb-brake-failure',
+    category: 'emergencies_safety',
+    keywords: [
+      'brake failure',
+      'brakes fail',
+      'no brakes',
+      'brakes not working',
+      'stop without brakes',
+    ],
+    question: {
+      en: 'What should I do if my vehicle brakes fail while driving?',
+      si: 'රිය ධාවනය අතරතුර තිරිංග (Brakes) අක්‍රිය වුවහොත් කුමක් කළ යුතුද?',
+      ta: 'வாகனம் ஓட்டும்போது பிரேக் செயலிழந்தால் என்ன செய்ய வேண்டும்?',
+    },
+    answer: {
+      en: `🛑 **Emergency Action Plan for Brake Failure:**
+
+1. **Pump the Footbrake Rapidly:**
+   • Rapid pumping can sometimes build hydraulic pressure to restore partial braking.
+
+2. **Downshift to Lower Gears (Engine Braking):**
+   • Shift down progressively: $4^{\text{th}} \rightarrow 3^{\text{rd}} \rightarrow 2^{\text{nd}} \rightarrow 1^{\text{st}}$ gear.
+   • In automatic cars, switch to Manual/Sport mode or $L/2$ to force engine braking.
+
+3. **Gently Apply Handbrake (Emergency Brake):**
+   • Gradually pull the handbrake while holding the release button.
+   • *Warning:* Do not yank it violently at high speed, as this could lock rear wheels and cause a spin.
+
+4. **Warn Others:**
+   • Turn on hazard lights and honk your horn to alert pedestrians and oncoming vehicles.
+
+5. **Look for an Escape Route:**
+   • Steer towards an open grassy verge, uphill gradient, gravel runaway ramp, or scrub bushes to slow down safely.`,
+      si: `🛑 **තිරිංග අක්‍රිය වූ විට කළ යුතු දෑ:**
+
+1. **බ්‍රේක් පැඩලය වේගයෙන් කිහිපවරක් පාගන්න:** හයිඩ්‍රොලික් පීඩනය යථා තත්ත්වයට පත් විය හැක.
+2. **ගියර් පහළට දමන්න (Engine Braking):** 4 $\rightarrow$ 3 $\rightarrow$ 2 $\rightarrow$ 1 ලෙස ක්‍රමයෙන් ගියර් අඩු කර වේගය පාලනය කරන්න.
+3. **හෑන්ඩ්බ්‍රේක් එක සෙමින් යොදන්න:** රිලීස් බොත්තම ඔබාගෙන සෙමින් හෑන්ඩ්බ්‍රේක් එක උඩට ගන්න (එකවර තදින් අදින්න එපා).
+4. **අනතුරු ඇඟවීම්:** Hazard lights දමා හෝන් එක නාද කරන්න.
+5. **ආරක්ෂිත බාධක:** තණකොළ සහිත මායිමක් හෝ ඉහළට ඇති බෑවුමක් දෙසට රථය යොමු කරන්න.`,
+      ta: `🛑 **பிரேக் செயலிழந்தால் செய்ய வேண்டியவை:**
+
+1. **பிரேக் பெடலை வேகமாக பலமுறை அழுத்துங்கள்.**
+2. **கியர்களைக் குறைத்து இன்ஜின் பிரேக்கிங் செய்யுங்கள் (4 $\rightarrow$ 3 $\rightarrow$ 2 $\rightarrow$ 1).**
+3. **ஹேண்ட்பிரேக்கை மெதுவாகப் பிரயோகியுங்கள்.**
+4. **Hazard விளக்குகளைப் போட்டு எச்சரியுங்கள்.**
+5. **பாதுகாப்பான மணல் அல்லது புல்வெளிப் பகுதி நோக்கி வாகனத்தை நகர்த்துங்கள்.**`,
+    },
+  },
+
+  // --- TYRE BLOWOUT EMERGENCY ---
+  {
+    id: 'kb-tyre-blowout',
+    category: 'emergencies_safety',
+    keywords: [
+      'tyre blowout',
+      'tire burst',
+      'flat tyre at high speed',
+      'puncture on expressway',
+    ],
+    question: {
+      en: 'How do I handle a tyre blowout or burst at high speed?',
+      si: 'අධික වේගයෙන් ධාවනය වන විට ටයරයක් පිපිරී ගියහොත් පාලනය කරන්නේ කෙසේද?',
+      ta: 'அதிவேகத்தில் டயர் வெடித்தால் எவ்வாறு வாகனத்தைக் கட்டுப்படுத்துவது?',
+    },
+    answer: {
+      en: `⚠️ **How to Survive a High-Speed Tyre Blowout:**
+
+1. **Grip the Steering Wheel Firmly with BOTH Hands:**
+   • A front-tyre blowout will pull the car violently to one side. Keep it pointed straight.
+
+2. **DO NOT Slam on the Brakes:**
+   • Slamming brakes during a blowout will cause immediate loss of control or a rollover.
+
+3. **Ease Off the Accelerator Slowly:**
+   • Allow engine friction and the blown tyre's rolling resistance to slow the car down naturally.
+
+4. **Maintain Lane & Signal Left:**
+   • Once speed drops below $40\text{ km/h}$, gently apply the brakes, activate the left indicator, and steer smoothly onto the hard shoulder or roadside.
+
+5. **Set Hazard Lights & Safety Triangle:**
+   • Turn on hazard lights and place the warning triangle $45\text{ m}$ behind your car before changing the tyre.`,
+      si: `⚠️ **අධිවේගී ටයර් පිපිරීමකදී කළ යුතු දෑ:**
+
+1. **සුක්කානම දෑතින්ම තදින් අල්ලාගන්න:** රථය එක පැත්තකට ඇදී යාම වැළැක්වීමට කෙළින් තබාගන්න.
+2. **එකවර තදින් බ්‍රේක් නොපාගන්න:** එකවර බ්‍රේක් පාගන්නේ නම් රථය පෙරලී යා හැක.
+3. **ඇක්සලරේටරයෙන් කකුල සෙමින් ඉවතට ගන්න:** රථය ස්වභාවිකවම වේගය අඩු වීමට ඉඩ හරින්න.
+4. **වේගය අඩු වූ පසු සෙමින් බ්‍රේක් කර පසෙකට ගන්න:** වම් සිග්නල් දමා ආරක්ෂිතව මාර්ගයෙන් ඉවතට ගන්න.
+5. **Hazard Lights සහ අනතුරු ත්‍රිකෝණය යොදන්න.**`,
+      ta: `⚠️ **டயர் வெடித்தால் செய்ய வேண்டியவை:**
+
+1. **ஸ்டீயரிங்கை இரு கைகளாலும் உறுதியாகப் பிடியுங்கள்.**
+2. **திடீரென பிரேக்கை அழுத்த வேண்டாம்.**
+3. **எக்ஸிலேட்டரை மெதுவாக விடுங்கள்.**
+4. **வேகம் குறைந்ததும் மெதுவாக பிரேக் செய்து வீதியோரமாக நிறுத்துங்கள்.**
+5. **Hazard விளக்குகளைப் போடுங்கள்.**`,
+    },
+  },
+
+  // --- DASHBOARD WARNING LIGHTS ---
+  {
+    id: 'kb-warning-lights',
+    category: 'maintenance_mechanics',
+    keywords: [
+      'warning light',
+      'warning lights',
+      'check engine',
+      'oil light',
+      'battery light',
+      'abs light',
+      'dashboard symbols',
+      'red lights on dashboard',
+    ],
+    question: {
+      en: 'What do the main dashboard warning lights mean and what should I do when they light up?',
+      si: 'වාහනයේ Dashboard එකේ දැල්වෙන ප්‍රධාන අනතුරු ඇඟවීමේ සංඥා ලාම්පු මොනවාද?',
+      ta: 'டாஷ்போர்டு எச்சரிக்கை விளக்குகளின் அர்த்தம் என்ன மற்றும் என்ன செய்ய வேண்டும்?',
+    },
+    answer: {
+      en: `🚗 **Dashboard Warning Lights Guide:**
+
+**🔴 RED LIGHTS = CRITICAL (Stop driving immediately):**
+• 🛢️ **Engine Oil Pressure Light:** Oil level critically low or oil pump failure. Stop engine immediately to prevent engine seizure.
+• 🔋 **Battery / Alternator Light:** Charging system failed. Car is running purely on battery power and will shut down soon.
+• 🌡️ **Engine Temperature / Coolant Light:** Engine is overheating. Pull over and turn off engine to avoid blown head gasket.
+• 🛑 **Brake System Warning:** Handbrake is engaged OR brake fluid is critically low.
+
+**🟡 AMBER / YELLOW LIGHTS = WARNING (Service needed soon):**
+• ⚙️ **Check Engine Light (MIL):** Engine sensor, catalytic converter, or emission malfunction. Scan with OBD-II scanner.
+• 🚫 **ABS Warning Light:** Anti-Lock Braking system disabled (standard brakes still work, but wheels may lock in hard stops).
+• ⚠️ **TPMS Light:** Low tyre pressure detected.`,
+      si: `🚗 **Dashboard අනතුරු ඇඟවීමේ ලාම්පු:**
+
+**🔴 රතු ලාම්පු = අතිශය හදිසි (වහාම රථය නවත්වන්න):**
+• 🛢️ **Engine Oil Light:** එන්ජින් ඔයිල් මට්ටම අඩුයි. එන්ජිම විනාශ වීම වැළැක්වීමට වහාම ක්‍රියා විරහිත කරන්න.
+• 🔋 **Battery Light:** Alternator ආරෝපණය අක්‍රියයි.
+• 🌡️ **Temperature Light:** එන්ජිම අධික ලෙස රත් වී ඇත.
+• 🛑 **Brake Light:** හෑන්ඩ්බ්‍රේක් යොදා ඇත හෝ බ්‍රේක් ඔයිල් අඩුයි.
+
+**🟡 කහ ලාම්පු = අනතුරු ඇඟවීම්:**
+• ⚙️ **Check Engine:** එන්ජිමේ සෙන්සරයක දෝෂයක්.
+• 🚫 **ABS Light:** ABS පද්ධතිය අක්‍රියයි.`,
+      ta: `🚗 **டாஷ்போர்டு எச்சரிக்கை விளக்குகள்:**
+
+**🔴 சிவப்பு விளக்குகள் = அவசரம் (உடனடியாக நிறுத்துங்கள்):**
+• 🛢️ **Engine Oil:** என்ஜின் எண்ணெய் குறைவு.
+• 🔋 **Battery:** மின்னேற்றம் செயலிழப்பு.
+• 🌡️ **Temperature:** என்ஜின் அதிக வெப்பமடைந்துள்ளது.
+
+**🟡 மஞ்சள் விளக்குகள் = எச்சரிக்கை:**
+• ⚙️ **Check Engine:** சென்சார் கோளாறு.
+• 🚫 **ABS:** ABS அமைப்பு செயலிழந்துள்ளது.`,
+    },
+  },
+
+  // --- HOW TO JUMPSTART A CAR ---
+  {
+    id: 'kb-jumpstart-battery',
+    category: 'maintenance_mechanics',
+    keywords: [
+      'jump start',
+      'jumpstart',
+      'dead battery',
+      'battery dead',
+      'jump cables',
+      'how to jump start a car',
+    ],
+    question: {
+      en: 'How do I safely jumpstart a car with a dead battery?',
+      si: 'බැටරිය බැසගිය වාහනයක් Jump Start කරන්නේ නිවැරදිව කෙසේද?',
+      ta: 'செயலிழந்த பேட்டரியை எவ்வாறு பாதுகாப்பாக ஜம்ப் ஸ்டார்ட் செய்வது?',
+    },
+    answer: {
+      en: `⚡ **Safe Step-by-Step Battery Jumpstart Guide:**
+
+**Connecting Jumper Cables (Order is crucial):**
+1. Park both cars close together with engines OFF (never let the cars touch).
+2. Connect **🔴 RED Cable** to the POSITIVE ($+$) terminal of the **DEAD battery**.
+3. Connect the other end of **🔴 RED Cable** to the POSITIVE ($+$) terminal of the **DONOR battery**.
+4. Connect **⚫ BLACK Cable** to the NEGATIVE ($-$) terminal of the **DONOR battery**.
+5. Connect the other end of **⚫ BLACK Cable** to an **unpainted bare metal surface on the engine block/chassis** of the DEAD car (away from battery).
+
+**Starting Procedure:**
+• Start the donor car and let it idle for 3-5 minutes.
+• Start the dead car. Once running, disconnect cables in the **exact reverse order** (Black from chassis $\rightarrow$ Black from donor $\rightarrow$ Red from donor $\rightarrow$ Red from dead car).
+• Keep the revived car running for at least 20 minutes to recharge.`,
+      si: `⚡ **බැටරියක් Jump Start කරන නිවැරදි පියවර:**
+
+**කේබල් සවි කිරීමේ අනුපිළිවෙල:**
+1. 🔴 **රතු කේබලය:** අක්‍රිය වාහනයේ **ධන ($+$)** අග්‍රයට සවි කරන්න.
+2. 🔴 **රතු කේබලයේ අනෙක් කෙළවර:** හොඳ වාහනයේ **ධන ($+$)** අග්‍රයට සවි කරන්න.
+3. ⚫ **කළු කේබලය:** හොඳ වාහනයේ **සෘණ ($-$)** අග්‍රයට සවි කරන්න.
+4. ⚫ **කළු කේබලයේ අනෙක් කෙළවර:** අක්‍රිය වාහනයේ එන්ජින් බොඩියේ ලෝහමය කොටසකට (Ground) සවි කරන්න.
+
+• හොඳ වාහනය පණගන්වා මිනිත්තු 3ක් තබා අක්‍රිය වාහනය පණගන්වන්න.
+• ඉවත් කිරීමේදී සවිකළ පිළිවෙලට විරුද්ධ අතට ගලවන්න.`,
+      ta: `⚡ **பேட்டரி ஜம்ப் ஸ்டார்ட் செய்யும் முறை:**
+
+1. 🔴 **சிவப்பு கேபிள்:** பழுதான பேட்டரியின் Positive ($+$) இற்கு.
+2. 🔴 **சிவப்பு கேபிளின் மறுமுனை:** நல்ல பேட்டரியின் Positive ($+$) இற்கு.
+3. ⚫ **கருப்பு கேபிள்:** நல்ல பேட்டரியின் Negative ($-$) இற்கு.
+4. ⚫ **கருப்பு கேபிளின் மறுமுனை:** பழுதான காரின் என்ஜின் உலோகம் (Ground) இற்கு.
+
+• காரை ஸ்டார்ட் செய்து 20 நிமிடங்கள் ஓட விடுங்கள்.`,
+    },
+  },
+
+  // --- INSURANCE TYPES IN SRI LANKA ---
+  {
+    id: 'kb-insurance-types',
+    category: 'insurance_police',
+    keywords: [
+      'insurance',
+      'third party',
+      'full insurance',
+      'comprehensive',
+      'vehicle insurance in sri lanka',
+      'spot claim',
+    ],
+    question: {
+      en: 'What is the difference between Third-Party and Comprehensive (Full) Insurance in Sri Lanka?',
+      si: 'ශ්‍රී ලංකාවේ Third-Party සහ Full Insurance අතර වෙනස කුමක්ද?',
+      ta: 'இலங்கையில் Third-Party மற்றும் Full Insurance இற்கு இடையிலான வேறுபாடு என்ன?',
+    },
+    answer: {
+      en: `🛡️ **Vehicle Insurance in Sri Lanka:**
+
+1. **Third-Party Insurance (Legal Minimum Requirement):**
+   • **What it covers:** Damages, property destruction, bodily injuries, or death caused to OTHER parties (third parties) by your vehicle.
+   • **What it does NOT cover:** Your own vehicle damage, theft, or natural disasters.
+
+2. **Comprehensive (Full) Insurance:**
+   • **What it covers:** Both third-party liabilities AND damages to your own vehicle (accidents, collisions, fire, theft, flood, vandalism, towing assistance, and spot cash claims).
+   • Recommended for all new, leased, and academy vehicles.`,
+      si: `🛡️ **ශ්‍රී ලංකාවේ වාහන රක්ෂණ වර්ග:**
+
+1. **Third-Party රක්ෂණය (නීතියෙන් අනිවාර්ය අවම රක්ෂණය):**
+   • ආවරණය වන්නේ: ඔබගේ වාහනයෙන් වෙනත් පාර්ශ්වයකට (Third Party) සිදුවන දේපළ හානි, තුවාල හෝ ජීවිත හානි පමණි.
+   • ඔබගේ වාහනයට සිදුවන හානි ආවරණය නොවේ.
+
+2. **Comprehensive (Full) රක්ෂණය:**
+   • ආවරණය වන්නේ: වෙනත් පාර්ශ්වයන්ගේ හානි මෙන්ම ඔබේ වාහනයට සිදුවන සියලු අනතුරු හානි, ගිනිගැනීම්, සොරකම් සහ ගංවතුර හානි ආවරණය වේ.`,
+      ta: `🛡️ **இலங்கை வாகனக் காப்புறுதி வகைகள்:**
+
+1. **Third-Party காப்புறுதி (சட்டபூர்வ கட்டாயம்):** மற்றைய நபர்களுக்கு ஏற்படும் சேதங்களை மட்டுமே ஈடுசெய்யும். உங்கள் வாகனத்திற்கு நட்டஈடு கிடைக்காது.
+2. **Full Insurance (முழுக் காப்புறுதி):** உங்கள் வாகனச் சேதம், திருட்டு மற்றும் மற்றைய தரப்பினரின் சேதங்கள் அனைத்தையும் ஈடுசெய்யும்.`,
+    },
+  },
+
+  // --- OVERCOMING EXAM NERVOUSNESS ---
+  {
+    id: 'kb-exam-nervousness',
+    category: 'trial_tips',
+    keywords: [
+      'nervous',
+      'exam stress',
+      'fear',
+      'anxiety',
+      'scared of trial',
+      'how to stay calm',
+      'confidence for trial',
+    ],
+    question: {
+      en: 'How can I overcome nervousness and anxiety before my driving trial test?',
+      si: 'රියදුරු පරීක්ෂණයට පෙර ඇතිවන බිය සහ නොසන්සුන්තාව පාලනය කරගන්නේ කෙසේද?',
+      ta: 'ஓட்டுநர் பரீட்சைக்கு முன் ஏற்படும் பயம் மற்றும் பதற்றத்தை எவ்வாறு குறைப்பது?',
+    },
+    answer: {
+      en: `🧘 **Tips to Conquer Driving Trial Test Anxiety:**
+
+1. **4-7-8 Breathing Technique:**
+   • Inhale through your nose for 4 seconds, hold your breath for 7 seconds, and exhale slowly through your mouth for 8 seconds. Repeat 3 times before sitting in the driver's seat.
+
+2. **Focus on the Process, Not the Outcome:**
+   • Don't worry about "passing or failing". Treat the trial as a regular practice lesson with your instructor.
+
+3. **Take Your Time on Every Step:**
+   • Adjust your seat, check all 3 mirrors, fasten seatbelt, verify handbrake, and take a deep breath before turning the key. Examiners appreciate calm, deliberate routines.
+
+4. **Examiners are Looking for Safety, Not Racing:**
+   • Maintain a gentle, controlled speed. Checking mirrors and looking over shoulders is what impresses examiners most!`,
+      si: `🧘 **විභාග බිය පාලනය කරගන්නා ආකාරය:**
+
+1. **හුස්ම ගැනීමේ ව්‍යායාමය (4-7-8 ක්‍රමය):** තත්පර 4ක් හුස්ම ඉහළට ගෙන, තත්පර 7ක් තබාගෙන, තත්පර 8කින් පහළට හෙළන්න.
+2. **සාමාන්‍ය පුහුණුවක් ලෙස සිතන්න:** විභාගයක් ලෙස නොව උපදේශකවරයා සමඟ කරන සාමාන්‍ය පාඩමක් ලෙස සිතන්න.
+3. **පියවරෙන් පියවර සෙමින් කරන්න:** සීට් එක හරිගස්සා, කණ්නාඩි 3ම බලා, සීට්බෙල්ට් දමා සන්සුන්ව ආරම්භ කරන්න.
+4. **පරීක්ෂකවරයා බලන්නේ ආරක්ෂාවයි:** අඩු පාලිත වේගයකින් කණ්නාඩි බලමින් ධාවනය කරන්න.`,
+      ta: `🧘 **பரீட்சைப் பதற்றத்தைத் தவிர்ப்பது எப்படி:**
+
+1. ஆழமாக மூச்சை இழுத்து விடுங்கள்.
+2. வழக்கமான பயிற்சி அமர்வு போல நினையுங்கள்.
+3. சீட், கண்ணாடிகள் மற்றும் சீட்பெல்ட்டை நிதானமாகச் சரிபாருங்கள்.
+4. வேகத்தை விட பாதுகாப்பான ஓட்டுதலே முக்கியம்!`,
     },
   },
 ]
