@@ -1,9 +1,9 @@
 import type { TheoryQuestion } from '../types/theory'
 
-export const SRI_LANKA_DMT_QUESTION_BANK: TheoryQuestion[] = [
-  // -------------------------------------------------------------
-  // 1. Regulatory Road Signs
-  // -------------------------------------------------------------
+export const SRI_LANKA_DMT_MASTER_QUESTIONS: TheoryQuestion[] = [
+  // =============================================================
+  // 1. REGULATORY ROAD SIGNS
+  // =============================================================
   {
     id: 'q-reg-01',
     category: 'road_signs_regulatory',
@@ -220,10 +220,118 @@ export const SRI_LANKA_DMT_QUESTION_BANK: TheoryQuestion[] = [
       },
     },
   },
+  {
+    id: 'q-reg-05',
+    category: 'road_signs_regulatory',
+    question_text:
+      'A circular sign with a blue background and a white arrow pointing to the left mandates:',
+    image_url: '⬅️',
+    options: [
+      'Compulsory turn left ahead',
+      'No left turn permitted',
+      'Left lane closed for repairs',
+      'One way road approaching on right',
+    ],
+    correct_option_index: 0,
+    explanation:
+      'Blue circular signs with white arrows indicate mandatory positive instructions. A left arrow means all vehicles must turn left.',
+    translations: {
+      en: {
+        question_text:
+          'A circular sign with a blue background and a white arrow pointing to the left mandates:',
+        options: [
+          'Compulsory turn left ahead',
+          'No left turn permitted',
+          'Left lane closed for repairs',
+          'One way road approaching on right',
+        ],
+        explanation:
+          'Blue circular signs with white arrows indicate mandatory positive instructions. A left arrow means all vehicles must turn left.',
+      },
+      si: {
+        question_text:
+          'නිල් පැහැති පසුබිමක වමට යොමු වූ සුදු ඊතලයක් සහිත වෘත්තාකාර සංඥාවෙන් නියෝග කරන්නේ:',
+        options: [
+          'අනිවාර්යයෙන්ම වමට හැරවිය යුතුය (Compulsory turn left)',
+          'වමට හැරවීම තහනම්ය',
+          'වම් මංතීරුව වසා ඇත',
+          'දකුණින් එක් මංතීරු මාර්ගයක් හමුවේ',
+        ],
+        explanation:
+          'නිල් පැහැති වෘත්තාකාර සංඥා අනිවාර්ය නියෝග දක්වයි. වමට යොමු වූ ඊතලය මගින් අනිවාර්යයෙන් වමට හැරවිය යුතු බව දක්වයි.',
+      },
+      ta: {
+        question_text:
+          'நீல நிற வட்ட பின்னணியில் இடப்பக்கம் சுட்டும் வெள்ளை அம்பு குறிப்பது:',
+        options: [
+          'கட்டாயமாக இடப்பக்கம் திரும்ப வேண்டும்',
+          'இடப்பக்கம் திரும்புவது தடை செய்யப்பட்டுள்ளது',
+          'இடது ஒழுங்கை மூடப்பட்டுள்ளது',
+          'வலப்பக்கத்தில் ஒரு வழிப்பாதை உள்ளது',
+        ],
+        explanation:
+          'நீல நிற வட்ட சைகைகள் கட்டாய வழிகாட்டலை குறிக்கின்றன. இடப்பக்க அம்பு சாரதிகள் கட்டாயமாக இடப்பக்கம் திரும்ப வேண்டும் என்பதை உணர்த்துகிறது.',
+      },
+    },
+  },
+  {
+    id: 'q-reg-06',
+    category: 'road_signs_regulatory',
+    question_text:
+      'A circular sign with a red border containing two cars side by side (one black, one red) signifies:',
+    image_url: '🚫 🚗🚗',
+    options: [
+      'Overtaking prohibited for all motor vehicles',
+      'Dual carriageway begins ahead',
+      'Car racing allowed on this sector',
+      'Vehicles must drive parallel in two lines',
+    ],
+    correct_option_index: 0,
+    explanation:
+      'This sign strictly prohibits overtaking. Drivers must not overtake any motorized vehicle on this stretch.',
+    translations: {
+      en: {
+        question_text:
+          'A circular sign with a red border containing two cars side by side (one black, one red) signifies:',
+        options: [
+          'Overtaking prohibited for all motor vehicles',
+          'Dual carriageway begins ahead',
+          'Car racing allowed on this sector',
+          'Vehicles must drive parallel in two lines',
+        ],
+        explanation:
+          'This sign strictly prohibits overtaking. Drivers must not overtake any motorized vehicle on this stretch.',
+      },
+      si: {
+        question_text:
+          'රතු මායිමක් සහිත වෘත්තාකාර සංඥාවක එක ළඟ ඇති මෝටර් රථ දෙකක් (රතු සහ කළු) දැක්වෙන විට ඉන් අදහස් වන්නේ:',
+        options: [
+          'ඉස්සර කිරීම සම්පූර්ණයෙන්ම තහනම්ය (No Overtaking)',
+          'ද්විත්ව මංතීරු මාර්ගය මෙතැනින් ආරම්භ වේ',
+          'රථ ධාවන තරඟ සඳහා අවසර ඇත',
+          'වාහන සමාන්තර පේළි දෙකකින් ධාවනය කළ යුතුය',
+        ],
+        explanation:
+          'මෙම සංඥාව මගින් ඉදිරියට ඇති මාර්ග කොටසේ වෙනත් මෝටර් වාහන ඉස්සර කිරීම තහනම් කරයි.',
+      },
+      ta: {
+        question_text:
+          'சிவப்பு எல்லை கொண்ட வட்டத்தில் பக்கவாட்டில் உள்ள இரண்டு கார்கள் (ஒன்று சிவப்பு) சைகை குறிப்பது:',
+        options: [
+          'முந்திச் செல்லுதல் தடை செய்யப்பட்டுள்ளது (No Overtaking)',
+          'இரட்டை ஒழுங்கை பாதை தொடங்குகிறது',
+          'கார் பந்தயங்களுக்கு அனுமதி',
+          'வாகனங்கள் இரண்டு வரிசையில் செல்ல வேண்டும்',
+        ],
+        explanation:
+          'இந்த சைகை வாகனங்களை முந்திச் செல்வது முற்றாக தடை செய்யப்பட்டுள்ளதை குறிக்கிறது.',
+      },
+    },
+  },
 
-  // -------------------------------------------------------------
-  // 2. Warning Road Signs
-  // -------------------------------------------------------------
+  // =============================================================
+  // 2. WARNING ROAD SIGNS
+  // =============================================================
   {
     id: 'q-warn-01',
     category: 'road_signs_warning',
@@ -254,27 +362,27 @@ export const SRI_LANKA_DMT_QUESTION_BANK: TheoryQuestion[] = [
       },
       si: {
         question_text:
-          'පදික මාරුවක් සහිත රතු මායිම් ත්‍රිකෝණාකාර අනතුරු ඇඟවීමේ සංඥාවෙන් දැක්වෙන්නේ:',
+          'රතු මායිමක් සහිත ත්‍රිකෝණාකාර සංඥාවක සීබ්‍රා මාරුවක ගමන් කරන පදිකයෙකුගේ රූපයක් ඇති විට ඉන් අදහස් වන්නේ:',
         options: [
-          'ඉදිරියෙන් පදික මාරුවකි (Zebra Crossing); වේගය අඩු කර නැවැත්වීමට සූදානම් වන්න',
-          'මෙම මාර්ගයේ පදිකයින්ට ගමන් කිරීම තහනම්ය',
-          'පාසල් ක්‍රීඩා පිටියක් ඉදිරියෙන් ඇත',
-          'බස් නැවතුම්පොළකි',
+          'ඉදිරියෙන් පදික මාරුවක් ඇත; වේගය අඩු කර නැවැත්වීමට සූදානම් වන්න',
+          'පදිකයින්ට මෙම මාර්ගයේ ගමන් කිරීම තහනම්',
+          'පාසල් ක්‍රීඩා පිටි කලාපයකි',
+          'ඉදිරියෙන් බස් නැවතුම්පොළකි',
         ],
         explanation:
-          'ත්‍රිකෝණාකාර රතු මායිම් සංඥා අනතුරු ඇඟවීම් වේ. මෙමගින් ඉදිරියෙන් ඇති පදික මාරුවක් පිළිබඳ අනතුරු අඟවයි.',
+          'ත්‍රිකෝණාකාර අනතුරු ඇඟවීමේ සංඥාව මගින් ඉදිරියේ පදික මාරුවක් ඇති බැවින් රියදුරු වේගය අඩු කර ගැනීමට අනතුරු අඟවයි.',
       },
       ta: {
         question_text:
-          'பாதசாரி கடவையை காட்டும் சிவப்பு எல்லையுடன் கூடிய முக்கோண சைகை எச்சரிப்பது:',
+          'சிவப்பு எல்லை கொண்ட முக்கோண சைகையில் பாதசாரி கடவையில் நடக்கும் மனிதனின் உருவம் குறிப்பது:',
         options: [
-          'முன்னால் பாதசாரி கடவை (Zebra Crossing); வேகத்தை குறைத்து நிறுத்த தயாராகுக',
-          'இந்த வீதியில் பாதசாரிகள் செல்ல தடை',
+          'முன்னோக்கி பாதசாரி கடவை (Zebra Crossing) உள்ளது; வேகத்தை குறைத்து நிறுத்த தயாராகுக',
+          'வீதியில் பாதசாரிகள் செல்ல தடை',
           'பாடசாலை விளையாட்டு மைதானம்',
-          'பஸ் நிறுத்தம்',
+          'பேருந்து நிறுத்தம் உள்ளது',
         ],
         explanation:
-          'சிவப்பு எல்லை கொண்ட முக்கோண சைகைகள் எச்சரிக்கை சைகைகளாகும். இது முன்னால் உள்ள பாதசாரி கடவையை குறிக்கிறது.',
+          'முக்கோண எச்சரிக்கை சைகை முன்னால் பாதசாரி கடவை உள்ளதால் வாகனத்தை மெதுவாக்க அறிவுறுத்துகிறது.',
       },
     },
   },
@@ -282,110 +390,218 @@ export const SRI_LANKA_DMT_QUESTION_BANK: TheoryQuestion[] = [
     id: 'q-warn-02',
     category: 'road_signs_warning',
     question_text:
-      'What action should a driver take when approaching a warning sign showing a circular arrow clockwise?',
-    image_url: '⚠️ 🔄',
+      'A triangular warning sign displaying a steam locomotive engine alerts the driver to:',
+    image_url: '⚠️ 🚂',
     options: [
-      'Accelerate to merge quickly',
-      'Prepare for a roundabout ahead; slow down and give way to traffic from the right',
-      'Make an immediate U-turn',
-      'Turn on hazard warning lights',
+      'Railway level crossing without gates or barriers ahead',
+      'Railway station entrance ahead',
+      'Level crossing with automatic barriers ahead',
+      'Industrial machinery zone',
     ],
-    correct_option_index: 1,
+    correct_option_index: 0,
     explanation:
-      'The roundabout warning sign advises drivers to slow down and prepare to yield to vehicles approaching from the right at the upcoming roundabout.',
+      'A steam locomotive inside a warning triangle indicates an UNGATED railway level crossing. Extreme caution and stopping to check both directions is mandatory.',
     translations: {
       en: {
         question_text:
-          'What action should a driver take when approaching a warning sign showing a circular arrow clockwise?',
+          'A triangular warning sign displaying a steam locomotive engine alerts the driver to:',
         options: [
-          'Accelerate to merge quickly',
-          'Prepare for a roundabout ahead; slow down and give way to traffic from the right',
-          'Make an immediate U-turn',
-          'Turn on hazard warning lights',
+          'Railway level crossing without gates or barriers ahead',
+          'Railway station entrance ahead',
+          'Level crossing with automatic barriers ahead',
+          'Industrial machinery zone',
         ],
         explanation:
-          'The roundabout warning sign advises drivers to slow down and prepare to yield to vehicles approaching from the right at the upcoming roundabout.',
+          'A steam locomotive inside a warning triangle indicates an UNGATED railway level crossing. Extreme caution and stopping to check both directions is mandatory.',
       },
       si: {
         question_text:
-          'වටරවුමක් (Roundabout) පිළිබඳ අනතුරු ඇඟවීමේ සංඥාවක් දුටු විට රියදුරෙකු ගත යුතු පියවර කුමක්ද?',
+          'දුම්රිය එන්ජිමක රූපයක් සහිත ත්‍රිකෝණාකාර අනතුරු ඇඟවීමේ සංඥාවෙන් රියදුරුට අනතුරු අඟවන්නේ:',
         options: [
-          'වේගය වැඩිකර ඉක්මනින් මංතීරුවට ඇතුළු වීම',
-          'ඉදිරියෙන් වටරවුමක් ඇත; වේගය අඩු කර දකුණෙන් එන වාහන වලට ප්‍රමුඛතාවය දීමට සූදානම් වීම',
-          'වහාම යූ-හැරවුමක් (U-Turn) ගැනීම',
-          'හදිසි ආපදා ලාම්පු (Hazard Lights) දැල්වීම',
+          'ඉදිරියෙන් ගේට්ටු හෝ බාධක රහිත අනාරක්ෂිත දුම්රිය හරස් මාර්ගයකි',
+          'දුම්රිය ස්ථාන පිවිසුමකි',
+          'ගේට්ටු සහිත ආරක්ෂිත දුම්රිය හරස් මාර්ගයකි',
+          'කාර්මික යන්ත්‍රෝපකරණ කලාපයකි',
         ],
         explanation:
-          'වටරවුම් සංඥාව මගින් වේගය අඩු කර වටරවුමට ඇතුළු වීමේදී දකුණෙන් පැමිණෙන රථවාහන වලට ප්‍රමුඛතාව දීමට අනතුරු අඟවයි.',
+          'දුම්රිය එන්ජිමක රූපය මගින් ගේට්ටු රහිත අනාරක්ෂිත දුම්රිය හරස් මාර්ගයක් ඉදිරියෙන් ඇති බව දන්වයි.',
       },
       ta: {
         question_text:
-          'சுற்றுவட்டம் (Roundabout) எச்சரிக்கை சைகையை நெருங்கும் போது சாரதி செய்ய வேண்டியது யாது?',
+          'முக்கோண சைகையினுள் நீராவி ரயில் எஞ்சின் படம் இருந்தால் அது எச்சரிப்பது:',
         options: [
-          'வேகத்தை அதிகரித்து விரைவாக இணையவும்',
-          'முன்னால் சுற்றுவட்டம் உள்ளது; வேகத்தை குறைத்து வலமிருந்து வரும் வாகனங்களுக்கு வழிவிட தயாராகுக',
-          'உடனடியாக U-வளைவு எடுக்கவும்',
-          'ஆபத்து சமிக்ஞை விளக்குகளை (Hazard Lights) ஒளிரவிடவும்',
+          'முன்னால் வாயில்/படலை அற்ற பாதுகாப்பற்ற ரயில் கடவை உள்ளது',
+          'ரயில் நிலைய பிரவேசம்',
+          'வாயில் உள்ள பாதுகாக்கப்பட்ட ரயில் கடவை',
+          'தொழிற்சாலை மண்டலம்',
         ],
         explanation:
-          'சுற்றுவட்ட சைகை வேகத்தை குறைத்து வலதுபுறமிருந்து வரும் வாகனங்களுக்கு முன்னுரிமை வழங்க தயாராகுமாறு எச்சரிக்கிறது.',
+          'ரயில் எஞ்சின் படம் முன்னால் வாயில் அல்லது படலை இல்லாத பாதுகாப்பற்ற ரயில் கடவை உள்ளதை உணர்த்துகிறது.',
+      },
+    },
+  },
+  {
+    id: 'q-warn-03',
+    category: 'road_signs_warning',
+    question_text:
+      'A triangular warning sign showing a car skidding with wavy tracks beneath warns of:',
+    image_url: '⚠️ 🚗〰️',
+    options: [
+      'Slippery road surface ahead; reduce speed and avoid sudden braking',
+      'Car racing track zone',
+      'Curved mountain bends ahead',
+      'Vehicle testing ground',
+    ],
+    correct_option_index: 0,
+    explanation:
+      'This sign warns drivers that the road surface may be slippery due to rain, oil, or loose gravel, increasing braking distance.',
+    translations: {
+      en: {
+        question_text:
+          'A triangular warning sign showing a car skidding with wavy tracks beneath warns of:',
+        options: [
+          'Slippery road surface ahead; reduce speed and avoid sudden braking',
+          'Car racing track zone',
+          'Curved mountain bends ahead',
+          'Vehicle testing ground',
+        ],
+        explanation:
+          'This sign warns drivers that the road surface may be slippery due to rain, oil, or loose gravel, increasing braking distance.',
+      },
+      si: {
+        question_text:
+          'ලිස්සා යන මෝටර් රථයක රූපයක් සහිත ත්‍රිකෝණාකාර සංඥාවෙන් අනතුරු අඟවන්නේ:',
+        options: [
+          'ඉදිරියෙන් ලිස්සන සුළු මාර්ගයකි; වේගය අඩු කර හදිසි තිරිංග යෙදීමෙන් වළකින්න',
+          'රථ ධාවන පථයකි',
+          'ඉදිරියෙන් වංගු සහිත කඳුකර මාර්ගයකි',
+          'වාහන පරීක්ෂණ අංගනයකි',
+        ],
+        explanation:
+          'තෙතමනය හෝ වැලි සහිත බව නිසා ඉදිරි මාර්ගය ලිස්සන සුළු බව මෙමගින් අනතුරු අඟවයි.',
+      },
+      ta: {
+        question_text:
+          'வழுக்கிச் செல்லும் கார் படம் கொண்ட முக்கோண எச்சரிக்கை சைகை குறிப்பது:',
+        options: [
+          'முன்னால் வழுக்கும் வீதி; வேகத்தைக் குறைத்து திடீர் பிரேக் போடுவதைத் தவிர்க்கவும்',
+          'கார் பந்தய பாதை',
+          'மலை வளைவுகள் உள்ளன',
+          'வாகன சோதனை தளம்',
+        ],
+        explanation:
+          'வீதி வழுக்கும் தன்மையுடையதாக இருப்பதால் வாகன வேகத்தை குறைத்து செல்ல வேண்டும்.',
+      },
+    },
+  },
+  {
+    id: 'q-warn-04',
+    category: 'road_signs_warning',
+    question_text:
+      'A warning sign depicting a fence or gate structure inside a red triangle means:',
+    image_url: '⚠️ 🚧',
+    options: [
+      'Railway level crossing with gates or barriers ahead',
+      'Farm boundary fence ahead',
+      'Road closed permanently',
+      'Construction zone perimeter',
+    ],
+    correct_option_index: 0,
+    explanation:
+      'The fence symbol warns of an approaching railway level crossing equipped with gates or automatic boom barriers.',
+    translations: {
+      en: {
+        question_text:
+          'A warning sign depicting a fence or gate structure inside a red triangle means:',
+        options: [
+          'Railway level crossing with gates or barriers ahead',
+          'Farm boundary fence ahead',
+          'Road closed permanently',
+          'Construction zone perimeter',
+        ],
+        explanation:
+          'The fence symbol warns of an approaching railway level crossing equipped with gates or automatic boom barriers.',
+      },
+      si: {
+        question_text:
+          'රතු ත්‍රිකෝණයක් තුළ වැටක් හෝ ගේට්ටුවක් නිරූපණය කරන සංඥාවෙන් අදහස් වන්නේ:',
+        options: [
+          'ඉදිරියෙන් ගේට්ටු සහිත ආරක්ෂිත දුම්රිය හරස් මාර්ගයකි',
+          'ගොවිපල වැටකි',
+          'මාර්ගය ස්ථිරවම වසා ඇත',
+          'ඉදිකිරීම් සීමාවකි',
+        ],
+        explanation:
+          'වැටක රූපය මගින් ගේට්ටු හෝ බාධක සහිත ආරක්ෂිත දුම්රිය හරස් මාර්ගයක් ඉදිරියෙන් ඇති බව දන්වයි.',
+      },
+      ta: {
+        question_text:
+          'சிவப்பு முக்கோணத்தில் வேலி அல்லது படலை படம் உள்ள சைகை குறிப்பது:',
+        options: [
+          'முன்னால் படலை/வாயில் உள்ள பாதுகாக்கப்பட்ட ரயில் கடவை உள்ளது',
+          'பண்ணை வேலி',
+          'வீதி நிரந்தரமாக மூடப்பட்டுள்ளது',
+          'கட்டுமான எல்லை',
+        ],
+        explanation:
+          'வேலி அடையாளம் முன்னால் வாயில் உள்ள பாதுகாக்கப்பட்ட ரயில் கடவையை குறிக்கிறது.',
       },
     },
   },
 
-  // -------------------------------------------------------------
-  // 3. Priority & Junctions
-  // -------------------------------------------------------------
+  // =============================================================
+  // 3. PRIORITY & JUNCTIONS
+  // =============================================================
   {
     id: 'q-prio-01',
     category: 'priority_and_junctions',
     question_text:
-      'At an uncontrolled junction or roundabout in Sri Lanka (left-hand driving), who has the right of way?',
+      'When approaching an uncontrolled 4-way intersection in Sri Lanka with no traffic lights or signs, which vehicle has the right of way?',
     options: [
-      'The vehicle travelling at the highest speed',
-      'Traffic approaching from your right-hand side',
-      'The larger vehicle or bus',
-      'Traffic approaching from your left-hand side',
+      'The vehicle approaching from your right-hand side',
+      'The fastest vehicle regardless of direction',
+      'The larger commercial heavy vehicle',
+      'The vehicle on your left-hand side',
     ],
-    correct_option_index: 1,
+    correct_option_index: 0,
     explanation:
-      'Under the Sri Lanka Motor Traffic Act, drivers must give way to traffic approaching from their right at roundabouts and equal priority intersections.',
+      'Under Sri Lankan road priority rules, at an uncontrolled junction with equal road status, drivers must give way to traffic approaching from their RIGHT.',
     translations: {
       en: {
         question_text:
-          'At an uncontrolled junction or roundabout in Sri Lanka (left-hand driving), who has the right of way?',
+          'When approaching an uncontrolled 4-way intersection in Sri Lanka with no traffic lights or signs, which vehicle has the right of way?',
         options: [
-          'The vehicle travelling at the highest speed',
-          'Traffic approaching from your right-hand side',
-          'The larger vehicle or bus',
-          'Traffic approaching from your left-hand side',
+          'The vehicle approaching from your right-hand side',
+          'The fastest vehicle regardless of direction',
+          'The larger commercial heavy vehicle',
+          'The vehicle on your left-hand side',
         ],
         explanation:
-          'Under the Sri Lanka Motor Traffic Act, drivers must give way to traffic approaching from their right at roundabouts and equal priority intersections.',
+          'Under Sri Lankan road priority rules, at an uncontrolled junction with equal road status, drivers must give way to traffic approaching from their RIGHT.',
       },
       si: {
         question_text:
-          'ශ්‍රී ලංකාවේ වටරවුමකදී හෝ පාලනය නොකළ මංසන්ධියකදී ප්‍රමුඛතාවය හිමිවන්නේ කාටද?',
+          'සංඥා හෝ මාර්ග සලකුණු නොමැති අනාරක්ෂිත සිව්මං හන්දියකට ළඟා වන විට ප්‍රමුඛතාව හිමි වන්නේ කුමන වාහනයටද?',
         options: [
-          'වැඩිම වේගයෙන් ධාවනය වන වාහනයට',
-          'ඔබේ දකුණු පසින් පැමිණෙන රථවාහන වලට',
-          'විශාල වාහන හෝ බස් රථ වලට',
-          'ඔබේ වම් පසින් පැමිණෙන රථවාහන වලට',
+          'ඔබේ දකුණු පසින් පැමිණෙන වාහනයට',
+          'දිශාව කුමක් වුවත් වේගයෙන්ම එන වාහනයට',
+          'ප්‍රමාණයෙන් විශාල බර වාහනයට',
+          'ඔබේ වම් පසින් පැමිණෙන වාහනයට',
         ],
         explanation:
-          'මෝටර් රථ පනතට අනුව වටරවුම් සහ මංසන්ධි වලදී සෑම විටම දකුණෙන් පැමිණෙන වාහන වලට ප්‍රමුඛතාවය ලබා දිය යුතුය.',
+          'ප්‍රමුඛතා නීති රීති අනුව, සලකුණු නොමැති හන්දියකදී තම දකුණු පසින් පැමිණෙන වාහන වලට ප්‍රමුඛතාවය ලබා දිය යුතුය.',
       },
       ta: {
         question_text:
-          'இலங்கையில் கட்டுப்பாடற்ற சந்திப்பு அல்லது சுற்றுவட்டத்தில் யாருக்கு முன்னுரிமை உண்டு?',
+          'சைகைகள் இல்லாத நான்கு சந்திப்பில் எத்திசையில் இருந்து வரும் வாகனத்திற்கு முன்னுரிமை உண்டு?',
         options: [
-          'அதிக வேகத்தில் செல்லும் வாகனத்திற்கு',
-          'உங்கள் வலதுபுறமிருந்து வரும் வாகனங்களுக்கு',
-          'பெரிய வாகனம் அல்லது பஸ்களுக்கு',
-          'உங்கள் இடதுபுறமிருந்து வரும் வாகனங்களுக்கு',
+          'உங்கள் வலதுபுறத்தில் இருந்து வரும் வாகனத்திற்கு',
+          'வேகமாக வரும் வாகனத்திற்கு',
+          'பெரிய கனரக வாகனத்திற்கு',
+          'உங்கள் இடதுபுறத்தில் இருந்து வரும் வாகனத்திற்கு',
         ],
         explanation:
-          'இலங்கை மோட்டார் போக்குவரத்து சட்டத்தின் கீழ் சுற்றுவட்டங்களில் எப்போதும் வலமிருந்து வரும் வாகனங்களுக்கே முன்னுரிமை வழங்க வேண்டும்.',
+          'சைகைகள் இல்லாத சந்திகளில் வலதுபுறத்தில் இருந்து வரும் வாகனத்திற்கு வழிவிட வேண்டும்.',
       },
     },
   },
@@ -393,138 +609,138 @@ export const SRI_LANKA_DMT_QUESTION_BANK: TheoryQuestion[] = [
     id: 'q-prio-02',
     category: 'priority_and_junctions',
     question_text:
-      'When are you allowed to enter a yellow criss-cross box junction on the road?',
+      'What is the legal driving rule regarding Yellow Box Junctions painted on Sri Lankan roads?',
     options: [
-      'At any time if traffic lights are green',
-      'Only when your exit road is clear and you can cross without stopping inside the box',
-      'Whenever following a public bus',
-      'If you plan to turn right and wait for oncoming traffic',
+      'You must not enter the yellow box unless your exit road is clear, except when turning right',
+      'You can stop inside the box at any time if traffic is heavy',
+      'Buses and three-wheelers can park inside the box',
+      'You can only enter when the light is green, regardless of exit space',
     ],
-    correct_option_index: 1,
+    correct_option_index: 0,
     explanation:
-      'You must NOT enter a yellow box junction unless your exit is completely clear, except when turning right and waiting only for oncoming vehicles.',
+      'Drivers must never enter a yellow box junction unless their exit is completely clear. The only exception is when waiting to turn right and oncoming traffic prevents completion.',
     translations: {
       en: {
         question_text:
-          'When are you allowed to enter a yellow criss-cross box junction on the road?',
+          'What is the legal driving rule regarding Yellow Box Junctions painted on Sri Lankan roads?',
         options: [
-          'At any time if traffic lights are green',
-          'Only when your exit road is clear and you can cross without stopping inside the box',
-          'Whenever following a public bus',
-          'If you plan to turn right and wait for oncoming traffic',
+          'You must not enter the yellow box unless your exit road is clear, except when turning right',
+          'You can stop inside the box at any time if traffic is heavy',
+          'Buses and three-wheelers can park inside the box',
+          'You can only enter when the light is green, regardless of exit space',
         ],
         explanation:
-          'You must NOT enter a yellow box junction unless your exit is completely clear, except when turning right and waiting only for oncoming vehicles.',
+          'Drivers must never enter a yellow box junction unless their exit is completely clear. The only exception is when waiting to turn right and oncoming traffic prevents completion.',
       },
       si: {
         question_text:
-          'මාර්ගයක ඇති කහ පැහැති කොටු සලකුණු කළ පෙට්ටියකට (Yellow Box Junction) ඇතුළු විය හැක්කේ කවදාද?',
+          'ශ්‍රී ලංකාවේ මාර්ග හන්දිවල ඇති කහ පැහැති කොටු දැල (Yellow Box Junction) සම්බන්ධ නීතිය කුමක්ද?',
         options: [
-          'කොළ පැහැති සංඥා ලාම්පුව දැල්වී ඇති ඕනෑම වේලාවක',
-          'පිටවීමේ මාර්ගය සම්පූර්ණයෙන්ම පැහැදිලිව ඇති විට හා කොටුව තුළ නොනැවතී යා හැකි විට පමණි',
-          'බස් රථයක් පසුපසින් ගමන් කරන විට',
-          'දකුණට හැරවීමට බලාපොරොත්තු වන්නේ නම් පමණි',
+          'පිටවීමේ මාර්ගය පැහැදිලිව නොමැති නම් කහ කොටුව තුළට ඇතුළු නොවිය යුතුය (දකුණට හැරවීම හැර)',
+          'තදබදය වැඩි නම් කොටුව තුළ වාහනය නතර කර තැබිය හැක',
+          'බස් සහ ත්‍රිරෝද රථ වලට කොටුව තුළ නැවැත්විය හැක',
+          'කොළ එළිය ඇති විට පිටවීම අවහිර වුවද ඇතුළු විය හැක',
         ],
         explanation:
-          'පිටවීමේ මාර්ගය පැහැදිලිව නොමැති නම් කහ කොටුව තුළ වාහනය නැවැත්වීම නීතියෙන් තහනම් වේ.',
+          'කහ කොටු දැලක් තුළට ඇතුළු විය හැක්කේ පිටවීමේ මාර්ගය සම්පූර්ණයෙන්ම පැහැදිලිව ඇත්නම් පමණි. දකුණට හැරවීමේදී පමණක් ව්‍යතිරේකයක් පවතී.',
       },
       ta: {
         question_text:
-          'மஞ்சள் பெட்டி சந்திப்பில் (Yellow Box Junction) நீங்கள் எப்போது நுழையலாம்?',
+          'வீதிகளில் வரையப்பட்டுள்ள மஞ்சள் பெட்டி சந்தி (Yellow Box Junction) தொடர்பான சட்டம் யாது?',
         options: [
-          'பச்சை விளக்கு எரியும் எந்த நேரத்திலும்',
-          'வெளியேறும் பாதை தெளிவாக இருந்து பெட்டிக்குள் நிற்காமல் கடக்க முடியும் போது மட்டுமே',
-          'பஸ்ஸின் பின்னால் செல்லும் போது',
-          'வலதுபுறம் திரும்ப காத்திருக்கும் போது',
+          'வெளியேறும் பாதை தெளிவாக இல்லாவிட்டால் மஞ்சள் பெட்டிக்குள் நுழையக்கூடாது (வலதுபுறம் திரும்புவதைத் தவிர)',
+          'போக்குவரத்து நெரிசல் இருப்பின் பெட்டிக்குள் வாகனத்தை நிறுத்தலாம்',
+          'பேருந்துகள் மற்றும் முச்சக்கர வண்டிகள் பெட்டியினுள் நிற்கலாம்',
+          'பச்சை விளக்கு எரியும்போது வெளியேறும் வழி அடைக்கப்பட்டிருந்தாலும் நுழையலாம்',
         ],
         explanation:
-          'வெளியேறும் பாதை தெளிவாக இல்லாவிட்டால் மஞ்சள் பெட்டிக்குள் வாகனத்தை நிறுத்துவது சட்டவிரோதமாகும்.',
+          'வெளியேறும் பாதை தெளிவாக இருக்கும்போது மட்டுமே மஞ்சள் பெட்டிக்குள் நுழைய வேண்டும்.',
+      },
+    },
+  },
+  {
+    id: 'q-prio-03',
+    category: 'priority_and_junctions',
+    question_text:
+      'When circulating a roundabout in Sri Lanka, which traffic has priority?',
+    options: [
+      'Traffic already circulating on the roundabout from your right',
+      'Vehicles entering the roundabout at highest speed',
+      'Long-distance buses entering from the left',
+      'Pedestrians crossing anywhere on the roundabout',
+    ],
+    correct_option_index: 0,
+    explanation:
+      'In Sri Lanka (left-hand drive road network), vehicles already in the roundabout coming from your right have absolute right of way.',
+    translations: {
+      en: {
+        question_text:
+          'When circulating a roundabout in Sri Lanka, which traffic has priority?',
+        options: [
+          'Traffic already circulating on the roundabout from your right',
+          'Vehicles entering the roundabout at highest speed',
+          'Long-distance buses entering from the left',
+          'Pedestrians crossing anywhere on the roundabout',
+        ],
+        explanation:
+          'In Sri Lanka (left-hand drive road network), vehicles already in the roundabout coming from your right have absolute right of way.',
+      },
+      si: {
+        question_text:
+          'වටරවුමකට ඇතුළු වීමේදී ප්‍රමුඛතාවය හිමි වන්නේ කාටද?',
+        options: [
+          'වටරවුමේ දකුණු පසින් දැනටමත් ගමන් කරමින් සිටින වාහන වලට',
+          'වැඩි වේගයකින් ඇතුළු වන වාහන වලට',
+          'වම් පසින් ඇතුළු වන දුරගමන් බස් රථ වලට',
+          'වටරවුම හරහා ගමන් කරන පදිකයින්ට',
+        ],
+        explanation:
+          'වටරවුමකදී සැමවිටම තම දකුණු පසින් වටරවුම තුළ දැනටමත් ධාවනය වන වාහන සඳහා ප්‍රමුඛතාවය ලබා දිය යුතුය.',
+      },
+      ta: {
+        question_text:
+          'வட்டச்சுற்றில் (Roundabout) நுழையும் போது யாருக்கு முன்னுரிமை அளிக்க வேண்டும்?',
+        options: [
+          'வட்டச்சுற்றில் வலதுபுறத்தில் ஏற்கனவே பயணிக்கும் வாகனங்களுக்கு',
+          'வேகமாக நுழையும் வாகனங்களுக்கு',
+          'இடதுபுறத்தில் இருந்து வரும் நீண்டதூர பேருந்துகளுக்கு',
+          'வட்டச்சுற்றை கடக்கும் பாதசாரிகளுக்கு',
+        ],
+        explanation:
+          'வட்டச்சுற்றில் ஏற்கனவே வலதுபுறத்திலிருந்து சுற்றிக்கொண்டிருக்கும் வாகனங்களுக்கே முன்னுரிமை உண்டு.',
       },
     },
   },
 
-  // -------------------------------------------------------------
-  // 4. General Road Safety & DMT Laws
-  // -------------------------------------------------------------
+  // =============================================================
+  // 4. GENERAL ROAD SAFETY & HIGHWAY CODE
+  // =============================================================
   {
-    id: 'q-law-01',
+    id: 'q-safe-01',
     category: 'general_road_safety',
     question_text:
-      'What is the minimum safe following distance rule in normal dry driving conditions?',
-    options: [
-      '1 second distance behind the vehicle ahead',
-      'The 2-Second Rule (increasing to 4 seconds in wet conditions)',
-      '1 meter for every 10 km/h speed',
-      'Stay as close as possible to prevent other vehicles from cutting in',
-    ],
-    correct_option_index: 1,
-    explanation:
-      'The 2-second rule provides adequate reaction time and braking distance in normal conditions.',
-    translations: {
-      en: {
-        question_text:
-          'What is the minimum safe following distance rule in normal dry driving conditions?',
-        options: [
-          '1 second distance behind the vehicle ahead',
-          'The 2-Second Rule (increasing to 4 seconds in wet conditions)',
-          '1 meter for every 10 km/h speed',
-          'Stay as close as possible to prevent other vehicles from cutting in',
-        ],
-        explanation:
-          'The 2-second rule provides adequate reaction time and braking distance in normal conditions.',
-      },
-      si: {
-        question_text:
-          'සාමාන්‍ය වියළි කාලගුණික තත්ත්වයන් යටතේ රිය පැදවීමේදී තබාගත යුතු අවම ආරක්ෂිත පරතරය පිළිබඳ නීතිය කුමක්ද?',
-        options: [
-          'ඉදිරි වාහනයට තත්පර 1ක පරතරයක් තබා ගැනීම',
-          'තත්පර 2 නීතිය (The 2-Second Rule) - වැසි සහිත අවස්ථාවල තත්පර 4 දක්වා වැඩි කළ යුතුය',
-          'සෑම පැයට කි.මී. 10ක වේගයකට මීටර් 1ක පරතරයක්',
-          'වෙනත් වාහන ඇතුළු වීම වැළැක්වීමට හැකි තරම් ළඟින් ධාවනය කිරීම',
-        ],
-        explanation:
-          'තත්පර 2 නීතිය මගින් හදිසි අවස්ථාවකදී තිරිංග යෙදීමට සහ ප්‍රතිචාර දැක්වීමට ප්‍රමාණවත් කාලයක් සහ ආරක්ෂිත දුරක් ලබා දේ.',
-      },
-      ta: {
-        question_text:
-          'சாதாரண உலர்ந்த காலநிலையில் முன்னால் செல்லும் வாகனத்திற்கும் உங்களுக்குமிடையிலான குறைந்தபட்ச பாதுகாப்பு இடைவெளி யாது?',
-        options: [
-          'முன்னால் செல்லும் வாகனத்திலிருந்து 1 வினாடி இடைவெளி',
-          '2-வினாடி விதி (The 2-Second Rule) - மழைக்காலத்தில் 4 வினாடிகளாக அதிகரிக்க வேண்டும்',
-          'ஒவ்வொரு 10 km/h வேகத்திற்கும் 1 மீட்டர்',
-          'மற்ற வாகனங்கள் நுழைவதை தடுக்க நெருக்கமாக செலுத்துதல்',
-        ],
-        explanation:
-          '2-வினாடி விதி திடீர் நிறுத்தங்களின் போது போதிய பிரதிபலிப்பு நேரத்தையும் தூரத்தையும் வழங்குகிறது.',
-      },
-    },
-  },
-  {
-    id: 'q-law-03',
-    category: 'general_road_safety',
-    question_text:
-      'What is the legal blood alcohol concentration (BAC) limit for driving a motor vehicle in Sri Lanka?',
+      'What is the maximum legal Blood Alcohol Concentration (BAC) permitted for driving a motor vehicle in Sri Lanka?',
     options: [
       '0.06 grams per 100 milliliters of blood (0.06% BAC)',
       '0.15 grams per 100 milliliters of blood',
       '0.50 grams per 100 milliliters of blood',
-      'There is no legal limit if driving carefully',
+      'There is no limit if driving under 40 km/h',
     ],
     correct_option_index: 0,
     explanation:
-      'Under the Sri Lanka Motor Traffic Act, the legal threshold for blood alcohol concentration is 0.06g/100ml. Driving above this limit is a criminal offense.',
+      'Under the Sri Lanka Motor Traffic Act, the legal threshold for blood alcohol concentration is 0.06g/100ml (0.06%). Operating a motor vehicle above this is a severe criminal offense.',
     translations: {
       en: {
         question_text:
-          'What is the legal blood alcohol concentration (BAC) limit for driving a motor vehicle in Sri Lanka?',
+          'What is the maximum legal Blood Alcohol Concentration (BAC) permitted for driving a motor vehicle in Sri Lanka?',
         options: [
           '0.06 grams per 100 milliliters of blood (0.06% BAC)',
           '0.15 grams per 100 milliliters of blood',
           '0.50 grams per 100 milliliters of blood',
-          'There is no legal limit if driving carefully',
+          'There is no limit if driving under 40 km/h',
         ],
         explanation:
-          'Under the Sri Lanka Motor Traffic Act, the legal threshold for blood alcohol concentration is 0.06g/100ml. Driving above this limit is a criminal offense.',
+          'Under the Sri Lanka Motor Traffic Act, the legal threshold for blood alcohol concentration is 0.06g/100ml (0.06%). Operating a motor vehicle above this is a severe criminal offense.',
       },
       si: {
         question_text:
@@ -533,23 +749,459 @@ export const SRI_LANKA_DMT_QUESTION_BANK: TheoryQuestion[] = [
           'රුධිරය මිලිලීටර් 100 කට ග්‍රෑම් 0.06 (0.06% BAC)',
           'රුධිරය මිලිලීටර් 100 කට ග්‍රෑම් 0.15',
           'රුධිරය මිලිලීටර් 100 කට ග්‍රෑම් 0.50',
-          'ප්‍රවේශමෙන් ධාවනය කරන්නේ නම් සීමාවක් නොමැත',
+          'පැයට කි.මී. 40ට අඩුවෙන් ධාවනය කරන්නේ නම් සීමාවක් නොමැත',
         ],
         explanation:
           'මෝටර් රථ පනතට අනුව නීත්‍යානුකූල මධ්‍යසාර සීමාව 0.06g/100ml වේ. ඊට වඩා මධ්‍යසාර ප්‍රමාණයක් සහිතව රිය පැදවීම දඬුවම් ලැබිය හැකි වරදකි.',
       },
       ta: {
         question_text:
-          'இலங்கையில் மோட்டார் வாகனத்தை செலுத்தும் போது அனுமதிக்கப்பட்ட இரத்த மதுபான செறிவு (BAC) வரம்பு யாது?',
+          'இலங்கையில் மோட்டார் வாகனத்தை செலுத்தும் போது அனுமதிக்கப்பட்ட அதிகபட்ச இரத்த மதுபான செறிவு (BAC) வரம்பு யாது?',
         options: [
           '100 மில்லிலீட்டர் இரத்தத்திற்கு 0.06 கிராம் (0.06% BAC)',
           '100 மில்லிலீட்டர் இரத்தத்திற்கு 0.15 கிராம்',
           '100 மில்லிலீட்டர் இரத்தத்திற்கு 0.50 கிராம்',
-          'கவனமாக செலுத்தினால் சட்ட வரம்பு இல்லை',
+          '40 km/h வேகத்திற்கு குறைவாக செலுத்தினால் வரம்பு இல்லை',
         ],
         explanation:
-          'மோட்டார் போக்குவரத்து சட்டத்தின் கீழ் சட்டப்பூர்வ மதுபான வரம்பு 0.06g/100ml ஆகும். இதற்கு மேல் வாகனம் செலுத்துவது குற்றமாகும்.',
+          'மோட்டார் போக்குவரத்து சட்டத்தின் கீழ் சட்டப்பூர்வ மதுபான வரம்பு 0.06g/100ml ஆகும்.',
+      },
+    },
+  },
+  {
+    id: 'q-safe-02',
+    category: 'general_road_safety',
+    question_text:
+      'What is the minimum legal distance a driver must maintain when parking a vehicle before or after a pedestrian (zebra) crossing?',
+    options: [
+      '15 meters from the crossing',
+      '2 meters from the crossing',
+      '30 meters from the crossing',
+      'Directly adjacent to the white zig-zag line',
+    ],
+    correct_option_index: 0,
+    explanation:
+      'Parking within 15 meters of a pedestrian zebra crossing in Sri Lanka is strictly prohibited to ensure oncoming drivers and crossing pedestrians have unobstructed sightlines.',
+    translations: {
+      en: {
+        question_text:
+          'What is the minimum legal distance a driver must maintain when parking a vehicle before or after a pedestrian (zebra) crossing?',
+        options: [
+          '15 meters from the crossing',
+          '2 meters from the crossing',
+          '30 meters from the crossing',
+          'Directly adjacent to the white zig-zag line',
+        ],
+        explanation:
+          'Parking within 15 meters of a pedestrian zebra crossing in Sri Lanka is strictly prohibited to ensure oncoming drivers and crossing pedestrians have unobstructed sightlines.',
+      },
+      si: {
+        question_text:
+          'පදික මාරුවකට (සීබ්‍රා මාරුව) ආසන්නව වාහනයක් නැවැත්වීමේදී පවත්වා ගත යුතු අවම නීත්‍යානුකූල දුර කොපමණද?',
+        options: [
+          'පදික මාරුවේ සිට මීටර් 15 ක්',
+          'පදික මාරුවේ සිට මීටර් 2 ක්',
+          'පදික මාරුවේ සිට මීටර් 30 ක්',
+          'සිග්-සැග් රේඛාව මත',
+        ],
+        explanation:
+          'පදිකයින්ගේ සහ රියදුරන්ගේ දෘශ්‍යතාව පැහැදිලිව තබා ගැනීම සඳහා පදික මාරුවකට මීටර් 15 ක් ඇතුළත වාහන නැවැත්වීම තහනම්ය.',
+      },
+      ta: {
+        question_text:
+          'பாதசாரி கடவைக்கு அருகில் வாகனத்தை நிறுத்துவதற்கு பேண வேண்டிய குறைந்தபட்ச தூரம் யாது?',
+        options: [
+          'பாதசாரி கடவையிலிருந்து 15 மீட்டர்கள்',
+          'பாதசாரி கடவையிலிருந்து 2 மீட்டர்கள்',
+          'பாதசாரி கடவையிலிருந்து 30 மீட்டர்கள்',
+          'வெள்ளை கோட்டின் அருகாமையில்',
+        ],
+        explanation:
+          'பாதசாரிகள் மற்றும் சாரதிகளின் பார்வை தெளிவாக இருக்க பாதசாரி கடவையில் இருந்து 15 மீற்றருக்குள் வாகனம் நிறுத்துவது தடை செய்யப்பட்டுள்ளது.',
+      },
+    },
+  },
+  {
+    id: 'q-safe-03',
+    category: 'general_road_safety',
+    question_text:
+      'What is the "Two-Second Rule" used for in safe driving practices?',
+    options: [
+      'Maintaining a safe following distance from the vehicle ahead in dry road conditions',
+      'The time taken to change a gear',
+      'The duration to look into rearview mirrors before overtaking',
+      'The maximum allowed horn sounding time',
+    ],
+    correct_option_index: 0,
+    explanation:
+      'The 2-second rule ensures a driver has adequate stopping distance behind the preceding vehicle under normal dry weather conditions. In wet weather, this should be doubled to 4 seconds.',
+    translations: {
+      en: {
+        question_text:
+          'What is the "Two-Second Rule" used for in safe driving practices?',
+        options: [
+          'Maintaining a safe following distance from the vehicle ahead in dry road conditions',
+          'The time taken to change a gear',
+          'The duration to look into rearview mirrors before overtaking',
+          'The maximum allowed horn sounding time',
+        ],
+        explanation:
+          'The 2-second rule ensures a driver has adequate stopping distance behind the preceding vehicle under normal dry weather conditions. In wet weather, this should be doubled to 4 seconds.',
+      },
+      si: {
+        question_text:
+          'ආරක්ෂිත රිය ධාවනයේදී "තත්පර දෙකේ නීතිය" (Two-Second Rule) භාවිත වන්නේ කුමකටද?',
+        options: [
+          'සාමාන්‍ය වියළි කාලගුණයේදී ඉදිරියෙන් ඇති වාහනයෙන් ආරක්ෂිත දුරක් පවත්වා ගැනීමට',
+          'ගියරයක් මාරු කිරීමට ගතවන කාලය මැනීමට',
+          'ඉස්සර කිරීමට පෙර කණ්නාඩිය බැලිය යුතු කාලය',
+          'නලා ශබ්ද කළ හැකි උපරිම කාලය',
+        ],
+        explanation:
+          'වියළි මාර්ග තත්ත්ව යටතේ ඉදිරිපස වාහනයෙන් ප්‍රමාණවත් ආරක්ෂිත පරතරයක් තබා ගැනීමට තත්පර 2ක නීතිය භාවිතා කරයි.',
+      },
+      ta: {
+        question_text:
+          'பாதுகாப்பான வாகன ஓட்டலில் "இரண்டு வினாடி விதி" (Two-Second Rule) எதற்காக பயன்படுகிறது?',
+        options: [
+          'முன்னால் செல்லும் வாகனத்திலிருந்து பாதுகாப்பான இடைவெளியைப் பேண',
+          'கியர் மாற்றுவதற்கு எடுக்கும் நேரம்',
+          'முந்துவதற்கு முன் கண்ணாடியைப் பார்க்க வேண்டிய நேரம்',
+          'ஒலிப்பானை (ஹோர்ன்) ஒலிக்கும் அதிகபட்ச நேரம்',
+        ],
+        explanation:
+          'முன்னால் செல்லும் வாகனத்திலிருந்து தகுந்த நிறுத்த இடைவெளியை பராமரிக்க 2 வினாடி விதி உதவுகிறது.',
+      },
+    },
+  },
+  {
+    id: 'q-safe-04',
+    category: 'general_road_safety',
+    question_text:
+      'When an emergency vehicle (ambulance, fire engine, or police vehicle) approaches with flashing emergency lights and siren active, what action should you take?',
+    options: [
+      'Move safely to the left edge of the road, slow down, and stop if necessary to clear a path',
+      'Accelerate rapidly to stay ahead of the emergency vehicle',
+      'Stop immediately in the center of the lane',
+      'Follow closely behind the ambulance to bypass heavy traffic',
+    ],
+    correct_option_index: 0,
+    explanation:
+      'All motorists must immediately yield right of way to emergency service vehicles by safely moving to the left side and creating an unobstructed lane.',
+    translations: {
+      en: {
+        question_text:
+          'When an emergency vehicle (ambulance, fire engine, or police vehicle) approaches with flashing emergency lights and siren active, what action should you take?',
+        options: [
+          'Move safely to the left edge of the road, slow down, and stop if necessary to clear a path',
+          'Accelerate rapidly to stay ahead of the emergency vehicle',
+          'Stop immediately in the center of the lane',
+          'Follow closely behind the ambulance to bypass heavy traffic',
+        ],
+        explanation:
+          'All motorists must immediately yield right of way to emergency service vehicles by safely moving to the left side and creating an unobstructed lane.',
+      },
+      si: {
+        question_text:
+          'හදිසි ආපදා සේවා වාහනයක් (ගිලන් රථ, ගිනි නිවන රථ හෝ පොලිස් රථ) සයිරන් නාද කරමින් පැමිණෙන විට ඔබ කළ යුත්තේ කුමක්ද?',
+        options: [
+          'ආරක්ෂිතව මාර්ගයේ වම් පසට කර වේගය අඩු කර අවශ්‍ය නම් නවත්වා ඉඩ ලබා දීම',
+          'ගිලන් රථයට වඩා වේගයෙන් ඉදිරියට ධාවනය කිරීම',
+          'මංතීරුව මැද හදිසියේම වාහනය නැවැත්වීම',
+          'තදබදය මඟ හැරීමට ගිලන් රථය පිටුපසින්ම ළඟින් ධාවනය කිරීම',
+        ],
+        explanation:
+          'හදිසි ආපදා වාහන වලට බාධාවකින් තොරව ගමන් කිරීමට මාර්ගයේ වම් පසට කර ඉඩ ලබා දීම අනිවාර්ය නීතියකි.',
+      },
+      ta: {
+        question_text:
+          'அவசர சிகிச்சை ஊர்தி (ஆம்புலன்ஸ்/தீயணைப்பு) சைரன் ஒலியுடன் வரும் போது நீங்கள் என்ன செய்ய வேண்டும்?',
+        options: [
+          'பாதுகாப்பாக வீதியின் இடதுபுறமாக சென்று வேகத்தை குறைத்து அல்லது நிறுத்தி வழிவிடவும்',
+          'அவசர ஊர்தியை விட வேகமாக செல்லவும்',
+          'ஒழுங்கையின் நடுவில் திடீரென நிறுத்தவும்',
+          'நெரிசலை தவிர்க்க ஆம்புலன்ஸின் பின்னால் தொடர்ந்து செல்லவும்',
+        ],
+        explanation:
+          'அவசர கால வாகனங்களுக்கு உடனடியாக இடதுபுறமாக சென்று தடையற்ற பாதையை வழங்குவது கட்டாயமாகும்.',
+      },
+    },
+  },
+
+  // =============================================================
+  // 5. VEHICLE MECHANICS, CONTROLS & EMERGENCIES
+  // =============================================================
+  {
+    id: 'q-mech-01',
+    category: 'vehicle_mechanics_controls',
+    question_text:
+      'If your foot brake suddenly fails while driving down a steep slope, what is the safest recovery sequence?',
+    options: [
+      'Pump the brake pedal, downshift progressively to lower gears (engine braking), and apply the handbrake gradually',
+      'Turn off the engine ignition immediately while traveling at speed',
+      'Steer straight off the edge into a ditch immediately',
+      'Shift the transmission into neutral and wait for the car to stop',
+    ],
+    correct_option_index: 0,
+    explanation:
+      'Pumping can build residual hydraulic pressure. Downshifting uses engine compression braking, and gradual handbrake engagement slows the wheels without locking them into a skid.',
+    translations: {
+      en: {
+        question_text:
+          'If your foot brake suddenly fails while driving down a steep slope, what is the safest recovery sequence?',
+        options: [
+          'Pump the brake pedal, downshift progressively to lower gears (engine braking), and apply the handbrake gradually',
+          'Turn off the engine ignition immediately while traveling at speed',
+          'Steer straight off the edge into a ditch immediately',
+          'Shift the transmission into neutral and wait for the car to stop',
+        ],
+        explanation:
+          'Pumping can build residual hydraulic pressure. Downshifting uses engine compression braking, and gradual handbrake engagement slows the wheels without locking them into a skid.',
+      },
+      si: {
+        question_text:
+          'බෑවුම් සහිත මාර්ගයක ධාවනය වන විට පාද තිරිංග (Foot brake) ක්‍රියාවිරහිත වුවහොත් ගත යුතු වඩාත්ම ආරක්ෂිත පියවර කුමක්ද?',
+        options: [
+          'තිරිංග පැඩලය කිහිපවරක් පාගා, ක්‍රමයෙන් පහළ ගියරයකට දමා (Engine brake), අත් තිරිංගය (Handbrake) ක්‍රමයෙන් යෙදීම',
+          'වේගයෙන් ගමන් කරන අතරතුර වාහනයේ එන්ජිම සම්පූර්ණයෙන්ම ක්‍රියා විරහිත කිරීම',
+          'වාහනය වහාම කානුවකට හැරවීම',
+          'ගියර් Neutral (නිදහස්) කර තනිව නවතින තුරු සිටීම',
+        ],
+        explanation:
+          'තිරිංග ක්‍රියාවිරහිත වූ විට එන්ජින් තිරිංගය (ක්‍රමයෙන් පහළ ගියර් වලට මාරු කිරීම) සහ අත් තිරිංග ක්‍රමයෙන් යෙදීම ආරක්ෂිතම ක්‍රමයයි.',
+      },
+      ta: {
+        question_text:
+          'செங்குத்தான சரிவில் செல்லும்போது பிரேக் செயலிழந்தால் நீங்கள் செய்ய வேண்டிய பாதுகாப்பான நடவடிக்கை யாது?',
+        options: [
+          'பிரேக்கை பலமுறை அழுத்தி, படிப்படியாக குறைந்த கியருக்கு மாற்றி (Engine brake), கை பிரேக்கை மெதுவாக இழுக்கவும்',
+          'வாகனம் வேகமாக செல்லும்போது இயந்திரத்தை அணைக்கவும்',
+          'உடனடியாக வாகனத்தை பள்ளத்தில் செலுத்தவும்',
+          'கியரை நியூட்ரலில் விட்டு வாகனம் நிற்கும் வரை காத்திருக்கவும்',
+        ],
+        explanation:
+          'கியரை குறைத்து என்ஜின் பிரேக் மூலம் வேகத்தை கட்டுப்படுத்தி கை பிரேக்கை படிப்படியாக பயன்படுத்துவதே சரியானது.',
+      },
+    },
+  },
+  {
+    id: 'q-mech-02',
+    category: 'vehicle_mechanics_controls',
+    question_text:
+      'If a tire suddenly bursts / blows out while driving at 80 km/h on a highway, what should you do?',
+    options: [
+      'Grip the steering wheel firmly with both hands, release the accelerator, and allow the car to decelerate gradually without hard braking',
+      'Slam on the foot brake with maximum force immediately',
+      'Pull the emergency handbrake instantly to maximum position',
+      'Turn the steering wheel rapidly to the opposite side of the blown tire',
+    ],
+    correct_option_index: 0,
+    explanation:
+      'Hard braking or sudden steering during a blowout causes a violent rollover or spin. Keep the vehicle straight and decelerate smoothly before pulling over.',
+    translations: {
+      en: {
+        question_text:
+          'If a tire suddenly bursts / blows out while driving at 80 km/h on a highway, what should you do?',
+        options: [
+          'Grip the steering wheel firmly with both hands, release the accelerator, and allow the car to decelerate gradually without hard braking',
+          'Slam on the foot brake with maximum force immediately',
+          'Pull the emergency handbrake instantly to maximum position',
+          'Turn the steering wheel rapidly to the opposite side of the blown tire',
+        ],
+        explanation:
+          'Hard braking or sudden steering during a blowout causes a violent rollover or spin. Keep the vehicle straight and decelerate smoothly before pulling over.',
+      },
+      si: {
+        question_text:
+          'අධිවේගී මාර්ගයක පැයට කි.මී. 80 ක වේගයෙන් ගමන් කරන විට ටයරයක් පුපුරා ගියහොත් ඔබ කළ යුත්තේ කුමක්ද?',
+        options: [
+          'සුක්කානම දෑතින්ම තදින් අල්ලාගෙන, ඇක්සලරේටරය අතහැර තදින් තිරිංග නොයොදා වාහනයේ වේගය ක්‍රමයෙන් අඩු වීමට ඉඩ හැරීම',
+          'වහාම උපරිම බලයෙන් පාද තිරිංග (Foot brake) තද කිරීම',
+          'ක්ෂණිකව අත් තිරිංග (Handbrake) උපරිමයට ඇදීම',
+          'සුක්කානම අනෙක් පැත්තට වේගයෙන් කැරකවීම',
+        ],
+        explanation:
+          'ටයරයක් පිපිරූ විට තදින් තිරිංග යෙදීමෙන් වාහනය පෙරළී යා හැක. සුක්කානම කෙළින් තබා ගනිමින් වේගය ක්‍රමයෙන් අඩු කරගත යුතුය.',
+      },
+      ta: {
+        question_text:
+          'நெடுஞ்சாலையில் 80 km/h வேகத்தில் செல்லும்போது ரயர் வெடித்தால் நீங்கள் என்ன செய்ய வேண்டும்?',
+        options: [
+          'ஸ்டீயரிங்கை இரு கைகளாலும் இறுக்கமாகப் பிடித்து, அக்ஸிலேட்டரை விடுவித்து, பிரேக் அடிக்காமல் வாகனத்தை மெதுவாக நிறுத்தவும்',
+          'உடனடியாக கடுமையான பிரேக் போடவும்',
+          'உடனடியாக கை பிரேக்கை முழுமையாக இழுக்கவும்',
+          'ஸ்டீயரிங்கை எதிர்பக்கமாக வேகமாக திருப்பவும்',
+        ],
+        explanation:
+          'ரயர் வெடிக்கும் போது கடுமையான பிரேக் போடுவதால் வாகனம் கவிழும் அபாயம் உள்ளது. சீரான முறையில் வேகத்தை குறைத்து நிறுத்த வேண்டும்.',
+      },
+    },
+  },
+  {
+    id: 'q-mech-03',
+    category: 'vehicle_mechanics_controls',
+    question_text:
+      'What should a driver do if the car begins to hydroplane (aquaplane) over standing water on a rainy highway?',
+    options: [
+      'Ease off the accelerator pedal gently, avoid sudden braking, and maintain a steady straight steering line until tires regain grip',
+      'Press the accelerator pedal to slice through the water layer',
+      'Apply harsh anti-lock braking to lock the wheels',
+      'Turn the steering wheel back and forth rapidly',
+    ],
+    correct_option_index: 0,
+    explanation:
+      'During hydroplaning, tires float on water without road contact. Easing off the throttle allows water to disperse and the tread to grip asphalt again.',
+    translations: {
+      en: {
+        question_text:
+          'What should a driver do if the car begins to hydroplane (aquaplane) over standing water on a rainy highway?',
+        options: [
+          'Ease off the accelerator pedal gently, avoid sudden braking, and maintain a steady straight steering line until tires regain grip',
+          'Press the accelerator pedal to slice through the water layer',
+          'Apply harsh anti-lock braking to lock the wheels',
+          'Turn the steering wheel back and forth rapidly',
+        ],
+        explanation:
+          'During hydroplaning, tires float on water without road contact. Easing off the throttle allows water to disperse and the tread to grip asphalt again.',
+      },
+      si: {
+        question_text:
+          'වැසි සහිත මාර්ගයක ජලය රැඳුණු ස්ථානයකදී වාහනය ලිස්සා යාම (Hydroplaning / Aquaplaning) සිදුවුවහොත් කළ යුත්තේ කුමක්ද?',
+        options: [
+          'ඇක්සලරේටරය ක්‍රමයෙන් මුදාහැර, හදිසි තිරිංග නොයොදා ටයර් නැවත මාර්ගයේ ග්‍රහණය වනතුරු සුක්කානම කෙළින් තබා ගැනීම',
+          'වතුර කපාගෙන යාමට ඇක්සලරේටරය තද කිරීම',
+          'හදිසි තිරිංග තදින් යෙදීම',
+          'සුක්කානම දෙපසට වේගයෙන් කරකැවීම',
+        ],
+        explanation:
+          'ජල තට්ටුවක් මත ටයර් ලිස්සා යන විට තිරිංග නොයොදා වේගය ලිහිල් කර ටයර් වලට මාර්ගය ස්පර්ශ වීමට ඉඩ දිය යුතුය.',
+      },
+      ta: {
+        question_text:
+          'மழைக்காலத்தில் வீதியில் தேங்கியுள்ள நீரில் வாகனம் வழுக்கும் போது (Aquaplaning) என்ன செய்ய வேண்டும்?',
+        options: [
+          'அக்ஸிலேட்டரை மெதுவாக குறைத்து, பிரேக் அடிக்காமல் ரயர்கள் மீண்டும் வீதியை பற்றும் வரை நேராக செலுத்தவும்',
+          'நீரை கடக்க வேகத்தை கூட்டவும்',
+          'கடுமையாக பிரேக் அடிக்கவும்',
+          'ஸ்டீயரிங்கை இருபுறமும் அசைக்கவும்',
+        ],
+        explanation:
+          'நீரில் வழுக்கும் போது திடீர் பிரேக் போடாமல் வேகத்தை குறைத்து வாகனத்தை நேராக வைத்திருக்க வேண்டும்.',
+      },
+    },
+  },
+
+  // =============================================================
+  // 6. INFORMATIVE & EXPRESSWAY SIGNS
+  // =============================================================
+  {
+    id: 'q-info-01',
+    category: 'road_signs_informative',
+    question_text:
+      'What are the minimum and maximum legal speed limits for cars on Sri Lankan Expressways (e.g., E01 Southern Expressway)?',
+    image_url: '🛣️ 100',
+    options: [
+      'Minimum: 40 km/h | Maximum: 100 km/h',
+      'Minimum: 20 km/h | Maximum: 70 km/h',
+      'Minimum: 60 km/h | Maximum: 140 km/h',
+      'No minimum limit | Maximum: 80 km/h',
+    ],
+    correct_option_index: 0,
+    explanation:
+      'On Sri Lankan Expressways, the minimum legal speed is 40 km/h (to prevent hazardous slow obstruction) and maximum is 100 km/h for passenger motor cars.',
+    translations: {
+      en: {
+        question_text:
+          'What are the minimum and maximum legal speed limits for cars on Sri Lankan Expressways (e.g., E01 Southern Expressway)?',
+        options: [
+          'Minimum: 40 km/h | Maximum: 100 km/h',
+          'Minimum: 20 km/h | Maximum: 70 km/h',
+          'Minimum: 60 km/h | Maximum: 140 km/h',
+          'No minimum limit | Maximum: 80 km/h',
+        ],
+        explanation:
+          'On Sri Lankan Expressways, the minimum legal speed is 40 km/h (to prevent hazardous slow obstruction) and maximum is 100 km/h for passenger motor cars.',
+      },
+      si: {
+        question_text:
+          'ශ්‍රී ලංකාවේ අධිවේගී මාර්ගවල (උදා: E01 දක්ෂිණ අධිවේගී මාර්ගය) මෝටර් රථ සඳහා වන අවම සහ උපරිම වේග සීමාවන් මොනවාද?',
+        options: [
+          'අවම: පැයට කි.මී. 40 | උපරිම: පැයට කි.මී. 100',
+          'අවම: පැයට කි.මී. 20 | උපරිම: පැයට කි.මී. 70',
+          'අවම: පැයට කි.මී. 60 | උපරිම: පැයට කි.මී. 140',
+          'අවම සීමාවක් නොමැත | උපරිම: පැයට කි.මී. 80',
+        ],
+        explanation:
+          'ශ්‍රී ලංකාවේ අධිවේගී මාර්ගවල මෝටර් රථ සඳහා නීත්‍යානුකූල අවම වේගය 40 km/h වන අතර උපරිම වේගය 100 km/h වේ.',
+      },
+      ta: {
+        question_text:
+          'இலங்கை அதிவேக நெடுஞ்சாலைகளில் கார்களுக்கான குறைந்தபட்ச மற்றும் அதிகபட்ச வேக வரம்புகள் என்ன?',
+        options: [
+          'குறைந்தபட்சம்: 40 km/h | அதிகபட்சம்: 100 km/h',
+          'குறைந்தபட்சம்: 20 km/h | அதிகபட்சம்: 70 km/h',
+          'குறைந்தபட்சம்: 60 km/h | அதிகபட்சம்: 140 km/h',
+          'குறைந்தபட்ச வரம்பு இல்லை | அதிகபட்சம்: 80 km/h',
+        ],
+        explanation:
+          'அதிவேக நெடுஞ்சாலையில் குறைந்தபட்ச வேகம் 40 km/h மற்றும் அதிகபட்ச வேகம் 100 km/h ஆகும்.',
+      },
+    },
+  },
+  {
+    id: 'q-info-02',
+    category: 'road_signs_informative',
+    question_text:
+      'A blue rectangular sign featuring a white capital letter "H" on Sri Lankan roads designates:',
+    image_url: '🏥 H',
+    options: [
+      'Hospital / medical treatment facility ahead (Maintain silence, no unnecessary horn blowing)',
+      'Helipad / Helicopter landing site',
+      'Hotel or resort accommodation',
+      'Highway exit ramp',
+    ],
+    correct_option_index: 0,
+    explanation:
+      'The "H" informative sign indicates a Hospital or medical emergency zone. Drivers must refrain from sounding horns or creating noise disturbances in this sector.',
+    translations: {
+      en: {
+        question_text:
+          'A blue rectangular sign featuring a white capital letter "H" on Sri Lankan roads designates:',
+        options: [
+          'Hospital / medical treatment facility ahead (Maintain silence, no unnecessary horn blowing)',
+          'Helipad / Helicopter landing site',
+          'Hotel or resort accommodation',
+          'Highway exit ramp',
+        ],
+        explanation:
+          'The "H" informative sign indicates a Hospital or medical emergency zone. Drivers must refrain from sounding horns or creating noise disturbances in this sector.',
+      },
+      si: {
+        question_text:
+          'නිල් පැහැති සෘජුකෝණාස්‍රාකාර පුවරුවක සුදු පැහැති "H" අකුරක් සහිත සංඥාවෙන් දැක්වෙන්නේ:',
+        options: [
+          'ඉදිරියෙන් රෝහලක් ඇත (ශබ්ද නොකරන්න, අනවශ්‍ය නලා ශබ්ද කිරීම තහනම්)',
+          'හෙලිකොප්ටර් ගොඩබෑමේ අංගනයකි',
+          'හෝටල් හෝ නවාතැන් පහසුකම් කලාපයකි',
+          'අධිවේගී මාර්ග පිටවීමකි',
+        ],
+        explanation:
+          '"H" සලකුණ රෝහල් කලාපයක් දක්වන අතර එහිදී අනවශ්‍ය නලා නාද කිරීම තහනම්ය.',
+      },
+      ta: {
+        question_text:
+          'நீல நிற செவ்வக பலகையில் வெள்ளை "H" எழுத்து குறிப்பது:',
+        options: [
+          'முன்னால் வைத்தியசாலை உள்ளது (அமைதி காக்கவும், ஹோர்ன் அடிக்க தடை)',
+          'ஹெலிகாப்டர் தளம்',
+          'ஹோட்டல் அல்லது தங்குமிடம்',
+          'நெடுஞ்சாலை வெளியேறும் வழி',
+        ],
+        explanation:
+          '"H" அடையாளம் வைத்தியசாலை பகுதியை குறிப்பதால் அங்கு ஒலிப்பான் எழுப்பக் கூடாது.',
       },
     },
   },
 ]
+
+export const SRI_LANKA_DMT_QUESTION_BANK = SRI_LANKA_DMT_MASTER_QUESTIONS

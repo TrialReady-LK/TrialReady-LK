@@ -16,6 +16,7 @@ import {
   Eye,
   TrendingUp,
   SlidersHorizontal,
+  Shuffle,
 } from 'lucide-react'
 import type {
   TheoryQuestion,
@@ -27,6 +28,7 @@ import {
   saveTheoryQuestion,
   deleteTheoryQuestion,
   resetQuestionBankToDefault,
+  shuffleTheoryQuestions,
   getAllAcademyMockAttempts,
   type ExtendedMockAttempt,
 } from '../services/theoryService'
@@ -181,12 +183,20 @@ export const AdminTheoryManagementView: React.FC<
     try {
       setIsResetting(true)
       const freshQuestions = await resetQuestionBankToDefault()
-      setQuestions(freshQuestions)
+      setQuestions([...freshQuestions])
       setIsResetModalOpen(false)
-      showToast('Quiz questions reset and refreshed to DMT standard!')
+      showToast(
+        `Quiz reset! Loaded ${freshQuestions.length} randomized DMT Highway Code questions.`,
+      )
     } finally {
       setIsResetting(false)
     }
+  }
+
+  const handleShuffleQuestions = async () => {
+    const shuffled = await shuffleTheoryQuestions()
+    setQuestions([...shuffled])
+    showToast(`Questions pool shuffled! ${shuffled.length} questions re-ordered.`)
   }
 
   // Filtered Questions
@@ -237,8 +247,9 @@ export const AdminTheoryManagementView: React.FC<
       <div className="rounded-3xl border border-blue-200 bg-linear-to-r from-slate-900 via-blue-950 to-indigo-950 p-6 sm:p-8 text-white shadow-xl flex flex-col md:flex-row md:items-center md:justify-between gap-6">
         <div className="space-y-2">
           <div className="flex flex-wrap items-center gap-2">
-            <span className="inline-block rounded-full bg-blue-500/20 px-3 py-1 text-xs font-semibold text-blue-300 border border-blue-400/30">
-              🛡️ Administrator Control Center
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-blue-500/20 px-3 py-1 text-xs font-semibold text-blue-300 border border-blue-400/30">
+              <SlidersHorizontal className="h-3 w-3" />
+              <span>Administrator Control Center</span>
             </span>
             <span className="inline-block rounded-full bg-emerald-500/20 px-3 py-1 text-xs font-semibold text-emerald-300 border border-emerald-400/30">
               DMT Exam Standard (≥ 75% Pass)
@@ -260,6 +271,15 @@ export const AdminTheoryManagementView: React.FC<
           >
             <Plus className="h-4 w-4" />
             <span>Add New Question</span>
+          </button>
+          <button
+            type="button"
+            onClick={handleShuffleQuestions}
+            className="inline-flex items-center gap-1.5 rounded-2xl bg-indigo-600/90 px-4 py-3 text-xs font-semibold text-white hover:bg-indigo-500 transition-all cursor-pointer border border-indigo-400/40 shadow-sm"
+            title="Instantly shuffle and randomize question order"
+          >
+            <Shuffle className="h-3.5 w-3.5" />
+            <span>Shuffle Order</span>
           </button>
           <button
             type="button"

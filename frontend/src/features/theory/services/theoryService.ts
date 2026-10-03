@@ -114,9 +114,31 @@ export async function deleteTheoryQuestion(questionId: string): Promise<void> {
   }
 }
 
+function shuffleQuestions<T>(array: T[]): T[] {
+  const arr = [...array]
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[arr[i], arr[j]] = [arr[j], arr[i]]
+  }
+  return arr
+}
+
 export async function resetQuestionBankToDefault(): Promise<TheoryQuestion[]> {
-  setStoredData(THEORY_QUESTIONS_KEY, SRI_LANKA_DMT_QUESTION_BANK)
-  return SRI_LANKA_DMT_QUESTION_BANK
+  // Shuffle the master bank so questions, categories, and question ordering actively change
+  const shuffled = shuffleQuestions(SRI_LANKA_DMT_QUESTION_BANK)
+  setStoredData(THEORY_QUESTIONS_KEY, shuffled)
+  return shuffled
+}
+
+export async function shuffleTheoryQuestions(): Promise<TheoryQuestion[]> {
+  const current = getStoredData<TheoryQuestion[]>(
+    THEORY_QUESTIONS_KEY,
+    SRI_LANKA_DMT_QUESTION_BANK,
+  )
+  const source = current.length >= SRI_LANKA_DMT_QUESTION_BANK.length ? current : SRI_LANKA_DMT_QUESTION_BANK
+  const shuffled = shuffleQuestions(source)
+  setStoredData(THEORY_QUESTIONS_KEY, shuffled)
+  return shuffled
 }
 
 export async function recordMockExamAttempt(
