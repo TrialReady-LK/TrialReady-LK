@@ -3,6 +3,7 @@ export interface KnowledgeItem {
   category:
     | 'greetings'
     | 'student_portal'
+    | 'instructor_admin'
     | 'theory_hub'
     | 'highway_code'
     | 'speed_limits'
@@ -116,6 +117,120 @@ Feel free to ask me any question!`,
     suggestions: ['Student Portal Features', 'Highway Code Rules', 'Hill Start Tips', 'Accident Procedure'],
   },
 
+  // --- ADMINISTRATOR PORTAL ---
+  {
+    id: 'kb-admin-portal',
+    category: 'instructor_admin' as const,
+    keywords: [
+      'admin',
+      'admin portal',
+      'administrator',
+      'administrator portal',
+      'admin access',
+      'how to get access to admin portal',
+      'how to get access to the admin portal',
+      'how toget access ti the admin portal',
+      'admin dashboard',
+      'admin role',
+      'admin permissions',
+      'admin features',
+      'academy management',
+    ],
+    question: {
+      en: 'How do I access the Administrator Portal and what can administrators do?',
+      si: 'පරිපාලක පෝර්ටලයට (Admin Portal) පිවිසෙන්නේ කෙසේද සහ පරිපාලක බලතල මොනවාද?',
+      ta: 'நிர்வாகி போர்ட்டலை (Admin Portal) எவ்வாறு அணுகுவது மற்றும் அதன் அதிகாரங்கள் யாவை?',
+    },
+    answer: {
+      en: `🏢 **Administrator Portal Access & Academy Management:**
+
+To access the **Admin Portal**, log in with an Administrator account credentials at \`/login\` and navigate to the **Main Dashboard (\`/dashboard\`)**.
+
+**Administrator Powers & Capabilities:**
+1. **👥 Student & Instructor Management (\`/students\`, \`/instructors\`):**
+   • Enroll new learner drivers, verify NIC and NTMI medical records, and assign dedicated instructors.
+   • Manage instructor workloads and driving rosters.
+
+2. **🚗 Vehicle Fleet Management (\`/vehicles\`):**
+   • Register training vehicles, manage maintenance schedules, fuel logs, and insurance renewals.
+
+3. **💳 Tuition Ledgers & Financials (\`/financials\`):**
+   • Set up course package rates, record payment installments (Cash/Card/Bank Transfer), generate official receipts, and monitor arrears.
+
+4. **🚦 Theory Exam & Question Bank Management (\`/theory\`):**
+   • Full authority to create, edit, delete, and shuffle DMT theory questions, mock exam papers, and road sign flashcards.
+
+5. **📈 Executive Analytics & DMT Audit (\`/analytics\`):**
+   • Monitor first-time trial pass rates, readiness score distributions, and export official government compliance reports.`,
+      si: `🏢 **පරිපාලක පෝර්ටලය (Admin Portal) සහ කළමනාකරණ බලතල:**
+
+**Admin Portal** වෙත පිවිසීමට පරිපාලක (Administrator) ගිණුමකින් \`/login\` හරහා ලොග් වී ප්‍රධාන **Dashboard (\`/dashboard\`)** වෙත පිවිසෙන්න.
+
+**පරිපාලකවරයෙකුට ඇති ප්‍රධාන බලතල:**
+1. **👥 ශිෂ්‍ය සහ උපදේශක කළමනාකරණය (\`/students\`, \`/instructors\`):** නව සිසුන් ලියාපදිංචිය, ජා.හැ./වෛද්‍ය සහතික පරීක්ෂාව සහ උපදේශකවරුන් අනුයුක්ත කිරීම.
+2. **🚗 වාහන කළමනාකරණය (\`/vehicles\`):** පුහුණු වාහන, නඩත්තු කාලසටහන් සහ රක්ෂණ තොරතුරු.
+3. **💳 මූල්‍ය සහ ගාස්තු (\`/financials\`):** පාඨමාලා ගාස්තු, වාරික ගෙවීම් වාර්තා කිරීම සහ නිල රිසිට්පත් නිකුත් කිරීම.
+4. **🚦 Theory ප්‍රශ්නාවලී කළමනාකරණය (\`/theory\`):** DMT විභාග ප්‍රශ්න සහ මාර්ග සංඥා flashcards සංස්කරණය, එකතු කිරීම සහ පාලනය.
+5. **📈 විශ්ලේෂණ වාර්තා (\`/analytics\`):** විභාග සමත් ප්‍රතිශත සහ රජයේ විගණන වාර්තා ලබාගැනීම.`,
+      ta: `🏢 **நிர்வாகி போர்ட்டல் (Admin Portal) அணுகல் & அதிகாரங்கள்:**
+
+**Admin Portal** ஐ அணுக நிர்வாகி கணக்கு மூலம் \`/login\` செய்து **Dashboard (\`/dashboard\`)** பக்கத்திற்குச் செல்லவும்.
+
+**நிர்வாகியின் முக்கிய அதிகாரங்கள்:**
+1. **👥 மாணவர் & பயிற்றுனர் மேலாண்மை (\`/students\`, \`/instructors\`):** புதிய மாணவர் சேர்க்கை, ஆவண சரிபார்ப்பு.
+2. **🚗 வாகனப் பராமரிப்பு (\`/vehicles\`):** பயிற்சி வாகனங்கள் மற்றும் காப்புறுதி விபரங்கள்.
+3. **💳 கட்டணங்கள் & நிதி மேலாண்மை (\`/financials\`):** கட்டண வசூல், ரசீதுகள் வழங்கல்.
+4. **🚦 Theory பரீட்சை வினாக்கள் மேலாண்மை (\`/theory\`):** DMT வினாக்களைத் திருத்துதல் மற்றும் சேர்த்தல்.
+5. **📈 பகுப்பாய்வு அறிக்கைகள் (\`/analytics\`):** தேர்ச்சி விகிதங்கள் மற்றும் அறிக்கைகள்.`,
+    },
+    suggestions: ['Instructor Portal Features', 'Student Portal Features', 'Financial Management'],
+  },
+
+  // --- INSTRUCTOR PORTAL ---
+  {
+    id: 'kb-instructor-portal',
+    category: 'instructor_admin' as const,
+    keywords: [
+      'instructor portal',
+      'instructor dashboard',
+      'instructor access',
+      'how to access instructor portal',
+      'instructor features',
+      'instructor role',
+      'instructor schedule',
+    ],
+    question: {
+      en: 'How do I access the Instructor Portal and what can instructors do?',
+      si: 'උපදේශක පෝර්ටලයට (Instructor Portal) පිවිසෙන්නේ කෙසේද සහ එහි විශේෂාංග මොනවාද?',
+      ta: 'பயிற்றுனர் போர்ட்டலை (Instructor Portal) எவ்வாறு அணுகுவது மற்றும் அதன் அம்சங்கள் யாவை?',
+    },
+    answer: {
+      en: `👨‍🏫 **Instructor Portal Access & Daily Agenda:**
+
+To access the **Instructor Portal**, log in with an Instructor account at \`/login\` and navigate to **Instructor Portal (\`/instructor/portal\`)**.
+
+**Instructor Features & Tasks:**
+1. **📅 Daily Driving Agenda:** View confirmed student driving lessons for today, assigned vehicles, and pick-up locations.
+2. **⭐ Practical Scoring & Feedback:** Log student odometer distance, rate critical maneuvers (Hill Start, Reverse S-Bend, Parallel Parking), and write pedagogical notes.
+3. **📊 Readiness Endorsement:** Verify when a student reaches $\ge 80\%$ readiness to recommend them for official government trial tests.`,
+      si: `👨‍🏫 **උපදේශක පෝර්ටලය (Instructor Portal):**
+
+**Instructor Portal** වෙත පිවිසීමට උපදේශක ගිණුමකින් \`/login\` හරහා ලොග් වී **Instructor Portal (\`/instructor/portal\`)** වෙත පිවිසෙන්න.
+
+**උපදේශක විශේෂාංග:**
+1. **📅 දෛනික කාලසටහන:** අද දිනට නියමිත රියදුරු පාඩම්, සිසුන් සහ වාහන විස්තර.
+2. **⭐ ලකුණු සහ ඇගයීම්:** Hill Start, Reverse S-Bend සඳහා ශිෂ්‍යයාට ලකුණු ලබාදීම සහ උපදෙස් සටහන් කිරීම.
+3. **📊 Trial සඳහා නිර්දේශ කිරීම:** ලකුණු 80% ඉක්මවූ සිසුන් නිල විභාගයට නිර්දේශ කිරීම.`,
+      ta: `👨‍🏫 **பயிற்றுனர் போர்ட்டல் (Instructor Portal):**
+
+**Instructor Portal** ஐ அணுக \`/instructor/portal\` பக்கத்திற்குச் செல்லவும்.
+1. **📅 அன்றாட கால அட்டவணை:** இன்றைய ஓட்டுநர் பாடங்கள் மற்றும் மாணவர்கள்.
+2. **⭐ மதிப்பீடுகள்:** Hill Start, Reverse S-Bend பயிற்சிகளுக்கு புள்ளிகள் வழங்குதல்.
+3. **📊 பரீட்சை பரிந்துரை:** 80% இற்கு மேல் பெற்ற மாணவர்களைப் பரிந்துரைத்தல்.`,
+    },
+    suggestions: ['Admin Portal Access', 'Student Portal Features', 'Hill Start Tips'],
+  },
+
   // --- STUDENT PORTAL OVERVIEW ---
   {
     id: 'kb-student-portal-overview',
@@ -127,7 +242,6 @@ Feel free to ask me any question!`,
       'what is in student portal',
       'how to use student portal',
       'student view',
-      'portal',
       'my portal',
       'tell me about student portal',
     ],
@@ -144,7 +258,7 @@ The **Student Portal** (\`/student/portal\`) is your personal central dashboard 
 1. **📊 Trial Readiness & Progress Widget:**
    • Displays your current AI Readiness Score (0-100%).
    • Shows completed practical driving hours vs. target requirement (e.g. 15 hours).
-   • Tracks your Learner Journey stage (Medical Clearance $\rightarrow$ Learner Permit $\rightarrow$ Practical Training $\rightarrow$ Trial Ready).
+   • Tracks your Learner Journey stage (Medical Clearance → Learner Permit → Practical Training → Trial Ready).
 
 2. **📅 Upcoming Practical Sessions:**
    • See your booked driving lessons with assigned instructor name, contact number, vehicle model, and transmission type (Manual/Auto).
@@ -164,7 +278,7 @@ The **Student Portal** (\`/student/portal\`) is your personal central dashboard 
 1. **📊 Trial Readiness සහ ප්‍රගති දර්ශකය:**
    • ඔබේ වත්මන් AI Readiness ප්‍රතිශතය (0-100%).
    • සම්පූර්ණ කළ ප්‍රායෝගික පුහුණු පැය ගණන (උදා: පැය 15).
-   • Learner Journey හි ඔබ සිටින වත්මන් පියවර.
+   • Learner Journey හි ඔබ සිටින වත්මන් පියවර (වෛද්‍ය සහතිකය → ආධුනික බලපත්‍රය → ප්‍රායෝගික පුහුණුව → විභාගයට සුදානම්).
 
 2. **📅 ඉදිරි පුහුණු සැසි (Upcoming Sessions):**
    • වෙන්කරවා ගත් රියදුරු පාඩම්, උපදේශකගේ නම, දුරකථන අංකය, වාහන අංකය.

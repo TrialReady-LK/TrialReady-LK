@@ -26,9 +26,12 @@ const FormattedMessageText: React.FC<{ text: string; isUser: boolean }> = ({
   isUser,
 }) => {
   const cleanText = text
-    .replace(/\$\\ge\$/g, '≥')
-    .replace(/\$\\le\$/g, '≤')
-    .replace(/\$\\rightarrow\$/g, '→')
+    .replace(/\$\s*ightarrow\$/gi, '→')
+    .replace(/\$\\rightarrow\$/gi, '→')
+    .replace(/\$\\ge\$/gi, '≥')
+    .replace(/\$\\le\$/gi, '≤')
+    .replace(/\$ge\$/gi, '≥')
+    .replace(/\$le\$/gi, '≤')
     .replace(/\\`/g, '`')
 
   const lines = cleanText.split('\n')

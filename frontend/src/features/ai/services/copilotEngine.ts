@@ -168,6 +168,50 @@ export function processCopilotQuery(
   // 2. High-Precision Knowledge Base Scoring
   const queryTokens = cleanLower.split(/\s+/).filter((t) => t.length > 1)
 
+  // Direct portal role match if user specifically asks for Admin or Instructor
+  if (
+    cleanLower.includes('admin') ||
+    cleanLower.includes('administrator') ||
+    cleanLower.includes('principal') ||
+    cleanLower.includes('management portal')
+  ) {
+    const adminItem = COPILOT_KNOWLEDGE_BASE.find(
+      (k) => k.id === 'kb-admin-portal'
+    )
+    if (adminItem) {
+      return {
+        text: adminItem.answer[language] || adminItem.answer.en,
+        matchedCategory: 'instructor_admin',
+        suggestions: adminItem.suggestions || [
+          'Student Management',
+          'Instructor Portal',
+          'Financial Management',
+        ],
+      }
+    }
+  }
+
+  if (
+    cleanLower.includes('instructor') ||
+    cleanLower.includes('teacher') ||
+    cleanLower.includes('trainer')
+  ) {
+    const instructorItem = COPILOT_KNOWLEDGE_BASE.find(
+      (k) => k.id === 'kb-instructor-portal'
+    )
+    if (instructorItem) {
+      return {
+        text: instructorItem.answer[language] || instructorItem.answer.en,
+        matchedCategory: 'instructor_admin',
+        suggestions: instructorItem.suggestions || [
+          'Admin Portal Access',
+          'Student Portal Features',
+          'Hill Start Tips',
+        ],
+      }
+    }
+  }
+
   let bestItem: KnowledgeItem | null = null
   let maxScore = 0
 
