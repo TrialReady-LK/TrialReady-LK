@@ -1,4 +1,5 @@
-import { useState, type FormEvent } from 'react'
+import { useState, type FormEvent, type DragEvent } from 'react'
+import { Upload, Trash2, Camera } from 'lucide-react'
 import type { CreateStudentInput, Student } from '../types/student'
 import {
   hasStudentValidationErrors,
@@ -94,7 +95,27 @@ function StudentForm({
   )
 
   const [errors, setErrors] = useState<StudentValidationErrors>({})
+  const [photoUrl, setPhotoUrl] = useState<string>('')
+  const [isDraggingPhoto, setIsDraggingPhoto] = useState(false)
 
+  const handlePhotoFile = (file: File) => {
+    if (!file.type.startsWith('image/')) return
+    const reader = new FileReader()
+    reader.onload = (e) => {
+      if (e.target?.result) {
+        setPhotoUrl(e.target.result as string)
+      }
+    }
+    reader.readAsDataURL(file)
+  }
+
+  const handlePhotoDrop = (e: DragEvent<HTMLDivElement>) => {
+    e.preventDefault()
+    setIsDraggingPhoto(false)
+    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+      handlePhotoFile(e.dataTransfer.files[0])
+    }
+  }
 
   function updateField<K extends keyof StudentFormState>(
     field: K,
@@ -159,8 +180,93 @@ function StudentForm({
         </h2>
 
         <p className="mt-1 text-sm text-slate-500">
-          Enter the student's personal and registration information.
+          Enter the student's personal, photo media, and registration information.
         </p>
+      </div>
+
+      {/* Student Photo & Media Drag and Drop Upload */}
+      <div className="rounded-2xl border border-slate-200 bg-slate-50/60 p-4 space-y-3">
+        <div className="flex items-center justify-between">
+          <label className="text-xs font-bold text-slate-700 flex items-center gap-1.5">
+            <Camera className="h-3.5 w-3.5 text-blue-600" />
+            <span>Student Photo / Document Media (Drag &amp; Drop)</span>
+          </label>
+          {photoUrl && (
+            <button
+              type="button"
+              onClick={() => setPhotoUrl('')}
+              className="inline-flex items-center gap-1 text-[11px] font-bold text-red-600 hover:text-red-700 cursor-pointer"
+            >
+              <Trash2 className="h-3 w-3" />
+              <span>Remove Photo</span>
+            </button>
+          )}
+        </div>
+
+        {photoUrl ? (
+          <div className="flex items-center gap-4 rounded-xl border border-slate-200 bg-white p-3">
+            <img
+              src={photoUrl}
+              alt="Student Preview"
+              className="h-16 w-16 rounded-xl object-cover border border-slate-200 shadow-xs"
+            />
+            <div className="flex-1 min-w-0">
+              <p className="text-xs font-bold text-slate-800">Student Profile Photo Loaded</p>
+              <p className="text-[10px] text-slate-400 truncate max-w-md mt-0.5">
+                Ready for identity verification &amp; DMT registration logbook
+              </p>
+            </div>
+            <label className="cursor-pointer rounded-lg bg-slate-100 hover:bg-slate-200 px-3 py-1.5 text-xs font-bold text-slate-700 transition-all border border-slate-200">
+              <span>Change</span>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => {
+                  if (e.target.files && e.target.files[0]) {
+                    handlePhotoFile(e.target.files[0])
+                  }
+                }}
+                className="hidden"
+              />
+            </label>
+          </div>
+        ) : (
+          <div
+            onDragOver={(e) => {
+              e.preventDefault()
+              setIsDraggingPhoto(true)
+            }}
+            onDragLeave={() => setIsDraggingPhoto(false)}
+            onDrop={handlePhotoDrop}
+            className={`relative rounded-xl border-2 border-dashed p-4 text-center transition-all cursor-pointer ${
+              isDraggingPhoto
+                ? 'border-blue-500 bg-blue-50/80 scale-[1.01]'
+                : 'border-slate-300 bg-white hover:border-slate-400 hover:bg-slate-50'
+            }`}
+          >
+            <input
+              type="file"
+              accept="image/*"
+              onChange={(e) => {
+                if (e.target.files && e.target.files[0]) {
+                  handlePhotoFile(e.target.files[0])
+                }
+              }}
+              className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+            />
+            <div className="flex flex-col items-center justify-center gap-1.5 pointer-events-none">
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-50 text-blue-600">
+                <Upload className="h-4 w-4" />
+              </div>
+              <p className="text-xs font-bold text-slate-700">
+                Drag and drop student photo or NIC image here, or <span className="text-blue-600 underline">Browse</span>
+              </p>
+              <p className="text-[10px] text-slate-400">
+                Supports PNG, JPG, WebP (Max 5MB)
+              </p>
+            </div>
+          </div>
+        )}
       </div>
 
       <section>

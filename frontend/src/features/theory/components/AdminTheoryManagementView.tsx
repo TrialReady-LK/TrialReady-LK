@@ -35,6 +35,7 @@ import {
 import { QuestionFormModal } from './QuestionFormModal'
 import { ResetQuizModal } from './ResetQuizModal'
 import { AdminRoadSignsManager } from './AdminRoadSignsManager'
+import { RoadSignIllustration } from './RoadSignIllustration'
 import { TheoryPracticeHubContent } from '../pages/TheoryPracticeHubPage'
 
 interface AdminTheoryManagementViewProps {
@@ -182,12 +183,18 @@ export const AdminTheoryManagementView: React.FC<
   const handleConfirmResetQuiz = async () => {
     try {
       setIsResetting(true)
+      try {
+        localStorage.removeItem('trialready_theory_questions')
+      } catch {}
       const freshQuestions = await resetQuestionBankToDefault()
       setQuestions([...freshQuestions])
       setIsResetModalOpen(false)
       showToast(
         `Quiz reset! Loaded ${freshQuestions.length} randomized DMT Highway Code questions.`,
       )
+    } catch (err) {
+      console.error(err)
+      showToast('Error resetting quiz questions.')
     } finally {
       setIsResetting(false)
     }
@@ -283,12 +290,13 @@ export const AdminTheoryManagementView: React.FC<
           </button>
           <button
             type="button"
-            onClick={() => setIsResetModalOpen(true)}
-            className="inline-flex items-center gap-1.5 rounded-2xl bg-slate-800/90 px-4 py-3 text-xs font-semibold text-slate-300 hover:bg-slate-700 hover:text-white transition-all cursor-pointer border border-slate-700"
-            title="Reset quiz questions to default authentic Sri Lanka DMT syllabus"
+            onClick={handleConfirmResetQuiz}
+            disabled={isResetting}
+            className="inline-flex items-center gap-1.5 rounded-2xl bg-slate-800/90 px-4 py-3 text-xs font-semibold text-slate-300 hover:bg-slate-700 hover:text-white transition-all cursor-pointer border border-slate-700 disabled:opacity-50"
+            title="Reset and refresh quiz questions to authentic Sri Lanka DMT syllabus"
           >
-            <RotateCcw className="h-3.5 w-3.5" />
-            <span>Reset Quiz</span>
+            <RotateCcw className={`h-3.5 w-3.5 ${isResetting ? 'animate-spin' : ''}`} />
+            <span>{isResetting ? 'Resetting...' : 'Reset Quiz'}</span>
           </button>
         </div>
       </div>
@@ -589,9 +597,19 @@ export const AdminTheoryManagementView: React.FC<
                       </div>
                     </div>
 
-                    {/* Question Body */}
-                    <div className="text-xs font-bold text-slate-900 leading-relaxed">
-                      {displayText}
+                    {/* Question Body with Image illustration if present */}
+                    <div className="flex items-start gap-3.5">
+                      {q.image_url && (
+                        <div className="shrink-0">
+                          <RoadSignIllustration
+                            signCode={q.image_url}
+                            className="h-14 w-14"
+                          />
+                        </div>
+                      )}
+                      <div className="text-xs font-bold text-slate-900 leading-relaxed flex-1">
+                        {displayText}
+                      </div>
                     </div>
 
                     {/* 4 Options Grid */}

@@ -11,6 +11,27 @@ export const RoadSignIllustration: React.FC<RoadSignIllustrationProps> = ({
 }) => {
   if (!signCode) return null
 
+  // Direct Image URL, Base64 DataURL, or Blob
+  if (
+    signCode.startsWith('data:image/') ||
+    signCode.startsWith('http://') ||
+    signCode.startsWith('https://') ||
+    signCode.startsWith('/') ||
+    signCode.startsWith('blob:')
+  ) {
+    return (
+      <div
+        className={`relative flex items-center justify-center overflow-hidden rounded-2xl bg-white p-1 shadow-xs border border-slate-200 ${className}`}
+      >
+        <img
+          src={signCode}
+          alt="Road Sign / Question Media"
+          className="h-full w-full object-contain"
+        />
+      </div>
+    )
+  }
+
   // Stop sign
   if (signCode.includes('🛑') || signCode.toLowerCase().includes('stop')) {
     return (
