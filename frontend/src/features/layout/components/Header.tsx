@@ -53,9 +53,11 @@ export const Header: React.FC<HeaderProps> = ({ onToggleSidebar }) => {
 
         {/* Driving School Badge */}
         <div className="flex items-center gap-2">
-          <div className="hidden sm:flex h-8 w-8 items-center justify-center rounded-lg bg-blue-600 font-black text-white text-xs shadow-xs">
-            TR
-          </div>
+          <img
+            src="/logo-icon.png"
+            alt="TrialReady"
+            className="hidden sm:block h-8 w-8 object-contain shrink-0"
+          />
           <div>
             <p className="text-xs font-bold text-slate-900">
               {profile?.driving_school?.name ?? 'TrialReady Driving Academy'}

@@ -145,9 +145,11 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
         {/* Brand Header */}
         <div className="flex h-16 items-center justify-between border-b border-slate-200 px-6">
           <div className="flex items-center gap-2.5">
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-600 text-sm font-black text-white shadow-sm">
-              TR
-            </div>
+            <img
+              src="/logo-icon.png"
+              alt="TrialReady LK Logo"
+              className="h-9 w-9 object-contain shrink-0"
+            />
             <div>
               <span className="text-base font-extrabold tracking-tight text-slate-900">
                 TrialReady<span className="text-blue-600">.LK</span>

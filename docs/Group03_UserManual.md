@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/logo.png" alt="TrialReady LK Official Logo" width="180" />
+</p>
+
 # TrialReady LK — User Manual
 **AI-Assisted Driving School ERP & Statutory DMT Regulatory Compliance Platform**
 

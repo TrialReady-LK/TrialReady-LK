@@ -7,6 +7,14 @@ export const LoginPage: React.FC = () => {
       <div className="w-full max-w-4xl grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
         {/* Left Side: Value proposition / branding */}
         <div className="text-white space-y-6 hidden md:block pr-6">
+          <div className="flex items-center gap-3">
+            <img
+              src="/logo-square.png"
+              alt="TrialReady LK Official Logo"
+              className="h-16 w-auto object-contain bg-white rounded-xl p-1.5 shadow-lg"
+            />
+          </div>
+
           <div className="inline-flex items-center gap-2 rounded-full bg-blue-500/20 px-3 py-1 text-xs font-semibold text-blue-300 border border-blue-400/30">
             <span>🇱🇰</span>
             <span>Sri Lanka Driving School Platform</span>

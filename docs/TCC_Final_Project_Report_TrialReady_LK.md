@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/logo.png" alt="TrialReady LK Official Logo" width="180" />
+</p>
+
 # TrialReady-LK: AI-Assisted Driving School Management & Statutory Regulatory Compliance Platform
 
 **Technology Challenges and Competitions (TCC) Module (CCS2360 / CCS3361)**  

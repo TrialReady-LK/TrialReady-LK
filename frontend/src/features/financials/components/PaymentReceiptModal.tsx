@@ -62,10 +62,12 @@ export const PaymentReceiptModal: React.FC<PaymentReceiptModalProps> = ({
           {/* Header */}
           <div className="flex items-start justify-between border-b-2 border-slate-900 pb-4">
             <div>
-              <div className="flex items-center gap-2">
-                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-600 text-white font-black text-xs">
-                  TR
-                </div>
+              <div className="flex items-center gap-2.5">
+                <img
+                  src="/logo-icon.png"
+                  alt="TrialReady"
+                  className="h-9 w-9 object-contain"
+                />
                 <h2 className="text-lg font-black tracking-tight text-slate-900">
                   TrialReady Driving Academy
                 </h2>

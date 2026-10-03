@@ -1,18 +1,26 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
-  <!-- Rounded Background -->
-  <rect width="64" height="64" rx="14" fill="#1e3a8a"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  <defs>
+    <linearGradient id="road-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1d4ed8" />
+      <stop offset="100%" stop-color="#0052ff" />
+    </linearGradient>
+    <linearGradient id="bg-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="100%" stop-color="#f8fafc" />
+    </linearGradient>
+  </defs>
+
+  <!-- Clean Rounded Square Container -->
+  <rect width="100" height="100" rx="22" fill="url(#bg-grad)" stroke="#e2e8f0" stroke-width="2"/>
+
+  <!-- Left Wing of T -->
+  <path d="M 16 30 L 32 30 L 44 43 L 16 43 Z" fill="url(#road-grad)" />
+  <line x1="16" y1="36.5" x2="36" y2="36.5" stroke="#60a5fa" stroke-width="2" stroke-dasharray="4 3" />
+
+  <!-- Main T Road Stem & Right Arm -->
+  <path d="M 48 16 L 94 16 L 82 36 L 62 36 L 36 84 L 20 84 L 46 36 L 48 36 Z" fill="url(#road-grad)" />
   
-  <!-- Steering Wheel Outer Ring -->
-  <circle cx="32" cy="32" r="22" stroke="#38bdf8" stroke-width="4"/>
-  
-  <!-- Steering Wheel Center Hub -->
-  <circle cx="32" cy="32" r="7" fill="#10b981"/>
-  
-  <!-- Steering Wheel Spokes -->
-  <line x1="10" y1="32" x2="25" y2="32" stroke="#38bdf8" stroke-width="4" stroke-linecap="round"/>
-  <line x1="39" y1="32" x2="54" y2="32" stroke="#38bdf8" stroke-width="4" stroke-linecap="round"/>
-  <line x1="32" y1="39" x2="32" y2="54" stroke="#38bdf8" stroke-width="4" stroke-linecap="round"/>
-  
-  <!-- Speed Dash Top Accent -->
-  <circle cx="32" cy="10" r="2.5" fill="#facc15"/>
+  <!-- Dashed Highway Lane Centerline -->
+  <path d="M 52 24 L 84 24" stroke="#60a5fa" stroke-width="2.5" stroke-dasharray="5 3" />
+  <path d="M 52 24 Q 48 32 40 46 L 27 76" stroke="#93c5fd" stroke-width="2.5" stroke-dasharray="5 3" fill="none" />
 </svg>
