@@ -51,7 +51,7 @@ export async function getStudentReadinessProfile(
     await Promise.all([
       supabase
         .from('students')
-        .select('id, full_name, admission_number, phone, email, driving_school_id, branches(name)')
+        .select('id, full_name, student_code, phone, email, driving_school_id, branches(name)')
         .eq('id', studentId)
         .single(),
       supabase
@@ -120,7 +120,7 @@ export async function getStudentReadinessProfile(
     student: {
       id: student.id,
       full_name: student.full_name,
-      admission_number: student.admission_number ?? '—',
+      admission_number: (student as any).student_code ?? (student as any).admission_number ?? '—',
       phone: student.phone ?? null,
       email: student.email ?? null,
       branch_name: (student.branches as any)?.name ?? 'Main Branch',

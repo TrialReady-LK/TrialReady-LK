@@ -33,15 +33,15 @@ export async function fetchStudentLogbookData(
   // 2. Fetch student profile
   const { data: studentRow } = await supabase
     .from('students')
-    .select('full_name, admission_number, nic_passport, phone, email, registration_date, branches(name)')
+    .select('full_name, student_code, nic, phone, email, registration_date, branches(name)')
     .eq('id', studentId)
     .single()
 
   const student: LogbookStudentProfile = studentRow
     ? {
         fullName: studentRow.full_name,
-        admissionNumber: studentRow.admission_number ?? '',
-        nicPassport: studentRow.nic_passport ?? '',
+        admissionNumber: (studentRow as any).student_code ?? (studentRow as any).admission_number ?? '',
+        nicPassport: (studentRow as any).nic ?? (studentRow as any).nic_passport ?? '',
         phone: studentRow.phone ?? '',
         email: studentRow.email ?? '',
         registrationDate: studentRow.registration_date ?? '',

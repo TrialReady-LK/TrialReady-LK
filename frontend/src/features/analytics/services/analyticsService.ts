@@ -47,7 +47,7 @@ export async function getExecutiveAnalyticsData(
       .eq('driving_school_id', drivingSchoolId),
     supabase
       .from('student_payments')
-      .select('*, students(full_name, admission_number)')
+      .select('*, students(full_name, student_code)')
       .eq('driving_school_id', drivingSchoolId),
     supabase
       .from('student_package_enrolments')

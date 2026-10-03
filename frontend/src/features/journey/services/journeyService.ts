@@ -219,7 +219,7 @@ export async function getStudentJourneyOverview(
     supabase
       .from('students')
       .select(
-        'id, full_name, admission_number, phone, email, registration_date, branches(name)',
+        'id, full_name, student_code, phone, email, registration_date, branches(name)',
       )
       .eq('id', studentId)
       .single(),
@@ -257,7 +257,7 @@ export async function getStudentJourneyOverview(
     student: {
       id: studentData.id,
       full_name: studentData.full_name,
-      admission_number: studentData.admission_number ?? '—',
+      admission_number: (studentData as any).student_code ?? (studentData as any).admission_number ?? '—',
       phone: studentData.phone ?? null,
       email: studentData.email ?? null,
       registration_date: studentData.registration_date ?? '',
@@ -280,7 +280,7 @@ export async function getAllStudentJourneys(
   const { data: students, error: studError } = await supabase
     .from('students')
     .select(
-      'id, full_name, admission_number, phone, email, registration_date, branches(name)',
+      'id, full_name, student_code, phone, email, registration_date, branches(name)',
     )
     .eq('driving_school_id', drivingSchoolId)
     .eq('is_active', true)
@@ -349,7 +349,7 @@ export async function getAllStudentJourneys(
       student: {
         id: s.id,
         full_name: s.full_name,
-        admission_number: s.admission_number ?? '—',
+        admission_number: (s as any).student_code ?? (s as any).admission_number ?? '—',
         phone: s.phone ?? null,
         email: s.email ?? null,
         registration_date: s.registration_date ?? '',

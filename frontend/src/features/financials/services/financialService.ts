@@ -211,7 +211,7 @@ export async function getStudentFinancialLedger(
   const [studentRes, enrolment, payments] = await Promise.all([
     supabase
       .from('students')
-      .select('id, full_name, admission_number, phone, email, branches(name)')
+      .select('id, full_name, student_code, phone, email, branches(name)')
       .eq('id', studentId)
       .single(),
     getStudentEnrolment(studentId),
@@ -236,7 +236,7 @@ export async function getStudentFinancialLedger(
     student: {
       id: s.id,
       full_name: s.full_name,
-      admission_number: s.admission_number ?? '—',
+      admission_number: (s as any).student_code ?? (s as any).admission_number ?? '—',
       phone: s.phone ?? null,
       email: s.email ?? null,
       branch_name: (s.branches as any)?.name ?? 'Main Branch',
@@ -256,7 +256,7 @@ export async function getAllFinancialLedgers(
 ): Promise<StudentFinancialLedger[]> {
   const { data: students, error: studError } = await supabase
     .from('students')
-    .select('id, full_name, admission_number, phone, email, branches(name)')
+    .select('id, full_name, student_code, phone, email, branches(name)')
     .eq('driving_school_id', drivingSchoolId)
     .eq('is_active', true)
     .order('full_name', { ascending: true })
@@ -308,7 +308,7 @@ export async function getAllFinancialLedgers(
       student: {
         id: s.id,
         full_name: s.full_name,
-        admission_number: s.admission_number ?? '—',
+        admission_number: (s as any).student_code ?? (s as any).admission_number ?? '—',
         phone: s.phone ?? null,
         email: s.email ?? null,
         branch_name: (s.branches as any)?.name ?? 'Main Branch',
@@ -329,7 +329,7 @@ export async function getAllRecentPayments(
 ): Promise<StudentPayment[]> {
   const { data, error } = await supabase
     .from('student_payments')
-    .select('*, student:students(id, full_name, admission_number, phone)')
+    .select('*, student:students(id, full_name, student_code, phone)')
     .eq('driving_school_id', drivingSchoolId)
     .order('payment_date', { ascending: false })
     .limit(100)

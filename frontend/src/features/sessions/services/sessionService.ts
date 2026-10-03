@@ -33,11 +33,11 @@ const SESSION_SELECT_RELATIONS = `
   skills_covered,
   created_at,
   updated_at,
-  student:students(id, full_name, admission_number, phone),
-  instructor:instructors(id, full_name, staff_number, phone),
-  vehicle:vehicles(id, registration_number, make, model, transmission_type),
+  student:students(id, full_name, student_code, phone),
+  instructor:instructors(id, full_name, employee_code, phone),
+  vehicle:vehicles(id, registration_number, display_name, manufacturer, model, transmission_type),
   licence_category:licence_categories(id, code, name),
-  branch:branches(id, name, code)
+  branch:branches(id, name)
 `
 
 export async function getPracticalSessions(
@@ -250,12 +250,17 @@ export async function getStudentsForSessions(
 ): Promise<SessionStudentSummary[]> {
   const { data, error } = await supabase
     .from('students')
-    .select('id, full_name, admission_number, phone')
+    .select('id, full_name, student_code, phone')
     .eq('driving_school_id', drivingSchoolId)
     .order('full_name', { ascending: true })
 
   if (error) throw new Error(`Failed to fetch students: ${error.message}`)
-  return (data as SessionStudentSummary[]) ?? []
+  return (data ?? []).map((s: any) => ({
+    id: s.id,
+    full_name: s.full_name,
+    admission_number: s.student_code ?? s.admission_number ?? '—',
+    phone: s.phone ?? null,
+  }))
 }
 
 export async function getInstructorsForSessions(
@@ -263,13 +268,18 @@ export async function getInstructorsForSessions(
 ): Promise<SessionInstructorSummary[]> {
   const { data, error } = await supabase
     .from('instructors')
-    .select('id, full_name, staff_number, phone')
+    .select('id, full_name, employee_code, phone')
     .eq('driving_school_id', drivingSchoolId)
-    .eq('status', 'active')
+    .eq('is_active', true)
     .order('full_name', { ascending: true })
 
   if (error) throw new Error(`Failed to fetch instructors: ${error.message}`)
-  return (data as SessionInstructorSummary[]) ?? []
+  return (data ?? []).map((i: any) => ({
+    id: i.id,
+    full_name: i.full_name,
+    staff_number: i.employee_code ?? i.staff_number ?? '—',
+    phone: i.phone ?? null,
+  }))
 }
 
 export async function getVehiclesForSessions(
@@ -277,13 +287,19 @@ export async function getVehiclesForSessions(
 ): Promise<SessionVehicleSummary[]> {
   const { data, error } = await supabase
     .from('vehicles')
-    .select('id, registration_number, make, model, transmission_type')
+    .select('id, registration_number, display_name, manufacturer, model, transmission_type')
     .eq('driving_school_id', drivingSchoolId)
     .eq('operational_status', 'active')
     .order('registration_number', { ascending: true })
 
   if (error) throw new Error(`Failed to fetch vehicles: ${error.message}`)
-  return (data as SessionVehicleSummary[]) ?? []
+  return (data ?? []).map((v: any) => ({
+    id: v.id,
+    registration_number: v.registration_number,
+    make: v.manufacturer ?? v.make ?? '',
+    model: v.model ?? v.display_name ?? '',
+    transmission_type: v.transmission_type,
+  }))
 }
 
 export async function getCategoriesForSessions(
