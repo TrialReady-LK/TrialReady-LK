@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>TrialReady LK — User Manual (Group 03)</title>
+  <style>
+    @page {
+      size: A4 portrait;
+      margin: 12mm 14mm 12mm 14mm;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: #1e293b;
+      line-height: 1.35;
+      font-size: 9pt;
+      background-color: #ffffff;
+    }
+    .page {
+      page-break-after: always;
+      position: relative;
+      min-height: 270mm;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .page:last-child {
+      page-break-after: avoid;
+    }
+    .header-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid #2563eb;
+      padding-bottom: 4px;
+      margin-bottom: 8px;
+    }
+    .header-title {
+      font-size: 8pt;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #2563eb;
+    }
+    .header-meta {
+      font-size: 7.5pt;
+      color: #64748b;
+      font-weight: 600;
+    }
+    .footer-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid #e2e8f0;
+      padding-top: 4px;
+      margin-top: 8px;
+      font-size: 7pt;
+      color: #94a3b8;
+    }
+    .content {
+      flex: 1;
+    }
+
+    /* Section Headers */
+    h1.main-title {
+      font-size: 16pt;
+      font-weight: 900;
+      color: #0f172a;
+      line-height: 1.15;
+      margin-bottom: 2px;
+    }
+    .sub-title {
+      font-size: 9.5pt;
+      font-weight: 600;
+      color: #2563eb;
+      margin-bottom: 8px;
+    }
+    h2.section-header {
+      font-size: 10.5pt;
+      font-weight: 800;
+      color: #0f172a;
+      background: #f1f5f9;
+      border-left: 3.5px solid #2563eb;
+      padding: 3px 8px;
+      margin-top: 8px;
+      margin-bottom: 5px;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+    h3.sub-header {
+      font-size: 8.5pt;
+      font-weight: 750;
+      color: #1e293b;
+      margin-top: 5px;
+      margin-bottom: 2px;
+    }
+    p {
+      margin-bottom: 4px;
+      text-align: justify;
+    }
+
+    /* Tables */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 7.5pt;
+      margin: 4px 0 6px 0;
+    }
+    th, td {
+      border: 1px solid #cbd5e1;
+      padding: 3.5px 5px;
+      text-align: left;
+    }
+    th {
+      background-color: #f8fafc;
+      font-weight: 700;
+      color: #334155;
+    }
+    tr:nth-child(even) {
+      background-color: #f8fafc;
+    }
+
+    /* Grid & Cards */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    .grid-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 6px;
+    }
+    .card {
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      padding: 6px 8px;
+      background: #ffffff;
+      margin-bottom: 4px;
+    }
+    .card-accent {
+      background: #f8fafc;
+      border-left: 3px solid #3b82f6;
+    }
+    .badge {
+      display: inline-block;
+      font-size: 6.5pt;
+      font-weight: 800;
+      padding: 1.5px 5px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+    .badge-blue { background: #dbeafe; color: #1e40af; }
+    .badge-green { background: #dcfce7; color: #166534; }
+    .badge-amber { background: #fef3c7; color: #92400e; }
+    .badge-red { background: #fee2e2; color: #991b1b; }
+
+    /* Lists */
+    ol, ul {
+      margin-left: 14px;
+      margin-bottom: 4px;
+    }
+    li {
+      margin-bottom: 2px;
+      font-size: 8pt;
+    }
+    ol.steps > li {
+      margin-bottom: 3.5px;
+    }
+    strong {
+      color: #0f172a;
+    }
+    .code-pill {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      background: #f1f5f9;
+      padding: 1px 4px;
+      border-radius: 3px;
+      font-size: 7.5pt;
+      color: #0f172a;
+      border: 1px solid #e2e8f0;
+    }
+
+    /* Visual workflow diagram */
+    .workflow-container {
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      padding: 6px 8px;
+      margin: 5px 0 6px 0;
+    }
+    .workflow-steps {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 4px;
+    }
+    .wf-step {
+      flex: 1;
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-radius: 4px;
+      padding: 4px;
+      text-align: center;
+      font-size: 7pt;
+    }
+    .wf-arrow {
+      color: #94a3b8;
+      font-weight: 900;
+      font-size: 8pt;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================== -->
+  <!-- PAGE 1: COVER, SYSTEM OVERVIEW, REQUIREMENTS & ACCESS          -->
+  <!-- ============================================================== -->
+  <div class="page">
+    <div class="header-bar">
+      <span class="header-title">TrialReady LK — TCC User Manual (2026)</span>
+      <span class="header-meta">Group 03 • SLTC Computing & IT</span>
+    </div>
+
+    <div class="content">
+      <!-- 1. COVER / HEADER -->
+      <div style="background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%); color: white; padding: 10px 14px; border-radius: 6px; margin-bottom: 8px;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+          <div>
+            <h1 class="main-title" style="color: #ffffff; margin-bottom: 2px;">TrialReady LK</h1>
+            <div style="font-size: 9pt; color: #93c5fd; font-weight: 600; margin-bottom: 4px;">
+              AI-Assisted Driving School ERP & Statutory Regulatory Compliance Platform
+            </div>
+            <div style="font-size: 7.5pt; color: #cbd5e1;">
+              Technology Challenge Competition (TCC) Module (CCS2360 / CCS3361) • BSc (Hons) in Cyber Security
+            </div>
+          </div>
+          <div style="text-align: right; font-size: 7.5pt; color: #e2e8f0; line-height: 1.3;">
+            <span class="badge" style="background: #3b82f6; color: white; margin-bottom: 2px;">Group 03</span><br>
+            <strong>Version:</strong> v1.0.0 (Release)<br>
+            <strong>Academic Year:</strong> 2026
+          </div>
+        </div>
+      </div>
+
+      <!-- TEAM DETAILS TABLE -->
+      <table style="margin-bottom: 8px;">
+        <thead>
+          <tr>
+            <th style="width: 28%;">Student Full Name</th>
+            <th style="width: 22%;">Registration ID</th>
+            <th style="width: 32%;">Project Role & Specialization</th>
+            <th style="width: 18%;">Degree Program</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Loshan Mihisara</strong></td>
+            <td><code>CIT-24-01-0249</code></td>
+            <td>Group Leader / System Analyst</td>
+            <td>BSc (Hons) Cyber Security</td>
+          </tr>
+          <tr>
+            <td><strong>Ravishka Rathnayake</strong></td>
+            <td><code>CIT-24-01-0251</code></td>
+            <td>Lead Full-Stack & Security Architect</td>
+            <td>BSc (Hons) Cyber Security</td>
+          </tr>
+          <tr>
+            <td><strong>Lasindu Dilshan</strong></td>
+            <td><code>CIT-24-01-0488</code></td>
+            <td>Frontend UI/UX & Responsive Specialist</td>
+            <td>BSc (Hons) Cyber Security</td>
+          </tr>
+          <tr>
+            <td><strong>Manura Anuhas</strong></td>
+            <td><code>CIT-24-01-0075</code></td>
+            <td>QA Automation & Database Engineer</td>
+            <td>BSc (Hons) Cyber Security</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- 2. SYSTEM OVERVIEW -->
+      <h2 class="section-header">2. System Overview</h2>
+      <p>
+        <strong>TrialReady LK</strong> is a specialized enterprise cloud ERP engineered to solve severe operational inefficiencies and statutory compliance risks faced by Sri Lankan driving schools. The application automates mandatory student milestones under the <em>Department of Motor Traffic (DMT)</em> and <em>National Transport Medical Institute (NTMI)</em>, prevents training schedule collisions, and uses machine learning to predict practical trial success.
+      </p>
+
+      <div class="grid-3" style="margin-top: 4px; margin-bottom: 6px;">
+        <div class="card card-accent">
+          <strong style="color: #1e3a8a; font-size: 8pt;">Target Users</strong>
+          <ul style="margin-top: 3px; font-size: 7.5pt; margin-left: 12px;">
+            <li><strong>Academy Admins:</strong> Centralized multi-branch control, fleet tracking, audit records, and billing.</li>
+            <li><strong>Instructors:</strong> Daily session roster, attendance logging, and student maneuver scoring.</li>
+            <li><strong>Learners (Students):</strong> 7-stage DMT tracker, computerized theory drills, and readiness status.</li>
+          </ul>
+        </div>
+        <div class="card card-accent">
+          <strong style="color: #1e3a8a; font-size: 8pt;">Key Platform Features</strong>
+          <ul style="margin-top: 3px; font-size: 7.5pt; margin-left: 12px;">
+            <li><strong>7-Stage Pipeline:</strong> Tracks medicals, 3-month permit maturation, and trial dates.</li>
+            <li><strong>Conflict-Free Scheduling:</strong> Prevents dual-booking of vehicles and instructors.</li>
+            <li><strong>DMT Compliance Slips:</strong> 1-click generation of official A4 Student Logbooks & Trial Slips.</li>
+          </ul>
+        </div>
+        <div class="card card-accent">
+          <strong style="color: #1e3a8a; font-size: 8pt;">Core AI/ML Functions</strong>
+          <ul style="margin-top: 3px; font-size: 7.5pt; margin-left: 12px;">
+            <li><strong>Trial Readiness Predictor:</strong> Multi-factor probability scoring (0–100%) and tiering.</li>
+            <li><strong>Adaptive Remedial Quiz:</strong> Generates targeted drills from mock exam weak areas.</li>
+            <li><strong>Intelligent Copilot:</strong> Instant natural language operational assistant.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 3. SYSTEM REQUIREMENTS & ACCESS -->
+      <h2 class="section-header">3. System Requirements & Access</h2>
+      <div class="grid-2">
+        <div class="card">
+          <h3 class="sub-header" style="margin-top: 0;">Environment & Software Requirements</h3>
+          <ul style="font-size: 7.5pt; margin-left: 12px;">
+            <li><strong>Operating System:</strong> Windows 10/11, macOS 12+, Linux, Android 11+, or iOS 15+.</li>
+            <li><strong>Web Browsers:</strong> Google Chrome (v110+), Microsoft Edge, Firefox, or Safari.</li>
+            <li><strong>Network:</strong> Standard internet connection (≥ 2 Mbps broadband or 4G/5G).</li>
+            <li><strong>Application URL:</strong> <span class="code-pill">http://localhost:5173/</span> (Local) or Hosted Domain.</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3 class="sub-header" style="margin-top: 0;">Verified Demo Login Credentials</h3>
+          <p style="font-size: 7.5pt; margin-bottom: 2px;">
+            The sign-in interface includes <strong>1-Click Quick Demo Login</strong> buttons for each role:
+          </p>
+          <table style="font-size: 7pt; margin: 2px 0;">
+            <thead>
+              <tr>
+                <th>Role</th>
+                <th>Email Address</th>
+                <th>Password</th>
+                <th>Landing Route</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="badge badge-blue">Admin</span></td>
+                <td><code>admin@drivingschool.lk</code></td>
+                <td><code>Admin@123</code></td>
+                <td><code>/dashboard</code></td>
+              </tr>
+              <tr>
+                <td><span class="badge badge-amber">Instructor</span></td>
+                <td><code>instructor@drivingschool.lk</code></td>
+                <td><code>Instructor@123</code></td>
+                <td><code>/instructor/portal</code></td>
+              </tr>
+              <tr>
+                <td><span class="badge badge-green">Student</span></td>
+                <td><code>student@drivingschool.lk</code></td>
+                <td><code>Student@123</code></td>
+                <td><code>/student/portal</code></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bar">
+      <span>TrialReady LK — TCC User Manual</span>
+      <span>Document Filename: <strong>Group03_UserManual.pdf</strong></span>
+      <span>Page 1 of 3</span>
+    </div>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- PAGE 2: HOW TO USE THE SYSTEM (MAIN OPERATIONAL WORKFLOWS)     -->
+  <!-- ============================================================== -->
+  <div class="page">
+    <div class="header-bar">
+      <span class="header-title">TrialReady LK — TCC User Manual (2026)</span>
+      <span class="header-meta">Group 03 • Core System Operations</span>
+    </div>
+
+    <div class="content">
+      <h2 class="section-header" style="margin-top: 0;">4. How to Use the System (Step-by-Step Instructions)</h2>
+
+      <!-- 4.1 LOGIN & NAVIGATION -->
+      <h3 class="sub-header">4.1 User Authentication & Portal Access</h3>
+      <ol class="steps">
+        <li>Open your browser and navigate to the application URL (<span class="code-pill">http://localhost:5173/</span>).</li>
+        <li>Enter your registered email and password, or select a role badge (<strong>Admin</strong>, <strong>Instructor</strong>, or <strong>Student</strong>) for 1-click demo entry.</li>
+        <li>Click <strong>Sign In to Academy</strong>. The system authenticates user roles and routes you to your authorized portal.</li>
+        <li>To switch accounts or terminate the session, click your profile icon on the top right bar and click <strong>Sign Out</strong>.</li>
+      </ol>
+
+      <!-- 4.2 STUDENT ENROLMENT & COMPLIANCE PIPELINE -->
+      <h3 class="sub-header">4.2 Student Registration & 7-Stage Learner Journey Tracking (Admin)</h3>
+      <ol class="steps">
+        <li>Click <strong>Students</strong> from the sidebar menu, then click <strong>+ Add Student</strong>.</li>
+        <li>Enter the student's legal name, NIC/Passport number, phone, email, training branch, and licence class (e.g., <em>Class B — Dual-Purpose Car</em>). Click <strong>Save Enrolment</strong>.</li>
+        <li>Navigate to <strong>Learner Journey</strong> to track statutory compliance across all 7 stages:
+          <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 4px; padding: 3px 6px; margin: 2px 0; font-size: 7.5pt;">
+            <strong>Stage 1:</strong> Enrolment &rarr; <strong>Stage 2:</strong> NTMI Medical &rarr; <strong>Stage 3:</strong> DMT Permit (3-Month Countdown) &rarr; <strong>Stage 4:</strong> Theory Exam Cleared &rarr; <strong>Stage 5:</strong> 20h Practical Lessons &rarr; <strong>Stage 6:</strong> AI Readiness Approved &rarr; <strong>Stage 7:</strong> DMT Trial Passed.
+          </div>
+        </li>
+        <li>To register medical or permit papers, click the student row, click <strong>Update Medical</strong> or <strong>Update Permit</strong>, enter the certificate/permit number, issue date, and expiry date, then click <strong>Save Record</strong>.</li>
+      </ol>
+
+      <!-- 4.3 PRACTICAL SESSIONS SCHEDULING & ATTENDANCE -->
+      <h3 class="sub-header">4.3 Practical Training Scheduling & Attendance Marking (Admin & Instructor)</h3>
+      <ol class="steps">
+        <li>From the sidebar, select <strong>Practical Sessions</strong>. Switch between <strong>Calendar View</strong> and <strong>List View</strong>.</li>
+        <li>To book a new lesson, click <strong>+ Schedule Lesson</strong>:
+          <ul style="margin-left: 12px; margin-top: 1px;">
+            <li>Select the <strong>Student</strong>, <strong>Licence Category</strong>, <strong>Instructor</strong>, <strong>Training Vehicle</strong>, <strong>Date</strong>, and <strong>Time Slot</strong>.</li>
+            <li><em>Real-Time Conflict Prevention:</em> The system verifies resource availability immediately. If the vehicle or instructor is already booked for that exact hour, a warning alert displays, blocking accidental double-bookings.</li>
+            <li>Select maneuvers to practice (e.g., <em>Clutch Control, Hill Start, Parallel Parking, 3-Point Turn</em>), then click <strong>Confirm Booking</strong>.</li>
+          </ul>
+        </li>
+        <li>To record attendance and evaluate the student after a drive:
+          <ul style="margin-left: 12px; margin-top: 1px;">
+            <li>Click <strong>Mark Attendance</strong> on the session card.</li>
+            <li>Set status (<strong>Present</strong>, <strong>Late</strong>, or <strong>Absent</strong>).</li>
+            <li>Check off skills mastered during the lesson, award an <strong>Instructor Rating (1 to 5 Stars)</strong>, enter lesson feedback notes, and click <strong>Save Evaluation</strong>.</li>
+          </ul>
+        </li>
+      </ol>
+
+      <!-- 4.4 THEORY EXAM SIMULATOR -->
+      <h3 class="sub-header">4.4 Trilingual DMT Theory Mock Exam Simulator & Road Signs (Student & Admin)</h3>
+      <ol class="steps">
+        <li>Navigate to <strong>Theory Hub</strong> from the sidebar.</li>
+        <li>Select examination language using the trilingual selector: <strong>English</strong>, <strong>සිංහල (Sinhala)</strong>, or <strong>தமிழ் (Tamil)</strong>.</li>
+        <li>Click <strong>Start Mock Exam</strong>. The computerized exam launches with an official 45-minute countdown clock and 40 DMT questions.</li>
+        <li>Select answers (A, B, C, D) and navigate questions via the numbered navigator palette.</li>
+        <li>Click <strong>Finish & Submit Test</strong>. The system provides an instant score report:
+          <ul style="margin-left: 12px; margin-top: 1px;">
+            <li>Score percentage, correct/incorrect count, and official pass determination (DMT threshold: &ge; 75%).</li>
+            <li>Click <strong>Review All Questions & Explanations</strong> to view Highway Code rationales and vector road sign illustrations for every mistake.</li>
+          </ul>
+        </li>
+        <li>Select <strong>Road Signs Flashcards</strong> to practice interactive flashcards across Regulatory, Warning, and Priority traffic signs.</li>
+      </ol>
+
+      <!-- 4.6 FINANCIALS & TUITION PACKAGES -->
+      <h3 class="sub-header">4.5 Financial Billing, Packages & Payment Receipts (Admin)</h3>
+      <ol class="steps">
+        <li>Select <strong>Financials</strong> from the sidebar to inspect revenue metrics, outstanding balances, and tuition collections.</li>
+        <li>To assign a training course to a student, click <strong>Packages</strong>, choose a package (e.g., <em>Standard Class B — LKR 48,000</em>), and assign it to the student profile.</li>
+        <li>To record an installment, click <strong>Record Payment</strong>, choose the student, enter the amount paid (e.g., <em>LKR 20,000</em>), payment method (Cash/Card/Bank Transfer), and click <strong>Save Payment</strong>.</li>
+        <li>Click <strong>View Receipt</strong> to view or print the official branded payment receipt showing remaining balance.</li>
+      </ol>
+    </div>
+
+    <div class="footer-bar">
+      <span>TrialReady LK — TCC User Manual</span>
+      <span>Document Filename: <strong>Group03_UserManual.pdf</strong></span>
+      <span>Page 2 of 3</span>
+    </div>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- PAGE 3: AI/ML WORKFLOW, SCREENSHOTS & TROUBLESHOOTING           -->
+  <!-- ============================================================== -->
+  <div class="page">
+    <div class="header-bar">
+      <span class="header-title">TrialReady LK — TCC User Manual (2026)</span>
+      <span class="header-meta">Group 03 • AI/ML & Troubleshooting</span>
+    </div>
+
+    <div class="content">
+      <!-- 4.5 AI/ML WORKFLOW (COMPREHENSIVE) -->
+      <h2 class="section-header" style="margin-top: 0;">4.6 AI/ML Practical Trial Readiness Evaluation (Core AI Workflow)</h2>
+      <p style="font-size: 7.5pt; margin-bottom: 4px;">
+        The machine learning predictive engine synthesizes five heterogeneous data dimensions into an objective trial success probability (0–100%) to eliminate premature practical trial failures at the DMT Werahera testing grounds.
+      </p>
+
+      <!-- WORKFLOW DIAGRAM -->
+      <div class="workflow-container">
+        <div style="font-size: 7pt; font-weight: 800; color: #1e3a8a; margin-bottom: 3px; text-transform: uppercase;">
+          TrialReady LK — End-to-End Predictive AI Workflow
+        </div>
+        <div class="workflow-steps">
+          <div class="wf-step">
+            <strong style="color: #2563eb;">1. User Input</strong><br>
+            20h Road Lessons, NTMI Medical, Permit Maturation (&ge;3 mo), Theory Tests, Maneuver Ratings
+          </div>
+          <span class="wf-arrow">&rarr;</span>
+          <div class="wf-step">
+            <strong style="color: #7c3aed;">2. Multi-Factor ML Processing</strong><br>
+            Weighted scoring algorithm evaluates statutory criteria &amp; risk factors (Hill start, S-bend)
+          </div>
+          <span class="wf-arrow">&rarr;</span>
+          <div class="wf-step">
+            <strong style="color: #059669;">3. Generated Output</strong><br>
+            Score (0–100%), Tier Classification Badge, and Dynamic Risk Checklist
+          </div>
+          <span class="wf-arrow">&rarr;</span>
+          <div class="wf-step">
+            <strong style="color: #0f172a;">4. Actionable Decision</strong><br>
+            Score &ge; 80%: Print DMT Trial Slip &amp; Logbook.<br>
+            Score &lt; 80%: Trigger AI Remedial Quiz.
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-2" style="margin-top: 4px; margin-bottom: 6px;">
+        <div class="card card-accent">
+          <h3 class="sub-header" style="margin-top: 0;">How to Execute & Interpret the AI Predictor</h3>
+          <ol class="steps" style="font-size: 7.5pt;">
+            <li>Navigate to <strong>Trial Readiness</strong> in the sidebar.</li>
+            <li>Click on any student to open the <strong>AI Trial Predictor Card</strong>.</li>
+            <li>The system compiles all session ratings and compliance dates automatically.</li>
+            <li><strong>Interpret the Readiness Tier Badge:</strong>
+              <ul style="margin-left: 10px; margin-top: 1px;">
+                <li><span class="badge badge-green">Trial Ready (&ge; 80%)</span>: Fully qualified for official DMT test.</li>
+                <li><span class="badge badge-blue">Nearly Ready (65–79%)</span>: 1–2 polishing sessions recommended.</li>
+                <li><span class="badge badge-amber">Needs Practice (40–64%)</span>: Needs additional road hours.</li>
+                <li><span class="badge badge-red">Not Ready (&lt; 40%)</span>: Missing statutory prerequisites.</li>
+              </ul>
+            </li>
+          </ol>
+        </div>
+
+        <div class="card card-accent">
+          <h3 class="sub-header" style="margin-top: 0;">Executing Adaptive AI Remedial Quizzes</h3>
+          <ol class="steps" style="font-size: 7.5pt;">
+            <li>On the student readiness page, inspect the <strong>Deficient Risk Factors</strong> (e.g., <em>Regulatory Signs, Roundabout Priority</em>).</li>
+            <li>Click <strong>Launch AI Remedial Quiz</strong>.</li>
+            <li>The AI engine generates a targeted 5-to-10 question drill isolating the candidate's exact identified weaknesses.</li>
+            <li>Upon completion, the candidate's readiness score recalibrates dynamically in real time.</li>
+            <li>If ready, click <strong>Print DMT Admission Slip</strong> to produce the official DMT Werahera exam pass.</li>
+          </ol>
+        </div>
+      </div>
+
+      <!-- 5. SCREENSHOTS & UI LAYOUT REFERENCE -->
+      <h2 class="section-header">5. Key Screen Layouts & User Interface Reference</h2>
+      <table style="font-size: 7pt; margin: 3px 0 6px 0;">
+        <thead>
+          <tr>
+            <th style="width: 25%;">Screen / Component</th>
+            <th style="width: 45%;">UI Layout & Contents</th>
+            <th style="width: 30%;">User Purpose & Primary Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Fig 1: Login & Role Selector</strong></td>
+            <td>Multi-branch picker, credentials form, and 3 1-click demo account badges.</td>
+            <td>Quick authentication into Admin, Instructor, or Student portals.</td>
+          </tr>
+          <tr>
+            <td><strong>Fig 2: Executive Admin Dashboard</strong></td>
+            <td>Real-time KPI cards (Active Students, Fleet Utilization, Revenue, Today's Lessons).</td>
+            <td>Central command overview for academy directors and owners.</td>
+          </tr>
+          <tr>
+            <td><strong>Fig 3: Learner Journey Pipeline</strong></td>
+            <td>7-stage progress stepper, permit countdown badges, and statutory upload modals.</td>
+            <td>Monitors student legal compliance and milestone progression.</td>
+          </tr>
+          <tr>
+            <td><strong>Fig 4: AI Trial Readiness Predictor</strong></td>
+            <td>Circular score gauge (0–100%), readiness tier pill, and risk factor checklist.</td>
+            <td>Evaluates student trial readiness and triggers remedial quizzes.</td>
+          </tr>
+          <tr>
+            <td><strong>Fig 5: Theory Mock Exam Hub</strong></td>
+            <td>40-question exam view, 45-min timer, trilingual toggle, and review explanations.</td>
+            <td>Simulates DMT computerized theory test with road sign visuals.</td>
+          </tr>
+          <tr>
+            <td><strong>Fig 6: Practical Session Scheduler</strong></td>
+            <td>Weekly calendar grid, instructor conflict alert banner, and attendance modal.</td>
+            <td>Schedules driving drives and marks maneuver ratings (1–5 stars).</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- 6. ERROR HANDLING & TROUBLESHOOTING -->
+      <h2 class="section-header">6. Error Handling & Troubleshooting Guide</h2>
+      <table style="font-size: 7.5pt; margin: 3px 0 0 0;">
+        <thead>
+          <tr>
+            <th style="width: 28%;">Issue Encountered</th>
+            <th style="width: 32%;">Potential Root Cause</th>
+            <th style="width: 40%;">Recommended User Solution</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Invalid Login / Access Denied</strong></td>
+            <td>Incorrect password or unauthorized user role.</td>
+            <td>Verify credentials or click the <strong>1-Click Quick Demo Login</strong> button (Admin / Instructor / Student) on the sign-in screen.</td>
+          </tr>
+          <tr>
+            <td><strong>Schedule Conflict Alert (Amber)</strong></td>
+            <td>The selected instructor or dual-control vehicle is already scheduled for that time slot.</td>
+            <td>The system prevents double-booking. Choose an open time slot, assign another available vehicle, or select a different instructor.</td>
+          </tr>
+          <tr>
+            <td><strong>Trial Booking Locked / Ineligible</strong></td>
+            <td>Student has &lt; 20 practical hours, expired medical, or learner permit has not reached 3 months.</td>
+            <td>Navigate to <strong>Learner Journey</strong>. Complete required driving sessions, update the NTMI certificate, or wait for statutory permit maturation.</td>
+          </tr>
+          <tr>
+            <td><strong>Exam Interruption / Accidental Refresh</strong></td>
+            <td>Network drop or accidental tab close during computerized mock exam.</td>
+            <td>TrialReady LK automatically caches test progress in local storage. Return to <span class="code-pill">/theory/exam</span> and click <strong>Resume Test</strong>.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="footer-bar">
+      <span>TrialReady LK — TCC User Manual</span>
+      <span>Document Filename: <strong>Group03_UserManual.pdf</strong></span>
+      <span>Page 3 of 3</span>
+    </div>
+  </div>
+
+</body>
+</html>
