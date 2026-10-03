@@ -1,14 +1,16 @@
-import React, { useState } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import {
   Bot,
   Send,
   X,
   RotateCw,
   TrendingUp,
-  Calendar,
-  Undo2,
+  GraduationCap,
+  BookOpen,
+  Zap,
 } from 'lucide-react'
-import { COPILOT_KNOWLEDGE_BASE } from '../data/copilotKnowledgeBase'
+import { useAuth } from '../../auth/context/AuthContext'
+import { processCopilotQuery } from '../services/copilotEngine'
 import type { TheoryLanguage } from '../../theory/types/theory'
 
 interface ChatMessage {
@@ -16,9 +18,11 @@ interface ChatMessage {
   sender: 'user' | 'ai'
   text: string
   timestamp: string
+  suggestions?: string[]
 }
 
 export const AiCopilotWidget: React.FC = () => {
+  const { profile, role } = useAuth()
   const [isOpen, setIsOpen] = useState(false)
   const [language, setLanguage] = useState<TheoryLanguage>('en')
   const [inputQuery, setInputQuery] = useState('')
@@ -27,24 +31,61 @@ export const AiCopilotWidget: React.FC = () => {
       id: 'msg-0',
       sender: 'ai',
       text:
-        'Ayubowan / Vanakkam! I am your **TrialReady AI Copilot**. Ask me anything about the Sri Lanka Highway Code, DMT practical trial maneuvers (Hill Start, Reverse S-Bend), or permit regulations in English, Sinhala, or Tamil!',
+        '👋 Ayubowan / Vanakkam! I am your **TrialReady AI Copilot**.\n\nAsk me anything about:\n• 🎓 **Student Portal:** Schedules, Payments, and Trial Readiness\n• 🚦 **Sri Lanka Highway Code:** Speed limits, Traffic lights, Road signs\n• 🚗 **DMT Practical Trials:** Hill Start, Reverse S-Bend, Parallel Parking\n\nI can assist you in English, Sinhala (සිංහල), or Tamil (தமிழ்)!',
       timestamp: 'Just now',
+      suggestions: [
+        'How to use Student Portal?',
+        'Give me highway codes in Sri Lanka',
+        'Hill Start Tips',
+        'Speed Limits in Sri Lanka',
+      ],
     },
   ])
   const [isTyping, setIsTyping] = useState(false)
+  const messagesEndRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (isOpen) {
+      messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+    }
+  }, [messages, isTyping, isOpen])
 
   const quickPrompts = [
-    { label: 'Roundabout Priority', icon: RotateCw, query: 'Who has right of way at a roundabout?' },
-    { label: 'Hill Start Tips', icon: TrendingUp, query: 'How do I do a perfect Hill Start without rollback?' },
-    { label: 'Permit Rules', icon: Calendar, query: 'How long is a DMT Learner Permit valid?' },
-    { label: 'Reverse S-Bend', icon: Undo2, query: 'What are the examiner checkpoints for Reverse S-Bend?' },
+    {
+      label: 'Student Portal',
+      icon: GraduationCap,
+      query: 'What can I do in the student portal?',
+    },
+    {
+      label: 'Highway Code',
+      icon: BookOpen,
+      query: 'Give me highway codes in Sri Lanka',
+    },
+    {
+      label: 'Hill Start Tips',
+      icon: TrendingUp,
+      query: 'How do I do a perfect Hill Start without rollback?',
+    },
+    {
+      label: 'Roundabout Priority',
+      icon: RotateCw,
+      query: 'Who has right of way at a roundabout?',
+    },
+    {
+      label: 'Speed Limits',
+      icon: Zap,
+      query: 'What are the legal speed limits in Sri Lanka?',
+    },
   ]
 
   const handleSend = (textToSend?: string) => {
     const query = (textToSend || inputQuery).trim()
     if (!query) return
 
-    const now = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+    const now = new Date().toLocaleTimeString([], {
+      hour: '2-digit',
+      minute: '2-digit',
+    })
     const userMsg: ChatMessage = {
       id: `user-${crypto.randomUUID()}`,
       sender: 'user',
@@ -56,36 +97,28 @@ export const AiCopilotWidget: React.FC = () => {
     setInputQuery('')
     setIsTyping(true)
 
-    // Match against Copilot knowledge base
+    // Process with intelligent NLP Copilot engine
     setTimeout(() => {
-      const lowerQuery = query.toLowerCase()
-      const matched = COPILOT_KNOWLEDGE_BASE.find((item) =>
-        item.keywords.some((kw) => lowerQuery.includes(kw.toLowerCase())),
-      )
-
-      let aiResponseText: string
-      if (matched) {
-        aiResponseText = matched.answer[language] || matched.answer.en
-      } else {
-        if (language === 'si') {
-          aiResponseText = `මම ඔබේ ප්‍රශ්නය විශ්ලේෂණය කළෙමි: "${query}". ශ්‍රී ලංකා DMT මාර්ග නීති සංග්‍රහයට අනුව, මාර්ග සංඥා සහ ආරක්ෂිත දුර පිළිබඳ නීති පිළිපදින්න. කරුණාකර Theory Practice Hub වෙතින් වැඩිදුර පුහුණුවන්න.`
-        } else if (language === 'ta') {
-          aiResponseText = `உங்கள் கேள்வியை ஆய்வு செய்தேன்: "${query}". இலங்கை DMT போக்குவரத்து விதிகளின்படி, போக்குவரத்து அடையாளங்கள் மற்றும் வேக வரம்புகளைப் பின்பற்றுங்கள்.`
-        } else {
-          aiResponseText = `AI Analysis: "${query}". According to the Sri Lanka Motor Traffic Act & Highway Code, ensure strict adherence to road signs, speed limits, and 2-second following distance. Practice additional mock questions in the Theory Hub for optimal preparation!`
-        }
-      }
+      const response = processCopilotQuery(query, language, {
+        role,
+        userName: profile?.full_name,
+        drivingSchoolName: profile?.driving_school?.name,
+      })
 
       const aiMsg: ChatMessage = {
         id: `ai-${crypto.randomUUID()}`,
         sender: 'ai',
-        text: aiResponseText,
-        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        text: response.text,
+        timestamp: new Date().toLocaleTimeString([], {
+          hour: '2-digit',
+          minute: '2-digit',
+        }),
+        suggestions: response.suggestions,
       }
 
       setMessages((prev) => [...prev, aiMsg])
       setIsTyping(false)
-    }, 600)
+    }, 450)
   }
 
   return (
@@ -99,8 +132,12 @@ export const AiCopilotWidget: React.FC = () => {
         >
           <Bot className="h-5 w-5 text-white animate-pulse" />
           <div className="text-left">
-            <p className="text-xs font-black tracking-wide leading-none">AI Copilot</p>
-            <p className="text-[10px] text-blue-100 font-medium leading-tight">Highway Code Assistant</p>
+            <p className="text-xs font-black tracking-wide leading-none">
+              AI Copilot
+            </p>
+            <p className="text-[10px] text-blue-100 font-medium leading-tight">
+              Highway Code & Student Guide
+            </p>
           </div>
           <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse ml-1" />
         </button>
@@ -122,7 +159,9 @@ export const AiCopilotWidget: React.FC = () => {
                     Online
                   </span>
                 </h3>
-                <p className="text-[10px] text-slate-400">Sri Lanka DMT Highway Code Assistant</p>
+                <p className="text-[10px] text-slate-400">
+                  Sri Lanka DMT & Academy Assistant
+                </p>
               </div>
             </div>
 
@@ -135,7 +174,9 @@ export const AiCopilotWidget: React.FC = () => {
                     type="button"
                     onClick={() => setLanguage(lang)}
                     className={`px-1.5 py-0.5 rounded-md transition-all cursor-pointer ${
-                      language === lang ? 'bg-blue-600 text-white' : 'text-slate-400 hover:text-slate-200'
+                      language === lang
+                        ? 'bg-blue-600 text-white'
+                        : 'text-slate-400 hover:text-slate-200'
                     }`}
                   >
                     {lang.toUpperCase()}
@@ -177,10 +218,12 @@ export const AiCopilotWidget: React.FC = () => {
             {messages.map((msg) => (
               <div
                 key={msg.id}
-                className={`flex flex-col ${msg.sender === 'user' ? 'items-end' : 'items-start'}`}
+                className={`flex flex-col ${
+                  msg.sender === 'user' ? 'items-end' : 'items-start'
+                }`}
               >
                 <div
-                  className={`max-w-[85%] rounded-2xl p-3 text-xs leading-relaxed shadow-xs ${
+                  className={`max-w-[88%] rounded-2xl p-3 text-xs leading-relaxed shadow-xs ${
                     msg.sender === 'user'
                       ? 'bg-blue-600 text-white rounded-br-xs'
                       : 'bg-white text-slate-800 border border-slate-200 rounded-bl-xs'
@@ -188,7 +231,27 @@ export const AiCopilotWidget: React.FC = () => {
                 >
                   <p className="whitespace-pre-line">{msg.text}</p>
                 </div>
-                <span className="text-[9px] text-slate-400 mt-1 px-1">{msg.timestamp}</span>
+                <span className="text-[9px] text-slate-400 mt-1 px-1">
+                  {msg.timestamp}
+                </span>
+
+                {/* Interactive Suggestion Chips */}
+                {msg.sender === 'ai' &&
+                  msg.suggestions &&
+                  msg.suggestions.length > 0 && (
+                    <div className="flex flex-wrap gap-1 mt-1.5 max-w-[90%]">
+                      {msg.suggestions.map((sug, idx) => (
+                        <button
+                          key={idx}
+                          type="button"
+                          onClick={() => handleSend(sug)}
+                          className="rounded-lg bg-blue-50/80 border border-blue-200/80 px-2 py-0.5 text-[10px] font-semibold text-blue-700 hover:bg-blue-100 hover:border-blue-300 transition-colors cursor-pointer text-left"
+                        >
+                          💡 {sug}
+                        </button>
+                      ))}
+                    </div>
+                  )}
               </div>
             ))}
 
@@ -199,6 +262,7 @@ export const AiCopilotWidget: React.FC = () => {
                 <span className="h-1.5 w-1.5 rounded-full bg-blue-500 animate-bounce [animation-delay:0.4s]" />
               </div>
             )}
+            <div ref={messagesEndRef} />
           </div>
 
           {/* Chat Input Bar */}
@@ -215,10 +279,10 @@ export const AiCopilotWidget: React.FC = () => {
               onChange={(e) => setInputQuery(e.target.value)}
               placeholder={
                 language === 'si'
-                  ? 'DMT හෝ මාර්ග නීති පිළිබඳ අසන්න...'
+                  ? 'ශිෂ්‍ය පෝර්ටලය හෝ DMT මාර්ග නීති පිළිබඳ අසන්න...'
                   : language === 'ta'
-                  ? 'DMT அல்லது போக்குவரத்து விதிகள் பற்றி கேட்கவும்...'
-                  : 'Ask about Highway Code, Hill Start, Permit rules...'
+                  ? 'மாணவர் போர்ட்டல் அல்லது போக்குவரத்து விதிகள் பற்றி கேட்கவும்...'
+                  : 'Ask about Student Portal, Highway Code, Hill Start, Fees...'
               }
               className="flex-1 rounded-xl border border-slate-300 bg-slate-50 px-3 py-2 text-xs text-slate-900 placeholder:text-slate-400 focus:bg-white focus:border-blue-500 focus:outline-hidden transition-all"
             />
