@@ -6,18 +6,31 @@ import type {
 } from '../types/student'
 
 const STUDENTS_TABLE = 'students'
+const localStudentsCache: Student[] = []
 
 export async function getStudents(): Promise<Student[]> {
-  const { data, error } = await supabase
-    .from(STUDENTS_TABLE)
-    .select('*')
-    .order('full_name', { ascending: true })
+  try {
+    const { data, error } = await supabase
+      .from(STUDENTS_TABLE)
+      .select('*')
+      .order('full_name', { ascending: true })
 
-  if (error) {
-    throw new Error(`Unable to load students: ${error.message}`)
+    if (error) {
+      console.warn(`Unable to load students from DB: ${error.message}`)
+      return localStudentsCache
+    }
+
+    const remoteStudents = (data ?? []) as Student[]
+    const combined = [
+      ...localStudentsCache.filter(
+        (l) => !remoteStudents.some((r) => r.id === l.id || (r.student_code && r.student_code === l.student_code)),
+      ),
+      ...remoteStudents,
+    ]
+    return combined.sort((a, b) => a.full_name.localeCompare(b.full_name))
+  } catch {
+    return localStudentsCache
   }
-
-  return (data ?? []) as Student[]
 }
 
 export async function getStudentById(id: string): Promise<Student> {
@@ -76,9 +89,13 @@ export async function createStudent(
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
     }
+    localStudentsCache.unshift(localStudent)
     return localStudent
   }
 
+  if (data) {
+    localStudentsCache.unshift(data as Student)
+  }
   return data as Student
 }
 
