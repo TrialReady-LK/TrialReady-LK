@@ -10,12 +10,12 @@ import {
   XCircle,
   HelpCircle,
   BookOpen,
-  Sparkles,
   RotateCcw,
   Award,
   Users,
   Eye,
   TrendingUp,
+  SlidersHorizontal,
 } from 'lucide-react'
 import type {
   TheoryQuestion,
@@ -31,7 +31,8 @@ import {
   type ExtendedMockAttempt,
 } from '../services/theoryService'
 import { QuestionFormModal } from './QuestionFormModal'
-import { RoadSignsFlashcards } from './RoadSignsFlashcards'
+import { ResetQuizModal } from './ResetQuizModal'
+import { AdminRoadSignsManager } from './AdminRoadSignsManager'
 import { TheoryPracticeHubContent } from '../pages/TheoryPracticeHubPage'
 
 interface AdminTheoryManagementViewProps {
@@ -84,8 +85,10 @@ export const AdminTheoryManagementView: React.FC<
     'questions' | 'results' | 'signs' | 'student_simulator'
   >('questions')
 
-  // Modal State
+  // Modal States
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isResetModalOpen, setIsResetModalOpen] = useState(false)
+  const [isResetting, setIsResetting] = useState(false)
   const [editingQuestion, setEditingQuestion] = useState<TheoryQuestion | null>(
     null,
   )
@@ -161,7 +164,7 @@ export const AdminTheoryManagementView: React.FC<
     await deleteTheoryQuestion(id)
     setDeleteConfirmId(null)
     await loadData()
-    showToast('Question deleted from bank.')
+    showToast('Question deleted from questions pool.')
   }
 
   const handleSaveQuestion = async (saved: TheoryQuestion) => {
@@ -170,19 +173,19 @@ export const AdminTheoryManagementView: React.FC<
     showToast(
       editingQuestion
         ? 'Question updated successfully.'
-        : 'New question added to bank.',
+        : 'New question added to quiz questions.',
     )
   }
 
-  const handleResetBank = async () => {
-    if (
-      window.confirm(
-        'Reset question bank to default authentic Sri Lanka DMT Highway Code questions?',
-      )
-    ) {
-      await resetQuestionBankToDefault()
-      await loadData()
-      showToast('Question bank reset to standard DMT questions.')
+  const handleConfirmResetQuiz = async () => {
+    try {
+      setIsResetting(true)
+      const freshQuestions = await resetQuestionBankToDefault()
+      setQuestions(freshQuestions)
+      setIsResetModalOpen(false)
+      showToast('Quiz questions reset and refreshed to DMT standard!')
+    } finally {
+      setIsResetting(false)
     }
   }
 
@@ -242,10 +245,10 @@ export const AdminTheoryManagementView: React.FC<
             </span>
           </div>
           <h1 className="text-2xl font-black tracking-tight sm:text-3xl">
-            DMT Theory Exam &amp; Question Bank Manager
+            DMT Theory Exam &amp; Questions Manager
           </h1>
           <p className="text-xs text-slate-300 max-w-2xl leading-relaxed">
-            Manage authentic Highway Code questions, edit translations (English, සිංහල, தமிழ்), audit student mock exam performance, and inspect pass rate statistics.
+            Manage authentic Highway Code questions, edit trilingual translations (English, සිංහල, தமிழ்), audit student mock exam performance, and configure road sign flashcards.
           </p>
         </div>
 
@@ -260,12 +263,12 @@ export const AdminTheoryManagementView: React.FC<
           </button>
           <button
             type="button"
-            onClick={handleResetBank}
+            onClick={() => setIsResetModalOpen(true)}
             className="inline-flex items-center gap-1.5 rounded-2xl bg-slate-800/90 px-4 py-3 text-xs font-semibold text-slate-300 hover:bg-slate-700 hover:text-white transition-all cursor-pointer border border-slate-700"
-            title="Reset question bank to default authentic Sri Lanka DMT bank"
+            title="Reset quiz questions to default authentic Sri Lanka DMT syllabus"
           >
             <RotateCcw className="h-3.5 w-3.5" />
-            <span>Reset Bank</span>
+            <span>Reset Quiz</span>
           </button>
         </div>
       </div>
@@ -275,7 +278,7 @@ export const AdminTheoryManagementView: React.FC<
         <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-xs">
           <div className="flex items-center justify-between">
             <span className="text-xs font-semibold text-slate-500">
-              Question Bank Size
+              Active Questions
             </span>
             <BookOpen className="h-4 w-4 text-blue-600" />
           </div>
@@ -345,7 +348,7 @@ export const AdminTheoryManagementView: React.FC<
           }`}
         >
           <FileText className="h-4 w-4" />
-          <span>Question Bank ({questions.length})</span>
+          <span>Questions ({questions.length})</span>
         </button>
 
         <button
@@ -370,8 +373,8 @@ export const AdminTheoryManagementView: React.FC<
               : 'text-slate-600 hover:bg-slate-100'
           }`}
         >
-          <Sparkles className="h-4 w-4" />
-          <span>Road Signs &amp; Flashcards</span>
+          <SlidersHorizontal className="h-4 w-4" />
+          <span>Road Signs &amp; Flashcards Library</span>
         </button>
 
         <button
@@ -389,7 +392,7 @@ export const AdminTheoryManagementView: React.FC<
       </div>
 
       {/* ============================================================== */}
-      {/* TAB 1: QUESTION BANK MANAGER                                   */}
+      {/* TAB 1: QUESTIONS MANAGER                                       */}
       {/* ============================================================== */}
       {activeTab === 'questions' && (
         <div className="space-y-4">
@@ -463,14 +466,14 @@ export const AdminTheoryManagementView: React.FC<
           {/* Questions List */}
           {loading ? (
             <div className="rounded-2xl border border-slate-200 bg-white p-12 text-center text-xs text-slate-500">
-              Loading question bank...
+              Loading questions...
             </div>
           ) : filteredQuestions.length === 0 ? (
             <div className="rounded-2xl border border-slate-200 bg-white p-12 text-center space-y-3">
               <HelpCircle className="h-10 w-10 text-slate-300 mx-auto" />
               <p className="text-sm font-bold text-slate-700">No questions found</p>
               <p className="text-xs text-slate-400">
-                Try clearing your search query or add a new question to the bank.
+                Try clearing your search query or add a new question to the pool.
               </p>
               <button
                 type="button"
@@ -715,13 +718,9 @@ export const AdminTheoryManagementView: React.FC<
       )}
 
       {/* ============================================================== */}
-      {/* TAB 3: ROAD SIGNS FLASHCARDS LIBRARY                           */}
+      {/* TAB 3: ROAD SIGNS & FLASHCARDS MANAGEMENT LIBRARY               */}
       {/* ============================================================== */}
-      {activeTab === 'signs' && (
-        <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-xs">
-          <RoadSignsFlashcards />
-        </div>
-      )}
+      {activeTab === 'signs' && <AdminRoadSignsManager />}
 
       {/* ============================================================== */}
       {/* TAB 4: STUDENT SIMULATOR PREVIEW                               */}
@@ -740,7 +739,7 @@ export const AdminTheoryManagementView: React.FC<
               onClick={() => setActiveTab('questions')}
               className="rounded-lg bg-white px-3 py-1 text-xs font-bold text-blue-700 border border-blue-300 hover:bg-blue-100 cursor-pointer"
             >
-              Back to Question Bank
+              Back to Questions
             </button>
           </div>
           <TheoryPracticeHubContent drivingSchoolId={drivingSchoolId} />
@@ -753,6 +752,14 @@ export const AdminTheoryManagementView: React.FC<
         onClose={() => setIsModalOpen(false)}
         onSave={handleSaveQuestion}
         initialQuestion={editingQuestion}
+      />
+
+      {/* Professional Reset Quiz Modal */}
+      <ResetQuizModal
+        isOpen={isResetModalOpen}
+        onClose={() => setIsResetModalOpen(false)}
+        onConfirm={handleConfirmResetQuiz}
+        isResetting={isResetting}
       />
     </div>
   )
