@@ -16,6 +16,57 @@ export interface CopilotResponse {
   suggestions?: string[]
 }
 
+const STOP_WORDS = new Set([
+  'how',
+  'to',
+  'be',
+  'an',
+  'a',
+  'the',
+  'in',
+  'is',
+  'at',
+  'of',
+  'on',
+  'for',
+  'with',
+  'about',
+  'can',
+  'i',
+  'you',
+  'me',
+  'my',
+  'what',
+  'where',
+  'when',
+  'which',
+  'who',
+  'why',
+  'and',
+  'or',
+  'do',
+  'does',
+  'did',
+  'are',
+  'was',
+  'were',
+  'it',
+  'this',
+  'that',
+  'there',
+  'section',
+  'tell',
+  'give',
+  'go',
+  'get',
+  'know',
+  'some',
+  'please',
+  'want',
+  'need',
+  'like',
+])
+
 // Conversational quick-replies for greetings & social exchanges
 const CASUAL_RESPONSES: Record<
   string,
@@ -165,10 +216,8 @@ export function processCopilotQuery(
     }
   }
 
-  // 2. High-Precision Knowledge Base Scoring
-  const queryTokens = cleanLower.split(/\s+/).filter((t) => t.length > 1)
-
-  // Direct portal role match if user specifically asks for Admin or Instructor
+  // 2. High-Specificity Sub-Intent Direct Routing
+  // A. Admin Portal Intent
   if (
     cleanLower.includes('admin') ||
     cleanLower.includes('administrator') ||
@@ -191,6 +240,7 @@ export function processCopilotQuery(
     }
   }
 
+  // B. Instructor Portal Intent
   if (
     cleanLower.includes('instructor') ||
     cleanLower.includes('teacher') ||
@@ -212,38 +262,181 @@ export function processCopilotQuery(
     }
   }
 
+  // C. Specific Student Portal Sub-Features:
+  // 1. Finances, Receipts, Payments, Fees & Balance
+  if (
+    cleanLower.includes('finance') ||
+    cleanLower.includes('financial') ||
+    cleanLower.includes('receipt') ||
+    cleanLower.includes('receipts') ||
+    cleanLower.includes('reciept') ||
+    cleanLower.includes('reciepts') ||
+    cleanLower.includes('payment') ||
+    cleanLower.includes('payments') ||
+    cleanLower.includes('installment') ||
+    cleanLower.includes('fee') ||
+    cleanLower.includes('fees') ||
+    cleanLower.includes('balance') ||
+    cleanLower.includes('package cost')
+  ) {
+    const payItem = COPILOT_KNOWLEDGE_BASE.find((k) => k.id === 'kb-payments-fees')
+    if (payItem) {
+      return {
+        text: payItem.answer[language] || payItem.answer.en,
+        matchedCategory: 'payments_fees',
+        suggestions: [
+          'How to check my sessions',
+          'Student Portal Overview',
+          'What is Readiness Score',
+        ],
+      }
+    }
+  }
+
+  // 2. Practical Sessions & Calendar Schedule
+  if (
+    cleanLower.includes('session') ||
+    cleanLower.includes('sessions') ||
+    cleanLower.includes('schedule') ||
+    cleanLower.includes('lesson') ||
+    cleanLower.includes('lessons') ||
+    cleanLower.includes('driving class') ||
+    cleanLower.includes('when is my class') ||
+    cleanLower.includes('book session') ||
+    cleanLower.includes('calendar')
+  ) {
+    const sessItem = COPILOT_KNOWLEDGE_BASE.find(
+      (k) => k.id === 'kb-sessions-schedule'
+    )
+    if (sessItem) {
+      return {
+        text: sessItem.answer[language] || sessItem.answer.en,
+        matchedCategory: 'sessions_schedule',
+        suggestions: [
+          'How to view my payments',
+          'Hill Start Tips',
+          'What is Readiness Score',
+        ],
+      }
+    }
+  }
+
+  // 3. Trial Readiness Score & Learner Journey
+  if (
+    cleanLower.includes('readiness') ||
+    cleanLower.includes('ready for trial') ||
+    cleanLower.includes('am i ready') ||
+    cleanLower.includes('score percentage') ||
+    cleanLower.includes('how readiness is calculated') ||
+    cleanLower.includes('journey milestones')
+  ) {
+    const readyItem = COPILOT_KNOWLEDGE_BASE.find(
+      (k) => k.id === 'kb-trial-readiness'
+    )
+    if (readyItem) {
+      return {
+        text: readyItem.answer[language] || readyItem.answer.en,
+        matchedCategory: 'trial_tips',
+        suggestions: ['How to do Hill Start', 'Examiner checkpoints', 'Take Mock Exam'],
+      }
+    }
+  }
+
+  // 4. DMT Theory Mock Exam Simulator
+  if (
+    cleanLower.includes('mock exam') ||
+    cleanLower.includes('theory exam') ||
+    cleanLower.includes('theory hub') ||
+    cleanLower.includes('practice exam') ||
+    cleanLower.includes('40 questions') ||
+    cleanLower.includes('pass mark')
+  ) {
+    const examItem = COPILOT_KNOWLEDGE_BASE.find(
+      (k) => k.id === 'kb-theory-exam-overview'
+    )
+    if (examItem) {
+      return {
+        text: examItem.answer[language] || examItem.answer.en,
+        matchedCategory: 'theory_hub',
+        suggestions: ['Highway Code Rules', 'Speed Limits in Sri Lanka', 'Road Signs Difference'],
+      }
+    }
+  }
+
+  // 5. Medical & DMT Permit Countdown
+  if (
+    cleanLower.includes('medical') ||
+    cleanLower.includes('ntmi') ||
+    cleanLower.includes('permit') ||
+    cleanLower.includes('6 months') ||
+    cleanLower.includes('renew permit') ||
+    cleanLower.includes('license class')
+  ) {
+    const permitItem = COPILOT_KNOWLEDGE_BASE.find(
+      (k) => k.id === 'kb-permits-regulations'
+    )
+    if (permitItem) {
+      return {
+        text: permitItem.answer[language] || permitItem.answer.en,
+        matchedCategory: 'permits_regulations',
+        suggestions: ['Student Portal Features', 'Highway Code Rules', 'Mock Exam'],
+      }
+    }
+  }
+
+  // 6. Generic Student Portal Overview (when no specific sub-feature was requested)
+  if (
+    cleanLower.includes('student portal') ||
+    cleanLower.includes('my portal') ||
+    cleanLower.includes('student dashboard') ||
+    cleanLower.includes('what is student portal')
+  ) {
+    const overviewItem = COPILOT_KNOWLEDGE_BASE.find(
+      (k) => k.id === 'kb-student-portal-overview'
+    )
+    if (overviewItem) {
+      return {
+        text: overviewItem.answer[language] || overviewItem.answer.en,
+        matchedCategory: 'student_portal',
+        suggestions: [
+          'How to view my payments',
+          'How to check my sessions',
+          'What is Readiness Score',
+        ],
+      }
+    }
+  }
+
+  // 3. Domain Knowledge Scoring with Stopword Filtering
+  const allTokens = cleanLower.split(/\s+/).filter((t) => t.length > 1)
+  const meaningfulTokens = allTokens.filter((t) => !STOP_WORDS.has(t))
+
+  // If user only provided stopwords or non-driving nonsense
+  if (meaningfulTokens.length === 0) {
+    return getOutOfScopeResponse(language)
+  }
+
   let bestItem: KnowledgeItem | null = null
   let maxScore = 0
 
   for (const item of COPILOT_KNOWLEDGE_BASE) {
     let score = 0
 
-    // Exact keyword or phrase matches
+    // Exact phrase matches in keywords
     for (const kw of item.keywords) {
       const lowerKw = kw.toLowerCase()
       if (cleanLower === lowerKw) {
-        score += 25
+        score += 30
       } else if (cleanLower.includes(lowerKw)) {
-        score += lowerKw.length > 5 ? 14 : 8
+        score += lowerKw.length > 5 ? 16 : 9
       }
 
-      // Token overlap
+      // Meaningful token overlap
       const kwTokens = lowerKw.split(/\s+/)
-      for (const t of queryTokens) {
+      for (const t of meaningfulTokens) {
         if (kwTokens.includes(t)) {
-          score += 4
+          score += 6
         }
-      }
-    }
-
-    // Question match
-    const qText = (item.question[language] || item.question.en).toLowerCase()
-    if (cleanLower.includes(qText) || qText.includes(cleanLower)) {
-      score += 18
-    }
-    for (const t of queryTokens) {
-      if (qText.includes(t)) {
-        score += 3
       }
     }
 
@@ -253,8 +446,8 @@ export function processCopilotQuery(
     }
   }
 
-  // If matched with confidence
-  if (bestItem && maxScore >= 6) {
+  // High-confidence threshold (must match actual domain keywords)
+  if (bestItem && maxScore >= 8) {
     let answerText = bestItem.answer[language] || bestItem.answer.en
 
     if (bestItem.category === 'student_portal' && context?.userName) {
@@ -279,80 +472,21 @@ export function processCopilotQuery(
     }
   }
 
-  // 3. Domain & Universal Generalized Responders
-  // Weather & Rain Driving
-  if (
-    cleanLower.includes('rain') ||
-    cleanLower.includes('weather') ||
-    cleanLower.includes('flood') ||
-    cleanLower.includes('fog') ||
-    cleanLower.includes('wet') ||
-    cleanLower.includes('aquaplan') ||
-    cleanLower.includes('hydroplan')
-  ) {
-    return {
-      text:
-        language === 'si'
-          ? `🌧️ **වැසි සහ අයහපත් කාලගුණයේදී ආරක්ෂිතව රිය ධාවනය:**\n\n1. **වේගය අඩු කරන්න:** සාමාන්‍ය වේග සීමාවට වඩා අවම වශයෙන් 20-30% කින් වේගය අඩු කරන්න.\n2. **4-Second රීතිය:** ඉදිරිපස වාහනය සමඟ ආරක්ෂිත පරතරය තත්පර 4 දක්වා දෙගුණ කරන්න.\n3. **හෙඩ්ලයිට් දල්වන්න (Low Beam):** මීදුම හෝ අධික වැසි ඇති විට Low Beam පමණක් දල්වන්න (High Beam මඟින් ආලෝකය පරාවර්තනය වේ).\n4. **Aquaplaning වළක්වා ගැනීම:** ජලය පිරුණු ස්ථානවලින් ධාවනය කිරීමේදී සුක්කානම එකවර නොකරකවන්න, එකවර තදින් බ්‍රේක් නොපාගන්න.`
-          : language === 'ta'
-          ? `🌧️ **மழைக்கால பாதுகாப்பான ஓட்டுநர் வழிகாட்டல்:**\n\n1. **வேகத்தைக் குறைக்கவும்:** 20-30% வேகத்தைக் குறைக்கவும்.\n2. **4-வினாடி இடைவெளி:** வாகனங்களுக்கிடையிலான இடைவெளியை 4 வினாடிகளாக அதிகரிக்கவும்.\n3. **Low Beam விளக்குகளைப் பயன்படுத்தவும்.**\n4. **Aquaplaning:** தண்ணீர்த் தேக்கங்களில் திடீரென பிரேக் அடிப்பதைத் தவிர்க்கவும்.`
-          : `🌧️ **Safe Driving in Rain & Wet Weather:**\n\n1. **Reduce Speed:** Slow down by 20–30% below the normal speed limit to maintain tyre traction.\n2. **Double the Following Distance (4-Second Rule):** Wet asphalt increases braking distance significantly.\n3. **Use Dipped Headlights (Low Beam):** Enhances visibility to other drivers without blinding them in heavy rain or mist.\n4. **Avoid Hydroplaning (Aquaplaning):** Never slam on brakes or jerk the steering wheel when driving through standing water puddles. Ease off the accelerator gently.\n5. **Demist Windshields:** Turn on AC and windscreen defroster to prevent internal glass fogging.`,
-      suggestions: ['Tyre Pressure Tips', 'Speed Limits in Sri Lanka', 'Brake Failure Emergency'],
-    }
-  }
+  // 4. Out-of-Scope / Beyond Knowledge Handler
+  return getOutOfScopeResponse(language)
+}
 
-  // Car Maintenance, Fluids, Tyres & Fuel
-  if (
-    cleanLower.includes('oil') ||
-    cleanLower.includes('fuel') ||
-    cleanLower.includes('petrol') ||
-    cleanLower.includes('diesel') ||
-    cleanLower.includes('tyre') ||
-    cleanLower.includes('tire') ||
-    cleanLower.includes('pressure') ||
-    cleanLower.includes('service') ||
-    cleanLower.includes('maintenance') ||
-    cleanLower.includes('coolant') ||
-    cleanLower.includes('battery')
-  ) {
-    return {
-      text:
-        language === 'si'
-          ? `🔧 **වාහන නඩත්තුව සහ ඉන්ධන කාර්යක්ෂමතාව:**\n\n• 🛢️ **එන්ජින් ඔයිල්:** සෑම කිලෝමීටර් 5,000කට වරක් (Mineral) හෝ 10,000කට වරක් (Synthetic) මාරු කරන්න.\n• 🚗 **ටයර් පීඩනය (PSI):** සාමාන්‍යයෙන් 30-34 PSI මට්ටමක තබාගන්න (සෑම සති 2කට වරක්ම පරීක්ෂා කරන්න).\n• ⛽ **ඉන්ධන ඉතිරිය:** අධික ලෙස වේගය වැඩි කිරීමෙන් වළකින්න, AC එක අධික ශීතල මට්ටම්වල නොතබන්න, රථයේ අනවශ්‍ය බර අඩු කරන්න.\n• 🔋 **බැටරිය:** අග්‍රවල මලකඩ පිරිසිදු කර ස්ථාවරව තබාගන්න.`
-          : language === 'ta'
-          ? `🔧 **வாகனப் பராமரிப்பு & எரிபொருள் சேமிப்பு:**\n\n• 🛢️ **என்ஜின் எண்ணெய்:** 5,000 கி.மீ அல்லது 10,000 கி.மீ இற்கு ஒருமுறை மாற்றவும்.\n• 🚗 **டயர் காற்று அழுத்தம்:** 30-34 PSI அளவில் பேணவும்.\n• ⛽ **எரிபொருள் சேமிப்பு:** மிதமான வேகத்தில் சீராக ஓட்டவும்.\n• 🔋 **பேட்டரி:** முனைகளை சுத்தமாக வைத்திருக்கவும்.`
-          : `🔧 **Essential Vehicle Maintenance & Fuel Economy:**\n\n1. **Engine Oil & Filter:** Change every 5,000 km (Mineral) or 10,000 km (Full Synthetic) to ensure engine longevity.\n2. **Tyre Pressure (PSI):** Maintain between 30–34 PSI (check your driver's door placard). Proper pressure improves fuel economy by up to 5% and prevents blowouts.\n3. **Fluid Checks:** Inspect Brake Fluid, Engine Coolant, and Transmission Fluid monthly.\n4. **Fuel-Saving Habits:** Accelerate smoothly, maintain 50–70 km/h cruising speed, and avoid excessive idling.\n5. **Battery Health:** Inspect battery terminals for white corrosion deposits and clean with warm water and baking soda.`,
-      suggestions: ['Dashboard Warning Lights', 'How to Jumpstart a Car', 'Tyre Blowout Emergency'],
-    }
-  }
-
-  // Police, Demerit Points, Fines & Law
-  if (
-    cleanLower.includes('police') ||
-    cleanLower.includes('fine') ||
-    cleanLower.includes('fines') ||
-    cleanLower.includes('court') ||
-    cleanLower.includes('penalty') ||
-    cleanLower.includes('law') ||
-    cleanLower.includes('legal') ||
-    cleanLower.includes('demerit')
-  ) {
-    return {
-      text:
-        language === 'si'
-          ? `👮 **ශ්‍රී ලංකා පොලිස් රථවාහන නීති සහ දඩ මුදල්:**\n\n1. **Spot Fines (ක්ෂණික දඩ):** දඩ පත්‍රිකාව ලැබී **දින 14ක් ඇතුළත** ඕනෑම තැපැල් කාර්යාලයකින් හෝ අන්තර්ජාලය හරහා ගෙවිය යුතුය.\n2. **දින 14 ඉක්මවුවහොත්:** අධිකරණයට ඉදිරිපත් වීමට සිදුවේ.\n3. **පොදු දඩ හේතු:** වලංගු ආදායම් බලපත්‍රයක් නොමැති වීම, ආසන පටි නොපැළඳීම, රිය ධාවනයේදී දුරකථන භාවිතය, වේග සීමා ඉක්මවීම, තනි/ද්විත්ව සුදු ඉරි කැපීම.\n4. **අනිවාර්ය ලිපිලේඛන:** රියදුරු බලපත්‍රය, වාහන ආදායම් බලපත්‍රය (Revenue License), සහ රක්ෂණ සහතිකය (Insurance Certificate) සැමවිටම ළඟ තබාගන්න.`
-          : language === 'ta'
-          ? `👮 **இலங்கை பொலிஸ் போக்குவரத்து அபராதங்கள்:**\n\n1. **Spot Fines:** 14 நாட்களுக்குள் தபால் நிலையத்தில் அல்லது ஆன்லைனில் செலுத்த வேண்டும்.\n2. **14 நாட்கள் கடந்தால்:** நீதிமன்றத்திற்குச் செல்ல நேரிடும்.\n3. **முக்கிய அபராதக் காரணங்கள்:** சீட்பெல்ட் அணியாமை, கையடக்கத் தொலைபேசி பயன்பாடு, அதிக வேகம், வெள்ளைக் கோடு மீறல்.\n4. **கட்டாய ஆவணங்கள்:** சாரதி அனுமதிப்பத்திரம், வருமான வரி அனுமதிப்பத்திரம் மற்றும் காப்புறுதிச் சான்றிதழ்.`
-          : `👮 **Sri Lanka Traffic Police & Spot Fines Guide:**\n\n1. **Spot Fine Payment Window:** Spot fines must be paid within **14 days** at any Post Office in Sri Lanka or online via government payment portals.\n2. **Exceeding 14 Days:** If unpaid within 14 days, a court summons will be issued with added penalties.\n3. **Common Spot Fine Offenses:**\n   • Failure to wear seatbelts / helmets\n   • Using a mobile phone while driving\n   • Crossing solid white single/double continuous lines\n   • Speeding beyond legal limits\n   • Expired Revenue License or Insurance\n4. **Mandatory Documents to Carry:** Always keep your original Driver's License/Learner Permit, Vehicle Revenue License, and Insurance Card in the vehicle.`,
-      suggestions: ['Speed Limits in Sri Lanka', 'Highway Code Rules', 'Insurance Types'],
-    }
-  }
-
-  // Universal General Knowledge & Conversational Synthesizer
-  // Formats thoughtful, polite, structured multi-topic responses
+function getOutOfScopeResponse(language: TheoryLanguage): CopilotResponse {
   if (language === 'si') {
     return {
-      text: `💡 **විමසුම් සහාය:** "${query}"\n\nමෙම මාතෘකාව පිළිබඳ ප්‍රධාන කරුණු මෙසේය:\n\n• **ආරක්ෂාව සහ මූලික නීති:** සෑමවිටම මාර්ග නීති, පුද්ගලික ආරක්ෂාව සහ නීත්‍යානුකූල ක්‍රමවේද අනුගමනය කරන්න.\n• **පුහුණුව සහ සූදානම:** රියදුරු පරීක්ෂණ හෝ වෙනත් ඕනෑම කාර්යයකදී ප්‍රමාණවත් පෙර සූදානම සාර්ථකත්වයට මග පාදයි.\n• **වැඩිදුර තොරතුරු:** ඔබේ ශිෂ්‍ය පෝර්ටලය (\`/student/portal\`) හෝ Theory Hub (\`/theory\`) වෙතින් අදාළ තොරතුරු සවිස්තරාත්මකව ලබාගත හැක.\n\nඔබට පහත මාතෘකා පිළිබඳ වැඩිදුර විමසිය හැක:`,
+      text: `🙏 **කණගාමියි, මෙම ප්‍රශ්නය TrialReady AI Copilot ලෙස මගේ විෂය පථයට අයත් නොවේ.**
+
+මම විශේෂණය වී ඇත්තේ පහත ක්ෂේත්‍ර සඳහා පමණි:
+• 🎓 **TrialReady පෝර්ටල්:** ශිෂ්‍ය කාලසටහන්, ගෙවීම් රිසිට්පත්, සහ විභාග සූදානම.
+• 🚦 **ශ්‍රී ලංකා මාර්ග නීති (Highway Code):** වේග සීමා, මාර්ග සංඥා, සහ වටරවුම් නීති.
+• 🚗 **DMT ප්‍රායෝගික පරීක්ෂණ:** Hill Start, Reverse S-Bend, සහ Parallel Parking.
+
+රියදුරු පුහුණුව හෝ මාර්ග නීති පිළිබඳ ඕනෑම ප්‍රශ්නයක් විමසන්න!`,
       suggestions: [
         'Student Portal Features',
         'Highway Code Rules',
@@ -364,7 +498,14 @@ export function processCopilotQuery(
 
   if (language === 'ta') {
     return {
-      text: `💡 **தகவல் உதவி:** "${query}"\n\nஇது தொடர்பான முக்கிய குறிப்புகள்:\n\n• **பாதுகாப்பு & சட்ட விதிகள்:** எப்போதும் பாதுகாப்பு வழிகாட்டுதல்கள் மற்றும் சட்ட விதிமுறைகளைப் பின்பற்றுங்கள்.\n• **பயிற்சி & தயாரிப்பு:** சிறந்த தயாரிப்பு உங்கள் தேர்ச்சிக்கு உதவும்.\n• **மேலதிக தகவல்கள்:** Student Portal (\`/student/portal\`) அல்லது Theory Hub (\`/theory\`) இல் பார்வையிடலாம்.\n\nகீழே உள்ள தலைப்புகளைத் தேர்ந்தெடுத்து மேலும் அறியலாம்:`,
+      text: `🙏 **மன்னிக்கவும், இந்த கேள்வி TrialReady AI Copilot ஆக எனது அறிவுக்கு அப்பாற்பட்டது.**
+
+நான் பின்வரும் துறைகளில் மட்டுமே உதவுகிறேன்:
+• 🎓 **TrialReady போர்ட்டல்:** கால அட்டவணை, கட்டண ரசீதுகள் மற்றும் தயார்நிலை.
+• 🚦 **இலங்கை போக்குவரத்து விதிகள்:** வேக வரம்புகள் மற்றும் வீதி அடையாளங்கள்.
+• 🚗 **DMT செய்முறைப் பரீட்சை:** Hill Start, Reverse S-Bend நுட்பங்கள்.
+
+ஓட்டுநர் பயிற்சி அல்லது விதிகள் தொடர்பான கேள்விகளைத் தயங்காமல் கேளுங்கள்!`,
       suggestions: [
         'Student Portal Features',
         'Highway Code Rules',
@@ -375,27 +516,19 @@ export function processCopilotQuery(
   }
 
   return {
-    text: `💡 **Helpful Guidance on:** "${query}"
+    text: `🙏 **Sorry, this question is beyond my knowledge as the TrialReady AI Copilot.**
 
-Here are the key takeaways and practical recommendations:
+I specialize specifically in:
+• 🎓 **TrialReady Portals:** Student schedules, payment receipts, and Trial Readiness scores.
+• 🚦 **Sri Lanka Highway Code:** Road signs, speed limits, traffic lights, and right-of-way rules.
+• 🚗 **DMT Practical Trial Maneuvers:** Hill Start, Reverse S-Bend, and Parallel Parking.
+• 🔧 **Road Safety & Emergencies:** Vehicle maintenance, brake failure, and accident procedures.
 
-1. **Safety & Best Practices First:**
-   • Always prioritize safety, legal adherence, and deliberate preparation in all driving and daily situations.
-   • For mechanical or vehicle issues, refer to certified technicians and official vehicle handbooks.
-
-2. **Driving Academy & Progress Support:**
-   • If this relates to your license training, check your **Student Portal (\`/student/portal\`)** for lesson schedules, trial readiness metrics, and fee balances.
-   • Practice official questions in the **Theory Hub (\`/theory\`)** for complete readiness.
-
-3. **24/7 Availability:**
-   • You can ask me anything further about Sri Lanka road laws, DMT trial maneuvers, or vehicle safety!
-
-Feel free to choose a prompt below to continue:`,
+Please feel free to ask me anything related to driving, road regulations, or your driving academy portal!`,
     suggestions: [
       'Student Portal Features',
       'Highway Code Rules',
       'Hill Start Tips',
-      'Accident Procedure',
       'Speed Limits in Sri Lanka',
     ],
   }

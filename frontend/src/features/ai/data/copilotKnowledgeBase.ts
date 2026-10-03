@@ -348,52 +348,80 @@ The **Student Portal** (\`/student/portal\`) is your personal central dashboard 
     },
   },
 
-  // --- PAYMENTS & FEES ---
+  // --- PAYMENTS, FINANCES & RECEIPTS ---
   {
     id: 'kb-payments-fees',
-    category: 'payments_fees',
+    category: 'payments_fees' as const,
     keywords: [
-      'payment',
-      'payments',
-      'fees',
-      'cost',
+      'finance',
+      'finances',
+      'financials',
       'receipt',
       'receipts',
+      'reciept',
+      'reciepts',
+      'payment',
+      'payments',
+      'fee',
+      'fees',
+      'cost',
       'installment',
       'balance',
       'how to pay',
-      'financials',
+      'how to go to finance and receipts',
       'course package',
       'pending fee',
+      'how to view receipt',
     ],
     question: {
-      en: 'How do I check my payment installments, fee balance, and download receipts?',
-      si: 'මගේ ගෙවීම් වාරික, ඉතිරි මුදල සහ රිසිට්පත් පරීක්ෂා කරන්නේ කෙසේද?',
-      ta: 'எனது கட்டணத் தவணைகள், நிலுவைத் தொகை மற்றும் ரசீதுகளை எவ்வாறு சரிபார்ப்பது?',
+      en: 'How do I go to the Finance & Receipts section in the Student Portal and view/download receipts?',
+      si: 'ශිෂ්‍ය පෝර්ටලයේ ගෙවීම් සහ රිසිට්පත් (Finance & Receipts) කොටසට යන්නේ කෙසේද?',
+      ta: 'மாணவர் போர்ட்டலில் கட்டணங்கள் மற்றும் ரசீதுகள் (Finance & Receipts) பகுதிக்கு எவ்வாறு செல்வது?',
     },
     answer: {
-      en: `💳 **Course Payments & Official Receipts:**
+      en: `💳 **How to Access Finances & Receipts in the Student Portal:**
 
-1. **Viewing Payments in Student Portal:**
-   • Navigate to **Student Portal (\`/student/portal\`)** or **Financials (\`/financials\`)**.
-   • You will see: Total Course Fee (e.g. LKR 45,000), Total Paid to date, and Outstanding Balance.
+To view your payment plan, fee balance, and download official receipts:
 
-2. **Official Payment Receipts:**
-   • Every time an installment is paid (Cash, Bank Transfer, or Card), an official digital receipt is recorded with a unique receipt number (e.g., \`REC-2026-0089\`).
-   • Click the **"View Receipt"** button next to any transaction to preview and print or save the PDF receipt.`,
-      si: `💳 **පාඨමාලා ගෙවීම් සහ නිල රිසිට්පත්:**
+1. **Go to Student Portal:**
+   • Navigate to **Student Portal (\`/student/portal\`)** from the sidebar or click your role dashboard.
 
-1. **ගෙවීම් විස්තර බැලීම:**
-   • **Student Portal (\`/student/portal\`)** හෝ **Financials (\`/financials\`)** වෙත පිවිසෙන්න.
-   • සම්පූර්ණ පාඨමාලා ගාස්තුව, මේ දක්වා ගෙවූ මුදල සහ ඉතිරි ශේෂය දැකගත හැක.
+2. **Locate Course Package & Financials:**
+   • Scroll to the **"Course Package & Financials"** section (or click **Financials (\`/financials\`)** in the sidebar).
+   • You will see your **Total Course Package Fee**, **Total Amount Paid**, and **Remaining Balance**.
 
-2. **නිල රිසිට්පත් ලබාගැනීම:**
-   • ඕනෑම ගෙවීමක් අසල ඇති **"View Receipt"** බොත්තම ක්ලික් කර PDF රිසිට්පත බාගත කරගන්න.`,
-      ta: `💳 **கட்டணங்கள் மற்றும் உத்தியோகபூர்வ ரசீதுகள்:**
+3. **View & Download Official Payment Receipts:**
+   • In the **Payment History** list, find your installment record.
+   • Click the **"View Receipt"** button next to any payment (e.g., \`REC-2026-0089\`).
+   • An official digital receipt with academy verification and transaction details will open for you to print or save as PDF.`,
+      si: `💳 **ශිෂ්‍ය පෝර්ටලයේ Finance & Receipts වෙත පිවිසෙන ආකාරය:**
 
-1. **கட்டண விவரங்களைப் பார்க்க:** **Student Portal (\`/student/portal\`)** அல்லது **Financials (\`/financials\`)** பக்கத்திற்குச் செல்லவும்.
-2. **ரசீதுகளைப் பதிவிறக்க:** **"View Receipt"** என்பதைக் கிளிக் செய்து PDF ரசீதைப் பெறலாம்.`,
+1. **Student Portal වෙත පිවිසෙන්න:**
+   • Sidebar මඟින් **Student Portal (\`/student/portal\`)** වෙත පිවිසෙන්න.
+
+2. **Course Package & Financials කොටස:**
+   • පහළට scroll කර **"Course Package & Financials"** කොටස බලන්න (හෝ **Financials (\`/financials\`)** වෙත යන්න).
+   • සම්පූර්ණ පාඨමාලා ගාස්තුව, ගෙවූ මුදල සහ ඉතිරි මුදල දැකගත හැක.
+
+3. **නිල රිසිට්පත් බාගත කිරීම:**
+   • Payment History ලැයිස්තුවේ අදාළ ගෙවීම අසල ඇති **"View Receipt"** බොත්තම ක්ලික් කරන්න.
+   • නිල PDF රිසිට්පත මුද්‍රණය කරගන්න හෝ සුරක්ෂිත කරගන්න.`,
+      ta: `💳 **மாணவர் போர்ட்டலில் Finance & Receipts பகுதிக்குச் செல்லும் முறை:**
+
+1. **Student Portal இற்குச் செல்லுங்கள்:**
+   • Sidebar மூலம் **Student Portal (\`/student/portal\`)** இற்குச் செல்லுங்கள்.
+
+2. **Course Package & Financials பகுதி:**
+   • மொத்தக் கட்டணம், செலுத்திய தொகை மற்றும் நிலுவைத் தொகையைப் பார்க்கலாம்.
+
+3. **ரசீதுகளைப் பதிவிறக்க:**
+   • Payment History இல் உள்ள **"View Receipt"** பொத்தானைக் கிளிக் செய்து உத்தியோகபூர்ව PDF ரசீதைப் பெறலாம்.`,
     },
+    suggestions: [
+      'How to check my sessions',
+      'Student Portal Overview',
+      'What is Readiness Score',
+    ],
   },
 
   // --- TRIAL READINESS & LEARNER JOURNEY ---
