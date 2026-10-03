@@ -126,20 +126,7 @@
 ### 4.5 AI/ML Trial Readiness Evaluation (Main AI Workflow)
 This is the core predictive machine learning feature of TrialReady LK that prevents premature student trial failures.
 
-```mermaid
-flowchart TD
-    A["<b>1. USER INPUT (Candidate Training & Compliance Data)</b><br/>• 20h Completed Practical Driving Lessons<br/>• Valid NTMI Medical Fitness Clearance<br/>• DMT Learner Permit Maturation (≥ 3 Months Legal Wait)<br/>• Computerized Mock Theory Exam Score (≥ 75% Benchmark)<br/>• Cumulative Instructor Maneuver Ratings (1–5 Stars)"]
-    
-    B["<b>2. AI MULTI-FACTOR PREDICTION ENGINE</b><br/>• Weighs statutory prerequisites & practical road volume<br/>• Evaluates critical maneuver deficiencies (Hill Start, Reverse S-Bend)<br/>• Computes weighted composite trial readiness probability"]
-    
-    C["<b>3. GENERATED OUTPUT & DIAGNOSTICS</b><br/>• Composite Trial Readiness Score: 0% – 100%<br/>• Readiness Tier: [Trial Ready] | [Nearly Ready] | [Needs Practice] | [Not Ready]<br/>• Dynamic Risk Factor Checklist (Mastered vs. Deficient Maneuvers)"]
-    
-    D["<b>4. ACTIONABLE OPERATIONAL DECISION</b><br/>• <b>If Score ≥ 80% (Trial Ready):</b> Issue 1-Click DMT Werahera Trial Slip & A4 Logbook<br/>• <b>If Score &lt; 80% (Needs Practice):</b> Auto-trigger Adaptive AI Remedial Quiz & extra lessons"]
-
-    A --> B
-    B --> C
-    C --> D
-```
+![TrialReady LK — End-to-End Predictive AI Workflow](assets/ai_workflow_diagram.svg)
 
 #### Step-by-Step AI Execution Instructions:
 1. Navigate to **Trial Readiness** from the sidebar (or view the student's detail profile).
