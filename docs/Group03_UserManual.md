@@ -123,10 +123,10 @@
 
 ---
 
-### 4.5 AI/ML Trial Readiness Evaluation (Main AI Workflow)
-This is the core predictive machine learning feature of TrialReady LK that prevents premature student trial failures.
+### 4.5 AI/ML Trial Readiness Evaluation (Main AI Workflow Flowchart)
+This is the core predictive machine learning feature of TrialReady LK that prevents premature student trial failures. The flowchart below illustrates the complete ISO/ANSI process flow from candidate input through multi-factor ML scoring to the decision gate and actionable remediation/qualification branches:
 
-![TrialReady LK — End-to-End Predictive AI Workflow](assets/ai_workflow_diagram.svg)
+![TrialReady LK — AI Trial Readiness Evaluation Flowchart](assets/ai_workflow_diagram.svg)
 
 #### Step-by-Step AI Execution Instructions:
 1. Navigate to **Trial Readiness** from the sidebar (or view the student's detail profile).
