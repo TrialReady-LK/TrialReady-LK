@@ -776,7 +776,12 @@ export async function ensureInitialDemoDataSeeded(
 ): Promise<boolean> {
   try {
     const existingStudents = getStoredData<any[]>(STORAGE_KEYS.STUDENTS, [])
-    if (existingStudents.length < 100) {
+    const uniqueNames = new Set(
+      existingStudents
+        .map((s) => s.full_name?.trim().toLowerCase())
+        .filter(Boolean),
+    )
+    if (existingStudents.length !== 100 || uniqueNames.size < 100) {
       await seedDemoAcademyData(
         drivingSchoolId || 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
       )

@@ -17,29 +17,109 @@ export interface DemoStudent {
   branch?: { id: string; name: string }
 }
 
-const FIRST_NAMES_MALE = [
-  'Amal', 'Chamath', 'Dhanushka', 'Dinuka', 'Duminda', 'Gayan', 'Harsha', 'Indika', 'Isuru', 'Janaka',
-  'Kasun', 'Lahiru', 'Mahesh', 'Malinda', 'Nadeesha', 'Nalaka', 'Nuwan', 'Pathum', 'Prabath', 'Pramod',
-  'Prasanna', 'Ravindu', 'Roshan', 'Ruwan', 'Sachith', 'Sajith', 'Saman', 'Sandun', 'Sanjeewa', 'Sarath',
-  'Shehan', 'Supun', 'Tharaka', 'Tharindu', 'Thisara', 'Udara', 'Upul', 'Viraj', 'Vishwa', 'Yohan',
-  'Chathura', 'Dinesh', 'Dilshan', 'Kaveen', 'Malith', 'Lakshan', 'Chamod', 'Damith', 'Asanka', 'Charith'
+export const UNIQUE_100_SRI_LANKAN_NAMES: string[] = [
+  'Amaya Fernando',
+  'Ravindu Rathnayaka',
+  'Sanduni Wickramasinghe',
+  'Dinesh Perera',
+  'Kavindi Silva',
+  'Nethmi Jayasekara',
+  'Dilshan Bandara',
+  'Malith Karunaratne',
+  'Kaveesha Gunaratne',
+  'Hasini Senanayake',
+  'Chamod Fonseka',
+  'Oshadi Mendis',
+  'Lakshan Dissanayake',
+  'Anuki Wickrama',
+  'Prabath Kariyawasam',
+  'Dilini Rajapaksha',
+  'Nuwan Samaraweera',
+  'Tharaka Alwis',
+  'Ruwini Pathirana',
+  'Damith Jayalath',
+  'Asanka Wijesinghe',
+  'Shalini Cooray',
+  'Thisara Abeysekara',
+  'Amal Madushanka',
+  'Nimasha Ranasinghe',
+  'Kasun Hettiarachchi',
+  'Isuru Jayasuriya',
+  'Sachini Weerasinghe',
+  'Pramod Liyanage',
+  'Dinithi Kulatunga',
+  'Supun Amarasinghe',
+  'Hiruni Gamage',
+  'Charith Nanayakkara',
+  'Kaveen Siriwardena',
+  'Nipuni Ekanayake',
+  'Pathum Gunasekara',
+  'Hansani Herath',
+  'Maleesha Tennekoon',
+  'Dhanushka Attanayake',
+  'Janani Subasinghe',
+  'Dinuka Wijeratne',
+  'Kanchana Basnayake',
+  'Duminda Dassanayake',
+  'Madhavi Senaratne',
+  'Gayan Weerakkody',
+  'Malsha Ratwatte',
+  'Harsha Illangakoon',
+  'Nelum Munasinghe',
+  'Indika Ranatunga',
+  'Nilmini Lokuge',
+  'Janaka Bogahawatta',
+  'Pavithra Welikala',
+  'Lahiru Medagoda',
+  'Poornima Halpe',
+  'Mahesh Rambukwella',
+  'Sewwandi Pilapitiya',
+  'Malinda Molamure',
+  'Shanika Delgoda',
+  'Nadeesha Keppetipola',
+  'Subhashini Madugalle',
+  'Nalaka Dunuwille',
+  'Sujani Hulangamuwa',
+  'Prasanna Meedeniya',
+  'Tharushi Aluvihare',
+  'Roshan Kobbekaduwa',
+  'Upeksha Giragama',
+  'Ruwan Marapana',
+  'Vihara Panabokke',
+  'Sachith Nugawela',
+  'Vindya Divakara',
+  'Sajith Weragama',
+  'Yashodha Halangoda',
+  'Saman Paranagama',
+  'Yenuki Ellepola',
+  'Sandun Amunugama',
+  'Anoma Walalgoda',
+  'Sanjeewa Kadigawa',
+  'Champa Dodanwela',
+  'Sarath Galagoda',
+  'Chitra Dehigama',
+  'Shehan Madawala',
+  'Geetha Batugedara',
+  'Udara Molagoda',
+  'Kanthi Iriyagolle',
+  'Upul Hendeniya',
+  'Malkanthi Godamunne',
+  'Viraj Kalugampitiya',
+  'Manel Weligodapola',
+  'Vishwa Alawatugoda',
+  'Priyanthi Bowala',
+  'Yohan Danthurebandara',
+  'Renuka Gunnepana',
+  'Chamath Mediwake',
+  'Sunethra Udalagama',
+  'Bawantha Weerasekara',
+  'Dilani Kirinde',
+  'Minoli Samarajeewa',
+  'Ishani Kahawatta',
+  'Tharindu Jayawardena',
+  'Kusal Kumara',
 ]
 
-const FIRST_NAMES_FEMALE = [
-  'Amaya', 'Anuki', 'Chathurika', 'Dilani', 'Dilini', 'Dinithi', 'Gayani', 'Hansani', 'Hasini', 'Hiruni',
-  'Ishani', 'Janani', 'Kanchana', 'Kavindi', 'Kaveesha', 'Madhavi', 'Malsha', 'Nadeesha', 'Nelum', 'Nethmi',
-  'Nilmini', 'Nimasha', 'Nipuni', 'Oshadi', 'Pavithra', 'Poornima', 'Ruwini', 'Sachini', 'Sanduni', 'Sewwandi',
-  'Shalini', 'Shanika', 'Subhashini', 'Sujani', 'Tharushi', 'Upeksha', 'Vihara', 'Vindya', 'Yashodha', 'Yenuki',
-  'Anoma', 'Champa', 'Chitra', 'Geetha', 'Kanthi', 'Malkanthi', 'Manel', 'Priyanthi', 'Renuka', 'Sunethra'
-]
-
-const SURNAMES = [
-  'Fernando', 'Perera', 'Silva', 'De Silva', 'Wickramasinghe', 'Jayawardena', 'Rajapaksa', 'Gunaratne', 'Rathnayake', 'Senanayake',
-  'Bandara', 'Fonseka', 'Mendis', 'Dissanayake', 'Samaraweera', 'Pathirana', 'Jayalath', 'Cooray', 'Wickrama', 'Alwis',
-  'Abeysekara', 'Madushanka', 'Ranasinghe', 'Hettiarachchi', 'Jayasuriya', 'Weerasinghe', 'Karunaratne', 'Liyanage', 'Wijesinghe', 'Kulatunga',
-  'Kariyawasam', 'Amarasinghe', 'Gamage', 'Nanayakkara', 'Siriwardena', 'Ekanayake', 'Gunasekara', 'Herath', 'Tennekoon', 'Attanayake',
-  'Subasinghe', 'Wijeratne', 'Basnayake', 'Dassanayake', 'Senaratne', 'Weerakkody', 'Ratwatte', 'Illangakoon', 'Munasinghe', 'Ranatunga'
-]
 
 const STREETS_BY_BRANCH: Record<number, { city: string; streets: string[] }> = {
   0: {
@@ -91,79 +171,56 @@ export function generate100SriLankanStudents(
 ): DemoStudent[] {
   const students: DemoStudent[] = []
 
-  // Student #1: Amaya Fernando (matches test account)
-  students.push({
-    id: '33333333-3333-3333-3333-111111111111',
-    driving_school_id: schoolId,
-    branch_id: branches[0]?.id || 'ba111111-1111-1111-1111-111111111111',
-    primary_instructor_id: instructors[0]?.id || '11111111-1111-1111-1111-111111111111',
-    student_code: 'ADM-2026-0101',
-    full_name: 'Amaya Fernando',
-    nic: '200178901234',
-    date_of_birth: '2001-08-14',
-    phone: '+94 77 123 4567',
-    email: 'amaya.fernando@gmail.com',
-    address: 'No. 45/2 Galle Road, Colombo 03',
-    emergency_contact_name: 'Dr. Rohan Fernando (Father)',
-    emergency_contact_phone: '+94 71 987 6543',
-    registration_date: '2026-01-10',
-    is_active: true,
-    branch: branches[0] || { id: 'ba111111-1111-1111-1111-111111111111', name: 'Colombo Central (Nugegoda)' }
-  })
+  for (let i = 1; i <= 100; i++) {
+    const fullName = UNIQUE_100_SRI_LANKAN_NAMES[i - 1]
+    const [firstName, surname] = fullName.split(' ')
 
-  // Students #2 to #100
-  for (let i = 2; i <= 100; i++) {
     const isMale = i % 2 === 0
-    const firstList = isMale ? FIRST_NAMES_MALE : FIRST_NAMES_FEMALE
-    const firstName = firstList[(i * 7) % firstList.length]
-    const surname = SURNAMES[(i * 11) % SURNAMES.length]
-    const fullName = `${firstName} ${surname}`
-
-    const branchIdx = (i - 1) % branches.length
-    const branch = branches[branchIdx] || branches[0]
-    const instructor = instructors[(i - 1) % instructors.length] || instructors[0]
+    const branchIdx = (i - 1) % (branches.length || 1)
+    const branch = branches[branchIdx] || branches[0] || { id: 'ba111111-1111-1111-1111-111111111111', name: 'Colombo Central (Nugegoda)' }
+    const instructor = instructors[(i - 1) % (instructors.length || 1)] || instructors[0] || { id: '11111111-1111-1111-1111-111111111111', full_name: 'Nimal Jayasuriya' }
 
     const branchStreetInfo = STREETS_BY_BRANCH[branchIdx] || STREETS_BY_BRANCH[0]
     const street = branchStreetInfo.streets[(i * 3) % branchStreetInfo.streets.length]
     const houseNumber = ((i * 13) % 180) + 1
-    const address = `No. ${houseNumber}, ${street}`
+    const address = i === 1 ? 'No. 45/2 Galle Road, Colombo 03' : `No. ${houseNumber}, ${street}`
 
     const birthYear = 1996 + ((i * 3) % 9)
     const birthMonth = String(((i * 5) % 12) + 1).padStart(2, '0')
     const birthDay = String(((i * 7) % 27) + 1).padStart(2, '0')
-    const dateOfBirth = `${birthYear}-${birthMonth}-${birthDay}`
+    const dateOfBirth = i === 1 ? '2001-08-14' : `${birthYear}-${birthMonth}-${birthDay}`
 
     // Authentic Sri Lankan NIC
-    const nic = `${birthYear}${String(((i * 37) % 800) + 100).padStart(3, '0')}${String(((i * 19) % 8000) + 1000).padStart(4, '0')}1`
+    const nic = i === 1 ? '200178901234' : `${birthYear}${String(((i * 37) % 800) + 100).padStart(3, '0')}${String(((i * 19) % 8000) + 1000).padStart(4, '0')}1`
 
     // Sri Lankan mobile number
     const prefixes = ['77', '71', '76', '75', '78', '70', '72']
     const prefix = prefixes[i % prefixes.length]
     const phoneSuffix = String(100000 + ((i * 8421) % 899999)).slice(0, 7)
-    const phone = `+94 ${prefix} ${phoneSuffix.slice(0, 3)} ${phoneSuffix.slice(3)}`
+    const phone = i === 1 ? '+94 77 123 4567' : `+94 ${prefix} ${phoneSuffix.slice(0, 3)} ${phoneSuffix.slice(3)}`
 
     // Email
     const cleanFirst = firstName.toLowerCase().replace(/[^a-z]/g, '')
     const cleanLast = surname.toLowerCase().replace(/[^a-z]/g, '')
     const emailDomain = i % 3 === 0 ? 'yahoo.com' : i % 5 === 0 ? 'outlook.com' : 'gmail.com'
-    const email = `${cleanFirst}.${cleanLast}${i > 40 ? i : ''}@${emailDomain}`
+    const email = i === 1 ? 'amaya.fernando@gmail.com' : `${cleanFirst}.${cleanLast}@${emailDomain}`
 
     // Emergency Contact
     const relativeRelation = isMale ? 'Mother' : 'Father'
-    const guardianSurname = surname
-    const guardianFirst = isMale ? FIRST_NAMES_FEMALE[(i * 3) % FIRST_NAMES_FEMALE.length] : FIRST_NAMES_MALE[(i * 3) % FIRST_NAMES_MALE.length]
-    const emergencyContactName = `${guardianFirst} ${guardianSurname} (${relativeRelation})`
-    const emergencyPhone = `+94 77 ${String(200000 + ((i * 7321) % 799999)).slice(0, 3)} ${String(1000 + ((i * 4913) % 8999))}`
+    const emergencyContactName = i === 1 ? 'Dr. Rohan Fernando (Father)' : `${surname} (${relativeRelation})`
+    const emergencyPhone = i === 1 ? '+94 71 987 6543' : `+94 77 ${String(200000 + ((i * 7321) % 799999)).slice(0, 3)} ${String(1000 + ((i * 4913) % 8999))}`
 
     // Registration date (staggered from Jan 2026 to Mar 2026)
     const regMonth = String(((i % 3) + 1)).padStart(2, '0')
     const regDay = String(((i * 2) % 26) + 1).padStart(2, '0')
-    const registrationDate = `2026-${regMonth}-${regDay}`
+    const registrationDate = i === 1 ? '2026-01-10' : `2026-${regMonth}-${regDay}`
 
-    const studentCodeNum = String(i).padStart(4, '0')
+    const studentCodeNum = String(100 + i).padStart(4, '0')
     const studentCode = `ADM-2026-${studentCodeNum}`
 
-    const paddedId = String(i).padStart(12, '0')
+    const paddedId = i <= 5
+      ? `${i}${i}${i}${i}${i}${i}${i}${i}${i}${i}${i}${i}`
+      : String(i).padStart(12, '0')
     const id = `33333333-3333-3333-3333-${paddedId}`
 
     students.push({

@@ -16,11 +16,11 @@ const STUDENTS_TABLE = 'students'
 
 export const DEFAULT_STUDENTS: Student[] = [
   {
-    id: '11111111-1111-1111-1111-111111111111',
+    id: '33333333-3333-3333-3333-111111111111',
     driving_school_id: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
     branch_id: 'ba111111-1111-1111-1111-111111111111',
-    primary_instructor_id: '33333333-3333-3333-3333-111111111111',
-    student_code: 'ADM-2026-0042',
+    primary_instructor_id: '11111111-1111-1111-1111-111111111111',
+    student_code: 'ADM-2026-0101',
     full_name: 'Amaya Fernando',
     nic: '200178901234',
     date_of_birth: '2001-08-14',
@@ -35,18 +35,18 @@ export const DEFAULT_STUDENTS: Student[] = [
     updated_at: new Date().toISOString(),
   },
   {
-    id: '11111111-1111-1111-1111-222222222222',
+    id: '33333333-3333-3333-3333-222222222222',
     driving_school_id: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
     branch_id: 'ba111111-1111-1111-1111-111111111111',
-    primary_instructor_id: '33333333-3333-3333-3333-222222222222',
-    student_code: 'ADM-2026-0058',
-    full_name: 'Ravindu Wickramasinghe',
-    nic: '199923405678',
+    primary_instructor_id: '11111111-1111-1111-1111-222222222222',
+    student_code: 'ADM-2026-0102',
+    full_name: 'Ravindu Rathnayaka',
+    nic: '199923405812',
     date_of_birth: '1999-04-20',
-    phone: '+94 71 456 7890',
-    email: 'ravindu.wick@gmail.com',
+    phone: '+94 71 234 5678',
+    email: 'ravindu.rathnayaka@gmail.com',
     address: 'No. 12 Temple Road, Maharagama',
-    emergency_contact_name: 'Chitra Wickramasinghe (Mother)',
+    emergency_contact_name: 'Chitra Rathnayaka (Mother)',
     emergency_contact_phone: '+94 77 333 4444',
     registration_date: '2026-02-01',
     is_active: true,
@@ -54,18 +54,18 @@ export const DEFAULT_STUDENTS: Student[] = [
     updated_at: new Date().toISOString(),
   },
   {
-    id: '11111111-1111-1111-1111-333333333333',
+    id: '33333333-3333-3333-3333-333333333333',
     driving_school_id: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
-    branch_id: 'ba222222-2222-2222-2222-222222222222',
-    primary_instructor_id: '33333333-3333-3333-3333-333333333333',
-    student_code: 'ADM-2026-0071',
-    full_name: 'Sanduni Jayawardena',
-    nic: '200256708912',
+    branch_id: 'ba111111-1111-1111-1111-111111111111',
+    primary_instructor_id: '11111111-1111-1111-1111-333333333333',
+    student_code: 'ADM-2026-0103',
+    full_name: 'Sanduni Wickramasinghe',
+    nic: '200265109432',
     date_of_birth: '2002-11-05',
     phone: '+94 76 890 1234',
-    email: 'sanduni.jaya@yahoo.com',
+    email: 'sanduni.w@gmail.com',
     address: 'No. 88 Kandy Road, Yakkala, Gampaha',
-    emergency_contact_name: 'Kamal Jayawardena (Father)',
+    emergency_contact_name: 'Kamal Wickramasinghe (Father)',
     emergency_contact_phone: '+94 70 222 1111',
     registration_date: '2026-03-01',
     is_active: true,
@@ -73,18 +73,18 @@ export const DEFAULT_STUDENTS: Student[] = [
     updated_at: new Date().toISOString(),
   },
   {
-    id: '11111111-1111-1111-1111-444444444444',
+    id: '33333333-3333-3333-3333-444444444444',
     driving_school_id: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
-    branch_id: 'ba111111-1111-1111-1111-111111111111',
-    primary_instructor_id: '33333333-3333-3333-3333-111111111111',
-    student_code: 'ADM-2026-0089',
-    full_name: 'Dinesh Kumara',
-    nic: '200012304567',
-    date_of_birth: '2000-06-18',
-    phone: '+94 72 345 6789',
-    email: 'dinesh.kumara@outlook.com',
+    branch_id: 'ba222222-2222-2222-2222-222222222222',
+    primary_instructor_id: '11111111-1111-1111-1111-111111111111',
+    student_code: 'ADM-2026-0104',
+    full_name: 'Dinesh Perera',
+    nic: '199834208914',
+    date_of_birth: '1998-06-18',
+    phone: '+94 75 678 9012',
+    email: 'dinesh.perera@gmail.com',
     address: 'No. 31 High Level Road, Nugegoda',
-    emergency_contact_name: 'Sunil Kumara (Brother)',
+    emergency_contact_name: 'Sunil Perera (Brother)',
     emergency_contact_phone: '+94 75 444 8888',
     registration_date: '2026-03-15',
     is_active: true,
@@ -92,18 +92,18 @@ export const DEFAULT_STUDENTS: Student[] = [
     updated_at: new Date().toISOString(),
   },
   {
-    id: '11111111-1111-1111-1111-555555555555',
+    id: '33333333-3333-3333-3333-555555555555',
     driving_school_id: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
     branch_id: 'ba333333-3333-3333-3333-333333333333',
-    primary_instructor_id: '33333333-3333-3333-3333-444444444444',
-    student_code: 'ADM-2026-0094',
-    full_name: 'Kavindi Perera',
-    nic: '200389012345',
+    primary_instructor_id: '11111111-1111-1111-1111-444444444444',
+    student_code: 'ADM-2026-0105',
+    full_name: 'Kavindi Silva',
+    nic: '200384102941',
     date_of_birth: '2003-01-25',
     phone: '+94 78 901 2345',
-    email: 'kavindi.perera@gmail.com',
+    email: 'kavindi.silva@gmail.com',
     address: 'No. 204 Peradeniya Road, Kandy',
-    emergency_contact_name: 'Malkanthi Perera (Mother)',
+    emergency_contact_name: 'Malkanthi Silva (Mother)',
     emergency_contact_phone: '+94 71 777 9999',
     registration_date: '2026-02-15',
     is_active: true,
@@ -113,58 +113,62 @@ export const DEFAULT_STUDENTS: Student[] = [
 ]
 
 export async function getStudents(): Promise<Student[]> {
-  let localList = getStoredData<Student[]>(
-    STORAGE_KEYS.STUDENTS,
-    [],
-  )
+  const branches = getStoredData<any[]>(STORAGE_KEYS.BRANCHES, [])
+  const instructors = getStoredData<any[]>(STORAGE_KEYS.INSTRUCTORS, [])
+  const schoolId = 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11'
+  const canonical100 = generate100SriLankanStudents(
+    schoolId,
+    branches,
+    instructors,
+  ) as Student[]
 
-  if (localList.length < 100) {
-    const branches = getStoredData<any[]>(STORAGE_KEYS.BRANCHES, [])
-    const instructors = getStoredData<any[]>(STORAGE_KEYS.INSTRUCTORS, [])
-    const schoolId = 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11'
-    const full100 = generate100SriLankanStudents(
-      schoolId,
-      branches,
-      instructors,
-    ) as Student[]
+  // Deduplicate and index strictly by normalized full_name (lowercase trim)
+  const nameMap = new Map<string, Student>()
 
-    const mergedMap = new Map<string, Student>()
-    full100.forEach((st) => mergedMap.set(st.student_code || st.id, st))
-    localList.forEach((st) => mergedMap.set(st.student_code || st.id, st))
-    localList = Array.from(mergedMap.values())
-    setStoredData(STORAGE_KEYS.STUDENTS, localList)
-  }
+  // 1. Populate canonical 100 students (100 distinct names guaranteed)
+  canonical100.forEach((st) => {
+    if (st.full_name) {
+      nameMap.set(st.full_name.trim().toLowerCase(), st)
+    }
+  })
 
+  // 2. Overlay any locally stored students (user edits or updates), matching on name
+  const localList = getStoredData<Student[]>(STORAGE_KEYS.STUDENTS, [])
+  localList.forEach((st) => {
+    if (!st.full_name) return
+    const key = st.full_name.trim().toLowerCase()
+    if (nameMap.has(key)) {
+      nameMap.set(key, { ...nameMap.get(key)!, ...st })
+    }
+  })
+
+  // 3. Overlay remote students from Supabase if available
   try {
     const { data, error } = await supabase
       .from(STUDENTS_TABLE)
       .select('*')
       .order('full_name', { ascending: true })
 
-    if (error || !data || data.length === 0) {
-      return localList.sort((a, b) => a.full_name.localeCompare(b.full_name))
-    }
-
-    const remoteStudents = data as Student[]
-    const merged = [...localList]
-    for (const r of remoteStudents) {
-      const idx = merged.findIndex(
-        (m) =>
-          m.id === r.id ||
-          (m.student_code && m.student_code === r.student_code),
-      )
-      if (idx !== -1) {
-        merged[idx] = { ...r, ...merged[idx] }
-      } else {
-        merged.push(r)
+    if (!error && data && data.length > 0) {
+      for (const r of data as Student[]) {
+        if (!r.full_name) continue
+        const key = r.full_name.trim().toLowerCase()
+        if (nameMap.has(key)) {
+          nameMap.set(key, { ...nameMap.get(key)!, ...r })
+        }
       }
     }
-
-    setStoredData(STORAGE_KEYS.STUDENTS, merged)
-    return merged.sort((a, b) => a.full_name.localeCompare(b.full_name))
-  } catch {
-    return localList.sort((a, b) => a.full_name.localeCompare(b.full_name))
+  } catch (err) {
+    console.warn('Supabase fetch students note:', err)
   }
+
+  // Exactly 100 distinct students with mutually unique full names
+  const finalMerged = Array.from(nameMap.values()).slice(0, 100)
+
+  // Ensure clean, deduplicated storage state in browser localStorage
+  setStoredData(STORAGE_KEYS.STUDENTS, finalMerged)
+
+  return finalMerged.sort((a, b) => a.full_name.localeCompare(b.full_name))
 }
 
 export async function getStudentById(id: string): Promise<Student> {
