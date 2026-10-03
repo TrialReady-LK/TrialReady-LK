@@ -126,33 +126,35 @@
 ### 4.5 AI/ML Trial Readiness Evaluation (Main AI Workflow)
 This is the core predictive machine learning feature of TrialReady LK that prevents premature student trial failures.
 
-```
-+---------------------------------------------------------------------------------------------------+
-|                                  AI TRIAL READINESS WORKFLOW                                      |
-+---------------------------------------------------------------------------------------------------+
-|  [USER INPUT]                                                                                     |
-|  * Minimum 15-20 Practical Training Hours Completed                                               |
-|  * Valid NTMI Medical Examination Status                                                          |
-|  * DMT Learner Permit Maturation (≥ 3 Months Legal Wait Period)                                    |
-|  * Theory Mock Exam Average Score (≥ 75% Benchmark)                                               |
-|  * Instructor Cumulative Maneuver Rating (1-5 Star Scale)                                          |
-|                                         |                                                         |
-|                                         v                                                         |
-|  [AI MULTI-FACTOR PREDICTION ENGINE]                                                              |
-|  * Weights & balances statutory prerequisites, road hours, and maneuver competency                |
-|  * Evaluates critical risk triggers (e.g. Hill Start deficiency, expiring permit)                 |
-|                                         |                                                         |
-|                                         v                                                         |
-|  [SYSTEM OUTPUT & DECISION]                                                                       |
-|  * Composite Readiness Score: 0% - 100%                                                           |
-|  * Readiness Tier: [Trial Ready] | [Nearly Ready] | [Needs Practice] | [Not Ready]                |
-|  * Dynamic Risk Factor Checklist highlighting mastered vs. deficient driving skills               |
-|                                         |                                                         |
-|                                         v                                                         |
-|  [ACTIONABLE INTERPRETATION]                                                                      |
-|  * If "Trial Ready" (Score ≥ 80%): Academy issues 1-Click DMT Werahera Trial Slip & Logbook       |
-|  * If Under 80%: Trigger "AI Remedial Quiz" & auto-schedule targeted maneuver practice            |
-+---------------------------------------------------------------------------------------------------+
+```mermaid
+flowchart TD
+    subgraph Step1["1. User Input (Training Data)"]
+        A1["20h Completed Practical Driving Lessons"]
+        A2["Valid NTMI Medical Fitness Clearance"]
+        A3["DMT Learner Permit Maturation (≥ 3 Months)"]
+        A4["Computerized Mock Theory Score (≥ 75%)"]
+        A5["Cumulative Instructor Maneuver Ratings (1–5 Stars)"]
+    end
+
+    subgraph Step2["2. AI Multi-Factor Prediction Engine"]
+        B1["Weighs Statutory Prerequisites & Lesson Volume"]
+        B2["Evaluates Critical Risk Triggers (e.g., Hill Start, S-Bend)"]
+    end
+
+    subgraph Step3["3. Generated Output"]
+        C1["Composite Readiness Score: 0% – 100%"]
+        C2["Readiness Tier: [Trial Ready] | [Nearly Ready] | [Needs Practice] | [Not Ready]"]
+        C3["Dynamic Risk Factor Checklist (Mastered vs. Deficient Maneuvers)"]
+    end
+
+    subgraph Step4["4. Actionable Decision"]
+        D1["Score ≥ 80% (Trial Ready): Print Official DMT Werahera Trial Slip & Logbook"]
+        D2["Score < 80% (Needs Practice): Launch AI Remedial Quiz & Target Extra Lessons"]
+    end
+
+    Step1 --> Step2
+    Step2 --> Step3
+    Step3 --> Step4
 ```
 
 #### Step-by-Step AI Execution Instructions:
