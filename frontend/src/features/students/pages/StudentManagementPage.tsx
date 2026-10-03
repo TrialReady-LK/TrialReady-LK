@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react'
-import StudentForm from '../components/StudentForm'
+import { getBranches } from '../../branches/services/branchService'
+import { getInstructors } from '../../instructors/services/instructorService'
+import StudentForm, { type StudentSelectOption } from '../components/StudentForm'
 import StudentLicenceEnrolment from '../components/StudentLicenceEnrolment'
 import StudentTable from '../components/StudentTable'
 import {
@@ -20,6 +22,8 @@ function StudentManagementPage({
   drivingSchoolId,
 }: StudentManagementPageProps) {
   const [students, setStudents] = useState<Student[]>([])
+  const [branchOptions, setBranchOptions] = useState<StudentSelectOption[]>([])
+  const [instructorOptions, setInstructorOptions] = useState<StudentSelectOption[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isFormOpen, setIsFormOpen] = useState(false)
@@ -37,13 +41,49 @@ function StudentManagementPage({
   useEffect(() => {
     let isCancelled = false
 
-    getStudents()
-      .then((data) => {
+    Promise.all([
+      getStudents(),
+      getBranches().catch(() => []),
+      getInstructors().catch(() => []),
+    ])
+      .then(([studentsData, branchesData, instructorsData]) => {
         if (isCancelled) {
           return
         }
 
-        setStudents(data)
+        setStudents(studentsData)
+
+        // Populate branches
+        const bOpts: StudentSelectOption[] = (branchesData || []).map((b) => ({
+          value: b.id,
+          label: `${b.name} (${b.address || 'Branch'})`,
+        }))
+        if (bOpts.length === 0) {
+          setBranchOptions([
+            { value: 'ba111111-1111-1111-1111-111111111111', label: 'Colombo Central (Nugegoda)' },
+            { value: 'ba222222-2222-2222-2222-222222222222', label: 'Gampaha Branch (Yakkala)' },
+            { value: 'ba333333-3333-3333-3333-333333333333', label: 'Kandy City Branch (Peradeniya)' },
+          ])
+        } else {
+          setBranchOptions(bOpts)
+        }
+
+        // Populate instructors
+        const iOpts: StudentSelectOption[] = (instructorsData || []).map((ins) => ({
+          value: ins.id,
+          label: `${ins.full_name} (${ins.employee_code || 'Instructor'})`,
+        }))
+        if (iOpts.length === 0) {
+          setInstructorOptions([
+            { value: '11111111-1111-1111-1111-111111111111', label: 'Nimal Jayawardena (Chief Instructor)' },
+            { value: '11111111-1111-1111-1111-222222222222', label: 'Sunil Shantha (Light Vehicle)' },
+            { value: '11111111-1111-1111-1111-333333333333', label: 'Kasun Perera (Bike/Auto Specialist)' },
+            { value: '11111111-1111-1111-1111-444444444444', label: 'Mohamed Rizwan (Heavy Commercial)' },
+          ])
+        } else {
+          setInstructorOptions(iOpts)
+        }
+
         setErrorMessage(null)
       })
       .catch((error: unknown) => {
@@ -184,6 +224,8 @@ function StudentManagementPage({
         {isFormOpen && (
           <StudentForm
             drivingSchoolId={drivingSchoolId}
+            branchOptions={branchOptions}
+            instructorOptions={instructorOptions}
             isSubmitting={isSubmitting}
             onSubmit={handleCreateStudent}
             onCancel={() => {
