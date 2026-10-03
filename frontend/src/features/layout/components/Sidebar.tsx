@@ -95,13 +95,13 @@ const NAV_ITEMS: NavItem[] = [
     label: 'Instructor Portal',
     to: '/instructor/portal',
     icon: UserCheck,
-    roles: ['administrator', 'instructor'],
+    roles: ['instructor'],
   },
   {
     label: 'My Student Portal',
     to: '/student/portal',
     icon: User,
-    roles: ['administrator', 'student'],
+    roles: ['student'],
   },
   {
     label: 'Instructors',
