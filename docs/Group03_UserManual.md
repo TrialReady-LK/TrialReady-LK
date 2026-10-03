@@ -128,33 +128,17 @@ This is the core predictive machine learning feature of TrialReady LK that preve
 
 ```mermaid
 flowchart TD
-    subgraph Step1["1. User Input (Training Data)"]
-        A1["20h Completed Practical Driving Lessons"]
-        A2["Valid NTMI Medical Fitness Clearance"]
-        A3["DMT Learner Permit Maturation (≥ 3 Months)"]
-        A4["Computerized Mock Theory Score (≥ 75%)"]
-        A5["Cumulative Instructor Maneuver Ratings (1–5 Stars)"]
-    end
+    A["<b>1. USER INPUT (Candidate Training & Compliance Data)</b><br/>• 20h Completed Practical Driving Lessons<br/>• Valid NTMI Medical Fitness Clearance<br/>• DMT Learner Permit Maturation (≥ 3 Months Legal Wait)<br/>• Computerized Mock Theory Exam Score (≥ 75% Benchmark)<br/>• Cumulative Instructor Maneuver Ratings (1–5 Stars)"]
+    
+    B["<b>2. AI MULTI-FACTOR PREDICTION ENGINE</b><br/>• Weighs statutory prerequisites & practical road volume<br/>• Evaluates critical maneuver deficiencies (Hill Start, Reverse S-Bend)<br/>• Computes weighted composite trial readiness probability"]
+    
+    C["<b>3. GENERATED OUTPUT & DIAGNOSTICS</b><br/>• Composite Trial Readiness Score: 0% – 100%<br/>• Readiness Tier: [Trial Ready] | [Nearly Ready] | [Needs Practice] | [Not Ready]<br/>• Dynamic Risk Factor Checklist (Mastered vs. Deficient Maneuvers)"]
+    
+    D["<b>4. ACTIONABLE OPERATIONAL DECISION</b><br/>• <b>If Score ≥ 80% (Trial Ready):</b> Issue 1-Click DMT Werahera Trial Slip & A4 Logbook<br/>• <b>If Score &lt; 80% (Needs Practice):</b> Auto-trigger Adaptive AI Remedial Quiz & extra lessons"]
 
-    subgraph Step2["2. AI Multi-Factor Prediction Engine"]
-        B1["Weighs Statutory Prerequisites & Lesson Volume"]
-        B2["Evaluates Critical Risk Triggers (e.g., Hill Start, S-Bend)"]
-    end
-
-    subgraph Step3["3. Generated Output"]
-        C1["Composite Readiness Score: 0% – 100%"]
-        C2["Readiness Tier: [Trial Ready] | [Nearly Ready] | [Needs Practice] | [Not Ready]"]
-        C3["Dynamic Risk Factor Checklist (Mastered vs. Deficient Maneuvers)"]
-    end
-
-    subgraph Step4["4. Actionable Decision"]
-        D1["Score ≥ 80% (Trial Ready): Print Official DMT Werahera Trial Slip & Logbook"]
-        D2["Score < 80% (Needs Practice): Launch AI Remedial Quiz & Target Extra Lessons"]
-    end
-
-    Step1 --> Step2
-    Step2 --> Step3
-    Step3 --> Step4
+    A --> B
+    B --> C
+    C --> D
 ```
 
 #### Step-by-Step AI Execution Instructions:
