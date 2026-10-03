@@ -206,6 +206,18 @@ Test Files  7 passed (7)
 
 ---
 
+## 📚 Project Documentation & User Manual
+
+| Document | Format | Description |
+| :--- | :--- | :--- |
+| **[TCC User Manual (PDF)](docs/Group03_UserManual.pdf)** | `PDF (3 Pages)` | Official submission-ready User Manual adhering strictly to TCC preparation guidelines. |
+| **[TCC User Manual (Markdown)](docs/Group03_UserManual.md)** | `Markdown` | Complete plain-text documentation of system workflows, AI/ML features, and troubleshooting. |
+| **[Final Project Report](docs/TCC_Final_Project_Report_TrialReady_LK.md)** | `Markdown` | Comprehensive academic & technical report for final evaluation. |
+| **[DMT Regulatory Compliance](docs/DMT_REGULATORY_COMPLIANCE.md)** | `Markdown` | Motor Traffic Act No. 14 of 1951 & NTMI statutory compliance specifications. |
+| **[Viva Examiner Guide](docs/VIVA_EXAMINER_GUIDE.md)** | `Markdown` | Comprehensive examiner defense and demonstration script. |
+
+---
+
 ## 📄 Regulatory Compliance
 
 This software is designed in strict alignment with:
@@ -215,12 +227,12 @@ This software is designed in strict alignment with:
 
 ---
 
-## 👨‍💻 Project Contributors
+## 👨‍💻 Project Contributors (Group 03)
 
-* **Ravishka Rathnayaka** — *BSc (Hons) in Cyber Security*
-* **Loshan Mihisara** — *Collaborator & Code Reviewer*
-* **Lasindu Dilshan** — *Collaborator & Code Reviewer*
-* **Manur Anuhas** — *Collaborator & Code Reviewer*
+* **Loshan Mihisara** (`CIT-24-01-0249`) — *Group Leader / System Analyst*
+* **Ravishka Rathnayake** (`CIT-24-01-0251`) — *Lead Full-Stack & Security Architect*
+* **Lasindu Dilshan** (`CIT-24-01-0488`) — *Frontend UI/UX & Responsive Specialist*
+* **Manura Anuhas** (`CIT-24-01-0075`) — *QA Automation & Database Systems Engineer*
 
 ---
 
