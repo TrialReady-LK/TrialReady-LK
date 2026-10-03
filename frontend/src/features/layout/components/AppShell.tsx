@@ -3,6 +3,7 @@ import { Outlet } from 'react-router-dom'
 import { AiCopilotWidget } from '../../ai/components/AiCopilotWidget'
 import { Header } from './Header'
 import { Sidebar } from './Sidebar'
+import { ScrollToTopButton } from './ScrollToTopButton'
 
 export const AppShell: React.FC = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
@@ -28,6 +29,9 @@ export const AppShell: React.FC = () => {
           </div>
         </main>
       </div>
+
+      {/* Global Scroll to Top Button */}
+      <ScrollToTopButton />
 
       {/* Global AI Driving Copilot Widget */}
       <AiCopilotWidget />
