@@ -60,6 +60,86 @@ export const DEFAULT_PACKAGES: Package[] = [
 ]
 
 export const DEFAULT_PAYMENTS: StudentPayment[] = [
+  // 1. Student Amaya Fernando (Primary Student Portal account: 33333333-3333-3333-3333-111111111111)
+  {
+    id: 'pay-amaya-01',
+    driving_school_id: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
+    student_id: '33333333-3333-3333-3333-111111111111',
+    enrolment_id: 'ea111111-1111-1111-1111-111111111111',
+    receipt_number: 'REC-20260510-0042',
+    payment_date: '2026-05-10',
+    amount: 25000,
+    payment_method: 'bank_transfer',
+    payment_reference: 'BOC-TXN-994120',
+    collected_by: null,
+    notes: 'Stage 1: Advance Registration & DMT Highway Code Course Materials',
+    created_at: '2026-05-10T10:00:00.000Z',
+    updated_at: new Date().toISOString(),
+  },
+  {
+    id: 'pay-amaya-02',
+    driving_school_id: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
+    student_id: '33333333-3333-3333-3333-111111111111',
+    enrolment_id: 'ea111111-1111-1111-1111-111111111111',
+    receipt_number: 'REC-20260620-0089',
+    payment_date: '2026-06-20',
+    amount: 20000,
+    payment_method: 'card',
+    payment_reference: 'VISA-AUTH-88310',
+    collected_by: null,
+    notes: 'Stage 2: Practical Dual-Control Road Sessions (12 Hours) & NTMI Medical Support',
+    created_at: '2026-06-20T10:00:00.000Z',
+    updated_at: new Date().toISOString(),
+  },
+  // 2. Student Ravindu Wickramasinghe (33333333-3333-3333-3333-222222222222)
+  {
+    id: 'pay-ravindu-01',
+    driving_school_id: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
+    student_id: '33333333-3333-3333-3333-222222222222',
+    enrolment_id: 'ea222222-2222-2222-2222-222222222222',
+    receipt_number: 'REC-20260601-0201',
+    payment_date: '2026-06-01',
+    amount: 30000,
+    payment_method: 'card',
+    payment_reference: 'POS-AUTH-44129',
+    collected_by: null,
+    notes: '1st & 2nd Instalment',
+    created_at: '2026-06-01T10:00:00.000Z',
+    updated_at: new Date().toISOString(),
+  },
+  // 3. Student Sanduni Jayasuriya (33333333-3333-3333-3333-333333333333)
+  {
+    id: 'pay-sanduni-01',
+    driving_school_id: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
+    student_id: '33333333-3333-3333-3333-333333333333',
+    enrolment_id: 'ea333333-3333-3333-3333-333333333333',
+    receipt_number: 'REC-20260715-0301',
+    payment_date: '2026-07-15',
+    amount: 20000,
+    payment_method: 'cash',
+    payment_reference: 'RCP-CSH-1102',
+    collected_by: null,
+    notes: 'Advance Fee Payment',
+    created_at: '2026-07-15T10:00:00.000Z',
+    updated_at: new Date().toISOString(),
+  },
+  // 4. Student Kasun Bandara (33333333-3333-3333-3333-444444444444)
+  {
+    id: 'pay-kasun-01',
+    driving_school_id: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
+    student_id: '33333333-3333-3333-3333-444444444444',
+    enrolment_id: 'ea444444-4444-4444-4444-444444444444',
+    receipt_number: 'REC-20260320-0401',
+    payment_date: '2026-03-20',
+    amount: 10000,
+    payment_method: 'cash',
+    payment_reference: 'RCP-CSH-0912',
+    collected_by: null,
+    notes: 'Initial Registration Fee',
+    created_at: '2026-03-20T10:00:00.000Z',
+    updated_at: new Date().toISOString(),
+  },
+  // 5. Student Kavindu Dilshan (11111111-1111-1111-1111-111111111111)
   {
     id: 'pay-001',
     driving_school_id: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
@@ -90,12 +170,13 @@ export const DEFAULT_PAYMENTS: StudentPayment[] = [
     created_at: '2026-07-15T10:00:00.000Z',
     updated_at: new Date().toISOString(),
   },
+  // 6. Student Nadeesha Fernando (11111111-1111-1111-1111-222222222222)
   {
     id: 'pay-003',
     driving_school_id: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
     student_id: '11111111-1111-1111-1111-222222222222',
     enrolment_id: 'ea222222-2222-2222-2222-222222222222',
-    receipt_number: 'REC-20260601-0201',
+    receipt_number: 'REC-20260601-0202',
     payment_date: '2026-06-01',
     amount: 30000,
     payment_method: 'card',
@@ -105,12 +186,13 @@ export const DEFAULT_PAYMENTS: StudentPayment[] = [
     created_at: '2026-06-01T10:00:00.000Z',
     updated_at: new Date().toISOString(),
   },
+  // 7. Student Sahan Ranasinghe (11111111-1111-1111-1111-333333333333)
   {
     id: 'pay-004',
     driving_school_id: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
     student_id: '11111111-1111-1111-1111-333333333333',
     enrolment_id: 'ea333333-3333-3333-3333-333333333333',
-    receipt_number: 'REC-20260715-0301',
+    receipt_number: 'REC-20260715-0302',
     payment_date: '2026-07-15',
     amount: 20000,
     payment_method: 'cash',
@@ -121,6 +203,45 @@ export const DEFAULT_PAYMENTS: StudentPayment[] = [
     updated_at: new Date().toISOString(),
   },
 ]
+
+export function getDefaultPaymentsForStudent(
+  studentId: string,
+  drivingSchoolId: string = 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
+): StudentPayment[] {
+  const shortId = studentId.replace(/[^a-zA-Z0-9]/g, '').slice(-4) || '0042'
+  return [
+    {
+      id: `pay-${studentId}-1`,
+      driving_school_id: drivingSchoolId,
+      student_id: studentId,
+      enrolment_id: `enr-${studentId}`,
+      receipt_number: `REC-20260510-${shortId}`,
+      payment_date: '2026-05-10',
+      amount: 25000,
+      payment_method: 'bank_transfer',
+      payment_reference: 'BOC-TXN-994120',
+      collected_by: null,
+      notes: 'Stage 1: Advance Registration & DMT Highway Code Course Materials',
+      created_at: '2026-05-10T10:00:00.000Z',
+      updated_at: new Date().toISOString(),
+    },
+    {
+      id: `pay-${studentId}-2`,
+      driving_school_id: drivingSchoolId,
+      student_id: studentId,
+      enrolment_id: `enr-${studentId}`,
+      receipt_number: `REC-20260620-${shortId}`,
+      payment_date: '2026-06-20',
+      amount: 20000,
+      payment_method: 'card',
+      payment_reference: 'VISA-AUTH-88310',
+      collected_by: null,
+      notes: 'Stage 2: Practical Dual-Control Road Sessions & NTMI Medical Support',
+      created_at: '2026-06-20T10:00:00.000Z',
+      updated_at: new Date().toISOString(),
+    },
+  ]
+}
 
 // ==========================================
 // 1. Packages
@@ -301,12 +422,12 @@ export async function getStudentEnrolment(
     driving_school_id: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
     student_id: studentId,
     package_id: fallbackPkg.id,
-    enrolled_date: '2026-01-15',
+    enrolled_date: '2026-05-10',
     agreed_total_fee: fallbackPkg.fee,
     discount_amount: 0,
     status: 'active',
-    notes: 'Default Demo Enrolment',
-    created_at: '2026-01-15T00:00:00.000Z',
+    notes: 'Default Active Enrolment',
+    created_at: '2026-05-10T00:00:00.000Z',
     updated_at: new Date().toISOString(),
     package: fallbackPkg,
   }
@@ -357,7 +478,15 @@ export async function getStudentPayments(
     STORAGE_KEYS.PAYMENTS,
     DEFAULT_PAYMENTS,
   )
-  const studentLocal = localPayments.filter((p) => p.student_id === studentId)
+  let studentLocal = localPayments.filter((p) => p.student_id === studentId)
+
+  // Ensure default payments exist if no payments were saved for this student
+  if (studentLocal.length === 0) {
+    const defaults = getDefaultPaymentsForStudent(studentId)
+    studentLocal = defaults
+    const updatedAll = [...localPayments, ...defaults]
+    setStoredData(STORAGE_KEYS.PAYMENTS, updatedAll)
+  }
 
   try {
     const { data, error } = await supabase
@@ -448,10 +577,10 @@ export async function getStudentFinancialLedger(
 
   let studentData = {
     id: studentId,
-    full_name: 'Student',
+    full_name: 'Amaya Fernando',
     admission_number: 'ADM-2026-0042',
-    phone: '+94 77 123 4567',
-    email: 'student@royaldriving.lk',
+    phone: '+94 77 456 7890',
+    email: 'amaya.fernando@gmail.com',
     branch_name: 'Colombo Central (Nugegoda)',
   }
 
@@ -534,11 +663,13 @@ export async function getAllFinancialLedgers(
     localStudents.length > 0
       ? localStudents.map((s) => s.id)
       : [
+          '33333333-3333-3333-3333-111111111111',
+          '33333333-3333-3333-3333-222222222222',
+          '33333333-3333-3333-3333-333333333333',
+          '33333333-3333-3333-3333-444444444444',
           '11111111-1111-1111-1111-111111111111',
           '11111111-1111-1111-1111-222222222222',
           '11111111-1111-1111-1111-333333333333',
-          '11111111-1111-1111-1111-444444444444',
-          '11111111-1111-1111-1111-555555555555',
         ]
 
   try {

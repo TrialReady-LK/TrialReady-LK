@@ -5,18 +5,18 @@ import {
 import { queryGeminiCopilot } from './copilotEngine'
 
 describe('geminiChatService & copilotEngine', () => {
-  const originalFetch = global.fetch
+  const originalFetch = globalThis.fetch
 
   beforeEach(() => {
     vi.restoreAllMocks()
   })
 
   afterEach(() => {
-    global.fetch = originalFetch
+    globalThis.fetch = originalFetch
   })
 
   it('successfully sends message history and returns Gemini response', async () => {
-    global.fetch = vi.fn().mockResolvedValue({
+    globalThis.fetch = vi.fn().mockResolvedValue({
       ok: true,
       json: async () => ({
         text: 'The solution is x = 5.',
@@ -35,7 +35,7 @@ describe('geminiChatService & copilotEngine', () => {
   })
 
   it('handles network failure gracefully with friendly fallback in English', async () => {
-    global.fetch = vi.fn().mockRejectedValue(new Error('Network offline'))
+    globalThis.fetch = vi.fn().mockRejectedValue(new Error('Network offline'))
 
     const result = await sendGeminiChatMessage(
       [{ sender: 'user', text: 'Hello' }],
@@ -47,7 +47,7 @@ describe('geminiChatService & copilotEngine', () => {
   })
 
   it('handles network failure with friendly fallback in Sinhala', async () => {
-    global.fetch = vi.fn().mockRejectedValue(new Error('Network offline'))
+    globalThis.fetch = vi.fn().mockRejectedValue(new Error('Network offline'))
 
     const result = await sendGeminiChatMessage(
       [{ sender: 'user', text: 'ආයුබෝවන්' }],
@@ -59,7 +59,7 @@ describe('geminiChatService & copilotEngine', () => {
   })
 
   it('queryGeminiCopilot correctly formats response from backend', async () => {
-    global.fetch = vi.fn().mockResolvedValue({
+    globalThis.fetch = vi.fn().mockResolvedValue({
       ok: true,
       json: async () => ({
         text: 'Here is a Python function: def is_palindrome(s): return s == s[::-1]',
