@@ -23,12 +23,12 @@ import {
   Globe,
   Sparkles,
   Zap,
-  Percent,
 } from 'lucide-react'
 import type { StudentFinancialLedger, StudentPayment } from '../../../financials/types/financials'
 import { formatLKR, formatPaymentMethod, getPaymentStatus } from '../../../financials/utils/financialUtils'
 import { PaymentReceiptModal } from '../../../financials/components/PaymentReceiptModal'
 import { recordStudentPayment } from '../../../financials/services/financialService'
+import { PayPalLogo, KokoLogo, MintpayLogo } from '../../../financials/components/PaymentLogos'
 
 interface StudentPaymentsSectionProps {
   ledger: StudentFinancialLedger | null
@@ -788,8 +788,8 @@ export const StudentPaymentsSection: React.FC<StudentPaymentsSectionProps> = ({
             <div className="rounded-2xl border border-blue-200 bg-blue-50/50 p-5 space-y-3">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2 text-slate-900 font-bold text-sm">
-                  <Globe className="h-4 w-4 text-blue-600" />
-                  <span>4. PayPal Express (International Checkout)</span>
+                  <PayPalLogo className="h-5" />
+                  <span>4. PayPal Express</span>
                 </div>
                 <span className="rounded-md bg-blue-100 px-2 py-0.5 text-[10px] font-bold text-blue-800">
                   Global / USD &amp; LKR
@@ -812,9 +812,9 @@ export const StudentPaymentsSection: React.FC<StudentPaymentsSectionProps> = ({
                 <button
                   type="button"
                   onClick={() => handleOpenPayModal(ledger.balance > 0 ? ledger.balance : 15000, 'paypal')}
-                  className="w-full rounded-xl bg-gradient-to-r from-blue-700 to-sky-600 py-2.5 text-xs font-bold text-white shadow-xs hover:from-blue-800 hover:to-sky-700 transition-all cursor-pointer flex items-center justify-center gap-1.5"
+                  className="w-full rounded-xl bg-gradient-to-r from-blue-700 to-sky-600 py-2.5 text-xs font-bold text-white shadow-xs hover:from-blue-800 hover:to-sky-700 transition-all cursor-pointer flex items-center justify-center gap-2"
                 >
-                  <Globe className="h-3.5 w-3.5" />
+                  <PayPalLogo className="h-4 brightness-200" />
                   <span>Launch PayPal Checkout</span>
                 </button>
               </div>
@@ -824,8 +824,8 @@ export const StudentPaymentsSection: React.FC<StudentPaymentsSectionProps> = ({
             <div className="rounded-2xl border border-pink-200 bg-pink-50/40 p-5 space-y-3">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2 text-slate-900 font-bold text-sm">
-                  <Sparkles className="h-4 w-4 text-pink-600" />
-                  <span>5. Koko: Buy Now, Pay Later (3x Installments)</span>
+                  <KokoLogo className="h-5" />
+                  <span>5. Koko: Buy Now, Pay Later</span>
                 </div>
                 <span className="rounded-md bg-pink-100 px-2 py-0.5 text-[10px] font-bold text-pink-700">
                   0% Interest
@@ -860,9 +860,9 @@ export const StudentPaymentsSection: React.FC<StudentPaymentsSectionProps> = ({
                 <button
                   type="button"
                   onClick={() => handleOpenPayModal(ledger.balance > 0 ? ledger.balance : 15000, 'koko')}
-                  className="w-full rounded-xl bg-gradient-to-r from-pink-600 to-rose-600 py-2.5 text-xs font-bold text-white shadow-xs hover:from-pink-700 hover:to-rose-700 transition-all cursor-pointer flex items-center justify-center gap-1.5"
+                  className="w-full rounded-xl bg-gradient-to-r from-pink-600 to-rose-600 py-2.5 text-xs font-bold text-white shadow-xs hover:from-pink-700 hover:to-rose-700 transition-all cursor-pointer flex items-center justify-center gap-2"
                 >
-                  <Percent className="h-3.5 w-3.5" />
+                  <KokoLogo className="h-4" />
                   <span>Pay with Koko (3x Installments)</span>
                 </button>
               </div>
@@ -872,8 +872,8 @@ export const StudentPaymentsSection: React.FC<StudentPaymentsSectionProps> = ({
             <div className="rounded-2xl border border-teal-200 bg-teal-50/40 p-5 space-y-3">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2 text-slate-900 font-bold text-sm">
-                  <Zap className="h-4 w-4 text-teal-600" />
-                  <span>6. Mintpay: Split in 3 (Debit / Credit)</span>
+                  <MintpayLogo className="h-5" />
+                  <span>6. Mintpay: Split in 3</span>
                 </div>
                 <span className="rounded-md bg-teal-100 px-2 py-0.5 text-[10px] font-bold text-teal-800">
                   Instant Approval + Cashback
@@ -898,9 +898,9 @@ export const StudentPaymentsSection: React.FC<StudentPaymentsSectionProps> = ({
                 <button
                   type="button"
                   onClick={() => handleOpenPayModal(ledger.balance > 0 ? ledger.balance : 15000, 'mintpay')}
-                  className="w-full rounded-xl bg-gradient-to-r from-teal-600 to-emerald-600 py-2.5 text-xs font-bold text-white shadow-xs hover:from-teal-700 hover:to-emerald-700 transition-all cursor-pointer flex items-center justify-center gap-1.5"
+                  className="w-full rounded-xl bg-gradient-to-r from-teal-600 to-emerald-600 py-2.5 text-xs font-bold text-white shadow-xs hover:from-teal-700 hover:to-emerald-700 transition-all cursor-pointer flex items-center justify-center gap-2"
                 >
-                  <Zap className="h-3.5 w-3.5" />
+                  <MintpayLogo className="h-4" />
                   <span>Pay with Mintpay (Split in 3)</span>
                 </button>
               </div>
@@ -1133,7 +1133,7 @@ export const StudentPaymentsSection: React.FC<StudentPaymentsSectionProps> = ({
                   >
                     <div className="flex items-center justify-between">
                       <span className="font-bold flex items-center gap-1.5 text-xs text-sky-900">
-                        <Globe className="h-4 w-4 text-sky-600 shrink-0" />
+                        <PayPalLogo className="h-4" />
                         <span>PayPal Express</span>
                       </span>
                       {payMethod === 'paypal' && <CheckCircle2 className="h-3.5 w-3.5 text-sky-600" />}
@@ -1156,7 +1156,7 @@ export const StudentPaymentsSection: React.FC<StudentPaymentsSectionProps> = ({
                   >
                     <div className="flex items-center justify-between">
                       <span className="font-bold flex items-center gap-1.5 text-xs text-pink-900">
-                        <Sparkles className="h-4 w-4 text-pink-600 shrink-0" />
+                        <KokoLogo className="h-4" />
                         <span>Koko (3x BNPL)</span>
                       </span>
                       {payMethod === 'koko' && <CheckCircle2 className="h-3.5 w-3.5 text-pink-600" />}
@@ -1179,7 +1179,7 @@ export const StudentPaymentsSection: React.FC<StudentPaymentsSectionProps> = ({
                   >
                     <div className="flex items-center justify-between">
                       <span className="font-bold flex items-center gap-1.5 text-xs text-teal-900">
-                        <Zap className="h-4 w-4 text-teal-600 shrink-0" />
+                        <MintpayLogo className="h-4" />
                         <span>Mintpay (BNPL)</span>
                       </span>
                       {payMethod === 'mintpay' && <CheckCircle2 className="h-3.5 w-3.5 text-teal-600" />}

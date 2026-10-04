@@ -59,7 +59,7 @@ export const COPILOT_KNOWLEDGE_BASE: KnowledgeItem[] = [
     answer: {
       en: `👋 **Ayubowan / Vanakkam! Welcome to TrialReady.LK AI Copilot!**
 
-I am your 24/7 intelligent driving and general assistant. Here is what I can help you with:
+I am your dedicated AI assistant for Sri Lanka driving licence education and student portal guidance:
 
 🎓 **Student Portal & Progress:**
 • Check booked driving lessons, assigned instructor, and vehicles.
@@ -77,10 +77,10 @@ I am your 24/7 intelligent driving and general assistant. Here is what I can hel
 🔧 **Safety, Emergencies & Vehicle Care:**
 • What to do in accidents, brake failures, tyre punctures, jumpstarts, and warning lights.
 
-Feel free to ask me any question!`,
+Feel free to ask me anything related to road rules, driving trials, or your learner journey!`,
       si: `👋 **ආයුබෝවන්! TrialReady.LK AI Copilot වෙත සාදරයෙන් පිළිගනිමු!**
 
-මම ඔබේ 24/7 බුද්ධිමත් රියදුරු සහ සාමාන්‍ය දැනුම සහායකයා වෙමි:
+මම ඔබේ රියදුරු පුහුණු සහ ශිෂ්‍ය ද්වාර සහායකයා වෙමි:
 
 🎓 **ශිෂ්‍ය පෝර්ටලය (Student Portal) සහ ප්‍රගතිය:**
 • නියමිත ප්‍රායෝගික පුහුණු සැසි, උපදේශක සහ වාහන තොරතුරු බැලීම.
@@ -98,7 +98,7 @@ Feel free to ask me any question!`,
 • තිරිංග අක්‍රිය වීම, ටයර් පිපිරීම්, බැටරි ජම්ප් ස්ටාර්ට් සහ අනතුරු අවස්ථා.`,
       ta: `👋 **வணக்கம்! TrialReady.LK AI Copilot இற்கு உங்களை அன்புடன் வரவேற்கிறோம்!**
 
-நான் உங்கள் 24/7 அறிவார்ந்த சாரதி மற்றும் பொது அறிவு உதவியாளர்:
+நான் உங்கள் சாரதி பயிற்சி மற்றும் மாணவர் தளம் சார்ந்த உதவியாளர் ஆவேன்:
 
 🎓 **மாணவர் போர்ட்டல் (Student Portal) & முன்னேற்றம்:**
 • செய்முறை ஓட்டுநர் அமர்வுகள், பயிற்றுனர் மற்றும் வாகன விவரங்கள்.
