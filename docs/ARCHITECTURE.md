@@ -69,7 +69,93 @@
 
 ---
 
-## 2. C4 Architectural Scheme & System Topology
+## 2. High-Level System Architecture (Presentation Slide 5)
+
+> 📌 **Examiner & Judge Presentation Reference:** A dedicated slide and word-for-word viva narration script is available in [`docs/SLIDE_5_HIGH_LEVEL_ARCHITECTURE.md`](./SLIDE_5_HIGH_LEVEL_ARCHITECTURE.md).  
+> 🖼️ **High-Resolution Vector Graphic (SVG):** [`docs/assets/high_level_system_architecture_slide5.svg`](./assets/high_level_system_architecture_slide5.svg)
+
+```mermaid
+flowchart LR
+    %% =========================================================================
+    %% SLIDE 5: HIGH-LEVEL SYSTEM ARCHITECTURE (LEFT-TO-RIGHT DATA FLOW)
+    %% =========================================================================
+
+    subgraph DS["1. DATA SOURCES"]
+        direction TB
+        DS1["🧑‍🎓 Student Enrolments<br/>• NIC & DOB Verification<br/>• Contact & Residential Data"]
+        DS2["🏥 NTMI Medical Records<br/>• Clinical Fitness Certificate<br/>• Barcode & Clinic Branch"]
+        DS3["📜 DMT Learner Permits<br/>• 6-Month Permit No<br/>• Issue & Expiry Timestamps"]
+        DS4["🚗 Practical Sessions<br/>• 1-5★ Instructor Star Ratings<br/>• 7 Core Maneuvers Covered"]
+        DS5["📝 Mock Theory Exams<br/>• 40-Q Trilingual Submissions<br/>• Time Elapsed & Category Scores"]
+        DS6["💳 Financial Transactions<br/>• Bank Slip / LankaQR / Card<br/>• Fee Package Subscriptions"]
+    end
+
+    subgraph PP["2. PREPROCESSING LAYER"]
+        direction TB
+        PP1["⚙️ Input Validator & Zod Schema<br/>• Type Sanitization<br/>• Anti-XSS DOM Encoding"]
+        PP2["⏱️ Permit Expiry Countdown<br/>• Δt = Expiry - Current<br/>• 30-Day Warning Engine"]
+        PP3["🎯 Maneuver Vectorizer<br/>• 7-Skill Bitmask Aggregator<br/>• Practical Hours Summation"]
+        PP4["🌐 Trilingual Token Mapper<br/>• Locale Fallback (EN/SI/TA)<br/>• Question Bank Loader"]
+        PP5["🛡️ RFC-4180 CSV Sanitizer<br/>• Formula Injection Defense<br/>• UTF-8 Excel BOM Encoding"]
+    end
+
+    subgraph ML["3. MODEL & INFERENCE LAYER"]
+        direction TB
+        ML1["🧠 6-Factor AI Readiness Engine<br/>• Composite Score: S = Σ(Wi · si)<br/>• Medical(15%) + Permit(15%) + Theory(15%)<br/>  + Hours(25%) + Maneuvers(20%) + Rating(10%)"]
+        ML2["🚫 Regulatory Veto Classifier<br/>• Critical Blocker Detection<br/>• Hard Lock for Expired Permits"]
+        ML3["📊 Adaptive Diagnostic Engine<br/>• Category Weakness Profiling<br/>• Targeted Remedial Drill Gen"]
+        ML4["📅 Scheduling Conflict Engine<br/>• Temporal Intersection Filter<br/>• Instructor/Fleet Double-Book Guard"]
+    end
+
+    subgraph BE["4. BACKEND LAYER"]
+        direction TB
+        BE1["🔐 GoTrue Auth Engine<br/>• JWT Stateless Token Issuance<br/>• Bcrypt Password Hashing (Salt≥10)"]
+        BE2["⚡ PostgREST Automated API<br/>• Parameterized Prepared Queries<br/>• Instant REST CRUD Endpoints"]
+        BE3["🛡️ Row-Level Security (RLS)<br/>• Kernel-Level Multi-Tenancy<br/>• Tenant ID Driving School Filter"]
+    end
+
+    subgraph FE["5. FRONTEND / UI LAYER"]
+        direction TB
+        FE1["💻 React 19 SPA + Tailwind v4<br/>• Lucide React Icon System<br/>• Responsive Glassmorphic UI"]
+        FE2["🚦 React Router v7 Gatekeeper<br/>• RBAC: Admin, Instructor, Student<br/>• Protected Route Interceptors"]
+        FE3["📱 18 Integrated Domain Modules<br/>• Admin, Instructor, Student Portals<br/>• Trilingual Theory Hub & 40-Q Exam<br/>• Payments, Sessions, & Analytics"]
+        FE4["🖨️ Vector Print Engine (@media print)<br/>• Official DMT Logbook (DMT/SL/LOG-01)<br/>• Trial Admission Slip (DMT/SL/ADM-PASS)"]
+    end
+
+    subgraph ST["6. DATA STORES"]
+        direction TB
+        ST1["🗄️ Primary Cloud Database<br/>• Supabase PostgreSQL 15<br/>• 18 Multi-Tenant Relational Tables<br/>• Foreign Key Cascades & Constraints"]
+        ST2["💾 Persistent Client Fallback Cache<br/>• LocalStorage (trialready_*)<br/>• Deterministic Seed & Offline State<br/>• Schema-Matched Data Sync"]
+    end
+
+    subgraph EXT["7. EXTERNAL SERVICES & APIS"]
+        direction TB
+        EXT1["☁️ Supabase Cloud (BaaS Infrastructure)"]
+        EXT2["🚀 Vercel Edge Serverless CDN"]
+        EXT3["🏛️ Dept. of Motor Traffic (DMT Standards)"]
+        EXT4["🏥 National Transport Medical Institute (NTMI)"]
+        EXT5["💳 LankaQR / Central Bank of Sri Lanka (CBSL)"]
+    end
+
+    %% Left-to-Right Connections
+    DS -->|1. Ingest Raw Records| PP
+    PP -->|2. Normalized Vectors| ML
+    ML -->|3. Evaluations & Predictions| BE
+    BE <-->|4. Authenticated SQL with RLS| ST
+    BE -->|5. RESTful JSON API| FE
+    FE -->|6. User Mutations & Queries| BE
+    FE <-->|7. Standalone / Offline Fallback| ST2
+
+    EXT1 -.->|BaaS & Auth Hosting| BE
+    EXT2 -.->|Edge CDN Delivery| FE
+    EXT3 -.->|Statutory Syllabus Alignment| ML
+    EXT4 -.->|Medical Protocol Rules| ML
+    EXT5 -.->|Payment Standard Integration| FE
+```
+
+---
+
+## 3. C4 Architectural Scheme & System Topology
 
 ### Level 1: System Context Diagram
 

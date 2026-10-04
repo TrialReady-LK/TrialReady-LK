@@ -63,11 +63,28 @@ This guide provides a structured walkthrough for the viva examination panel, dem
 
 ---
 
-## 🛡️ 4. Key Cyber Security & Quality Highlights for the Panel
+## 🏛️ 4. Presentation Slide 5: High-Level System Architecture Defense
+
+When presenting **Slide 5 (High-Level System Architecture)** to the judge panel, follow the **Left-to-Right 6-Stage Narrative Flow**:
+
+1. **1. Data Sources (Left):** Candidate NIC/DOB, NTMI Medical Fitness records, 6-Month DMT Learner's Permit dates, in-car instructor star evaluations across 7 core maneuvers, trilingual mock theory tests, and tuition fee payments.
+2. **2. Preprocessing Layer:** Zod schema validation, 6-month permit countdown engine ($\Delta t = \text{Expiry} - \text{Current}$), 7-maneuver skill vectorizer, trilingual token mapper (EN/SI/TA), and RFC-4180 CSV formula injection sanitizer (`=`, `+`, `-`, `@`).
+3. **3. Model & Inference Layer (AI Engine):** 6-factor weighted AI Readiness Composite Scoring Engine ($S = \sum W_i \cdot s_i$), Regulatory Veto Hard Classifier, Adaptive Highway Code Diagnostic Engine, and Temporal Scheduling Collision Prevention.
+4. **4. Backend Layer:** Supabase Cloud BaaS with PostgreSQL 15, GoTrue Auth with Bcrypt ($\ge 10$ salt rounds) & JWT, PostgREST parameterized API, and Kernel-Level Multi-Tenant Row Level Security (RLS).
+5. **5. Frontend / UI Layer:** React 19 SPA + Tailwind CSS v4, React Router v7 role gatekeeper, 18 domain modules, and zero-PDF browser-native `@media print` vector logbook/pass generator.
+6. **6. Data Stores (Right):** Primary Cloud PostgreSQL 15 (18 multi-tenant relational tables) + Client Persistent Fallback Engine (`localStorage` `trialready_*`).
+7. **External Integrations:** Supabase Cloud BaaS, Vercel Edge Serverless CDN, Department of Motor Traffic (DMT) Werahera syllabus, NTMI medical standards, and LankaQR / CBSL payment rails.
+
+> 📖 **Full Slide 5 Guide & Script:** See [`docs/SLIDE_5_HIGH_LEVEL_ARCHITECTURE.md`](./SLIDE_5_HIGH_LEVEL_ARCHITECTURE.md)  
+> 🖼️ **Vector Graphic:** [`docs/assets/high_level_system_architecture_slide5.svg`](./assets/high_level_system_architecture_slide5.svg)
+
+---
+
+## 🛡️ 5. Key Cyber Security & Quality Highlights for the Panel
 
 1. **Row Level Security (RLS)**: Enforces multi-tenant data segregation at the database kernel level; no driving school can ever read another academy's candidate records.
 2. **Defensive CSV Sanitization**: Protection against Spreadsheet Formula Injection (`CSV Injection`) by sanitizing cells starting with `=`, `+`, `-`, or `@`.
 3. **Automated Unit & Integration Testing**:
    - Run in terminal: `npm test`
-   - Show **36 tests passing across 7 test suites** in under 3 seconds using Vitest.
+   - Show **53 tests passing across 13 test suites** in under 5 seconds using Vitest.
 4. **Browser-Native A4 Print Layout**: Zero reliance on third-party PDF server rendering engines, eliminating server-side rendering attack vectors.
