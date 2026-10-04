@@ -373,6 +373,7 @@ export const VehicleProfileView: React.FC<VehicleProfileViewProps> = ({
               vehicleId={vehicle.id}
               drivingSchoolId={drivingSchoolId}
               documents={documents}
+              isInstructor={isInstructor}
               onAddDocument={handleAddDocument}
               onDeleteDocument={handleDeleteDocument}
             />
@@ -385,6 +386,7 @@ export const VehicleProfileView: React.FC<VehicleProfileViewProps> = ({
               drivingSchoolId={drivingSchoolId}
               currentOdometer={vehicle.current_odometer_km}
               maintenanceRecords={maintenanceRecords}
+              isInstructor={isInstructor}
               onAddMaintenance={handleAddMaintenance}
             />
           )}
@@ -396,6 +398,7 @@ export const VehicleProfileView: React.FC<VehicleProfileViewProps> = ({
               drivingSchoolId={drivingSchoolId}
               currentAvailability={vehicle.availability_status}
               availabilityPeriods={availabilityPeriods}
+              isInstructor={isInstructor}
               onChangeAvailabilityStatus={handleAvailabilityStatus}
               onAddAvailabilityPeriod={handleAddAvailabilityPeriod}
             />

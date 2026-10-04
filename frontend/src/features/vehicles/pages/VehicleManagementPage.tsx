@@ -142,11 +142,20 @@ export const VehicleManagementPage: React.FC<VehicleManagementPageProps> = ({
         {/* Main Header */}
         <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h1 className="text-2xl font-bold text-slate-900">
-              Vehicle Management
-            </h1>
+            <div className="flex items-center gap-2.5">
+              <h1 className="text-2xl font-bold text-slate-900">
+                Vehicle Management
+              </h1>
+              {isInstructor && (
+                <span className="rounded-full bg-blue-100 px-2.5 py-0.5 text-xs font-bold text-blue-800">
+                  Instructor Fleet View
+                </span>
+              )}
+            </div>
             <p className="mt-1 text-sm text-slate-500">
-              Manage fleet vehicles, compliance documents, maintenance history, and training session availability.
+              {isInstructor
+                ? 'Inspect academy training vehicles, view technical specifications, and report defects with instant replacement switching.'
+                : 'Manage fleet vehicles, compliance documents, maintenance history, and training session availability.'}
             </p>
           </div>
 

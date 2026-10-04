@@ -18,6 +18,7 @@ interface VehicleAvailabilityManagerProps {
   drivingSchoolId: string
   currentAvailability: VehicleAvailabilityStatus
   availabilityPeriods: VehicleAvailabilityPeriod[]
+  isInstructor?: boolean
   onChangeAvailabilityStatus: (
     status: VehicleAvailabilityStatus,
   ) => Promise<unknown>
@@ -53,6 +54,7 @@ export const VehicleAvailabilityManager: React.FC<
   drivingSchoolId,
   currentAvailability,
   availabilityPeriods,
+  isInstructor = false,
   onChangeAvailabilityStatus,
   onAddAvailabilityPeriod,
 }) => {
@@ -150,13 +152,31 @@ export const VehicleAvailabilityManager: React.FC<
           {(['available', 'unavailable', 'in_maintenance'] as const).map(
             (status) => {
               const isSelected = currentAvailability === status
+              if (isInstructor) {
+                if (!isSelected) return null
+                return (
+                  <span
+                    key={status}
+                    className={`rounded-lg px-4 py-2 text-xs font-bold capitalize shadow-sm ${
+                      status === 'available'
+                        ? 'bg-emerald-600 text-white'
+                        : status === 'in_maintenance'
+                          ? 'bg-indigo-600 text-white'
+                          : 'bg-amber-600 text-white'
+                    }`}
+                  >
+                    ● {status.replace('_', ' ')} (Active Status)
+                  </span>
+                )
+              }
+
               return (
                 <button
                   key={status}
                   type="button"
                   onClick={() => handleQuickStatusChange(status)}
                   disabled={isUpdatingStatus}
-                  className={`rounded-lg px-4 py-2 text-xs font-semibold capitalize transition-all ${
+                  className={`rounded-lg px-4 py-2 text-xs font-semibold capitalize transition-all cursor-pointer ${
                     isSelected
                       ? status === 'available'
                         ? 'bg-emerald-600 text-white shadow-sm ring-2 ring-emerald-600/30'
@@ -195,11 +215,11 @@ export const VehicleAvailabilityManager: React.FC<
           </p>
         </div>
 
-        {!isLoggingPeriod && (
+        {!isInstructor && !isLoggingPeriod && (
           <button
             type="button"
             onClick={() => setIsLoggingPeriod(true)}
-            className="rounded-lg bg-blue-600 px-4 py-2 text-xs font-medium text-white hover:bg-blue-700"
+            className="rounded-lg bg-blue-600 px-4 py-2 text-xs font-medium text-white hover:bg-blue-700 cursor-pointer"
           >
             + Log Downtime / Availability Period
           </button>
