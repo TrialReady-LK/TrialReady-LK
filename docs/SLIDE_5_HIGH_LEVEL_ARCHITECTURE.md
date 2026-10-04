@@ -16,62 +16,69 @@
 
 > 🖼️ **Full HD 1920x1080 Direct Vector File:** [`docs/assets/high_level_system_architecture_top_to_bottom.svg`](./assets/high_level_system_architecture_top_to_bottom.svg)
 
-[![TrialReady LK - Top-to-Bottom Tiered Architecture](https://raw.githubusercontent.com/ravishkarathnayaka/TrialReady-LK/main/docs/assets/high_level_system_architecture_top_to_bottom.svg)](https://raw.githubusercontent.com/ravishkarathnayaka/TrialReady-LK/main/docs/assets/high_level_system_architecture_top_to_bottom.svg)
-
 ```
 ┌────────────────────────────────────────────────────────────────────────────────────────┐
 │                        LAYER 1: PRESENTATION & CLIENT PLATFORMS                        │
-│  • Administrator Dashboard   • Instructor Practical Portal   • Student Learner Hub     │
-│  • React 19 Single Page App  • Tailwind CSS v4 Glassmorphic  • RBAC Route Gatekeepers  │
+│ 🛠️ TOOLS & TECH: React 19 SPA • TypeScript 5.8 • Tailwind CSS v4 • Vite 7 • React Router v7│
+│ • Administrator Dashboard   • Instructor Practical Portal   • Student Learner Hub     │
+│ • 18 Feature Subsystems     • Lucide React Icons System     • Glassmorphic Responsive UI│
 └───────────────────────────────────────────┬────────────────────────────────────────────┘
                                             │ (HTTPS / TLS 1.3 Anycast)
                                             ▼
 ┌────────────────────────────────────────────────────────────────────────────────────────┐
 │                        LAYER 2: EDGE CDN & TRANSPORT SECURITY                          │
-│  • Vercel Serverless Edge CDN (<50ms Latency)   • Strict TLS 1.3 & HTTP/2 Encryption   │
-│  • DDoS Perimeter Shield & Origin Shield        • Automated Git CI/CD Deployments      │
+│ 🛠️ TOOLS & TECH: Vercel Serverless Edge CDN • TLS 1.3 / HTTP/2 • Anycast Routing • DDoS Shield│
+│ • Global Edge Delivery (<50ms Latency)          • Automated Git CI/CD Deployments      │
+│ • Perfect Forward Secrecy Encryption            • CORS Strict Domain Isolation         │
 └───────────────────────────────────────────┬────────────────────────────────────────────┘
                                             │ (Encrypted API Gateway)
                                             ▼
 ┌────────────────────────────────────────────────────────────────────────────────────────┐
 │                LAYER 3: PREPROCESSING, INPUT VALIDATION & AUTHENTICATION               │
-│  • Zod Schema Strict Type Sanitizer             • Anti-XSS Virtual DOM Encoding        │
-│  • 30-Day Permit Expiry Countdown (Δt)          • 7-Maneuver Mandatory Skill Bitmask   │
-│  • Trilingual Context Token Resolver (EN/SI/TA) • RFC-4180 CSV Anti-Formula Injection  │
-│  • GoTrue Stateless JWT Authentication Engine   • Bcrypt Password Hash (Salt ≥ 10)     │
+│ 🛠️ TOOLS & TECH: Zod v3 Schemas • GoTrue Auth Engine • Bcrypt (Salt ≥ 10) • JWT (RFC 7519)│
+│ • Zod Strict Type Sanitizer                     • Anti-XSS Virtual DOM Encoding        │
+│ • 30-Day Permit Expiry Countdown (Δt)          • 7-Maneuver Mandatory Skill Bitmask   │
+│ • Trilingual Context Token Resolver (EN/SI/TA) • RFC-4180 CSV Anti-Formula Injection  │
+│ • Stateless JWT Token Lifecycle Management      • Anti-Tamper Signature Verification   │
 └───────────────────────────────────────────┬────────────────────────────────────────────┘
                                             │ (Feature Vectors & Auth Claims)
                                             ▼
 ┌────────────────────────────────────────────────────────────────────────────────────────┐
 │                 LAYER 4: AI INFERENCE & CORE BUSINESS LOGIC ENGINES                    │
-│  • 6-Factor AI Composite Readiness Algorithm: S = Σ(W_i · s_i) ∈ [0, 100]%             │
-│    [Medical 15% + Permit 15% + Theory 15% + Hours 25% + Maneuvers 20% + Rating 10%]    │
-│  • Regulatory Veto Classifier (Hard lock for expired permits / missing medicals)       │
-│  • Adaptive Theory Diagnostics (Highway Code Weakness Profiler & Remedial Drill Gen)   │
-│  • Instructor & Vehicle Fleet Scheduling Collision Prevention Guard                    │
-│  • Browser-Native Vector Print Engine (@media print A4 DMT Logbooks & Passes)          │
+│ 🛠️ TOOLS & TECH: Multivariate Scoring Engine • Rule-Based AI • Interval Scheduling • CSS3 Print│
+│ • 6-Factor AI Composite Readiness Algorithm: S = Σ(W_i · s_i) ∈ [0, 100]%             │
+│   [NTMI Medical 15% + DMT Permit 15% + Theory 15% + Hours 25% + Skills 20% + Stars 10%] │
+│ • Regulatory Veto Classifier (Hard lock for expired permits / missing medicals)       │
+│ • Adaptive Theory Diagnostics (Highway Code Weakness Profiler & Remedial Drill Gen)   │
+│ • Instructor & Vehicle Fleet Scheduling Collision Prevention Engine                    │
+│ • Browser-Native Vector Print Engine (@media print A4 DMT Logbooks & Passes - Zero PDF│
 └───────────────────────────────────────────┬────────────────────────────────────────────┘
                                             │ (Prepared RESTful Payloads)
                                             ▼
 ┌────────────────────────────────────────────────────────────────────────────────────────┐
 │                LAYER 5: BACKEND SERVICES & KERNEL ROW-LEVEL SECURITY                   │
-│  • PostgREST High-Throughput REST API           • Parameterized Prepared SQL (Anti-SQLi│
-│  • Kernel-Level PostgreSQL Row-Level Security: `driving_school_id = auth.uid()`        │
-│  • Zero Cross-School Tenant Leakage             • Role-Scoped DB Policies (Admin/Ins/St│
+│ 🛠️ TOOLS & TECH: PostgREST API Engine • PostgreSQL RLS • Prepared SQL Statements • RBAC Policy│
+│ • PostgREST High-Throughput REST API           • Parameterized Prepared SQL (Anti-SQLi│
+│ • Kernel-Level PostgreSQL Row-Level Security: `driving_school_id = auth.uid()`        │
+│ • Zero Cross-School Tenant Leakage             • Role-Scoped DB Policies (Admin/Ins/St│
+│ • Tamper-Evident Transaction Audit Logging     • Sub-Millisecond DB Execution Latency │
 └───────────────────────────────────────────┬────────────────────────────────────────────┘
                                             │ (Authenticated SQL Queries & Offline Sync)
                                             ▼
 ┌────────────────────────────────────────────────────────────────────────────────────────┐
 │                         LAYER 6: HYBRID DATA STORES & PERSISTENCE                      │
-│  • Primary Database: Managed PostgreSQL 15 Database (18 Multi-Tenant Relational Tables)│
-│  • Offline Engine: Persistent Client LocalStorage (`trialready_*`) for 100% Resilience│
+│ 🛠️ TOOLS & TECH: PostgreSQL 15 Relational DB • HTML5 Web Storage API (LocalStorage Cache) │
+│ • Primary Cloud Database: Managed PostgreSQL 15 Database (18 Multi-Tenant Tables)      │
+│ • Offline Fallback Engine: Persistent Client LocalStorage (`trialready_*`) for 100% Up │
+│ • Deterministic Seed Dataset: Royal Driving Academy Preset + 5 Diverse User Personas   │
 └───────────────────────────────────────────┬────────────────────────────────────────────┘
                                             │ (Statutory Alignment & Cloud Hosting)
                                             ▼
 ┌────────────────────────────────────────────────────────────────────────────────────────┐
 │              LAYER 7: INTEGRATED EXTERNAL STATUTORY & REGULATORY ECOSYSTEM             │
-│  • Department of Motor Traffic (DMT)            • NTMI Driver Medical Institute        │
-│  • LankaQR / Central Bank of Sri Lanka (CBSL)   • Supabase Cloud Infrastructure        │
+│ 🛠️ TOOLS & TECH: Motor Traffic Act No. 14 of 1951 • NTMI Directives • LankaQR / CBSL • BaaS│
+│ • Department of Motor Traffic (DMT)            • NTMI Driver Medical Fitness Directives│
+│ • LankaQR / Central Bank of Sri Lanka (CBSL)   • Supabase Cloud BaaS Platform          │
 └────────────────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -81,38 +88,39 @@
 
 > 🖼️ **Full HD 1920x1080 Direct Vector File:** [`docs/assets/high_level_system_architecture_slide5.svg`](./assets/high_level_system_architecture_slide5.svg)
 
-[![TrialReady LK - Left-to-Right Data Pipeline](https://raw.githubusercontent.com/ravishkarathnayaka/TrialReady-LK/main/docs/assets/high_level_system_architecture_slide5.svg)](https://raw.githubusercontent.com/ravishkarathnayaka/TrialReady-LK/main/docs/assets/high_level_system_architecture_slide5.svg)
-
 ```
-╔══════════════════════╗      ╔══════════════════════╗      ╔══════════════════════╗
-║   1. DATA SOURCES    ║      ║   2. PREPROCESSING   ║      ║  3. AI MODEL ENGINE  ║
-╠══════════════════════╣      ╠══════════════════════╣      ╠══════════════════════╣
-║ • Student KYC & NIC  ║ ───> ║ • Zod Type Validator ║ ───> ║ • 6-Factor AI Score  ║
-║ • NTMI Medical Recs  ║      ║ • Permit Countdown   ║      ║   S = Σ(W_i · s_i)   ║
-║ • DMT 6M Permits     ║      ║ • 7-Maneuver Vector  ║      ║ • Regulatory Veto    ║
-║ • Practical Lessons  ║      ║ • Trilingual Mapper  ║      ║ • Adaptive Theory    ║
-║ • Mock Theory Exams  ║      ║ • CSV Anti-Injection ║      ║ • Fleet Collision    ║
-║ • Tuition Payments   ║      ║   (RFC-4180 Shield)  ║      ║   Prevention Guard   ║
-╚══════════════════════╝      ╚══════════════════════╝      ╚══════════════════════╝
-                                                                       │
-                                                                       ▼
-╔══════════════════════╗      ╔══════════════════════╗      ╔══════════════════════╗
-║   6. DATA STORES     ║      ║ 5. FRONTEND / UI SPA ║      ║ 4. BACKEND & SECURITY║
-╠══════════════════════╣      ╠══════════════════════╣      ╠══════════════════════╣
-║ • PostgreSQL 15 DB   ║ <──> ║ • React 19 + Tailwind║ <──> ║ • GoTrue JWT Auth    ║
-║   (18 Tenant Tables) ║ (SQL)║ • RBAC Gatekeepers   ║(REST)║   (Bcrypt Salt ≥ 10) ║
-║ • Client LocalCache  ║      ║ • 18 Feature Modules ║      ║ • PostgREST API      ║
-║   (trialready_* Key) ║ <──> ║ • Vector Print Engine║      ║   (100% Anti-SQLi)   ║
-║   100% Offline Ready ║(Sync)║   (Zero-PDF CVEs)    ║      ║ • Kernel-Level RLS   ║
-╚══════════════════════╝      ╚══════════════════════╝      ╚══════════════════════╝
-                                        ▲
-                                        │
-┌───────────────────────────────────────┴──────────────────────────────────────┐
-│             7. INTEGRATED EXTERNAL SERVICES & REGULATORY APIS                │
-│  • Dept. of Motor Traffic (DMT)           • NTMI Driver Medical Directives   │
-│  • Supabase Cloud BaaS Infrastructure     • Vercel Edge Serverless CDN       │
-│  • LankaQR / Central Bank of Sri Lanka (CBSL National Payment Rails)         │
-└──────────────────────────────────────────────────────────────────────────────┘
+╔══════════════════════════╗      ╔══════════════════════════╗      ╔══════════════════════════╗
+║     1. DATA SOURCES      ║      ║     2. PREPROCESSING     ║      ║   3. AI MODEL & LOGIC    ║
+╠══════════════════════════╣      ╠══════════════════════════╣      ╠══════════════════════════╣
+║ 🛠️ HTTP Forms / Payloads ║ ───> ║ 🛠️ Zod / Regex / BOM     ║ ───> ║ 🛠️ Weighted AI Scoring   ║
+║ • Student KYC & NIC      ║      ║ • Zod Strict Validator   ║      ║ • 6-Factor Readiness S   ║
+║ • NTMI Medical Records   ║      ║ • Permit Countdown (Δt)  ║      ║ • Regulatory Veto Lock   ║
+║ • DMT 6-Month Permits    ║      ║ • 7-Maneuver Vectorizer  ║      ║ • Adaptive Diagnostics   ║
+║ • Practical Session Logs ║      ║ • Trilingual Tokenizer   ║      ║ • Fleet Collision Guard  ║
+║ • Mock Theory Exams      ║      ║ • RFC-4180 CSV Shield    ║      ║ • @media print Generator ║
+║ • Tuition Fee Receipts   ║      ║   (Anti-Formula Inj)     ║      ║   (Zero-PDF Exploitation)║
+╚══════════════════════════╝      ╚══════════════════════════╝      ╚══════════════════════════╝
+                                                                                 │
+                                                                                 ▼
+╔══════════════════════════╗      ╔══════════════════════════╗      ╔══════════════════════════╗
+║     6. DATA STORES       ║      ║   5. FRONTEND / UI SPA   ║      ║  4. BACKEND & SECURITY   ║
+╠══════════════════════════╣      ╠══════════════════════════╣      ╠══════════════════════════╣
+║ 🛠️ PostgreSQL 15 & Cache ║ <──> ║ 🛠️ React 19 & Tailwind   ║ <──> ║ 🛠️ PostgREST / GoTrue RLS ║
+║ • Supabase PostgreSQL 15 ║ (SQL)║ • React 19 + Tailwind v4 ║(REST)║ • GoTrue JWT Auth Engine║
+║   (18 Relational Tables) ║      ║ • RBAC Protected Routes  ║      ║   (Bcrypt Salt ≥ 10)     ║
+║ • Persistent LocalStorage║ <──> ║ • 18 Modular Portals     ║      ║ • PostgREST Prepared API ║
+║   (trialready_* Cache)   ║(Sync)║ • 1-Click Persona Bar    ║      ║   (100% Anti-SQLi)       ║
+║   100% Offline Continuous║      ║ • Zero-PDF Print Layouts ║      ║ • Kernel Row-Level Sec   ║
+╚══════════════════════════╝      ╚══════════════════════════╝      ╚══════════════════════════╝
+                                                ▲
+                                                │
+┌───────────────────────────────────────────────┴──────────────────────────────────────────────┐
+│                    7. INTEGRATED EXTERNAL SERVICES & REGULATORY APIS                         │
+│ 🛠️ Motor Traffic Act No. 14 of 1951 • NTMI Directives • LankaQR / CBSL • Supabase • Vercel CDN │
+│ • Dept. of Motor Traffic (DMT Standards)          • NTMI Driver Medical Directives           │
+│ • Supabase Cloud BaaS Infrastructure              • Vercel Edge Serverless Network (TLS 1.3) │
+│ • LankaQR / Central Bank of Sri Lanka (CBSL)      • Werahera Practical Trial Ground Spec     │
+└──────────────────────────────────────────────────────────────────────────────────────────────┘
 ```
 
 ---
