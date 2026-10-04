@@ -13,6 +13,7 @@ import {
   getStudents,
   setStudentActiveStatus,
 } from '../services/studentService'
+import { useAuth } from '../../auth/context/AuthContext'
 import type {
   CreateStudentInput,
   Student,
@@ -25,6 +26,9 @@ interface StudentManagementPageProps {
 function StudentManagementPage({
   drivingSchoolId,
 }: StudentManagementPageProps) {
+  const { role } = useAuth()
+  const isInstructor = role === 'instructor'
+
   const [activeTab, setActiveTab] = useState<'all' | 'leaderboard'>('all')
   const [students, setStudents] = useState<Student[]>([])
   const [readinessProfiles, setReadinessProfiles] = useState<StudentReadinessProfile[]>([])
@@ -191,17 +195,26 @@ function StudentManagementPage({
         {/* Page Top Header */}
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h1 className="text-2xl font-bold text-slate-900">
-              Student Management
-            </h1>
+            <div className="flex items-center gap-2.5">
+              <h1 className="text-2xl font-bold text-slate-900">
+                Student Management
+              </h1>
+              {isInstructor && (
+                <span className="rounded-full bg-blue-100 px-2.5 py-0.5 text-xs font-bold text-blue-800">
+                  Instructor Directory View
+                </span>
+              )}
+            </div>
 
             <p className="mt-1 text-sm text-slate-500">
-              Register, view, search, rank best performing candidates, and manage learner profiles.
+              {isInstructor
+                ? 'Search and view registered candidates, monitor learner journeys, and inspect trial readiness rankings.'
+                : 'Register, view, search, rank best performing candidates, and manage learner profiles.'}
             </p>
           </div>
 
           <div className="flex items-center gap-3">
-            {activeTab === 'all' && !isFormOpen && (
+            {activeTab === 'all' && !isFormOpen && !isInstructor && (
               <button
                 type="button"
                 onClick={() => {
@@ -299,7 +312,7 @@ function StudentManagementPage({
         {/* Tab 1: All Registered Students View */}
         {activeTab === 'all' && (
           <>
-            {isFormOpen && (
+            {!isInstructor && isFormOpen && (
               <StudentForm
                 drivingSchoolId={drivingSchoolId}
                 branchOptions={branchOptions}
@@ -318,7 +331,9 @@ function StudentManagementPage({
                 <div className="flex flex-col gap-3 rounded-2xl border border-slate-200 bg-white p-4 sm:flex-row sm:items-center sm:justify-between shadow-xs">
                   <div>
                     <p className="text-xs text-slate-500 uppercase tracking-wider font-semibold">
-                      Managing Licence Categories &amp; Enrolment
+                      {isInstructor
+                        ? 'Enrolled Licence Categories (Read-Only)'
+                        : 'Managing Licence Categories & Enrolment'}
                     </p>
 
                     <h2 className="text-lg font-bold text-slate-900">
@@ -344,6 +359,7 @@ function StudentManagementPage({
                 <StudentLicenceEnrolment
                   studentId={enrolmentStudent.id}
                   drivingSchoolId={drivingSchoolId}
+                  isReadOnly={isInstructor}
                 />
               </section>
             )}
@@ -351,13 +367,14 @@ function StudentManagementPage({
             <StudentTable
               students={students}
               isLoading={isLoading}
+              isInstructor={isInstructor}
               onManageEnrolment={(student) => {
                 setIsFormOpen(false)
                 setErrorMessage(null)
                 setSuccessMessage(null)
                 setEnrolmentStudent(student)
               }}
-              onToggleStatus={handleToggleStatus}
+              onToggleStatus={isInstructor ? undefined : handleToggleStatus}
             />
           </>
         )}

@@ -6,6 +6,7 @@ import type { Student } from '../types/student'
 interface StudentTableProps {
   students: Student[]
   isLoading?: boolean
+  isInstructor?: boolean
   onEdit?: (student: Student) => void
   onManageEnrolment?: (student: Student) => void
   onToggleStatus?: (student: Student) => void
@@ -16,6 +17,7 @@ type StatusFilter = 'all' | 'active' | 'inactive'
 function StudentTable({
   students,
   isLoading = false,
+  isInstructor = false,
   onEdit,
   onManageEnrolment,
   onToggleStatus,
@@ -210,7 +212,7 @@ function StudentTable({
                         <span>Learner Journey</span>
                       </Link>
 
-                      {onEdit && (
+                      {!isInstructor && onEdit && (
                         <button
                           type="button"
                           onClick={() => onEdit(student)}
@@ -224,13 +226,13 @@ function StudentTable({
                         <button
                           type="button"
                           onClick={() => onManageEnrolment(student)}
-                          className="rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-100 cursor-pointer"
+                          className="rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-bold text-slate-700 hover:bg-slate-100 cursor-pointer"
                         >
-                          Licence Categories
+                          {isInstructor ? 'Licence Classes' : 'Licence Categories'}
                         </button>
                       )}
 
-                      {onToggleStatus && (
+                      {!isInstructor && onToggleStatus && (
                         <button
                           type="button"
                           onClick={() =>
