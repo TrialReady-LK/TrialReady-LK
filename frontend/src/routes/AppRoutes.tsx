@@ -77,7 +77,7 @@ export const AppRoutes: React.FC = () => {
         <Route
           path="/journey"
           element={
-            <ProtectedRoute allowedRoles={['administrator', 'instructor']}>
+            <ProtectedRoute allowedRoles={['administrator', 'instructor', 'student']}>
               <StudentJourneyOverviewPage drivingSchoolId={drivingSchoolId} />
             </ProtectedRoute>
           }
@@ -85,7 +85,15 @@ export const AppRoutes: React.FC = () => {
         <Route
           path="/students/:studentId/journey"
           element={
-            <ProtectedRoute allowedRoles={['administrator', 'instructor']}>
+            <ProtectedRoute allowedRoles={['administrator', 'instructor', 'student']}>
+              <StudentJourneyDetailPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/student/journey"
+          element={
+            <ProtectedRoute allowedRoles={['administrator', 'instructor', 'student']}>
               <StudentJourneyDetailPage />
             </ProtectedRoute>
           }
@@ -95,7 +103,7 @@ export const AppRoutes: React.FC = () => {
         <Route
           path="/readiness"
           element={
-            <ProtectedRoute allowedRoles={['administrator', 'instructor']}>
+            <ProtectedRoute allowedRoles={['administrator', 'instructor', 'student']}>
               <SchoolReadinessDashboardPage
                 drivingSchoolId={drivingSchoolId}
               />
@@ -105,7 +113,15 @@ export const AppRoutes: React.FC = () => {
         <Route
           path="/students/:studentId/readiness"
           element={
-            <ProtectedRoute allowedRoles={['administrator', 'instructor']}>
+            <ProtectedRoute allowedRoles={['administrator', 'instructor', 'student']}>
+              <StudentReadinessPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/student/readiness"
+          element={
+            <ProtectedRoute allowedRoles={['administrator', 'instructor', 'student']}>
               <StudentReadinessPage />
             </ProtectedRoute>
           }

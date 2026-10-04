@@ -13,10 +13,17 @@ import { useStudentJourney } from '../hooks/useStudentJourney'
 import { computeJourneyStages } from '../utils/journeyUtils'
 
 export const StudentJourneyDetailPage: React.FC = () => {
-  const { studentId } = useParams<{ studentId: string }>()
-  const { drivingSchoolId, role } = useAuth()
+  const { studentId: paramStudentId } = useParams<{ studentId: string }>()
+  const { profile, drivingSchoolId, role } = useAuth()
   const isAdmin = role === 'administrator'
   const isInstructor = role === 'instructor'
+  const isStudent = role === 'student'
+
+  const effectiveStudentId =
+    paramStudentId ||
+    (isStudent
+      ? profile?.id || '11111111-1111-1111-1111-111111111111'
+      : '11111111-1111-1111-1111-111111111111')
 
   const {
     journey,
@@ -30,9 +37,9 @@ export const StudentJourneyDetailPage: React.FC = () => {
     handleSaveExamTrial,
     handleMarkStageDone,
     handleSaveCompletedLessons,
-  } = useStudentJourney(studentId || '')
+  } = useStudentJourney(effectiveStudentId)
 
-  const { logbookData, getTrialSlipData } = useStudentLogbook(drivingSchoolId, studentId || '')
+  const { logbookData, getTrialSlipData } = useStudentLogbook(drivingSchoolId, effectiveStudentId)
   const [showLogbook, setShowLogbook] = useState(false)
   const [showTrialSlip, setShowTrialSlip] = useState(false)
   const [isActionLoading, setIsActionLoading] = useState(false)
@@ -55,10 +62,10 @@ export const StudentJourneyDetailPage: React.FC = () => {
       <div className="rounded-2xl border border-slate-200 bg-white p-8 text-center space-y-3">
         <p className="text-sm font-bold text-slate-800">Student not found</p>
         <Link
-          to="/journey"
+          to={isStudent ? '/student/portal' : '/journey'}
           className="inline-block rounded-xl bg-blue-600 px-4 py-2 text-xs font-semibold text-white hover:bg-blue-700"
         >
-          ← Back to Journey Dashboard
+          {isStudent ? '← Back to My Portal' : '← Back to Journey Dashboard'}
         </Link>
       </div>
     )
@@ -99,10 +106,10 @@ export const StudentJourneyDetailPage: React.FC = () => {
       {/* Back Navigation & Header */}
       <div>
         <Link
-          to="/journey"
+          to={isStudent ? '/student/portal' : '/journey'}
           className="inline-flex items-center gap-1.5 text-xs font-semibold text-blue-600 hover:underline mb-2 cursor-pointer"
         >
-          ← Back to Learner Journey Dashboard
+          {isStudent ? '← Back to My Student Portal' : '← Back to Learner Journey Dashboard'}
         </Link>
 
         <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
@@ -115,9 +122,13 @@ export const StudentJourneyDetailPage: React.FC = () => {
                 <span className="rounded-full bg-blue-100 px-2.5 py-0.5 text-[10px] font-extrabold text-blue-800 border border-blue-200">
                   Full Admin Permissions
                 </span>
-              ) : (
+              ) : isInstructor ? (
                 <span className="rounded-full bg-indigo-100 px-2.5 py-0.5 text-[10px] font-extrabold text-indigo-800 border border-indigo-200">
                   Instructor Permissions
+                </span>
+              ) : (
+                <span className="rounded-full bg-purple-100 px-2.5 py-0.5 text-[10px] font-extrabold text-purple-800 border border-purple-200">
+                  Student Learner View
                 </span>
               )}
             </div>

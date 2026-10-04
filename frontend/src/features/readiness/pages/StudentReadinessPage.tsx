@@ -11,8 +11,15 @@ import { ReadinessScoreGauge } from '../components/ReadinessScoreGauge'
 import { useStudentReadiness } from '../hooks/useStudentReadiness'
 
 export const StudentReadinessPage: React.FC = () => {
-  const { studentId } = useParams<{ studentId: string }>()
-  const { drivingSchoolId } = useAuth()
+  const { studentId: paramStudentId } = useParams<{ studentId: string }>()
+  const { profile: authProfile, role, drivingSchoolId } = useAuth()
+  const isStudent = role === 'student'
+  const effectiveStudentId =
+    paramStudentId ||
+    (isStudent
+      ? authProfile?.id || '11111111-1111-1111-1111-111111111111'
+      : '11111111-1111-1111-1111-111111111111')
+
   const {
     profile,
     isLoading,
@@ -21,9 +28,9 @@ export const StudentReadinessPage: React.FC = () => {
     setErrorMessage,
     setSuccessMessage,
     handleSaveEvaluation,
-  } = useStudentReadiness(studentId || '')
+  } = useStudentReadiness(effectiveStudentId)
 
-  const { logbookData } = useStudentLogbook(drivingSchoolId, studentId || '')
+  const { logbookData } = useStudentLogbook(drivingSchoolId, effectiveStudentId)
   const [showLogbook, setShowLogbook] = useState(false)
   const [isSaving, setIsSaving] = useState(false)
 
@@ -54,10 +61,10 @@ export const StudentReadinessPage: React.FC = () => {
       <div className="rounded-2xl border border-slate-200 bg-white p-8 text-center space-y-3">
         <p className="text-sm font-bold text-slate-800">Student not found</p>
         <Link
-          to="/readiness"
+          to={isStudent ? '/student/portal' : '/readiness'}
           className="inline-block rounded-xl bg-blue-600 px-4 py-2 text-xs font-semibold text-white hover:bg-blue-700"
         >
-          ← Back to Candidates Dashboard
+          {isStudent ? '← Back to My Portal' : '← Back to Candidates Dashboard'}
         </Link>
       </div>
     )
@@ -68,10 +75,10 @@ export const StudentReadinessPage: React.FC = () => {
       {/* Back Link & Header */}
       <div>
         <Link
-          to="/readiness"
+          to={isStudent ? '/student/portal' : '/readiness'}
           className="inline-flex items-center gap-1.5 text-xs font-semibold text-blue-600 hover:underline mb-2 cursor-pointer"
         >
-          ← Back to Trial Candidates Dashboard
+          {isStudent ? '← Back to My Student Portal' : '← Back to Trial Candidates Dashboard'}
         </Link>
 
         <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
