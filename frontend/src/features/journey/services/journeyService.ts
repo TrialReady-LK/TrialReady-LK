@@ -390,6 +390,118 @@ export async function updateStudentExamTrial(
   return updated
 }
 
+export async function saveStudentCompletedLessons(
+  studentId: string,
+  count: number,
+  drivingSchoolId: string = 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
+): Promise<void> {
+  const localSessions = getStoredData<any[]>(STORAGE_KEYS.SESSIONS, [])
+  const otherSessions = localSessions.filter((s) => s.student_id !== studentId)
+  const newCompletedSessions = Array.from({ length: count }).map((_, idx) => {
+    const d = new Date()
+    d.setDate(d.getDate() - (count - idx))
+    return {
+      id: `ses-auto-${studentId.slice(0, 8)}-${idx + 1}`,
+      driving_school_id: drivingSchoolId,
+      student_id: studentId,
+      instructor_id: 'inst-001',
+      vehicle_id: 'veh-001',
+      session_date: d.toISOString().split('T')[0],
+      start_time: '09:00:00',
+      end_time: '10:30:00',
+      status: 'completed',
+      attendance_status: 'present',
+      skills_covered: [
+        'Vehicle Controls',
+        'Clutch & Gear Maneuvers',
+        'Parallel Parking',
+        '3-Point Turn',
+        'Traffic Driving',
+      ],
+      student_rating: 5,
+      instructor_feedback: `Practical driving lesson #${idx + 1} completed & evaluated.`,
+      created_at: d.toISOString(),
+      updated_at: new Date().toISOString(),
+    }
+  })
+  setStoredData(STORAGE_KEYS.SESSIONS, [...newCompletedSessions, ...otherSessions])
+}
+
+export async function markStudentStageDone(
+  stageKey: 'medical' | 'permit' | 'theory' | 'lessons' | 'trial' | 'licence',
+  studentId: string,
+  drivingSchoolId: string = 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
+): Promise<void> {
+  const todayStr = new Date().toISOString().split('T')[0]
+  const sixMonthsLater = new Date()
+  sixMonthsLater.setMonth(sixMonthsLater.getMonth() + 6)
+  const sixMonthsStr = sixMonthsLater.toISOString().split('T')[0]
+
+  if (stageKey === 'medical') {
+    await saveStudentMedical({
+      driving_school_id: drivingSchoolId,
+      student_id: studentId,
+      status: 'passed',
+      certificate_number: `NTMI-WP-${new Date().getFullYear()}-${Math.floor(10000 + Math.random() * 90000)}`,
+      ntmi_branch: 'NTMI Colombo / Werahera Center',
+      issued_date: todayStr,
+      expiry_date: sixMonthsStr,
+      blood_group: 'O+',
+      restrictions: 'None',
+      notes: 'Medical fitness cleared and certified for driving training.',
+    })
+  } else if (stageKey === 'permit') {
+    const randomSerial = Math.floor(10000 + Math.random() * 90000)
+    await saveStudentPermit({
+      driving_school_id: drivingSchoolId,
+      student_id: studentId,
+      permit_number: `DMT-WP-${new Date().getFullYear()}-${randomSerial}`,
+      issue_date: todayStr,
+      expiry_date: sixMonthsStr,
+      dmt_reference: `WER-${new Date().getFullYear()}-PER-${randomSerial.toString().slice(0, 4)}`,
+      notes: 'Valid DMT Learner Driving Permit.',
+    })
+  } else if (stageKey === 'theory') {
+    await saveStudentExamTrial({
+      driving_school_id: drivingSchoolId,
+      student_id: studentId,
+      exam_type: 'theory',
+      attempt_number: 1,
+      scheduled_date: todayStr,
+      status: 'passed',
+      score: 88,
+      location: 'DMT Werahera Computerized Hall',
+      examiner_notes: 'Passed computerized theory exam on first attempt.',
+    })
+  } else if (stageKey === 'lessons') {
+    await saveStudentCompletedLessons(studentId, 10, drivingSchoolId)
+  } else if (stageKey === 'trial') {
+    await saveStudentExamTrial({
+      driving_school_id: drivingSchoolId,
+      student_id: studentId,
+      exam_type: 'practical_trial',
+      attempt_number: 1,
+      scheduled_date: todayStr,
+      status: 'passed',
+      score: 95,
+      location: 'Werahera DMT Trial Ground',
+      examiner_notes: 'Practical driving test passed with DMT Chief Examiner endorsement.',
+    })
+  } else if (stageKey === 'licence') {
+    await saveStudentExamTrial({
+      driving_school_id: drivingSchoolId,
+      student_id: studentId,
+      exam_type: 'practical_trial',
+      attempt_number: 1,
+      scheduled_date: todayStr,
+      status: 'passed',
+      score: 95,
+      location: 'Werahera DMT Trial Ground',
+      examiner_notes: 'Practical trial passed; Smart Card Driving Licence issued.',
+    })
+  }
+}
+
 // ==========================================
 // Comprehensive Student Journey Overview
 // ==========================================

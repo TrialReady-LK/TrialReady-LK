@@ -15,13 +15,30 @@ interface StudentJourneyPipelineProps {
   stages: JourneyStageInfo[]
   overallPercentage: number
   currentStageName: string
+  isAdmin?: boolean
+  isInstructor?: boolean
+  onQuickMarkDone?: (stageKey: JourneyStageInfo['key']) => Promise<void>
 }
 
 export const StudentJourneyPipeline: React.FC<StudentJourneyPipelineProps> = ({
   stages,
   overallPercentage,
   currentStageName,
+  isAdmin = true,
+  isInstructor = false,
+  onQuickMarkDone,
 }) => {
+  const [loadingStage, setLoadingStage] = React.useState<string | null>(null)
+
+  const handleMarkDoneClick = async (key: JourneyStageInfo['key']) => {
+    if (!onQuickMarkDone) return
+    try {
+      setLoadingStage(key)
+      await onQuickMarkDone(key)
+    } finally {
+      setLoadingStage(null)
+    }
+  }
   const renderStageIcon = (key: JourneyStageInfo['key']) => {
     switch (key) {
       case 'registration':
@@ -134,13 +151,57 @@ export const StudentJourneyPipeline: React.FC<StudentJourneyPipelineProps> = ({
                 </p>
               </div>
 
-              {/* Status Badge */}
-              <div className="mt-3 pt-2 border-t border-slate-200/60">
+              {/* Status Badge & Quick Mark Done Action */}
+              <div className="mt-3 pt-2 border-t border-slate-200/60 space-y-1.5">
                 <span
                   className={`inline-block w-full text-center rounded-md border px-1.5 py-0.5 text-[10px] font-semibold ${style.badge}`}
                 >
                   {stage.badgeText}
                 </span>
+
+                {stage.status !== 'completed' && stage.key !== 'registration' && (
+                  <div>
+                    {(() => {
+                      const canAct =
+                        stage.key === 'lessons' || stage.key === 'trial'
+                          ? isAdmin || isInstructor
+                          : isAdmin
+
+                      if (canAct && onQuickMarkDone) {
+                        const isCurrentlyLoading = loadingStage === stage.key
+                        return (
+                          <button
+                            type="button"
+                            disabled={isCurrentlyLoading}
+                            onClick={() => handleMarkDoneClick(stage.key)}
+                            className="w-full mt-1 flex items-center justify-center gap-1 rounded-lg bg-blue-600 px-2 py-1 text-[10px] font-bold text-white shadow-xs hover:bg-blue-700 active:scale-95 transition-all cursor-pointer disabled:opacity-50"
+                          >
+                            <Check className="h-3 w-3" />
+                            <span>
+                              {isCurrentlyLoading
+                                ? 'Saving...'
+                                : stage.key === 'lessons'
+                                  ? 'Mark 10/10 Done'
+                                  : stage.key === 'trial'
+                                    ? 'Pass Trial'
+                                    : 'Mark Done'}
+                            </span>
+                          </button>
+                        )
+                      }
+
+                      if (!canAct) {
+                        return (
+                          <span className="block text-center text-[9px] font-medium text-slate-400 mt-1">
+                            🔒 Admin Only
+                          </span>
+                        )
+                      }
+
+                      return null
+                    })()}
+                  </div>
+                )}
               </div>
             </div>
           )

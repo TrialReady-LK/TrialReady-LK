@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useState } from 'react'
 import {
   getStudentJourneyOverview,
+  markStudentStageDone,
+  saveStudentCompletedLessons,
   saveStudentExamTrial,
   saveStudentMedical,
   saveStudentPermit,
@@ -114,6 +116,53 @@ export function useStudentJourney(studentId: string) {
     [reloadJourney],
   )
 
+  const handleMarkStageDone = useCallback(
+    async (
+      stageKey: 'medical' | 'permit' | 'theory' | 'lessons' | 'trial' | 'licence',
+      drivingSchoolId?: string,
+    ) => {
+      if (!studentId) return
+      try {
+        setErrorMessage(null)
+        await markStudentStageDone(stageKey, studentId, drivingSchoolId)
+        await reloadJourney()
+        const stageTitles: Record<string, string> = {
+          medical: 'NTMI Medical Clearance',
+          permit: "DMT Learner's Permit",
+          theory: 'DMT Theory Exam',
+          lessons: 'Practical Driving Lessons (10/10)',
+          trial: 'DMT Practical Trial',
+          licence: 'Driving Licence Issuance',
+        }
+        setSuccessMessage(`Stage "${stageTitles[stageKey] || stageKey}" marked as completed!`)
+      } catch (err) {
+        const msg =
+          err instanceof Error ? err.message : 'Failed to update milestone.'
+        setErrorMessage(msg)
+        throw err
+      }
+    },
+    [studentId, reloadJourney],
+  )
+
+  const handleSaveCompletedLessons = useCallback(
+    async (count: number, drivingSchoolId?: string) => {
+      if (!studentId) return
+      try {
+        setErrorMessage(null)
+        await saveStudentCompletedLessons(studentId, count, drivingSchoolId)
+        await reloadJourney()
+        setSuccessMessage(`Logged ${count} practical driving lessons successfully.`)
+      } catch (err) {
+        const msg =
+          err instanceof Error ? err.message : 'Failed to update lessons count.'
+        setErrorMessage(msg)
+        throw err
+      }
+    },
+    [studentId, reloadJourney],
+  )
+
   return {
     journey,
     isLoading,
@@ -125,5 +174,7 @@ export function useStudentJourney(studentId: string) {
     handleSavePermit,
     handleSaveMedical,
     handleSaveExamTrial,
+    handleMarkStageDone,
+    handleSaveCompletedLessons,
   }
 }

@@ -28,11 +28,14 @@ export const StudentJourneyDetailPage: React.FC = () => {
     handleSavePermit,
     handleSaveMedical,
     handleSaveExamTrial,
+    handleMarkStageDone,
+    handleSaveCompletedLessons,
   } = useStudentJourney(studentId || '')
 
   const { logbookData, getTrialSlipData } = useStudentLogbook(drivingSchoolId, studentId || '')
   const [showLogbook, setShowLogbook] = useState(false)
   const [showTrialSlip, setShowTrialSlip] = useState(false)
+  const [isActionLoading, setIsActionLoading] = useState(false)
 
   if (isLoading) {
     return (
@@ -70,6 +73,26 @@ export const StudentJourneyDetailPage: React.FC = () => {
   })
 
   const hasPassedTrial = journey.practicalTrials.some((t) => t.status === 'passed')
+
+  const handleQuickMarkComplete = async (stageKey: any) => {
+    try {
+      setIsActionLoading(true)
+      await handleMarkStageDone(stageKey, drivingSchoolId)
+    } finally {
+      setIsActionLoading(false)
+    }
+  }
+
+  const handleStepLessons = async (delta: number) => {
+    const current = journey.completedLessonsCount || 0
+    const nextCount = Math.max(0, Math.min(20, current + delta))
+    try {
+      setIsActionLoading(true)
+      await handleSaveCompletedLessons(nextCount, drivingSchoolId)
+    } finally {
+      setIsActionLoading(false)
+    }
+  }
 
   return (
     <div className="space-y-6">
@@ -179,11 +202,14 @@ export const StudentJourneyDetailPage: React.FC = () => {
         </div>
       )}
 
-      {/* 1. Visual 7-Stage Pipeline */}
+      {/* 1. Visual 7-Stage Pipeline with Quick Mark-Done Buttons */}
       <StudentJourneyPipeline
         stages={stageData.stages}
         overallPercentage={stageData.completionPercentage}
         currentStageName={stageData.currentStageName}
+        isAdmin={isAdmin}
+        isInstructor={isInstructor}
+        onQuickMarkDone={handleQuickMarkComplete}
       />
 
       {/* 2. Permits & Medical Records Grid */}
@@ -259,13 +285,45 @@ export const StudentJourneyDetailPage: React.FC = () => {
             </div>
           </div>
 
-          <div className="flex justify-end items-center gap-2">
-            <Link
-              to="/sessions"
-              className="rounded-xl border border-slate-300 bg-white px-4 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50 transition-all cursor-pointer"
-            >
-              Open Practical Sessions →
-            </Link>
+          {/* Quick Controls for Stage 5 */}
+          <div className="flex flex-wrap items-center justify-between gap-2 pt-1 border-t border-slate-100">
+            <div className="flex items-center gap-1.5">
+              <button
+                type="button"
+                disabled={isActionLoading || journey.completedLessonsCount <= 0}
+                onClick={() => handleStepLessons(-1)}
+                className="rounded-lg border border-slate-200 bg-white px-2.5 py-1 text-xs font-bold text-slate-600 hover:bg-slate-100 disabled:opacity-40 cursor-pointer"
+              >
+                - 1 Lesson
+              </button>
+              <button
+                type="button"
+                disabled={isActionLoading}
+                onClick={() => handleStepLessons(1)}
+                className="rounded-lg border border-slate-200 bg-white px-2.5 py-1 text-xs font-bold text-slate-700 hover:bg-slate-100 disabled:opacity-40 cursor-pointer"
+              >
+                + 1 Lesson
+              </button>
+            </div>
+
+            <div className="flex items-center gap-2">
+              {journey.completedLessonsCount < 10 && (
+                <button
+                  type="button"
+                  disabled={isActionLoading}
+                  onClick={() => handleQuickMarkComplete('lessons')}
+                  className="rounded-xl bg-emerald-600 px-3 py-1.5 text-xs font-bold text-white shadow-xs hover:bg-emerald-700 disabled:opacity-50 transition-all cursor-pointer flex items-center gap-1"
+                >
+                  <span>✔ Mark 10/10 Done</span>
+                </button>
+              )}
+              <Link
+                to="/sessions"
+                className="rounded-xl border border-slate-300 bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 hover:bg-slate-50 transition-all cursor-pointer"
+              >
+                Sessions View →
+              </Link>
+            </div>
           </div>
         </div>
 
@@ -299,11 +357,20 @@ export const StudentJourneyDetailPage: React.FC = () => {
             </p>
           </div>
 
-          <div className="flex justify-end items-center gap-2">
+          <div className="flex justify-end items-center gap-2 pt-1 border-t border-slate-100">
             {hasPassedTrial ? (
               <span className="text-xs font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-3 py-1.5 rounded-xl">
                 ✔ 100% Journey Completed
               </span>
+            ) : isAdmin ? (
+              <button
+                type="button"
+                disabled={isActionLoading}
+                onClick={() => handleQuickMarkComplete('licence')}
+                className="rounded-xl bg-blue-600 px-3.5 py-1.5 text-xs font-bold text-white shadow-xs hover:bg-blue-700 disabled:opacity-50 transition-all cursor-pointer flex items-center gap-1"
+              >
+                <span>✔ Mark Licence Issued (Pass Trial & Issue)</span>
+              </button>
             ) : (
               <span className="text-[11px] text-slate-400 italic">
                 Awaiting Stage 6 Practical Trial Pass
