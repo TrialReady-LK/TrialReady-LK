@@ -1,5 +1,6 @@
 import React from 'react'
-import { FileText, Activity, BookOpen } from 'lucide-react'
+import { Link } from 'react-router-dom'
+import { FileText, Activity, BookOpen, Route as RouteIcon } from 'lucide-react'
 import type { StudentExamTrial, StudentMedicalRecord, StudentPermit } from '../../../journey/types/journey'
 import { calculatePermitValidity } from '../../../journey/utils/journeyUtils'
 
@@ -41,7 +42,15 @@ export const StudentJourneyHeroCard: React.FC<StudentJourneyHeroCardProps> = ({
           </p>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2.5">
+          <Link
+            to={`/students/${student.id}/journey`}
+            className="inline-flex items-center gap-2 rounded-2xl bg-blue-600 hover:bg-blue-500 px-4 py-2.5 text-xs font-bold text-white shadow-lg transition-all cursor-pointer border border-blue-400/30"
+          >
+            <RouteIcon className="h-4 w-4" />
+            <span>My Learner Journey →</span>
+          </Link>
+
           <div className="rounded-2xl bg-white/10 p-3 backdrop-blur-xs border border-white/10 text-center">
             <span className="text-[10px] uppercase font-bold text-slate-300 block">
               DMT Target

@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { Route as RouteIcon, Target } from 'lucide-react'
 import type { StudentReadinessProfile } from '../../../readiness/types/readiness'
 import { getReadinessTierInfo } from '../../../readiness/utils/readinessEngine'
 
@@ -85,19 +86,22 @@ export const InstructorStudentsRoster: React.FC<
                     </td>
 
                     <td className="px-4 py-3 text-right whitespace-nowrap">
-                      <div className="flex items-center justify-end gap-1.5">
+                      <div className="flex items-center justify-end gap-2">
                         <Link
                           to={`/students/${s.student.id}/journey`}
-                          className="rounded-lg border border-slate-200 bg-white px-2.5 py-1 text-xs font-semibold text-slate-700 hover:bg-slate-50 transition-all cursor-pointer"
+                          className="inline-flex items-center gap-1.5 rounded-lg border border-blue-600 bg-blue-50 px-2.5 py-1 text-xs font-bold text-blue-700 hover:bg-blue-600 hover:text-white transition-all cursor-pointer shadow-xs"
+                          title="View & update student DMT Learner Journey"
                         >
-                          Journey
+                          <RouteIcon className="h-3 w-3" />
+                          <span>Learner Journey</span>
                         </Link>
 
                         <Link
                           to={`/students/${s.student.id}/readiness`}
-                          className="rounded-lg bg-blue-50 px-2.5 py-1 text-xs font-bold text-blue-700 hover:bg-blue-100 transition-all cursor-pointer"
+                          className="inline-flex items-center gap-1 rounded-lg bg-slate-100 border border-slate-200 px-2.5 py-1 text-xs font-bold text-slate-700 hover:bg-slate-200 transition-all cursor-pointer"
                         >
-                          AI Readiness →
+                          <Target className="h-3 w-3 text-blue-600" />
+                          <span>AI Readiness</span>
                         </Link>
                       </div>
                     </td>

@@ -4,6 +4,8 @@ import { useAuth } from '../../../auth/context/AuthContext'
 import { DmtLogbookModal } from '../../../logbook/components/DmtLogbookModal'
 import { DmtTrialSlipModal } from '../../../logbook/components/DmtTrialSlipModal'
 import { useStudentLogbook } from '../../../logbook/hooks/useStudentLogbook'
+import { StudentJourneyPipeline } from '../../../journey/components/StudentJourneyPipeline'
+import { computeJourneyStages } from '../../../journey/utils/journeyUtils'
 import { StudentFinancialOverviewCard } from '../components/StudentFinancialOverviewCard'
 import { StudentJourneyHeroCard } from '../components/StudentJourneyHeroCard'
 import { StudentPersonalReadinessCard } from '../components/StudentPersonalReadinessCard'
@@ -67,6 +69,14 @@ export const StudentPortalPage: React.FC<StudentPortalPageProps> = ({
     )
   }
 
+  const stageData = computeJourneyStages({
+    permit: journey.permit,
+    medical: journey.medical,
+    theoryExams: journey.theoryExams,
+    practicalTrials: journey.practicalTrials,
+    completedLessonsCount: completedSessionsCount,
+  })
+
   return (
     <div className="space-y-6">
       {/* Alerts */}
@@ -84,7 +94,16 @@ export const StudentPortalPage: React.FC<StudentPortalPageProps> = ({
         theoryExams={journey.theoryExams}
       />
 
-      {/* 2. Upcoming Lessons & Financial Overview Grid */}
+      {/* 2. Visual 7-Stage Pipeline for Learner Progress */}
+      <StudentJourneyPipeline
+        stages={stageData.stages}
+        overallPercentage={stageData.completionPercentage}
+        currentStageName={stageData.currentStageName}
+        isAdmin={false}
+        isInstructor={false}
+      />
+
+      {/* 3. Upcoming Lessons & Financial Overview Grid */}
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         <StudentUpcomingLessons
           upcomingSessions={upcomingSessions}

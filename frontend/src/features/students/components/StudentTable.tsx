@@ -1,4 +1,6 @@
 import { useMemo, useState } from 'react'
+import { Link } from 'react-router-dom'
+import { Route as RouteIcon } from 'lucide-react'
 import type { Student } from '../types/student'
 
 interface StudentTableProps {
@@ -198,12 +200,21 @@ function StudentTable({
                   </td>
 
                   <td className="whitespace-nowrap px-5 py-4 text-right">
-                    <div className="flex justify-end gap-2">
+                    <div className="flex justify-end items-center gap-2">
+                      <Link
+                        to={`/students/${student.id}/journey`}
+                        className="inline-flex items-center gap-1.5 rounded-lg border border-blue-600 bg-blue-50 px-3 py-1.5 text-xs font-bold text-blue-700 hover:bg-blue-600 hover:text-white transition-all cursor-pointer shadow-xs"
+                        title="View & manage DMT Learner Journey"
+                      >
+                        <RouteIcon className="h-3.5 w-3.5" />
+                        <span>Learner Journey</span>
+                      </Link>
+
                       {onEdit && (
                         <button
                           type="button"
                           onClick={() => onEdit(student)}
-                          className="rounded-lg border border-slate-300 px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-50"
+                          className="rounded-lg border border-slate-300 px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-50 cursor-pointer"
                         >
                           Edit
                         </button>
@@ -213,7 +224,7 @@ function StudentTable({
                         <button
                           type="button"
                           onClick={() => onManageEnrolment(student)}
-                          className="rounded-lg border border-blue-200 bg-blue-50 px-3 py-1.5 text-sm font-medium text-blue-700 hover:bg-blue-100"
+                          className="rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-100 cursor-pointer"
                         >
                           Licence Categories
                         </button>
@@ -225,7 +236,7 @@ function StudentTable({
                           onClick={() =>
                             onToggleStatus(student)
                           }
-                          className={`rounded-lg px-3 py-1.5 text-sm font-medium ${student.is_active
+                          className={`rounded-lg px-3 py-1.5 text-sm font-medium cursor-pointer ${student.is_active
                             ? 'bg-red-50 text-red-700 hover:bg-red-100'
                             : 'bg-green-50 text-green-700 hover:bg-green-100'
                             }`}
