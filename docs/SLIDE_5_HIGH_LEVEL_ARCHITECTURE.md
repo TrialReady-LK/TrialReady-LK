@@ -8,22 +8,80 @@
 
 ---
 
-## 1. High-Level Architecture Diagram (Left-to-Right Flow)
-
-> 🖼️ **Full High-Resolution Diagram (1920x1080 Full HD):**  
-> Direct Vector File: [`docs/assets/high_level_system_architecture_slide5.svg`](./assets/high_level_system_architecture_slide5.svg)
+## 1. High-Level Architecture Diagrams (Dual Orientation: Top-to-Bottom & Left-to-Right)
 
 ---
 
-### 🎨 High-Resolution System Architecture Map (Slide 5)
+### 🎨 Representation A: Top-to-Bottom Tiered Architecture (Layer 1 → Layer 7)
 
-[![TrialReady LK - High-Level System Architecture](https://raw.githubusercontent.com/ravishkarathnayaka/TrialReady-LK/main/docs/assets/high_level_system_architecture_slide5.svg)](https://raw.githubusercontent.com/ravishkarathnayaka/TrialReady-LK/main/docs/assets/high_level_system_architecture_slide5.svg)
+> 🖼️ **Full HD 1920x1080 Direct Vector File:** [`docs/assets/high_level_system_architecture_top_to_bottom.svg`](./assets/high_level_system_architecture_top_to_bottom.svg)
 
-> 💡 *Click the diagram above or [open the direct SVG link](https://raw.githubusercontent.com/ravishkarathnayaka/TrialReady-LK/main/docs/assets/high_level_system_architecture_slide5.svg) to view or download the 1920x1080 Full HD image for your presentation slide.*
+[![TrialReady LK - Top-to-Bottom Tiered Architecture](https://raw.githubusercontent.com/ravishkarathnayaka/TrialReady-LK/main/docs/assets/high_level_system_architecture_top_to_bottom.svg)](https://raw.githubusercontent.com/ravishkarathnayaka/TrialReady-LK/main/docs/assets/high_level_system_architecture_top_to_bottom.svg)
+
+```
+┌────────────────────────────────────────────────────────────────────────────────────────┐
+│                        LAYER 1: PRESENTATION & CLIENT PLATFORMS                        │
+│  • Administrator Dashboard   • Instructor Practical Portal   • Student Learner Hub     │
+│  • React 19 Single Page App  • Tailwind CSS v4 Glassmorphic  • RBAC Route Gatekeepers  │
+└───────────────────────────────────────────┬────────────────────────────────────────────┘
+                                            │ (HTTPS / TLS 1.3 Anycast)
+                                            ▼
+┌────────────────────────────────────────────────────────────────────────────────────────┐
+│                        LAYER 2: EDGE CDN & TRANSPORT SECURITY                          │
+│  • Vercel Serverless Edge CDN (<50ms Latency)   • Strict TLS 1.3 & HTTP/2 Encryption   │
+│  • DDoS Perimeter Shield & Origin Shield        • Automated Git CI/CD Deployments      │
+└───────────────────────────────────────────┬────────────────────────────────────────────┘
+                                            │ (Encrypted API Gateway)
+                                            ▼
+┌────────────────────────────────────────────────────────────────────────────────────────┐
+│                LAYER 3: PREPROCESSING, INPUT VALIDATION & AUTHENTICATION               │
+│  • Zod Schema Strict Type Sanitizer             • Anti-XSS Virtual DOM Encoding        │
+│  • 30-Day Permit Expiry Countdown (Δt)          • 7-Maneuver Mandatory Skill Bitmask   │
+│  • Trilingual Context Token Resolver (EN/SI/TA) • RFC-4180 CSV Anti-Formula Injection  │
+│  • GoTrue Stateless JWT Authentication Engine   • Bcrypt Password Hash (Salt ≥ 10)     │
+└───────────────────────────────────────────┬────────────────────────────────────────────┘
+                                            │ (Feature Vectors & Auth Claims)
+                                            ▼
+┌────────────────────────────────────────────────────────────────────────────────────────┐
+│                 LAYER 4: AI INFERENCE & CORE BUSINESS LOGIC ENGINES                    │
+│  • 6-Factor AI Composite Readiness Algorithm: S = Σ(W_i · s_i) ∈ [0, 100]%             │
+│    [Medical 15% + Permit 15% + Theory 15% + Hours 25% + Maneuvers 20% + Rating 10%]    │
+│  • Regulatory Veto Classifier (Hard lock for expired permits / missing medicals)       │
+│  • Adaptive Theory Diagnostics (Highway Code Weakness Profiler & Remedial Drill Gen)   │
+│  • Instructor & Vehicle Fleet Scheduling Collision Prevention Guard                    │
+│  • Browser-Native Vector Print Engine (@media print A4 DMT Logbooks & Passes)          │
+└───────────────────────────────────────────┬────────────────────────────────────────────┘
+                                            │ (Prepared RESTful Payloads)
+                                            ▼
+┌────────────────────────────────────────────────────────────────────────────────────────┐
+│                LAYER 5: BACKEND SERVICES & KERNEL ROW-LEVEL SECURITY                   │
+│  • PostgREST High-Throughput REST API           • Parameterized Prepared SQL (Anti-SQLi│
+│  • Kernel-Level PostgreSQL Row-Level Security: `driving_school_id = auth.uid()`        │
+│  • Zero Cross-School Tenant Leakage             • Role-Scoped DB Policies (Admin/Ins/St│
+└───────────────────────────────────────────┬────────────────────────────────────────────┘
+                                            │ (Authenticated SQL Queries & Offline Sync)
+                                            ▼
+┌────────────────────────────────────────────────────────────────────────────────────────┐
+│                         LAYER 6: HYBRID DATA STORES & PERSISTENCE                      │
+│  • Primary Database: Managed PostgreSQL 15 Database (18 Multi-Tenant Relational Tables)│
+│  • Offline Engine: Persistent Client LocalStorage (`trialready_*`) for 100% Resilience│
+└───────────────────────────────────────────┬────────────────────────────────────────────┘
+                                            │ (Statutory Alignment & Cloud Hosting)
+                                            ▼
+┌────────────────────────────────────────────────────────────────────────────────────────┐
+│              LAYER 7: INTEGRATED EXTERNAL STATUTORY & REGULATORY ECOSYSTEM             │
+│  • Department of Motor Traffic (DMT)            • NTMI Driver Medical Institute        │
+│  • LankaQR / Central Bank of Sri Lanka (CBSL)   • Supabase Cloud Infrastructure        │
+└────────────────────────────────────────────────────────────────────────────────────────┘
+```
 
 ---
 
-### 🧭 High-Level Data Flow Topology (Left-to-Right Pipeline)
+### 🎨 Representation B: Left-to-Right Stage-by-Stage Data Flow Pipeline
+
+> 🖼️ **Full HD 1920x1080 Direct Vector File:** [`docs/assets/high_level_system_architecture_slide5.svg`](./assets/high_level_system_architecture_slide5.svg)
+
+[![TrialReady LK - Left-to-Right Data Pipeline](https://raw.githubusercontent.com/ravishkarathnayaka/TrialReady-LK/main/docs/assets/high_level_system_architecture_slide5.svg)](https://raw.githubusercontent.com/ravishkarathnayaka/TrialReady-LK/main/docs/assets/high_level_system_architecture_slide5.svg)
 
 ```
 ╔══════════════════════╗      ╔══════════════════════╗      ╔══════════════════════╗
