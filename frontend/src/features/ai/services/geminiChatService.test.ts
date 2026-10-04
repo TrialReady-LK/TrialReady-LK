@@ -43,7 +43,7 @@ describe('geminiChatService & copilotEngine', () => {
     )
 
     expect(result.status).toBe('network_error')
-    expect(result.text).toContain('Could not connect to the Gemini AI server')
+    expect(result.text).toContain('trouble connecting to Gemini')
   })
 
   it('handles network failure with friendly fallback in Sinhala', async () => {
@@ -55,7 +55,7 @@ describe('geminiChatService & copilotEngine', () => {
     )
 
     expect(result.status).toBe('network_error')
-    expect(result.text).toContain('Gemini AI සේවාදායකය හා සම්බන්ධ වීමට නොහැකි විය')
+    expect(result.text).toContain('Gemini සේවාව හා සම්බන්ධ වීමේ')
   })
 
   it('queryGeminiCopilot correctly formats response from backend', async () => {
