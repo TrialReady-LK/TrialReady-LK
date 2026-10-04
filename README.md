@@ -214,6 +214,7 @@ Test Files  7 passed (7)
 
 | Document | Format | Description |
 | :--- | :--- | :--- |
+| **[System Architecture Specification](docs/ARCHITECTURE.md)** | `Markdown` | Comprehensive system architecture, C4 models, ERD, 18-table dictionary, security, and algorithms. |
 | **[TCC User Manual (PDF)](docs/Group03_UserManual.pdf)** | `PDF (3 Pages)` | Official submission-ready User Manual adhering strictly to TCC preparation guidelines. |
 | **[TCC User Manual (Markdown)](docs/Group03_UserManual.md)** | `Markdown` | Complete plain-text documentation of system workflows, AI/ML features, and troubleshooting. |
 | **[Final Project Report](docs/TCC_Final_Project_Report_TrialReady_LK.md)** | `Markdown` | Comprehensive academic & technical report for final evaluation. |
