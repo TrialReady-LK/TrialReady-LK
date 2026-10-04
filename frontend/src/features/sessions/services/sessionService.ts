@@ -133,11 +133,11 @@ export function getDefaultSessions(): PracticalSessionWithRelations[] {
     { date: '2026-10-04', sTime: '13:30:00', eTime: '14:45:00', sIdx: 7, iIdx: 2, vIdx: 0, cIdx: 0, bIdx: 2, status: 'scheduled', att: 'unmarked', fb: null, rating: null, skills: ['Parallel Parking', '3-Point Turn'] },
     { date: '2026-10-04', sTime: '15:15:00', eTime: '16:30:00', sIdx: 8, iIdx: 5, vIdx: 0, cIdx: 0, bIdx: 3, status: 'scheduled', att: 'unmarked', fb: null, rating: null, skills: ['Emergency Braking', 'Clutch Control & Gears'] },
 
-    // --- Week 2 (Viva Week, Oct 5 – Oct 11, 2026) ---
+    // --- Week 2 (Oct 5 – Oct 11, 2026) ---
     { date: '2026-10-05', sTime: '08:30:00', eTime: '09:45:00', sIdx: 9, iIdx: 0, vIdx: 0, cIdx: 0, bIdx: 0, status: 'scheduled', att: 'unmarked', fb: null, rating: null, skills: ['Hill Start / Gradient', 'Reverse S-Bend'] },
     { date: '2026-10-05', sTime: '10:15:00', eTime: '11:30:00', sIdx: 0, iIdx: 1, vIdx: 1, cIdx: 0, bIdx: 0, status: 'scheduled', att: 'unmarked', fb: null, rating: null, skills: ['Parallel Parking', '3-Point Turn'] },
     { date: '2026-10-05', sTime: '13:30:00', eTime: '14:45:00', sIdx: 1, iIdx: 2, vIdx: 0, cIdx: 0, bIdx: 2, status: 'scheduled', att: 'unmarked', fb: null, rating: null, skills: ['Lane Discipline & Roundabouts', 'Highway & City Traffic'] },
-    { date: '2026-10-05', sTime: '15:15:00', eTime: '16:30:00', sIdx: 2, iIdx: 3, vIdx: 4, cIdx: 3, bIdx: 1, status: 'scheduled', att: 'unmarked', fb: null, rating: null, skills: ['Emergency Braking', 'Clutch Control & Gears'] },
+    { date: '2026-10-05', sTime: '15:15:00', eTime: '16:30:00', sIdx: 2, iIdx: 3, vIdx: 4, cIdx: 3, bIdx: 1, status: 'cancelled', att: 'unmarked', fb: null, rating: null, skills: ['Emergency Braking', 'Clutch Control & Gears'], reason: 'Candidate requested cancellation due to university exam.' },
 
     // Tuesday, Oct 6, 2026
     { date: '2026-10-06', sTime: '08:30:00', eTime: '09:45:00', sIdx: 0, iIdx: 0, vIdx: 0, cIdx: 0, bIdx: 0, status: 'scheduled', att: 'unmarked', fb: null, rating: null, skills: ['Hill Start / Gradient', 'Clutch Control & Gears'] },
@@ -145,10 +145,11 @@ export function getDefaultSessions(): PracticalSessionWithRelations[] {
     { date: '2026-10-06', sTime: '13:30:00', eTime: '14:45:00', sIdx: 4, iIdx: 2, vIdx: 0, cIdx: 0, bIdx: 2, status: 'scheduled', att: 'unmarked', fb: null, rating: null, skills: ['Lane Discipline & Roundabouts', 'Highway & City Traffic'] },
     { date: '2026-10-06', sTime: '15:15:00', eTime: '16:30:00', sIdx: 5, iIdx: 3, vIdx: 1, cIdx: 0, bIdx: 1, status: 'scheduled', att: 'unmarked', fb: null, rating: null, skills: ['3-Point Turn', 'Emergency Braking'] },
 
+    // Wednesday, Oct 7, 2026
     { date: '2026-10-07', sTime: '08:30:00', eTime: '09:45:00', sIdx: 3, iIdx: 0, vIdx: 0, cIdx: 0, bIdx: 0, status: 'scheduled', att: 'unmarked', fb: null, rating: null, skills: ['Clutch Control & Gears', 'Hill Start / Gradient'] },
-    { date: '2026-10-07', sTime: '10:15:00', eTime: '11:30:00', sIdx: 4, iIdx: 3, vIdx: 4, cIdx: 3, bIdx: 1, status: 'scheduled', att: 'unmarked', fb: null, rating: null, skills: ['Reverse S-Bend', 'Emergency Braking'] },
+    { date: '2026-10-07', sTime: '10:15:00', eTime: '11:30:00', sIdx: 4, iIdx: 3, vIdx: 4, cIdx: 3, bIdx: 1, status: 'cancelled', att: 'unmarked', fb: null, rating: null, skills: ['Reverse S-Bend', 'Emergency Braking'], reason: 'Vehicle WP LL-4029 scheduled for routine inspection.' },
     { date: '2026-10-07', sTime: '13:30:00', eTime: '14:45:00', sIdx: 5, iIdx: 1, vIdx: 1, cIdx: 0, bIdx: 0, status: 'scheduled', att: 'unmarked', fb: null, rating: null, skills: ['Parallel Parking', '3-Point Turn'] },
-    { date: '2026-10-07', sTime: '15:15:00', eTime: '16:30:00', sIdx: 6, iIdx: 6, vIdx: 2, cIdx: 2, bIdx: 2, status: 'scheduled', att: 'unmarked', fb: null, rating: null, skills: ['Road Signs & Signals', 'Highway & City Traffic'] },
+    { date: '2026-10-07', sTime: '15:15:00', eTime: '16:30:00', sIdx: 6, iIdx: 6, vIdx: 2, cIdx: 2, bIdx: 2, status: 'no_show', att: 'absent', fb: null, rating: null, skills: ['Road Signs & Signals', 'Highway & City Traffic'], reason: 'Candidate did not attend scheduled lesson (No show).' },
 
     { date: '2026-10-08', sTime: '08:30:00', eTime: '09:45:00', sIdx: 7, iIdx: 0, vIdx: 0, cIdx: 0, bIdx: 0, status: 'scheduled', att: 'unmarked', fb: null, rating: null, skills: ['Hill Start / Gradient', 'Reverse S-Bend'] },
     { date: '2026-10-08', sTime: '10:15:00', eTime: '11:30:00', sIdx: 8, iIdx: 1, vIdx: 1, cIdx: 0, bIdx: 0, status: 'scheduled', att: 'unmarked', fb: null, rating: null, skills: ['Lane Discipline & Roundabouts', 'Highway & City Traffic'] },
@@ -193,7 +194,7 @@ export function getDefaultSessions(): PracticalSessionWithRelations[] {
       attendance_status: p.att as PracticalSessionWithRelations['attendance_status'],
       instructor_feedback: p.fb,
       student_rating: p.rating,
-      cancellation_reason: null,
+      cancellation_reason: (p as any).reason || null,
       skills_covered: p.skills,
       created_at: `${p.date}T${p.sTime}.000Z`,
       updated_at: `${p.date}T${p.eTime}.000Z`,
@@ -223,15 +224,13 @@ export async function getPracticalSessions(
     defaults,
   )
 
-  // Auto-migrate outdated clustered session cache so all dates in the week have active sessions
+  // Auto-migrate outdated session cache so cancelled & multi-day sessions are immediately active
   const hasOutdatedData =
     !localList ||
     localList.length < 30 ||
     localList.filter((s) => s.session_date === '2026-10-08').length > 6 ||
-    !localList.some((s) => s.session_date === '2026-10-05') ||
-    !localList.some((s) => s.session_date === '2026-10-06') ||
-    !localList.some((s) => s.session_date === '2026-10-07') ||
-    !localList.some((s) => s.session_date === '2026-10-09')
+    !localList.some((s) => s.session_date === '2026-10-05' && (s.status === 'cancelled' || s.status === 'no_show')) ||
+    localList.filter((s) => s.session_date === '2026-10-07' && (s.status === 'cancelled' || s.status === 'no_show' || s.attendance_status === 'absent')).length < 2
 
   if (hasOutdatedData) {
     localList = defaults

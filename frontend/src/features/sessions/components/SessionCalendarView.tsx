@@ -87,13 +87,13 @@ export const SessionCalendarView: React.FC<SessionCalendarViewProps> = ({
 
   const getStatusColor = (status: string, attendance: string) => {
     if (status === 'cancelled') {
-      return 'bg-red-50 border-red-200 text-red-700 opacity-60 line-through'
+      return 'bg-red-50/90 border-red-300 text-red-800'
     }
     if (status === 'completed' || attendance === 'present') {
       return 'bg-emerald-50 border-emerald-300 text-emerald-900'
     }
     if (attendance === 'absent' || status === 'no_show') {
-      return 'bg-amber-50 border-amber-300 text-amber-900'
+      return 'bg-amber-50/90 border-amber-300 text-amber-900'
     }
     return 'bg-blue-50 border-blue-300 text-blue-950 hover:border-blue-400'
   }
@@ -227,8 +227,12 @@ export const SessionCalendarView: React.FC<SessionCalendarViewProps> = ({
                               <Check className="h-3 w-3" /> Done
                             </span>
                           ) : sess.status === 'cancelled' ? (
-                            <span className="inline-flex items-center gap-0.5 text-red-700">
+                            <span className="inline-flex items-center gap-0.5 text-red-700 font-bold">
                               <X className="h-3 w-3" /> Cancelled
+                            </span>
+                          ) : sess.status === 'no_show' || sess.attendance_status === 'absent' ? (
+                            <span className="inline-flex items-center gap-0.5 text-amber-800 font-bold">
+                              <X className="h-3 w-3" /> No Show
                             </span>
                           ) : (
                             duration

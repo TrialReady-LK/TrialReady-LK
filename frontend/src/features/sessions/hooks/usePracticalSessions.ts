@@ -218,7 +218,12 @@ export function usePracticalSessions(drivingSchoolId: string) {
       todayTotal: todaySessions.length,
       scheduled: sessions.filter((s) => s.status === 'scheduled').length,
       completed: sessions.filter((s) => s.status === 'completed').length,
-      cancelled: sessions.filter((s) => s.status === 'cancelled').length,
+      cancelled: sessions.filter(
+        (s) =>
+          s.status === 'cancelled' ||
+          s.status === 'no_show' ||
+          s.attendance_status === 'absent',
+      ).length,
     }
   }, [sessions])
 

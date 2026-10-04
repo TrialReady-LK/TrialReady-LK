@@ -484,11 +484,12 @@ export function generate100Sessions(
     vehicleIdx: number
     catIdx: number
     branchIdx: number
-    status: 'completed' | 'scheduled' | 'in_progress'
+    status: 'completed' | 'scheduled' | 'in_progress' | 'cancelled' | 'no_show'
     attendance: 'present' | 'unmarked' | 'absent'
     feedback: string | null
     rating: number | null
     skills: string[]
+    reason?: string
   }> = [
     // --- WEEK 1 ---
     // Monday, Sep 28, 2026
@@ -996,11 +997,12 @@ export function generate100Sessions(
       vehicleIdx: 4,
       catIdx: 3,
       branchIdx: 1,
-      status: 'scheduled',
+      status: 'cancelled',
       attendance: 'unmarked',
       feedback: null,
       rating: null,
       skills: ['Emergency Braking', 'Clutch Control & Gears'],
+      reason: 'Candidate requested cancellation due to university exam.',
     },
 
     // Tuesday, Oct 6, 2026
@@ -1090,11 +1092,12 @@ export function generate100Sessions(
       vehicleIdx: 4,
       catIdx: 3,
       branchIdx: 1,
-      status: 'scheduled',
+      status: 'cancelled',
       attendance: 'unmarked',
       feedback: null,
       rating: null,
       skills: ['Reverse S-Bend', 'Emergency Braking'],
+      reason: 'Vehicle WP LL-4029 scheduled for routine inspection.',
     },
     {
       date: '2026-10-07',
@@ -1120,11 +1123,12 @@ export function generate100Sessions(
       vehicleIdx: 2,
       catIdx: 2,
       branchIdx: 2,
-      status: 'scheduled',
-      attendance: 'unmarked',
+      status: 'no_show',
+      attendance: 'absent',
       feedback: null,
       rating: null,
       skills: ['Road Signs & Signals', 'Highway & City Traffic'],
+      reason: 'Candidate did not attend scheduled lesson (No show).',
     },
 
     // Thursday, Oct 8, 2026
@@ -1398,6 +1402,7 @@ export function generate100Sessions(
       attendance_status: plan.attendance,
       instructor_feedback: plan.feedback,
       student_rating: plan.rating,
+      cancellation_reason: (plan as any).reason || null,
       skills_covered: plan.skills,
       created_at: `${plan.date}T${plan.startTime}.000Z`,
       updated_at: `${plan.date}T${plan.endTime}.000Z`,
