@@ -24,13 +24,13 @@ The platform digitizes the entire student lifecycle—from initial registration,
 
 ```mermaid
 graph LR
-    A[Student Registration] --> B[NTMI Medical Fitness]
-    B --> C[6-Month DMT Learner Permit]
-    C --> D[Highway Code & Mock Theory]
-    D --> E[Practical Road Training]
-    E --> F[AI Trial Readiness Engine]
-    F --> G[DMT Logbook & Trial Admission]
-    G --> H[🏆 Driving Licence Granted]
+    A["Student Registration"] --> B["NTMI Medical Fitness"]
+    B --> C["6-Month DMT Learner Permit"]
+    C --> D["Highway Code & Mock Theory"]
+    D --> E["Practical Road Training"]
+    E --> F["AI Trial Readiness Engine"]
+    F --> G["DMT Logbook & Trial Admission"]
+    G --> H["🏆 Driving Licence Granted"]
 ```
 
 ---
@@ -103,24 +103,29 @@ graph LR
 
 ## 🏛️ System Architecture
 
+> 📌 **Comprehensive Architecture & Presentation Guides:**  
+> • **Top-to-Bottom 7-Tiered System Architecture:** [`docs/SLIDE_5_HIGH_LEVEL_ARCHITECTURE.md`](docs/SLIDE_5_HIGH_LEVEL_ARCHITECTURE.md)  
+> • **Technical Architecture Specification (C4 & ERD):** [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md)  
+> • **Full HD Vector Diagrams:** [`docs/assets/high_level_system_architecture_top_to_bottom.svg`](docs/assets/high_level_system_architecture_top_to_bottom.svg) | [`docs/assets/high_level_system_architecture_slide5.svg`](docs/assets/high_level_system_architecture_slide5.svg)
+
 ```mermaid
 graph TD
-    Client[React 19 + TypeScript + Tailwind CSS] --> Routing[React Router v7 Protected Routes]
-    Routing --> Contexts[AuthContext | TheoryLanguageContext]
-    Contexts --> Features[Feature Modules]
+    Client["React 19 + TypeScript + Tailwind CSS"] --> Routing["React Router v7 Protected Routes"]
+    Routing --> Contexts["AuthContext & TheoryLanguageContext"]
+    Contexts --> Features["18 Feature Modules"]
     
-    subgraph "Application Core"
-        Features --> J[Learner Journey]
-        Features --> R[AI Readiness Engine]
-        Features --> T[Theory Practice & Mock Exam]
-        Features --> L[DMT Logbook & Slips]
-        Features --> F[Financial Ledger]
-        Features --> A[Executive Analytics]
+    subgraph Core["Application Core Subsystems"]
+        Features --> J["Learner Journey (7-Stage Pipeline)"]
+        Features --> R["AI Readiness Engine (6-Factor Scoring)"]
+        Features --> T["Trilingual Mock Exam & Theory Hub"]
+        Features --> L["DMT Logbook (DMT/SL/LOG-01) & Trial Pass"]
+        Features --> F["Financial Ledger & LankaQR Invoicing"]
+        Features --> A["Executive Analytics & CSV Export"]
     end
     
-    Features --> SupabaseClient[Supabase JS Client]
-    SupabaseClient --> Auth[Supabase Auth / JWT]
-    SupabaseClient --> DB[(PostgreSQL Database + RLS Policies)]
+    Features --> SupabaseClient["Supabase PostgREST Client"]
+    SupabaseClient --> Auth["GoTrue Auth Engine (JWT / Bcrypt)"]
+    SupabaseClient --> DB[("PostgreSQL 15 Database (Row-Level Security)")]
 ```
 
 ---
