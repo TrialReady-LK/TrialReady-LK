@@ -6,8 +6,8 @@ import { DmtTrialSlipModal } from '../../../logbook/components/DmtTrialSlipModal
 import { useStudentLogbook } from '../../../logbook/hooks/useStudentLogbook'
 import { StudentJourneyPipeline } from '../../../journey/components/StudentJourneyPipeline'
 import { computeJourneyStages } from '../../../journey/utils/journeyUtils'
-import { StudentFinancialOverviewCard } from '../components/StudentFinancialOverviewCard'
 import { StudentJourneyHeroCard } from '../components/StudentJourneyHeroCard'
+import { StudentPaymentsSection } from '../components/StudentPaymentsSection'
 import { StudentPersonalReadinessCard } from '../components/StudentPersonalReadinessCard'
 import { StudentUpcomingLessons } from '../components/StudentUpcomingLessons'
 import { useStudentPortal } from '../hooks/useStudentPortal'
@@ -33,6 +33,7 @@ export const StudentPortalPage: React.FC<StudentPortalPageProps> = ({
     completedSessionsCount,
     isLoading,
     errorMessage,
+    reloadData,
   } = useStudentPortal(drivingSchoolId, effectiveStudentId)
 
   const activeStudentId = effectiveStudentId || journey?.student?.id || ''
@@ -103,18 +104,22 @@ export const StudentPortalPage: React.FC<StudentPortalPageProps> = ({
         isInstructor={false}
       />
 
-      {/* 3. Upcoming Lessons & Financial Overview Grid */}
+      {/* 3. Upcoming Lessons & Personal AI Trial Readiness Grid */}
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         <StudentUpcomingLessons
           upcomingSessions={upcomingSessions}
           completedSessionsCount={completedSessionsCount}
         />
 
-        <StudentFinancialOverviewCard ledger={ledger} />
+        <StudentPersonalReadinessCard readinessProfile={readiness} />
       </div>
 
-      {/* 3. Personal AI Trial Readiness */}
-      <StudentPersonalReadinessCard readinessProfile={readiness} />
+      {/* 4. Comprehensive Student Payments, Fees, Installments & Options Section */}
+      <StudentPaymentsSection
+        ledger={ledger}
+        drivingSchoolId={drivingSchoolId}
+        onPaymentRecorded={() => void reloadData()}
+      />
 
       {/* 4. DMT Document Quick Actions */}
       {logbookData && (

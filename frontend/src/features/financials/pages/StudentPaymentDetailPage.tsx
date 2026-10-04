@@ -11,10 +11,17 @@ import {
   formatPaymentMethod,
   getPaymentStatus,
 } from '../utils/financialUtils'
+import { StudentPaymentsSection } from '../../portal/student/components/StudentPaymentsSection'
 
 export const StudentPaymentDetailPage: React.FC = () => {
-  const { studentId } = useParams<{ studentId: string }>()
-  const { drivingSchoolId } = useAuth()
+  const { studentId: paramStudentId } = useParams<{ studentId: string }>()
+  const { profile, role, drivingSchoolId } = useAuth()
+  const effectiveStudentId =
+    paramStudentId ||
+    (role === 'student'
+      ? profile?.id || '11111111-1111-1111-1111-111111111111'
+      : '11111111-1111-1111-1111-111111111111')
+
   const {
     ledger,
     isLoading,
@@ -24,7 +31,8 @@ export const StudentPaymentDetailPage: React.FC = () => {
     setSuccessMessage,
     handleRecordPayment,
     handleDeletePayment,
-  } = useStudentLedger(studentId || '')
+    reloadLedger,
+  } = useStudentLedger(effectiveStudentId)
 
   const [isRecordModalOpen, setIsRecordModalOpen] = useState(false)
   const [isReceiptModalOpen, setIsReceiptModalOpen] = useState(false)
@@ -45,6 +53,26 @@ export const StudentPaymentDetailPage: React.FC = () => {
             Loading student payment ledger...
           </p>
         </div>
+      </div>
+    )
+  }
+
+  if (role === 'student') {
+    return (
+      <div className="space-y-6">
+        <div>
+          <Link
+            to="/student/portal"
+            className="inline-flex items-center gap-1.5 text-xs font-semibold text-blue-600 hover:underline mb-2 cursor-pointer"
+          >
+            ← Back to My Student Portal
+          </Link>
+        </div>
+        <StudentPaymentsSection
+          ledger={ledger}
+          drivingSchoolId={drivingSchoolId}
+          onPaymentRecorded={() => void reloadLedger()}
+        />
       </div>
     )
   }

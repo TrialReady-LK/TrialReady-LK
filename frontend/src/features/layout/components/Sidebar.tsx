@@ -104,6 +104,12 @@ const NAV_ITEMS: NavItem[] = [
     roles: ['student'],
   },
   {
+    label: 'My Payments & Fees',
+    to: '/student/payments',
+    icon: CreditCard,
+    roles: ['student'],
+  },
+  {
     label: 'My Profile & Account',
     to: '/student/profile',
     icon: User,

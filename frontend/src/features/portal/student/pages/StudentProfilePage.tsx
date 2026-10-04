@@ -27,6 +27,7 @@ import { DmtLogbookModal } from '../../../logbook/components/DmtLogbookModal'
 import { DmtTrialSlipModal } from '../../../logbook/components/DmtTrialSlipModal'
 import { useStudentLogbook } from '../../../logbook/hooks/useStudentLogbook'
 import { calculatePermitValidity } from '../../../journey/utils/journeyUtils'
+import { StudentPaymentsSection } from '../components/StudentPaymentsSection'
 import { useStudentPortal } from '../hooks/useStudentPortal'
 import { getStoredData, setStoredData, STORAGE_KEYS } from '../../../../lib/persistentStorage'
 
@@ -45,6 +46,7 @@ export const StudentProfilePage: React.FC<StudentProfilePageProps> = ({
 
   const {
     journey,
+    ledger,
     completedSessionsCount,
     isLoading,
     errorMessage,
@@ -850,53 +852,11 @@ export const StudentProfilePage: React.FC<StudentProfilePageProps> = ({
 
       {/* TAB 4: Fee & Payments */}
       {activeTab === 'financials' && (
-        <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-xs space-y-6">
-          <div className="flex items-center justify-between border-b border-slate-100 pb-4">
-            <div>
-              <h2 className="text-base font-bold text-slate-900">
-                Course Fee &amp; Payment Ledger
-              </h2>
-              <p className="text-xs text-slate-500">
-                Track payments made to Royal Driving Academy (Pvt) Ltd
-              </p>
-            </div>
-            <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-bold text-emerald-800 border border-emerald-200">
-              Paid in Full: LKR 110,000
-            </span>
-          </div>
-
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-3 text-xs">
-            <div className="rounded-xl bg-slate-50 p-4 border border-slate-100 text-center">
-              <span className="text-slate-400 font-medium">Total Package Fee</span>
-              <p className="text-2xl font-black text-slate-900 mt-1">
-                LKR 110,000
-              </p>
-              <span className="text-[10px] text-slate-500">
-                Dual Combo (Car + Motorbike)
-              </span>
-            </div>
-
-            <div className="rounded-xl bg-emerald-50 p-4 border border-emerald-100 text-center">
-              <span className="text-emerald-700 font-medium">Total Paid to Date</span>
-              <p className="text-2xl font-black text-emerald-700 mt-1">
-                LKR 110,000
-              </p>
-              <span className="text-[10px] text-emerald-600 font-bold">
-                100% Cleared
-              </span>
-            </div>
-
-            <div className="rounded-xl bg-blue-50 p-4 border border-blue-100 text-center">
-              <span className="text-blue-700 font-medium">Outstanding Due Balance</span>
-              <p className="text-2xl font-black text-blue-700 mt-1">
-                LKR 0.00
-              </p>
-              <span className="text-[10px] text-blue-600 font-bold">
-                No Dues Pending
-              </span>
-            </div>
-          </div>
-        </div>
+        <StudentPaymentsSection
+          ledger={ledger}
+          drivingSchoolId={drivingSchoolId}
+          onPaymentRecorded={() => void reloadData()}
+        />
       )}
 
       {/* DMT Modals */}

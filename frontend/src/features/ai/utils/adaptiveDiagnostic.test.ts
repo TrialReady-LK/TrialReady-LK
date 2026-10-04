@@ -9,7 +9,7 @@ describe('adaptiveDiagnostic', () => {
       { questionId: 'q-reg-02', selectedOptionIndex: 0, isCorrect: false },
       { questionId: 'q-warn-01', selectedOptionIndex: 1, isCorrect: false },
       { questionId: 'q-prio-01', selectedOptionIndex: 0, isCorrect: true },
-      { questionId: 'q-law-01', selectedOptionIndex: 0, isCorrect: true },
+      { questionId: 'q-safe-01', selectedOptionIndex: 0, isCorrect: true },
     ]
 
     const diagnosis = diagnoseMockExamPerformance(mockAnswers)
