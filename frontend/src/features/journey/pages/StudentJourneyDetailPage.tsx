@@ -159,10 +159,10 @@ export const StudentJourneyDetailPage: React.FC = () => {
               </>
             )}
             <Link
-              to="/students"
+              to={isStudent ? '/student/profile' : `/students/${journey.student.id}/profile`}
               className="rounded-xl border border-slate-300 bg-white px-3.5 py-1.5 text-xs font-semibold text-slate-700 hover:bg-slate-50 transition-all cursor-pointer"
             >
-              View Student Profile
+              {isStudent ? 'My Profile & Account' : 'View Student Profile'}
             </Link>
           </div>
         </div>
@@ -175,9 +175,13 @@ export const StudentJourneyDetailPage: React.FC = () => {
             <span>
               🛡️ <strong>Administrator Mode:</strong> You can edit and mark as done all 7 learner journey milestones (Medical, Permit, Theory Exam, Practical Lessons, DMT Trial, and Final Licence).
             </span>
-          ) : (
+          ) : isInstructor ? (
             <span>
               🚗 <strong>Instructor Mode:</strong> You are authorized to log <strong>Practical Driving Lessons</strong> and record <strong>DMT Practical Trial</strong> milestones. Administrative records (Medical, Permit, Theory) are read-only.
+            </span>
+          ) : (
+            <span>
+              🧑‍🎓 <strong>Student Learner Mode:</strong> View your real-time 7-stage DMT training milestones, medical clearance, and practical lesson progress.
             </span>
           )}
         </div>

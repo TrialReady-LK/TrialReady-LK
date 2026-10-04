@@ -27,10 +27,22 @@ export const UnauthorizedPage: React.FC = () => {
         <div className="mt-6 flex flex-col gap-2">
           <button
             type="button"
-            onClick={() => navigate('/dashboard')}
+            onClick={() =>
+              navigate(
+                role === 'student'
+                  ? '/student/portal'
+                  : role === 'instructor'
+                  ? '/instructor/portal'
+                  : '/dashboard',
+              )
+            }
             className="w-full rounded-xl bg-blue-600 px-4 py-2.5 text-xs font-semibold text-white shadow-sm hover:bg-blue-700 transition-all cursor-pointer"
           >
-            Go to Dashboard
+            {role === 'student'
+              ? 'Return to My Student Portal'
+              : role === 'instructor'
+              ? 'Return to Instructor Portal'
+              : 'Go to Dashboard'}
           </button>
 
           <button

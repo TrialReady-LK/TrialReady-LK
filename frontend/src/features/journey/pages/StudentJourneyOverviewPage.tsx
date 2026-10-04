@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { Users, Check, Trophy } from 'lucide-react'
+import { Users, Check, Trophy, User } from 'lucide-react'
+import { useAuth } from '../../auth/context/AuthContext'
 import { useJourneyOverview } from '../hooks/useJourneyOverview'
 import { calculatePermitValidity } from '../utils/journeyUtils'
 
@@ -11,6 +12,8 @@ interface StudentJourneyOverviewPageProps {
 export const StudentJourneyOverviewPage: React.FC<
   StudentJourneyOverviewPageProps
 > = ({ drivingSchoolId }) => {
+  const { role } = useAuth()
+  const isStudent = role === 'student'
   const {
     filteredJourneys,
     filters,
@@ -41,11 +44,11 @@ export const StudentJourneyOverviewPage: React.FC<
         </div>
 
         <Link
-          to="/students"
+          to={isStudent ? '/student/profile' : '/students'}
           className="inline-flex items-center gap-1.5 rounded-xl border border-slate-300 bg-white px-4 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50 transition-all cursor-pointer"
         >
-          <Users className="h-4 w-4" />
-          <span>Manage Students</span>
+          {isStudent ? <User className="h-4 w-4" /> : <Users className="h-4 w-4" />}
+          <span>{isStudent ? 'My Profile & Account' : 'Manage Students'}</span>
         </Link>
       </div>
 

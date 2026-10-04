@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import {
   User,
   Mail,
@@ -40,9 +40,12 @@ export const StudentProfilePage: React.FC<StudentProfilePageProps> = ({
   drivingSchoolId,
   studentId,
 }) => {
+  const { studentId: paramStudentId } = useParams<{ studentId: string }>()
   const { profile, role } = useAuth()
   const effectiveStudentId =
-    studentId || (role === 'student' ? profile?.id : undefined)
+    studentId ||
+    paramStudentId ||
+    (role === 'student' ? profile?.id || '11111111-1111-1111-1111-111111111111' : undefined)
 
   const {
     journey,
@@ -216,13 +219,13 @@ export const StudentProfilePage: React.FC<StudentProfilePageProps> = ({
 
           <div className="flex flex-wrap items-center gap-2">
             <Link
-              to="/student/portal"
+              to={role === 'student' ? '/student/portal' : role === 'instructor' ? '/instructor/portal' : '/students'}
               className="rounded-xl border border-white/20 bg-white/10 px-4 py-2 text-xs font-semibold text-white hover:bg-white/20 transition-all cursor-pointer"
             >
-              ← Back to Portal
+              {role === 'student' ? '← Back to Portal' : '← Back'}
             </Link>
             <Link
-              to={`/students/${student.id}/journey`}
+              to={role === 'student' ? '/student/journey' : `/students/${student.id}/journey`}
               className="rounded-xl bg-blue-600 px-4 py-2 text-xs font-bold text-white shadow-lg hover:bg-blue-500 transition-all cursor-pointer"
             >
               Full Journey Roadmap →
