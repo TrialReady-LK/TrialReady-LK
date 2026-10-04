@@ -1,4 +1,5 @@
 import React, { useState, type FormEvent } from 'react'
+import { AlertCircle } from 'lucide-react'
 import type {
   CreateVehicleInput,
   UpdateVehicleInput,
@@ -104,6 +105,7 @@ export const VehicleForm: React.FC<VehicleFormProps> = ({
       model: form.model,
       licence_category_id: form.licence_category_id,
       transmission_type: form.transmission_type,
+      fuel_type: form.fuel_type,
       year_of_manufacture: form.year_of_manufacture,
       current_odometer_km: form.current_odometer_km,
     })
@@ -150,6 +152,13 @@ export const VehicleForm: React.FC<VehicleFormProps> = ({
     }
   }
 
+  const getInputClass = (fieldName: keyof VehicleValidationErrors) =>
+    `w-full rounded-lg border px-3 py-2 text-slate-900 outline-none transition-colors ${
+      errors[fieldName]
+        ? 'border-red-500 bg-red-50/20 focus:border-red-600 focus:ring-1 focus:ring-red-500'
+        : 'border-slate-300 focus:border-blue-500'
+    }`
+
   return (
     <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
       <div className="mb-6 border-b border-slate-200 pb-4">
@@ -162,6 +171,19 @@ export const VehicleForm: React.FC<VehicleFormProps> = ({
             : 'Fill in the vehicle specifications, licence qualification category, and branch assignment.'}
         </p>
       </div>
+
+      {/* Validation Alert Summary */}
+      {hasVehicleValidationErrors(errors) && (
+        <div className="mb-6 rounded-xl border border-red-200 bg-red-50 p-4 text-xs text-red-800 flex items-start gap-2.5 animate-in fade-in">
+          <AlertCircle className="h-4 w-4 text-red-600 shrink-0 mt-0.5" />
+          <div className="space-y-1">
+            <p className="font-bold">Required Details Incomplete:</p>
+            <p className="text-red-700">
+              Please fill in all mandatory vehicle details (Registration Number, Manufacturer, Model, Licence Category, Transmission Type, Fuel Type, Year of Manufacture, and Odometer) before saving.
+            </p>
+          </div>
+        </div>
+      )}
 
       <form onSubmit={handleSubmit} noValidate>
         <div className="grid gap-5 md:grid-cols-2">
@@ -181,10 +203,10 @@ export const VehicleForm: React.FC<VehicleFormProps> = ({
                 updateField('registration_number', e.target.value)
               }
               placeholder="e.g. WP CAB-1234 or 19-5432"
-              className="w-full rounded-lg border border-slate-300 px-3 py-2 text-slate-900 outline-none focus:border-blue-500 uppercase font-mono"
+              className={`${getInputClass('registration_number')} uppercase font-mono`}
             />
             {errors.registration_number && (
-              <p className="mt-1 text-xs text-red-600">
+              <p className="mt-1 text-xs text-red-600 font-semibold">
                 {errors.registration_number}
               </p>
             )}
@@ -222,10 +244,10 @@ export const VehicleForm: React.FC<VehicleFormProps> = ({
               value={form.manufacturer}
               onChange={(e) => updateField('manufacturer', e.target.value)}
               placeholder="e.g. Toyota, Suzuki, Honda, Bajaj"
-              className="w-full rounded-lg border border-slate-300 px-3 py-2 text-slate-900 outline-none focus:border-blue-500"
+              className={getInputClass('manufacturer')}
             />
             {errors.manufacturer && (
-              <p className="mt-1 text-xs text-red-600">
+              <p className="mt-1 text-xs text-red-600 font-semibold">
                 {errors.manufacturer}
               </p>
             )}
@@ -245,10 +267,10 @@ export const VehicleForm: React.FC<VehicleFormProps> = ({
               value={form.model}
               onChange={(e) => updateField('model', e.target.value)}
               placeholder="e.g. Vitz, Alto, Pulsar 150"
-              className="w-full rounded-lg border border-slate-300 px-3 py-2 text-slate-900 outline-none focus:border-blue-500"
+              className={getInputClass('model')}
             />
             {errors.model && (
-              <p className="mt-1 text-xs text-red-600">{errors.model}</p>
+              <p className="mt-1 text-xs text-red-600 font-semibold">{errors.model}</p>
             )}
           </div>
 
@@ -266,7 +288,7 @@ export const VehicleForm: React.FC<VehicleFormProps> = ({
               onChange={(e) =>
                 updateField('licence_category_id', e.target.value)
               }
-              className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-900 outline-none focus:border-blue-500"
+              className={`${getInputClass('licence_category_id')} bg-white`}
             >
               <option value="">Select a Licence Category</option>
               {licenceCategories.map((cat) => (
@@ -276,7 +298,7 @@ export const VehicleForm: React.FC<VehicleFormProps> = ({
               ))}
             </select>
             {errors.licence_category_id && (
-              <p className="mt-1 text-xs text-red-600">
+              <p className="mt-1 text-xs text-red-600 font-semibold">
                 {errors.licence_category_id}
               </p>
             )}
@@ -322,15 +344,16 @@ export const VehicleForm: React.FC<VehicleFormProps> = ({
                   e.target.value as VehicleTransmissionType,
                 )
               }
-              className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-900 outline-none focus:border-blue-500"
+              className={`${getInputClass('transmission_type')} bg-white`}
             >
+              <option value="">Select transmission</option>
               <option value="manual">Manual</option>
               <option value="automatic">Automatic</option>
               <option value="semi_automatic">Semi-Automatic</option>
               <option value="other">Other</option>
             </select>
             {errors.transmission_type && (
-              <p className="mt-1 text-xs text-red-600">
+              <p className="mt-1 text-xs text-red-600 font-semibold">
                 {errors.transmission_type}
               </p>
             )}
@@ -342,7 +365,7 @@ export const VehicleForm: React.FC<VehicleFormProps> = ({
               htmlFor="veh-fuel"
               className="mb-1.5 block text-sm font-medium text-slate-900"
             >
-              Fuel Type
+              Fuel Type *
             </label>
             <select
               id="veh-fuel"
@@ -350,14 +373,20 @@ export const VehicleForm: React.FC<VehicleFormProps> = ({
               onChange={(e) =>
                 updateField('fuel_type', e.target.value as VehicleFuelType)
               }
-              className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-900 outline-none focus:border-blue-500"
+              className={`${getInputClass('fuel_type')} bg-white`}
             >
+              <option value="">Select fuel type</option>
               <option value="petrol">Petrol</option>
               <option value="diesel">Diesel</option>
               <option value="hybrid">Hybrid</option>
               <option value="electric">Electric</option>
               <option value="other">Other</option>
             </select>
+            {errors.fuel_type && (
+              <p className="mt-1 text-xs text-red-600 font-semibold">
+                {errors.fuel_type}
+              </p>
+            )}
           </div>
 
           {/* Year of Manufacture */}
@@ -366,7 +395,7 @@ export const VehicleForm: React.FC<VehicleFormProps> = ({
               htmlFor="veh-year"
               className="mb-1.5 block text-sm font-medium text-slate-900"
             >
-              Year of Manufacture
+              Year of Manufacture *
             </label>
             <input
               id="veh-year"
@@ -390,10 +419,10 @@ export const VehicleForm: React.FC<VehicleFormProps> = ({
                 }
               }}
               placeholder="e.g. 2024"
-              className="w-full rounded-lg border border-slate-300 px-3 py-2 text-slate-900 outline-none focus:border-blue-500"
+              className={getInputClass('year_of_manufacture')}
             />
             {errors.year_of_manufacture && (
-              <p className="mt-1 text-xs text-red-600">
+              <p className="mt-1 text-xs text-red-600 font-semibold">
                 {errors.year_of_manufacture}
               </p>
             )}
@@ -405,7 +434,7 @@ export const VehicleForm: React.FC<VehicleFormProps> = ({
               htmlFor="veh-odo"
               className="mb-1.5 block text-sm font-medium text-slate-900"
             >
-              Current Odometer (km)
+              Current Odometer (km) *
             </label>
             <input
               id="veh-odo"
@@ -416,10 +445,10 @@ export const VehicleForm: React.FC<VehicleFormProps> = ({
                 updateField('current_odometer_km', e.target.value)
               }
               placeholder="e.g. 45000"
-              className="w-full rounded-lg border border-slate-300 px-3 py-2 text-slate-900 outline-none focus:border-blue-500 font-mono"
+              className={`${getInputClass('current_odometer_km')} font-mono`}
             />
             {errors.current_odometer_km && (
-              <p className="mt-1 text-xs text-red-600">
+              <p className="mt-1 text-xs text-red-600 font-semibold">
                 {errors.current_odometer_km}
               </p>
             )}
@@ -453,7 +482,7 @@ export const VehicleForm: React.FC<VehicleFormProps> = ({
                 onChange={(e) =>
                   updateField('training_use_enabled', e.target.checked)
                 }
-                className="h-4 w-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500"
+                className="h-4 w-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
               />
               Enable for student training sessions
             </label>
@@ -492,14 +521,14 @@ export const VehicleForm: React.FC<VehicleFormProps> = ({
             type="button"
             onClick={onCancel}
             disabled={isSubmitting}
-            className="rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50 disabled:opacity-60"
+            className="rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50 disabled:opacity-60 cursor-pointer"
           >
             Cancel
           </button>
           <button
             type="submit"
             disabled={isSubmitting}
-            className="rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-700 disabled:opacity-60"
+            className="rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-700 disabled:opacity-60 cursor-pointer shadow-xs transition-colors"
           >
             {isSubmitting
               ? 'Saving...'
@@ -512,3 +541,4 @@ export const VehicleForm: React.FC<VehicleFormProps> = ({
     </section>
   )
 }
+

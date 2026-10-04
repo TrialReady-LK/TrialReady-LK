@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import { AlertCircle } from 'lucide-react'
 import type { Branch } from '../../branches/types/branch'
 import type {
   CreateInstructorInput,
@@ -45,7 +46,7 @@ const emptyFormState: InstructorFormState = {
   email: '',
   driving_licence_number: '',
   driving_licence_expiry_date: '',
-  joined_date: '',
+  joined_date: new Date().toISOString().split('T')[0],
   is_active: true,
 }
 
@@ -134,6 +135,7 @@ function InstructorForm({
       driving_licence_expiry_date:
         form.driving_licence_expiry_date,
       joined_date: form.joined_date,
+      branch_id: form.branch_id,
     })
 
     setErrors(validationErrors)
@@ -174,8 +176,12 @@ function InstructorForm({
     await onSubmit(input)
   }
 
-  const inputClassName =
-    'mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-slate-900 outline-none focus:border-blue-500 disabled:bg-slate-100'
+  const getInputClass = (fieldName: keyof InstructorValidationErrors) =>
+    `mt-1 w-full rounded-lg border px-3 py-2 text-slate-900 outline-none transition-colors disabled:bg-slate-100 ${
+      errors[fieldName]
+        ? 'border-red-500 bg-red-50/20 focus:border-red-600 focus:ring-1 focus:ring-red-500'
+        : 'border-slate-300 focus:border-blue-500'
+    }`
 
   return (
     <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
@@ -191,8 +197,22 @@ function InstructorForm({
         </p>
       </div>
 
+      {/* Validation Alert Summary */}
+      {hasInstructorValidationErrors(errors) && (
+        <div className="mt-5 rounded-xl border border-red-200 bg-red-50 p-4 text-xs text-red-800 flex items-start gap-2.5 animate-in fade-in">
+          <AlertCircle className="h-4 w-4 text-red-600 shrink-0 mt-0.5" />
+          <div className="space-y-1">
+            <p className="font-bold">Required Details Incomplete:</p>
+            <p className="text-red-700">
+              Please fill in all mandatory instructor fields (Full Name, Employee Code, Branch, NIC, Phone, Email, Licence Number, Expiry Date, and Joined Date) before saving.
+            </p>
+          </div>
+        </div>
+      )}
+
       <form
         onSubmit={(event) => void handleSubmit(event)}
+        noValidate
         className="mt-6 space-y-6"
       >
         <div className="grid gap-5 md:grid-cols-2">
@@ -212,11 +232,12 @@ function InstructorForm({
                 updateField('full_name', event.target.value)
               }
               disabled={isSubmitting}
-              className={inputClassName}
+              className={getInputClass('full_name')}
+              placeholder="e.g. Ravishka Rathnayaka"
             />
 
             {errors.full_name && (
-              <p className="mt-1 text-sm text-red-600">
+              <p className="mt-1 text-xs text-red-600 font-semibold">
                 {errors.full_name}
               </p>
             )}
@@ -227,7 +248,7 @@ function InstructorForm({
               htmlFor="instructor-employee-code"
               className="text-sm font-medium text-slate-900"
             >
-              Employee Code
+              Employee Code *
             </label>
 
             <input
@@ -241,8 +262,15 @@ function InstructorForm({
                 )
               }
               disabled={isSubmitting}
-              className={inputClassName}
+              className={getInputClass('employee_code')}
+              placeholder="e.g. INS-WP-008"
             />
+
+            {errors.employee_code && (
+              <p className="mt-1 text-xs text-red-600 font-semibold">
+                {errors.employee_code}
+              </p>
+            )}
           </div>
 
           <div>
@@ -250,7 +278,7 @@ function InstructorForm({
               htmlFor="instructor-branch"
               className="text-sm font-medium text-slate-900"
             >
-              Branch
+              Branch *
             </label>
 
             <select
@@ -260,9 +288,9 @@ function InstructorForm({
                 updateField('branch_id', event.target.value)
               }
               disabled={isSubmitting}
-              className={`${inputClassName} bg-white`}
+              className={`${getInputClass('branch_id')} bg-white`}
             >
-              <option value="">No branch assigned</option>
+              <option value="">Select an assigned branch</option>
 
               {availableBranches.map((branch) => (
                 <option key={branch.id} value={branch.id}>
@@ -271,6 +299,12 @@ function InstructorForm({
                 </option>
               ))}
             </select>
+
+            {errors.branch_id && (
+              <p className="mt-1 text-xs text-red-600 font-semibold">
+                {errors.branch_id}
+              </p>
+            )}
           </div>
 
           <div>
@@ -278,7 +312,7 @@ function InstructorForm({
               htmlFor="instructor-nic"
               className="text-sm font-medium text-slate-900"
             >
-              NIC
+              NIC *
             </label>
 
             <input
@@ -289,8 +323,15 @@ function InstructorForm({
                 updateField('nic', event.target.value)
               }
               disabled={isSubmitting}
-              className={inputClassName}
+              className={getInputClass('nic')}
+              placeholder="e.g. 198512345678 or 851234567V"
             />
+
+            {errors.nic && (
+              <p className="mt-1 text-xs text-red-600 font-semibold">
+                {errors.nic}
+              </p>
+            )}
           </div>
 
           <div>
@@ -298,7 +339,7 @@ function InstructorForm({
               htmlFor="instructor-phone"
               className="text-sm font-medium text-slate-900"
             >
-              Phone
+              Phone *
             </label>
 
             <input
@@ -309,11 +350,12 @@ function InstructorForm({
                 updateField('phone', event.target.value)
               }
               disabled={isSubmitting}
-              className={inputClassName}
+              className={getInputClass('phone')}
+              placeholder="e.g. +94 77 123 4567"
             />
 
             {errors.phone && (
-              <p className="mt-1 text-sm text-red-600">
+              <p className="mt-1 text-xs text-red-600 font-semibold">
                 {errors.phone}
               </p>
             )}
@@ -324,7 +366,7 @@ function InstructorForm({
               htmlFor="instructor-email"
               className="text-sm font-medium text-slate-900"
             >
-              Email
+              Email *
             </label>
 
             <input
@@ -335,11 +377,12 @@ function InstructorForm({
                 updateField('email', event.target.value)
               }
               disabled={isSubmitting}
-              className={inputClassName}
+              className={getInputClass('email')}
+              placeholder="e.g. instructor@royaldriving.lk"
             />
 
             {errors.email && (
-              <p className="mt-1 text-sm text-red-600">
+              <p className="mt-1 text-xs text-red-600 font-semibold">
                 {errors.email}
               </p>
             )}
@@ -350,7 +393,7 @@ function InstructorForm({
               htmlFor="instructor-licence-number"
               className="text-sm font-medium text-slate-900"
             >
-              Driving Licence Number
+              Driving Licence Number *
             </label>
 
             <input
@@ -364,8 +407,15 @@ function InstructorForm({
                 )
               }
               disabled={isSubmitting}
-              className={inputClassName}
+              className={getInputClass('driving_licence_number')}
+              placeholder="e.g. B8901234"
             />
+
+            {errors.driving_licence_number && (
+              <p className="mt-1 text-xs text-red-600 font-semibold">
+                {errors.driving_licence_number}
+              </p>
+            )}
           </div>
 
           <div>
@@ -373,7 +423,7 @@ function InstructorForm({
               htmlFor="instructor-licence-expiry"
               className="text-sm font-medium text-slate-900"
             >
-              Driving Licence Expiry Date
+              Driving Licence Expiry Date *
             </label>
 
             <input
@@ -387,11 +437,11 @@ function InstructorForm({
                 )
               }
               disabled={isSubmitting}
-              className={inputClassName}
+              className={getInputClass('driving_licence_expiry_date')}
             />
 
             {errors.driving_licence_expiry_date && (
-              <p className="mt-1 text-sm text-red-600">
+              <p className="mt-1 text-xs text-red-600 font-semibold">
                 {errors.driving_licence_expiry_date}
               </p>
             )}
@@ -402,7 +452,7 @@ function InstructorForm({
               htmlFor="instructor-joined-date"
               className="text-sm font-medium text-slate-900"
             >
-              Joined Date
+              Joined Date *
             </label>
 
             <input
@@ -413,12 +463,18 @@ function InstructorForm({
                 updateField('joined_date', event.target.value)
               }
               disabled={isSubmitting}
-              className={inputClassName}
+              className={getInputClass('joined_date')}
             />
+
+            {errors.joined_date && (
+              <p className="mt-1 text-xs text-red-600 font-semibold">
+                {errors.joined_date}
+              </p>
+            )}
           </div>
         </div>
 
-        <label className="flex items-center gap-2 text-sm font-medium text-slate-900">
+        <label className="flex items-center gap-2 text-sm font-medium text-slate-900 cursor-pointer select-none">
           <input
             type="checkbox"
             checked={form.is_active}
@@ -426,7 +482,7 @@ function InstructorForm({
               updateField('is_active', event.target.checked)
             }
             disabled={isSubmitting}
-            className="h-4 w-4 rounded border-slate-300"
+            className="h-4 w-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
           />
 
           Active instructor
@@ -437,7 +493,7 @@ function InstructorForm({
             type="button"
             onClick={onCancel}
             disabled={isSubmitting}
-            className="rounded-lg border border-slate-300 px-4 py-2 font-medium text-slate-700 hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-60"
+            className="rounded-lg border border-slate-300 px-4 py-2 font-medium text-slate-700 hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-60 cursor-pointer"
           >
             Cancel
           </button>
@@ -445,7 +501,7 @@ function InstructorForm({
           <button
             type="submit"
             disabled={isSubmitting}
-            className="rounded-lg bg-blue-600 px-4 py-2 font-medium text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-60"
+            className="rounded-lg bg-blue-600 px-4 py-2 font-medium text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-60 cursor-pointer shadow-xs transition-colors"
           >
             {isSubmitting
               ? 'Saving...'

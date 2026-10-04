@@ -51,22 +51,30 @@ export function validateVehicle(
     errors.transmission_type = 'Transmission type is required.'
   }
 
+  if (!input.fuel_type) {
+    errors.fuel_type = 'Fuel type is required.'
+  }
+
   if (
-    input.year_of_manufacture !== undefined &&
-    input.year_of_manufacture !== '' &&
-    input.year_of_manufacture !== null
+    input.year_of_manufacture === undefined ||
+    input.year_of_manufacture === '' ||
+    input.year_of_manufacture === null
   ) {
+    errors.year_of_manufacture = 'Year of manufacture is required.'
+  } else {
     const year = Number(input.year_of_manufacture)
-    if (isNaN(year) || !Number.isInteger(year) || year < 1900 || year > 2100) {
-      errors.year_of_manufacture = 'Enter a valid year between 1900 and 2100.'
+    if (isNaN(year) || !Number.isInteger(year) || year < 1990 || year > 2030) {
+      errors.year_of_manufacture = 'Enter a valid year between 1990 and 2030.'
     }
   }
 
   if (
-    input.current_odometer_km !== undefined &&
-    input.current_odometer_km !== '' &&
-    input.current_odometer_km !== null
+    input.current_odometer_km === undefined ||
+    input.current_odometer_km === '' ||
+    input.current_odometer_km === null
   ) {
+    errors.current_odometer_km = 'Current odometer reading is required.'
+  } else {
     const odo = Number(input.current_odometer_km)
     if (isNaN(odo) || odo < 0) {
       errors.current_odometer_km = 'Odometer reading cannot be negative.'

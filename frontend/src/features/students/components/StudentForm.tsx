@@ -1,5 +1,5 @@
 import { useState, type FormEvent, type DragEvent } from 'react'
-import { Upload, Trash2, Camera } from 'lucide-react'
+import { Upload, Trash2, Camera, AlertCircle } from 'lucide-react'
 import type { CreateStudentInput, Student } from '../types/student'
 import {
   hasStudentValidationErrors,
@@ -135,7 +135,7 @@ function StudentForm({
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
 
-    const studentInput: CreateStudentInput = {
+    const studentInput: CreateStudentInput & { branch_id?: string | null } = {
       driving_school_id: drivingSchoolId,
       branch_id: normalizeOptionalText(form.branch_id),
       primary_instructor_id: normalizeOptionalText(
@@ -160,6 +160,10 @@ function StudentForm({
 
     const validationErrors = validateStudentInput(studentInput)
 
+    if (branchOptions.length > 0 && !form.branch_id) {
+      validationErrors.branch_id = 'Please select a driving school branch.'
+    }
+
     if (hasStudentValidationErrors(validationErrors)) {
       setErrors(validationErrors)
       return
@@ -169,9 +173,17 @@ function StudentForm({
     await onSubmit(studentInput)
   }
 
+  const getInputClass = (fieldName: keyof StudentValidationErrors) =>
+    `w-full rounded-lg border px-3 py-2 text-sm text-slate-900 outline-none transition-colors ${
+      errors[fieldName]
+        ? 'border-red-500 bg-red-50/20 focus:border-red-600 focus:ring-1 focus:ring-red-500'
+        : 'border-slate-300 focus:border-blue-500'
+    }`
+
   return (
     <form
       onSubmit={handleSubmit}
+      noValidate
       className="space-y-8 rounded-2xl bg-white p-6 shadow-sm"
     >
       <div>
@@ -183,6 +195,19 @@ function StudentForm({
           Enter the student's personal, photo media, and registration information.
         </p>
       </div>
+
+      {/* Validation Alert Banner */}
+      {hasStudentValidationErrors(errors) && (
+        <div className="rounded-xl border border-red-200 bg-red-50 p-4 text-xs text-red-800 flex items-start gap-2.5 animate-in fade-in">
+          <AlertCircle className="h-4 w-4 text-red-600 shrink-0 mt-0.5" />
+          <div className="space-y-1">
+            <p className="font-bold">Required Details Incomplete:</p>
+            <p className="text-red-700">
+              Please fill in all mandatory fields (Full Name, NIC, Date of Birth, Phone, Email, Address, Branch, and Registration Date) before saving.
+            </p>
+          </div>
+        </div>
+      )}
 
       {/* Student Photo & Media Drag and Drop Upload */}
       <div className="rounded-2xl border border-slate-200 bg-slate-50/60 p-4 space-y-3">
@@ -290,12 +315,12 @@ function StudentForm({
               onChange={(event) =>
                 updateField('full_name', event.target.value)
               }
-              className="w-full rounded-lg border border-slate-300 px-3 py-2 outline-none focus:border-blue-500"
+              className={getInputClass('full_name')}
               placeholder="Enter student's full name"
             />
 
             {errors.full_name && (
-              <p className="mt-1 text-sm text-red-600">
+              <p className="mt-1 text-xs text-red-600 font-semibold">
                 {errors.full_name}
               </p>
             )}
@@ -316,8 +341,8 @@ function StudentForm({
               onChange={(event) =>
                 updateField('student_code', event.target.value)
               }
-              className="w-full rounded-lg border border-slate-300 px-3 py-2 outline-none focus:border-blue-500"
-              placeholder="Enter student code"
+              className={getInputClass('student_code')}
+              placeholder="e.g. STU-2026-0042"
             />
           </div>
 
@@ -326,7 +351,7 @@ function StudentForm({
               htmlFor="nic"
               className="mb-1 block text-sm font-medium text-slate-700"
             >
-              NIC
+              NIC *
             </label>
 
             <input
@@ -334,9 +359,15 @@ function StudentForm({
               type="text"
               value={form.nic}
               onChange={(event) => updateField('nic', event.target.value)}
-              className="w-full rounded-lg border border-slate-300 px-3 py-2 outline-none focus:border-blue-500"
-              placeholder="Enter NIC number"
+              className={getInputClass('nic')}
+              placeholder="Enter NIC number (e.g. 200012345678 or 987654321V)"
             />
+
+            {errors.nic && (
+              <p className="mt-1 text-xs text-red-600 font-semibold">
+                {errors.nic}
+              </p>
+            )}
           </div>
 
           <div>
@@ -344,7 +375,7 @@ function StudentForm({
               htmlFor="date_of_birth"
               className="mb-1 block text-sm font-medium text-slate-700"
             >
-              Date of Birth
+              Date of Birth *
             </label>
 
             <input
@@ -354,11 +385,11 @@ function StudentForm({
               onChange={(event) =>
                 updateField('date_of_birth', event.target.value)
               }
-              className="w-full rounded-lg border border-slate-300 px-3 py-2 outline-none focus:border-blue-500"
+              className={getInputClass('date_of_birth')}
             />
 
             {errors.date_of_birth && (
-              <p className="mt-1 text-sm text-red-600">
+              <p className="mt-1 text-xs text-red-600 font-semibold">
                 {errors.date_of_birth}
               </p>
             )}
@@ -369,7 +400,7 @@ function StudentForm({
               htmlFor="phone"
               className="mb-1 block text-sm font-medium text-slate-700"
             >
-              Phone
+              Phone *
             </label>
 
             <input
@@ -379,9 +410,15 @@ function StudentForm({
               onChange={(event) =>
                 updateField('phone', event.target.value)
               }
-              className="w-full rounded-lg border border-slate-300 px-3 py-2 outline-none focus:border-blue-500"
-              placeholder="Enter phone number"
+              className={getInputClass('phone')}
+              placeholder="e.g. 077 123 4567"
             />
+
+            {errors.phone && (
+              <p className="mt-1 text-xs text-red-600 font-semibold">
+                {errors.phone}
+              </p>
+            )}
           </div>
 
           <div>
@@ -389,7 +426,7 @@ function StudentForm({
               htmlFor="email"
               className="mb-1 block text-sm font-medium text-slate-700"
             >
-              Email
+              Email *
             </label>
 
             <input
@@ -399,12 +436,12 @@ function StudentForm({
               onChange={(event) =>
                 updateField('email', event.target.value)
               }
-              className="w-full rounded-lg border border-slate-300 px-3 py-2 outline-none focus:border-blue-500"
+              className={getInputClass('email')}
               placeholder="student@example.com"
             />
 
             {errors.email && (
-              <p className="mt-1 text-sm text-red-600">
+              <p className="mt-1 text-xs text-red-600 font-semibold">
                 {errors.email}
               </p>
             )}
@@ -416,7 +453,7 @@ function StudentForm({
             htmlFor="address"
             className="mb-1 block text-sm font-medium text-slate-700"
           >
-            Address
+            Address *
           </label>
 
           <textarea
@@ -426,9 +463,15 @@ function StudentForm({
             onChange={(event) =>
               updateField('address', event.target.value)
             }
-            className="w-full rounded-lg border border-slate-300 px-3 py-2 outline-none focus:border-blue-500"
-            placeholder="Enter residential address"
+            className={getInputClass('address')}
+            placeholder="Enter residential address for DMT permit registry"
           />
+
+          {errors.address && (
+            <p className="mt-1 text-xs text-red-600 font-semibold">
+              {errors.address}
+            </p>
+          )}
         </div>
       </section>
 
@@ -443,7 +486,7 @@ function StudentForm({
               htmlFor="branch_id"
               className="mb-1 block text-sm font-medium text-slate-700"
             >
-              Branch
+              Branch *
             </label>
 
             <select
@@ -452,9 +495,9 @@ function StudentForm({
               onChange={(event) =>
                 updateField('branch_id', event.target.value)
               }
-              className="w-full rounded-lg border border-slate-300 px-3 py-2 outline-none focus:border-blue-500"
+              className={getInputClass('branch_id')}
             >
-              <option value="">No branch selected</option>
+              <option value="">Select a branch</option>
 
               {branchOptions.map((branch) => (
                 <option key={branch.value} value={branch.value}>
@@ -462,6 +505,12 @@ function StudentForm({
                 </option>
               ))}
             </select>
+
+            {errors.branch_id && (
+              <p className="mt-1 text-xs text-red-600 font-semibold">
+                {errors.branch_id}
+              </p>
+            )}
           </div>
 
           <div>
@@ -481,9 +530,9 @@ function StudentForm({
                   event.target.value,
                 )
               }
-              className="w-full rounded-lg border border-slate-300 px-3 py-2 outline-none focus:border-blue-500"
+              className={getInputClass('primary_instructor_id')}
             >
-              <option value="">Not assigned</option>
+              <option value="">Not assigned (Assign later)</option>
 
               {instructorOptions.map((instructor) => (
                 <option
@@ -511,11 +560,11 @@ function StudentForm({
               onChange={(event) =>
                 updateField('registration_date', event.target.value)
               }
-              className="w-full rounded-lg border border-slate-300 px-3 py-2 outline-none focus:border-blue-500"
+              className={getInputClass('registration_date')}
             />
 
             {errors.registration_date && (
-              <p className="mt-1 text-sm text-red-600">
+              <p className="mt-1 text-xs text-red-600 font-semibold">
                 {errors.registration_date}
               </p>
             )}
@@ -529,12 +578,12 @@ function StudentForm({
               onChange={(event) =>
                 updateField('is_active', event.target.checked)
               }
-              className="h-4 w-4"
+              className="h-4 w-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
             />
 
             <label
               htmlFor="is_active"
-              className="ml-2 text-sm font-medium text-slate-700"
+              className="ml-2 text-sm font-medium text-slate-700 cursor-pointer select-none"
             >
               Active student
             </label>
@@ -544,7 +593,7 @@ function StudentForm({
 
       <section>
         <h3 className="mb-4 text-sm font-semibold uppercase tracking-wide text-slate-500">
-          Emergency Contact
+          Emergency Contact (Optional)
         </h3>
 
         <div className="grid gap-5 md:grid-cols-2">
@@ -566,7 +615,7 @@ function StudentForm({
                   event.target.value,
                 )
               }
-              className="w-full rounded-lg border border-slate-300 px-3 py-2 outline-none focus:border-blue-500"
+              className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm outline-none focus:border-blue-500"
               placeholder="Emergency contact name"
             />
           </div>
@@ -589,7 +638,7 @@ function StudentForm({
                   event.target.value,
                 )
               }
-              className="w-full rounded-lg border border-slate-300 px-3 py-2 outline-none focus:border-blue-500"
+              className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm outline-none focus:border-blue-500"
               placeholder="Emergency contact number"
             />
           </div>
@@ -597,7 +646,7 @@ function StudentForm({
       </section>
 
       {errors.driving_school_id && (
-        <p className="text-sm text-red-600">
+        <p className="text-xs font-semibold text-red-600">
           {errors.driving_school_id}
         </p>
       )}
@@ -608,7 +657,7 @@ function StudentForm({
             type="button"
             onClick={onCancel}
             disabled={isSubmitting}
-            className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 disabled:opacity-50"
+            className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 disabled:opacity-50 cursor-pointer"
           >
             Cancel
           </button>
@@ -617,9 +666,9 @@ function StudentForm({
         <button
           type="submit"
           disabled={isSubmitting}
-          className="rounded-lg bg-blue-600 px-5 py-2 text-sm font-medium text-white disabled:cursor-not-allowed disabled:opacity-50"
+          className="rounded-lg bg-blue-600 px-5 py-2 text-sm font-medium text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50 cursor-pointer shadow-xs transition-colors"
         >
-          {isSubmitting ? 'Saving...' : 'Register Student'}
+          {isSubmitting ? 'Saving...' : initialStudent ? 'Save Changes' : 'Register Student'}
         </button>
       </div>
     </form>
