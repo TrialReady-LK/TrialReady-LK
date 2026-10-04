@@ -1,395 +1,584 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="100%" height="100%" style="background:#090d16; font-family:'Segoe UI', system-ui, -apple-system, sans-serif;">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="100%" height="100%" style="background:#070b14; font-family:'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;">
   <defs>
-    <!-- Gradients -->
+    <!-- Background Gradients -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#070b14" />
+      <stop offset="50%" stop-color="#0b1329" />
+      <stop offset="100%" stop-color="#050811" />
+    </linearGradient>
+
+    <!-- Header Gradient -->
     <linearGradient id="headerGrad" x1="0%" y1="0%" x2="100%" y2="0%">
       <stop offset="0%" stop-color="#1e3a8a" />
-      <stop offset="50%" stop-color="#2563eb" />
-      <stop offset="100%" stop-color="#0284c7" />
+      <stop offset="35%" stop-color="#2563eb" />
+      <stop offset="70%" stop-color="#0284c7" />
+      <stop offset="100%" stop-color="#0f766e" />
     </linearGradient>
-    <linearGradient id="cardGrad1" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#1e293b" />
-      <stop offset="100%" stop-color="#0f172a" />
+
+    <!-- Card Gradients -->
+    <linearGradient id="cardGradDark" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#151e32" />
+      <stop offset="100%" stop-color="#0c1322" />
     </linearGradient>
-    <linearGradient id="cardGradAi" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#1e1b4b" />
-      <stop offset="100%" stop-color="#0f172a" />
+
+    <linearGradient id="cardGradAI" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#241442" />
+      <stop offset="50%" stop-color="#1a1033" />
+      <stop offset="100%" stop-color="#0d091a" />
     </linearGradient>
-    <linearGradient id="cardGradSec" x1="0%" y1="0%" x2="0%" y2="100%">
+
+    <linearGradient id="cardGradBackend" x1="0%" y1="0%" x2="0%" y2="100%">
       <stop offset="0%" stop-color="#064e3b" />
-      <stop offset="100%" stop-color="#022c22" />
+      <stop offset="50%" stop-color="#063c2f" />
+      <stop offset="100%" stop-color="#022018" />
     </linearGradient>
+
+    <linearGradient id="cardGradFrontend" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0c2d48" />
+      <stop offset="50%" stop-color="#072036" />
+      <stop offset="100%" stop-color="#041220" />
+    </linearGradient>
+
+    <linearGradient id="cardGradStores" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#3d2204" />
+      <stop offset="50%" stop-color="#2c1701" />
+      <stop offset="100%" stop-color="#150a00" />
+    </linearGradient>
+
+    <linearGradient id="pillGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#3b82f6" />
+      <stop offset="100%" stop-color="#8b5cf6" />
+    </linearGradient>
+
+    <!-- Glow & Drop Shadow Filters -->
     <filter id="shadow" x="-5%" y="-5%" width="110%" height="115%">
-      <feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#000" flood-opacity="0.5"/>
+      <feDropShadow dx="0" dy="10" stdDeviation="10" flood-color="#000000" flood-opacity="0.6"/>
     </filter>
-    <!-- Arrow marker -->
-    <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-      <path d="M 0 1 L 10 5 L 0 9 z" fill="#38bdf8" />
+
+    <filter id="glowBlue" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="6" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+
+    <!-- Arrow Markers -->
+    <marker id="arrowBlue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#38bdf8" />
     </marker>
-    <marker id="arrowGreen" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-      <path d="M 0 1 L 10 5 L 0 9 z" fill="#34d399" />
+    <marker id="arrowPurple" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#a855f7" />
+    </marker>
+    <marker id="arrowGreen" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#10b981" />
+    </marker>
+    <marker id="arrowGold" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#f59e0b" />
     </marker>
   </defs>
 
-  <!-- Title Header Bar -->
-  <rect x="30" y="25" width="1540" height="70" rx="14" fill="url(#headerGrad)" filter="url(#shadow)" />
-  <text x="60" y="68" fill="#ffffff" font-size="24" font-weight="900" letter-spacing="0.5">SLIDE 5: HIGH-LEVEL SYSTEM ARCHITECTURE</text>
-  <text x="750" y="68" fill="#bae6fd" font-size="15" font-weight="600">TrialReady LK — AI-Assisted Driving Academy Management &amp; Regulatory Compliance SaaS</text>
-  <rect x="1440" y="42" width="105" height="34" rx="8" fill="#ffffff" fill-opacity="0.2"/>
-  <text x="1455" y="65" fill="#ffffff" font-size="13" font-weight="800">BSc Hons</text>
+  <!-- Background Base Canvas -->
+  <rect width="1920" height="1080" fill="url(#bgGrad)" />
 
-  <!-- ================= COLUMN 1: DATA SOURCES ================= -->
-  <g transform="translate(30, 115)" filter="url(#shadow)">
-    <rect width="230" height="610" rx="16" fill="url(#cardGrad1)" stroke="#334155" stroke-width="1.5" />
-    <rect width="230" height="42" rx="16" fill="#3b82f6" fill-opacity="0.2" />
-    <text x="15" y="28" fill="#60a5fa" font-size="14" font-weight="800">1. DATA SOURCES</text>
+  <!-- Subtle Blueprint Grid Lines -->
+  <g stroke="#1e293b" stroke-width="0.75" opacity="0.25">
+    <line x1="0" y1="120" x2="1920" y2="120" />
+    <line x1="0" y1="890" x2="1920" y2="890" />
+    <line x1="335" y1="120" x2="335" y2="890" />
+    <line x1="650" y1="120" x2="650" y2="890" />
+    <line x1="975" y1="120" x2="975" y2="890" />
+    <line x1="1275" y1="120" x2="1275" y2="890" />
+    <line x1="1590" y1="120" x2="1590" y2="890" />
+  </g>
 
-    <!-- Source Items -->
-    <g transform="translate(12, 55)">
-      <rect width="206" height="78" rx="10" fill="#1e293b" stroke="#475569" stroke-width="1" />
-      <text x="10" y="22" fill="#38bdf8" font-size="12" font-weight="700">🧑‍🎓 Student Enrolments</text>
-      <text x="10" y="40" fill="#94a3b8" font-size="10.5">• NIC &amp; DOB Verification</text>
-      <text x="10" y="56" fill="#94a3b8" font-size="10.5">• Residential Address &amp; Tel</text>
-      <text x="10" y="70" fill="#94a3b8" font-size="10.5">• Branch &amp; Package Choice</text>
+  <!-- ========================================================================= -->
+  <!-- TOP PRESENTATION TITLE BANNER -->
+  <!-- ========================================================================= -->
+  <g transform="translate(35, 25)" filter="url(#shadow)">
+    <rect width="1850" height="80" rx="16" fill="url(#headerGrad)" stroke="#38bdf8" stroke-width="1.5" />
+    
+    <!-- Title Text -->
+    <text x="35" y="48" fill="#ffffff" font-size="25" font-weight="900" letter-spacing="1">
+      SLIDE 5: HIGH-LEVEL SYSTEM ARCHITECTURE &amp; DATA FLOW PIPELINE
+    </text>
+    <text x="35" y="70" fill="#bae6fd" font-size="14.5" font-weight="600">
+      TrialReady LK — AI-Assisted Driving Academy Management &amp; DMT Regulatory Compliance SaaS Platform
+    </text>
+
+    <!-- Right Side Degree & Role Badges -->
+    <g transform="translate(1420, 16)">
+      <rect width="210" height="48" rx="10" fill="#000000" fill-opacity="0.35" stroke="#ffffff" stroke-opacity="0.3" stroke-width="1" />
+      <text x="105" y="22" fill="#ffffff" font-size="12" font-weight="800" text-anchor="middle">BSc (Hons) in Cyber Security</text>
+      <text x="105" y="39" fill="#38bdf8" font-size="11.5" font-weight="700" text-anchor="middle">Lead Full-Stack Architect</text>
     </g>
 
-    <g transform="translate(12, 145)">
-      <rect width="206" height="78" rx="10" fill="#1e293b" stroke="#475569" stroke-width="1" />
-      <text x="10" y="22" fill="#34d399" font-size="12" font-weight="700">🏥 NTMI Medical Records</text>
-      <text x="10" y="40" fill="#94a3b8" font-size="10.5">• Clinical Fitness Clearance</text>
-      <text x="10" y="56" fill="#94a3b8" font-size="10.5">• Certificate Barcode No</text>
-      <text x="10" y="70" fill="#94a3b8" font-size="10.5">• Clinic Branch Registry</text>
-    </g>
-
-    <g transform="translate(12, 235)">
-      <rect width="206" height="78" rx="10" fill="#1e293b" stroke="#475569" stroke-width="1" />
-      <text x="10" y="22" fill="#fbbf24" font-size="12" font-weight="700">📜 DMT Learner Permits</text>
-      <text x="10" y="40" fill="#94a3b8" font-size="10.5">• 6-Month Permit Number</text>
-      <text x="10" y="56" fill="#94a3b8" font-size="10.5">• Issue Date &amp; Expiry Date</text>
-      <text x="10" y="70" fill="#94a3b8" font-size="10.5">• Vehicle Classes (A/B/B1)</text>
-    </g>
-
-    <g transform="translate(12, 325)">
-      <rect width="206" height="78" rx="10" fill="#1e293b" stroke="#475569" stroke-width="1" />
-      <text x="10" y="22" fill="#f472b6" font-size="12" font-weight="700">🚗 Practical Sessions</text>
-      <text x="10" y="40" fill="#94a3b8" font-size="10.5">• In-Car 1-5★ Star Ratings</text>
-      <text x="10" y="56" fill="#94a3b8" font-size="10.5">• 7 Core DMT Maneuvers</text>
-      <text x="10" y="70" fill="#94a3b8" font-size="10.5">• Attendance &amp; Lesson Hours</text>
-    </g>
-
-    <g transform="translate(12, 415)">
-      <rect width="206" height="78" rx="10" fill="#1e293b" stroke="#475569" stroke-width="1" />
-      <text x="10" y="22" fill="#c084fc" font-size="12" font-weight="700">📝 Mock Theory Exams</text>
-      <text x="10" y="40" fill="#94a3b8" font-size="10.5">• 40-Q Timed Submissions</text>
-      <text x="10" y="56" fill="#94a3b8" font-size="10.5">• Trilingual (EN / SI / TA)</text>
-      <text x="10" y="70" fill="#94a3b8" font-size="10.5">• Category Diagnostic Logs</text>
-    </g>
-
-    <g transform="translate(12, 505)">
-      <rect width="206" height="88" rx="10" fill="#1e293b" stroke="#475569" stroke-width="1" />
-      <text x="10" y="22" fill="#2dd4bf" font-size="12" font-weight="700">💳 Tuition Payments</text>
-      <text x="10" y="40" fill="#94a3b8" font-size="10.5">• Bank Slips &amp; CEFT Transfers</text>
-      <text x="10" y="56" fill="#94a3b8" font-size="10.5">• Online Card / LankaQR</text>
-      <text x="10" y="72" fill="#94a3b8" font-size="10.5">• Cash at Academy Counter</text>
+    <g transform="translate(1645, 16)">
+      <rect width="170" height="48" rx="10" fill="#10b981" fill-opacity="0.25" stroke="#10b981" stroke-width="1.5" />
+      <text x="85" y="22" fill="#34d399" font-size="11.5" font-weight="800" text-anchor="middle">LEFT-TO-RIGHT</text>
+      <text x="85" y="39" fill="#ffffff" font-size="12" font-weight="800" text-anchor="middle">6-Stage Pipeline</text>
     </g>
   </g>
 
-  <!-- Arrow 1 -> 2 -->
-  <path d="M 265 420 L 290 420" stroke="#38bdf8" stroke-width="3" fill="none" marker-end="url(#arrow)" />
+  <!-- ========================================================================= -->
+  <!-- 1. COLUMN 1: DATA SOURCES -->
+  <!-- ========================================================================= -->
+  <g transform="translate(35, 125)" filter="url(#shadow)">
+    <!-- Column Outer Shell -->
+    <rect width="280" height="740" rx="18" fill="url(#cardGradDark)" stroke="#3b82f6" stroke-width="2" />
+    <rect width="280" height="50" rx="18" fill="#3b82f6" fill-opacity="0.25" />
+    <text x="20" y="33" fill="#60a5fa" font-size="16" font-weight="900" letter-spacing="0.5">1. DATA SOURCES</text>
+    <rect x="210" y="14" width="55" height="22" rx="6" fill="#3b82f6" />
+    <text x="237" y="30" fill="#ffffff" font-size="11" font-weight="900" text-anchor="middle">INPUT</text>
 
-  <!-- ================= COLUMN 2: PREPROCESSING ================= -->
-  <g transform="translate(295, 115)" filter="url(#shadow)">
-    <rect width="230" height="610" rx="16" fill="url(#cardGrad1)" stroke="#334155" stroke-width="1.5" />
-    <rect width="230" height="42" rx="16" fill="#0284c7" fill-opacity="0.2" />
-    <text x="15" y="28" fill="#38bdf8" font-size="14" font-weight="800">2. PREPROCESSING</text>
-
-    <g transform="translate(12, 55)">
-      <rect width="206" height="95" rx="10" fill="#0f172a" stroke="#0284c7" stroke-width="1" />
-      <text x="10" y="22" fill="#38bdf8" font-size="12" font-weight="700">⚙️ Zod &amp; Type Validator</text>
-      <text x="10" y="42" fill="#94a3b8" font-size="10.5">• Strict Schema Validation</text>
-      <text x="10" y="58" fill="#94a3b8" font-size="10.5">• Anti-XSS Virtual DOM</text>
-      <text x="10" y="74" fill="#94a3b8" font-size="10.5">• NIC &amp; Phone Sanitization</text>
-      <text x="10" y="90" fill="#94a3b8" font-size="10.5">• Prototype Pollution Guard</text>
+    <!-- Card 1: Student Profiles -->
+    <g transform="translate(15, 65)">
+      <rect width="250" height="96" rx="12" fill="#0f172a" stroke="#334155" stroke-width="1.2" />
+      <text x="14" y="24" fill="#38bdf8" font-size="13.5" font-weight="800">🧑‍🎓 Student Identity Enrolment</text>
+      <text x="14" y="46" fill="#94a3b8" font-size="11.5">• NIC &amp; Date of Birth Verification</text>
+      <text x="14" y="65" fill="#94a3b8" font-size="11.5">• Residential Address &amp; Contact</text>
+      <text x="14" y="84" fill="#94a3b8" font-size="11.5">• Branch &amp; Licence Class (A/B/B1)</text>
     </g>
 
-    <g transform="translate(12, 160)">
-      <rect width="206" height="95" rx="10" fill="#0f172a" stroke="#0284c7" stroke-width="1" />
-      <text x="10" y="22" fill="#38bdf8" font-size="12" font-weight="700">⏱️ Expiry Countdown</text>
-      <text x="10" y="42" fill="#94a3b8" font-size="10.5">• Δt = Expiry - CurrentDate</text>
-      <text x="10" y="58" fill="#94a3b8" font-size="10.5">• Valid (&gt;30d), Warning (&lt;30d)</text>
-      <text x="10" y="74" fill="#94a3b8" font-size="10.5">• Expired (&lt;0d) Blocker Flag</text>
-      <text x="10" y="90" fill="#94a3b8" font-size="10.5">• NTMI Medical Gatekeeper</text>
+    <!-- Card 2: NTMI Medical -->
+    <g transform="translate(15, 175)">
+      <rect width="250" height="96" rx="12" fill="#0f172a" stroke="#334155" stroke-width="1.2" />
+      <text x="14" y="24" fill="#34d399" font-size="13.5" font-weight="800">🏥 NTMI Medical Records</text>
+      <text x="14" y="46" fill="#94a3b8" font-size="11.5">• Clinical Fitness Clearance</text>
+      <text x="14" y="65" fill="#94a3b8" font-size="11.5">• Certificate Number &amp; Barcode</text>
+      <text x="14" y="84" fill="#94a3b8" font-size="11.5">• Examination Date &amp; Validity</text>
     </g>
 
-    <g transform="translate(12, 265)">
-      <rect width="206" height="95" rx="10" fill="#0f172a" stroke="#0284c7" stroke-width="1" />
-      <text x="10" y="22" fill="#38bdf8" font-size="12" font-weight="700">🎯 Skill Vectorizer</text>
-      <text x="10" y="42" fill="#94a3b8" font-size="10.5">• 7 DMT Maneuver Matrix</text>
-      <text x="10" y="58" fill="#94a3b8" font-size="10.5">• Practical Hours Summation</text>
-      <text x="10" y="74" fill="#94a3b8" font-size="10.5">• Attendance Normalization</text>
-      <text x="10" y="90" fill="#94a3b8" font-size="10.5">• Star-Rating Averaging</text>
+    <!-- Card 3: DMT Permit -->
+    <g transform="translate(15, 285)">
+      <rect width="250" height="96" rx="12" fill="#0f172a" stroke="#334155" stroke-width="1.2" />
+      <text x="14" y="24" fill="#fbbf24" font-size="13.5" font-weight="800">📜 DMT Learner's Permits</text>
+      <text x="14" y="46" fill="#94a3b8" font-size="11.5">• Official 6-Month Permit No</text>
+      <text x="14" y="65" fill="#94a3b8" font-size="11.5">• Issue Date &amp; Expiration Date</text>
+      <text x="14" y="84" fill="#94a3b8" font-size="11.5">• Approved Vehicle Class Scope</text>
     </g>
 
-    <g transform="translate(12, 370)">
-      <rect width="206" height="95" rx="10" fill="#0f172a" stroke="#0284c7" stroke-width="1" />
-      <text x="10" y="22" fill="#38bdf8" font-size="12" font-weight="700">🌐 Trilingual Mapper</text>
-      <text x="10" y="42" fill="#94a3b8" font-size="10.5">• Locale Context Provider</text>
-      <text x="10" y="58" fill="#94a3b8" font-size="10.5">• EN ↔ SI ↔ TA Tokenizer</text>
-      <text x="10" y="74" fill="#94a3b8" font-size="10.5">• Fallback Schema Resolver</text>
-      <text x="10" y="90" fill="#94a3b8" font-size="10.5">• Dynamic Question Loader</text>
+    <!-- Card 4: Practical Lessons -->
+    <g transform="translate(15, 395)">
+      <rect width="250" height="96" rx="12" fill="#0f172a" stroke="#334155" stroke-width="1.2" />
+      <text x="14" y="24" fill="#f472b6" font-size="13.5" font-weight="800">🚗 Practical In-Car Lessons</text>
+      <text x="14" y="46" fill="#94a3b8" font-size="11.5">• Instructor Star Ratings (1–5★)</text>
+      <text x="14" y="65" fill="#94a3b8" font-size="11.5">• 7 Mandatory DMT Maneuvers</text>
+      <text x="14" y="84" fill="#94a3b8" font-size="11.5">• Accumulated Road Hours Count</text>
     </g>
 
-    <g transform="translate(12, 475)">
-      <rect width="206" height="115" rx="10" fill="#0f172a" stroke="#0284c7" stroke-width="1" />
-      <text x="10" y="22" fill="#38bdf8" font-size="12" font-weight="700">🛡️ RFC-4180 Sanitizer</text>
-      <text x="10" y="42" fill="#94a3b8" font-size="10.5">• Formula Injection Defense</text>
-      <text x="10" y="58" fill="#94a3b8" font-size="10.5">• Strip =, +, -, @ Prefixes</text>
-      <text x="10" y="74" fill="#94a3b8" font-size="10.5">• UTF-8 Excel BOM Header</text>
-      <text x="10" y="90" fill="#94a3b8" font-size="10.5">• DMT Audit Log Formatting</text>
+    <!-- Card 5: Theory Mock Exams -->
+    <g transform="translate(15, 505)">
+      <rect width="250" height="96" rx="12" fill="#0f172a" stroke="#334155" stroke-width="1.2" />
+      <text x="14" y="24" fill="#c084fc" font-size="13.5" font-weight="800">📝 Trilingual Theory Mocks</text>
+      <text x="14" y="46" fill="#94a3b8" font-size="11.5">• 40-Question Timed Submissions</text>
+      <text x="14" y="65" fill="#94a3b8" font-size="11.5">• Sinhala / Tamil / English Quizzes</text>
+      <text x="14" y="84" fill="#94a3b8" font-size="11.5">• Category Diagnostic Weaknesses</text>
+    </g>
+
+    <!-- Card 6: Fee Payments -->
+    <g transform="translate(15, 615)">
+      <rect width="250" height="106" rx="12" fill="#0f172a" stroke="#334155" stroke-width="1.2" />
+      <text x="14" y="24" fill="#2dd4bf" font-size="13.5" font-weight="800">💳 Tuition &amp; Fee Payments</text>
+      <text x="14" y="46" fill="#94a3b8" font-size="11.5">• Bank Deposit Slips &amp; CEFT</text>
+      <text x="14" y="65" fill="#94a3b8" font-size="11.5">• LankaQR National Standards</text>
+      <text x="14" y="84" fill="#94a3b8" font-size="11.5">• Package Installments &amp; Dues</text>
     </g>
   </g>
 
-  <!-- Arrow 2 -> 3 -->
-  <path d="M 530 420 L 555 420" stroke="#38bdf8" stroke-width="3" fill="none" marker-end="url(#arrow)" />
+  <!-- Connective Pipe: 1 -> 2 -->
+  <g>
+    <path d="M 315 495 L 345 495" stroke="#38bdf8" stroke-width="4" fill="none" marker-end="url(#arrowBlue)" />
+    <rect x="316" y="465" width="26" height="20" rx="4" fill="#0369a1" />
+    <text x="329" y="479" fill="#ffffff" font-size="10" font-weight="900" text-anchor="middle">P1</text>
+  </g>
 
-  <!-- ================= COLUMN 3: MODEL / INFERENCE ================= -->
-  <g transform="translate(560, 115)" filter="url(#shadow)">
-    <rect width="245" height="610" rx="16" fill="url(#cardGradAi)" stroke="#6366f1" stroke-width="2" />
-    <rect width="245" height="42" rx="16" fill="#4f46e5" fill-opacity="0.3" />
-    <text x="15" y="28" fill="#818cf8" font-size="14" font-weight="800">3. MODEL &amp; INFERENCE</text>
+  <!-- ========================================================================= -->
+  <!-- 2. COLUMN 2: PREPROCESSING LAYER -->
+  <!-- ========================================================================= -->
+  <g transform="translate(350, 125)" filter="url(#shadow)">
+    <rect width="280" height="740" rx="18" fill="url(#cardGradDark)" stroke="#0284c7" stroke-width="2" />
+    <rect width="280" height="50" rx="18" fill="#0284c7" fill-opacity="0.25" />
+    <text x="20" y="33" fill="#38bdf8" font-size="16" font-weight="900" letter-spacing="0.5">2. PREPROCESSING</text>
+    <rect x="200" y="14" width="65" height="22" rx="6" fill="#0284c7" />
+    <text x="232" y="30" fill="#ffffff" font-size="11" font-weight="900" text-anchor="middle">CLEANSE</text>
 
-    <!-- Formula Box -->
-    <g transform="translate(12, 55)">
-      <rect width="221" height="155" rx="10" fill="#0f172a" stroke="#818cf8" stroke-width="1.5" />
-      <text x="10" y="22" fill="#a5b4fc" font-size="12" font-weight="800">🧠 6-Factor AI Readiness</text>
-      <rect x="8" y="30" width="205" height="22" rx="5" fill="#312e81"/>
-      <text x="14" y="45" fill="#c7d2fe" font-size="11" font-weight="700">S = Σ ( W_i × s_i )  ∈ [0, 100]</text>
+    <!-- Process 1: Zod Validation -->
+    <g transform="translate(15, 65)">
+      <rect width="250" height="115" rx="12" fill="#0b1526" stroke="#0284c7" stroke-width="1.2" />
+      <text x="14" y="24" fill="#38bdf8" font-size="13.5" font-weight="800">⚙️ Zod Strict Type Sanitizer</text>
+      <text x="14" y="48" fill="#94a3b8" font-size="11.5">• Schema-Driven Validation Rules</text>
+      <text x="14" y="68" fill="#94a3b8" font-size="11.5">• Anti-XSS Virtual DOM Encoding</text>
+      <text x="14" y="88" fill="#94a3b8" font-size="11.5">• NIC &amp; Phone Canonicalization</text>
+      <text x="14" y="106" fill="#94a3b8" font-size="11.5">• Prototype Pollution Interceptor</text>
+    </g>
+
+    <!-- Process 2: Countdown Engine -->
+    <g transform="translate(15, 195)">
+      <rect width="250" height="115" rx="12" fill="#0b1526" stroke="#0284c7" stroke-width="1.2" />
+      <text x="14" y="24" fill="#38bdf8" font-size="13.5" font-weight="800">⏱️ Permit Expiry Countdown</text>
+      <text x="14" y="48" fill="#94a3b8" font-size="11.5">• Δt = Date(expiry) - Date(now)</text>
+      <text x="14" y="68" fill="#94a3b8" font-size="11.5">• Valid (&gt;30d), Warning (&lt;30d)</text>
+      <text x="14" y="88" fill="#94a3b8" font-size="11.5">• Expired (&lt;0d) Lockout Flag</text>
+      <text x="14" y="106" fill="#94a3b8" font-size="11.5">• NTMI 6-Month Gatekeeper</text>
+    </g>
+
+    <!-- Process 3: Maneuver Vectorizer -->
+    <g transform="translate(15, 325)">
+      <rect width="250" height="115" rx="12" fill="#0b1526" stroke="#0284c7" stroke-width="1.2" />
+      <text x="14" y="24" fill="#38bdf8" font-size="13.5" font-weight="800">🎯 Maneuver Vectorizer</text>
+      <text x="14" y="48" fill="#94a3b8" font-size="11.5">• 7-Skill Mandatory Bitmask</text>
+      <text x="14" y="68" fill="#94a3b8" font-size="11.5">• Practical Hours Accumulator</text>
+      <text x="14" y="88" fill="#94a3b8" font-size="11.5">• Instructor Rating Weighting</text>
+      <text x="14" y="106" fill="#94a3b8" font-size="11.5">• Attendance Consistency Check</text>
+    </g>
+
+    <!-- Process 4: Trilingual Mapper -->
+    <g transform="translate(15, 455)">
+      <rect width="250" height="115" rx="12" fill="#0b1526" stroke="#0284c7" stroke-width="1.2" />
+      <text x="14" y="24" fill="#38bdf8" font-size="13.5" font-weight="800">🌐 Trilingual Token Mapper</text>
+      <text x="14" y="48" fill="#94a3b8" font-size="11.5">• Context-Driven i18n Resolver</text>
+      <text x="14" y="68" fill="#94a3b8" font-size="11.5">• EN ↔ SI ↔ TA Dynamic Switch</text>
+      <text x="14" y="88" fill="#94a3b8" font-size="11.5">• Fallback Schema Resolution</text>
+      <text x="14" y="106" fill="#94a3b8" font-size="11.5">• Official DMT Syllabus Loader</text>
+    </g>
+
+    <!-- Process 5: CSV Sanitizer -->
+    <g transform="translate(15, 585)">
+      <rect width="250" height="136" rx="12" fill="#0b1526" stroke="#0284c7" stroke-width="1.2" />
+      <text x="14" y="24" fill="#38bdf8" font-size="13.5" font-weight="800">🛡️ RFC-4180 CSV Sanitizer</text>
+      <text x="14" y="48" fill="#94a3b8" font-size="11.5">• Formula Injection Defense</text>
+      <text x="14" y="68" fill="#94a3b8" font-size="11.5">• Strip '=', '+', '-', '@' Prefixes</text>
+      <text x="14" y="88" fill="#94a3b8" font-size="11.5">• UTF-8 Excel BOM Header Prep</text>
+      <text x="14" y="108" fill="#94a3b8" font-size="11.5">• Audit Log Stream Generation</text>
+      <text x="14" y="126" fill="#94a3b8" font-size="11.5">• Ministry Reporting Compliance</text>
+    </g>
+  </g>
+
+  <!-- Connective Pipe: 2 -> 3 -->
+  <g>
+    <path d="M 630 495 L 660 495" stroke="#a855f7" stroke-width="4" fill="none" marker-end="url(#arrowPurple)" />
+    <rect x="631" y="465" width="26" height="20" rx="4" fill="#7c3aed" />
+    <text x="644" y="479" fill="#ffffff" font-size="10" font-weight="900" text-anchor="middle">P2</text>
+  </g>
+
+  <!-- ========================================================================= -->
+  <!-- 3. COLUMN 3: MODEL & INFERENCE LAYER (AI CORE) -->
+  <!-- ========================================================================= -->
+  <g transform="translate(665, 125)" filter="url(#shadow)">
+    <rect width="295" height="740" rx="18" fill="url(#cardGradAI)" stroke="#8b5cf6" stroke-width="2.5" />
+    <rect width="295" height="50" rx="18" fill="#8b5cf6" fill-opacity="0.3" />
+    <text x="20" y="33" fill="#c084fc" font-size="16" font-weight="900" letter-spacing="0.5">3. MODEL &amp; INFERENCE</text>
+    <rect x="220" y="14" width="60" height="22" rx="6" fill="#8b5cf6" />
+    <text x="250" y="30" fill="#ffffff" font-size="11" font-weight="900" text-anchor="middle">AI CORE</text>
+
+    <!-- 6-Factor Algorithm Master Box -->
+    <g transform="translate(15, 65)">
+      <rect width="265" height="190" rx="14" fill="#0e0720" stroke="#a855f7" stroke-width="1.5" />
+      <text x="14" y="24" fill="#e9d5ff" font-size="14" font-weight="900">🧠 6-Factor Composite Readiness</text>
       
-      <text x="10" y="72" fill="#e2e8f0" font-size="10.5">• Medical Clearance: 15%</text>
-      <text x="10" y="88" fill="#e2e8f0" font-size="10.5">• DMT Permit Validity: 15%</text>
-      <text x="10" y="104" fill="#e2e8f0" font-size="10.5">• Theory Mock Exam: 15%</text>
-      <text x="10" y="120" fill="#e2e8f0" font-size="10.5">• Practical Road Hours: 25%</text>
-      <text x="10" y="136" fill="#e2e8f0" font-size="10.5">• 7 Maneuver Mastery: 20%</text>
-      <text x="10" y="150" fill="#e2e8f0" font-size="10.5">• Instructor Star Rating: 10%</text>
+      <!-- Formula Banner -->
+      <rect x="12" y="34" width="241" height="28" rx="6" fill="#581c87" stroke="#9333ea" stroke-width="1" />
+      <text x="132" y="53" fill="#ffffff" font-size="12.5" font-weight="900" text-anchor="middle">
+        S = Σ ( W_i × s_i )  ∈  [0, 100] %
+      </text>
+
+      <!-- Weight Breakdown -->
+      <g transform="translate(14, 75)" font-size="11.5" font-weight="700">
+        <text x="0" y="16" fill="#38bdf8">1. NTMI Medical Fitness:</text>
+        <text x="200" y="16" fill="#ffffff">15%</text>
+
+        <text x="0" y="34" fill="#fbbf24">2. DMT Permit Validity:</text>
+        <text x="200" y="34" fill="#ffffff">15%</text>
+
+        <text x="0" y="52" fill="#c084fc">3. Theory Mock Mastery:</text>
+        <text x="200" y="52" fill="#ffffff">15%</text>
+
+        <text x="0" y="70" fill="#34d399">4. Practical Road Hours:</text>
+        <text x="200" y="70" fill="#ffffff">25%</text>
+
+        <text x="0" y="88" fill="#f472b6">5. 7 Core Maneuvers:</text>
+        <text x="200" y="88" fill="#ffffff">20%</text>
+
+        <text x="0" y="106" fill="#fb923c">6. Instructor Star Rating:</text>
+        <text x="200" y="106" fill="#ffffff">10%</text>
+      </g>
     </g>
 
-    <!-- Veto Classifier -->
-    <g transform="translate(12, 220)">
-      <rect width="221" height="115" rx="10" fill="#0f172a" stroke="#ef4444" stroke-width="1.2" />
-      <text x="10" y="22" fill="#f87171" font-size="12" font-weight="800">🚫 Regulatory Veto Rules</text>
-      <text x="10" y="42" fill="#fca5a5" font-size="10.5">• Expired Permit → Hard Stop</text>
-      <text x="10" y="58" fill="#fca5a5" font-size="10.5">• Failed Medical → Tier Lock</text>
-      <text x="10" y="74" fill="#fca5a5" font-size="10.5">• &lt;10 Hours → Not Ready</text>
-      <text x="10" y="90" fill="#cbd5e1" font-size="10.5">• Output: Ready (85%+), Nearly,</text>
-      <text x="10" y="105" fill="#cbd5e1" font-size="10.5">  Needs Practice, Not Ready</text>
+    <!-- Regulatory Veto Box -->
+    <g transform="translate(15, 270)">
+      <rect width="265" height="140" rx="14" fill="#18070d" stroke="#ef4444" stroke-width="1.5" />
+      <text x="14" y="24" fill="#fca5a5" font-size="13.5" font-weight="900">🚫 Regulatory Veto Classifier</text>
+      <text x="14" y="48" fill="#f87171" font-size="11.5">• Expired Permit → HARD VETO LOCK</text>
+      <text x="14" y="68" fill="#f87171" font-size="11.5">• Missing Medical → IMMEDIATE BLOCK</text>
+      <text x="14" y="88" fill="#f87171" font-size="11.5">• &lt;10 Hours → NOT TRIAL READY</text>
+      <text x="14" y="108" fill="#cbd5e1" font-size="11">• 4-Tier State: Ready (85%+), Nearly Ready,</text>
+      <text x="14" y="126" fill="#cbd5e1" font-size="11">  Needs Practice, Not Ready</text>
     </g>
 
-    <!-- Adaptive Diagnostic -->
-    <g transform="translate(12, 345)">
-      <rect width="221" height="120" rx="10" fill="#0f172a" stroke="#6366f1" stroke-width="1" />
-      <text x="10" y="22" fill="#a5b4fc" font-size="12" font-weight="800">📊 Adaptive Diagnostics</text>
-      <text x="10" y="42" fill="#94a3b8" font-size="10.5">• Highway Code Profiler</text>
-      <text x="10" y="58" fill="#94a3b8" font-size="10.5">• Identifies Weak Categories</text>
-      <text x="10" y="74" fill="#94a3b8" font-size="10.5">• Targeted Remedial Quizzes</text>
-      <text x="10" y="90" fill="#94a3b8" font-size="10.5">• Road Sign Radar Analysis</text>
-      <text x="10" y="106" fill="#94a3b8" font-size="10.5">• Pass Score Certificate Gen</text>
+    <!-- Adaptive Diagnostics Box -->
+    <g transform="translate(15, 425)">
+      <rect width="265" height="145" rx="14" fill="#0e0720" stroke="#8b5cf6" stroke-width="1.2" />
+      <text x="14" y="24" fill="#e9d5ff" font-size="13.5" font-weight="900">📊 Adaptive Theory Diagnostics</text>
+      <text x="14" y="48" fill="#c4b5fd" font-size="11.5">• Highway Code Weakness Mapping</text>
+      <text x="14" y="68" fill="#c4b5fd" font-size="11.5">• Priority Remedial Quiz Generator</text>
+      <text x="14" y="88" fill="#c4b5fd" font-size="11.5">• Road Signs vs Road Rules Radar</text>
+      <text x="14" y="108" fill="#c4b5fd" font-size="11.5">• Real-Time 40-Q Exam Scoring</text>
+      <text x="14" y="128" fill="#c4b5fd" font-size="11.5">• Pass Certificate Generation</text>
     </g>
 
-    <!-- Scheduling Collision Engine -->
-    <g transform="translate(12, 475)">
-      <rect width="221" height="115" rx="10" fill="#0f172a" stroke="#6366f1" stroke-width="1" />
-      <text x="10" y="22" fill="#a5b4fc" font-size="12" font-weight="800">📅 Collision Engine</text>
-      <text x="10" y="42" fill="#94a3b8" font-size="10.5">• Temporal Intersection Math</text>
-      <text x="10" y="58" fill="#94a3b8" font-size="10.5">• Prevents Fleet Double-Booking</text>
-      <text x="10" y="74" fill="#94a3b8" font-size="10.5">• Instructor Overlap Guard</text>
-      <text x="10" y="90" fill="#94a3b8" font-size="10.5">• Weekly Schedule Validator</text>
-    </g>
-  </g>
-
-  <!-- Arrow 3 -> 4 -->
-  <path d="M 810 420 L 835 420" stroke="#38bdf8" stroke-width="3" fill="none" marker-end="url(#arrow)" />
-
-  <!-- ================= COLUMN 4: BACKEND LAYER ================= -->
-  <g transform="translate(840, 115)" filter="url(#shadow)">
-    <rect width="220" height="610" rx="16" fill="url(#cardGradSec)" stroke="#059669" stroke-width="1.5" />
-    <rect width="220" height="42" rx="16" fill="#10b981" fill-opacity="0.2" />
-    <text x="15" y="28" fill="#34d399" font-size="14" font-weight="800">4. BACKEND LAYER</text>
-
-    <g transform="translate(12, 55)">
-      <rect width="196" height="155" rx="10" fill="#022c22" stroke="#10b981" stroke-width="1" />
-      <text x="10" y="22" fill="#6ee7b7" font-size="12" font-weight="800">🔐 GoTrue Auth Engine</text>
-      <text x="10" y="42" fill="#a7f3d0" font-size="10.5">• Stateless JWT Tokens</text>
-      <text x="10" y="58" fill="#a7f3d0" font-size="10.5">• Bcrypt Salt Rounds ≥10</text>
-      <text x="10" y="74" fill="#a7f3d0" font-size="10.5">• Claims: School Tenant ID</text>
-      <text x="10" y="90" fill="#a7f3d0" font-size="10.5">• Session Auto-Renewal</text>
-      <text x="10" y="106" fill="#a7f3d0" font-size="10.5">• Role Claims Inspection</text>
-      <text x="10" y="122" fill="#a7f3d0" font-size="10.5">• Safe Credential Storage</text>
-    </g>
-
-    <g transform="translate(12, 225)">
-      <rect width="196" height="155" rx="10" fill="#022c22" stroke="#10b981" stroke-width="1" />
-      <text x="10" y="22" fill="#6ee7b7" font-size="12" font-weight="800">⚡ PostgREST API</text>
-      <text x="10" y="42" fill="#a7f3d0" font-size="10.5">• Parameterized Queries</text>
-      <text x="10" y="58" fill="#a7f3d0" font-size="10.5">• SQL Injection Immunity</text>
-      <text x="10" y="74" fill="#a7f3d0" font-size="10.5">• Auto-Generated REST</text>
-      <text x="10" y="90" fill="#a7f3d0" font-size="10.5">• Sub-Millisecond Speed</text>
-      <text x="10" y="106" fill="#a7f3d0" font-size="10.5">• TLS 1.3 Transport Layer</text>
-      <text x="10" y="122" fill="#a7f3d0" font-size="10.5">• JSON Payload Formatting</text>
-    </g>
-
-    <g transform="translate(12, 395)">
-      <rect width="196" height="195" rx="10" fill="#022c22" stroke="#10b981" stroke-width="1.5" />
-      <text x="10" y="22" fill="#6ee7b7" font-size="12" font-weight="800">🛡️ Row-Level Security</text>
-      <rect x="8" y="32" width="180" height="20" rx="4" fill="#064e3b"/>
-      <text x="12" y="46" fill="#a7f3d0" font-size="9" font-mono font-weight="700">driving_school_id = auth.uid()</text>
-      <text x="10" y="70" fill="#a7f3d0" font-size="10.5">• Kernel-Level Tenancy</text>
-      <text x="10" y="86" fill="#a7f3d0" font-size="10.5">• Zero Cross-School Leak</text>
-      <text x="10" y="102" fill="#a7f3d0" font-size="10.5">• RBAC Scoped Policies</text>
-      <text x="10" y="118" fill="#a7f3d0" font-size="10.5">• Student Personal Scoping</text>
-      <text x="10" y="134" fill="#a7f3d0" font-size="10.5">• Instructor Practical Only</text>
-      <text x="10" y="150" fill="#a7f3d0" font-size="10.5">• Admin Financial Security</text>
+    <!-- Collision Avoidance Box -->
+    <g transform="translate(15, 585)">
+      <rect width="265" height="136" rx="14" fill="#0e0720" stroke="#8b5cf6" stroke-width="1.2" />
+      <text x="14" y="24" fill="#e9d5ff" font-size="13.5" font-weight="900">📅 Scheduling Conflict Engine</text>
+      <text x="14" y="48" fill="#c4b5fd" font-size="11.5">• Temporal Intersection Math</text>
+      <text x="14" y="68" fill="#c4b5fd" font-size="11.5">• Instructor Double-Booking Shield</text>
+      <text x="14" y="88" fill="#c4b5fd" font-size="11.5">• Vehicle Fleet Collision Detector</text>
+      <text x="14" y="108" fill="#c4b5fd" font-size="11.5">• Multi-Branch Availability Checker</text>
+      <text x="14" y="126" fill="#c4b5fd" font-size="11.5">• 100% Conflict-Free Timetable</text>
     </g>
   </g>
 
-  <!-- Arrow 4 -> 5 -->
-  <path d="M 1065 420 L 1090 420" stroke="#38bdf8" stroke-width="3" fill="none" marker-end="url(#arrow)" />
+  <!-- Connective Pipe: 3 -> 4 -->
+  <g>
+    <path d="M 960 495 L 990 495" stroke="#10b981" stroke-width="4" fill="none" marker-end="url(#arrowGreen)" />
+    <rect x="961" y="465" width="26" height="20" rx="4" fill="#059669" />
+    <text x="974" y="479" fill="#ffffff" font-size="10" font-weight="900" text-anchor="middle">P3</text>
+  </g>
 
-  <!-- ================= COLUMN 5: FRONTEND / UI ================= -->
-  <g transform="translate(1095, 115)" filter="url(#shadow)">
-    <rect width="230" height="610" rx="16" fill="url(#cardGrad1)" stroke="#38bdf8" stroke-width="1.5" />
-    <rect width="230" height="42" rx="16" fill="#0284c7" fill-opacity="0.2" />
-    <text x="15" y="28" fill="#38bdf8" font-size="14" font-weight="800">5. FRONTEND / UI LAYER</text>
+  <!-- ========================================================================= -->
+  <!-- 4. COLUMN 4: BACKEND & SECURITY LAYER -->
+  <!-- ========================================================================= -->
+  <g transform="translate(995, 125)" filter="url(#shadow)">
+    <rect width="275" height="740" rx="18" fill="url(#cardGradBackend)" stroke="#10b981" stroke-width="2" />
+    <rect width="275" height="50" rx="18" fill="#10b981" fill-opacity="0.25" />
+    <text x="20" y="33" fill="#34d399" font-size="16" font-weight="900" letter-spacing="0.5">4. BACKEND LAYER</text>
+    <rect x="195" y="14" width="65" height="22" rx="6" fill="#10b981" />
+    <text x="227" y="30" fill="#ffffff" font-size="11" font-weight="900" text-anchor="middle">SECURITY</text>
 
-    <g transform="translate(12, 55)">
-      <rect width="206" height="115" rx="10" fill="#0f172a" stroke="#38bdf8" stroke-width="1" />
-      <text x="10" y="22" fill="#38bdf8" font-size="12" font-weight="700">💻 React 19 + Tailwind v4</text>
-      <text x="10" y="42" fill="#94a3b8" font-size="10.5">• Vite 7 Build System</text>
-      <text x="10" y="58" fill="#94a3b8" font-size="10.5">• Lucide React Icon Suite</text>
-      <text x="10" y="74" fill="#94a3b8" font-size="10.5">• Glassmorphic Styling</text>
-      <text x="10" y="90" fill="#94a3b8" font-size="10.5">• Responsive (Mobile/Desktop)</text>
-      <text x="10" y="106" fill="#94a3b8" font-size="10.5">• Dynamic Modals &amp; Alerts</text>
+    <!-- GoTrue Auth Box -->
+    <g transform="translate(15, 65)">
+      <rect width="245" height="190" rx="12" fill="#022c22" stroke="#10b981" stroke-width="1.2" />
+      <text x="14" y="24" fill="#6ee7b7" font-size="13.5" font-weight="900">🔐 GoTrue Auth Engine</text>
+      <text x="14" y="48" fill="#a7f3d0" font-size="11.5">• Stateless JWT Access Tokens</text>
+      <text x="14" y="68" fill="#a7f3d0" font-size="11.5">• Bcrypt Salt Rounds ≥ 10</text>
+      <text x="14" y="88" fill="#a7f3d0" font-size="11.5">• Claims: School Tenant ID</text>
+      <text x="14" y="108" fill="#a7f3d0" font-size="11.5">• Role Claims (Admin/Ins/Stud)</text>
+      <text x="14" y="128" fill="#a7f3d0" font-size="11.5">• Automatic Token Refresh Cycle</text>
+      <text x="14" y="148" fill="#a7f3d0" font-size="11.5">• Anti-Tamper Signature Checks</text>
+      <text x="14" y="168" fill="#a7f3d0" font-size="11.5">• Multi-Device Session Guard</text>
     </g>
 
-    <g transform="translate(12, 180)">
-      <rect width="206" height="115" rx="10" fill="#0f172a" stroke="#38bdf8" stroke-width="1" />
-      <text x="10" y="22" fill="#38bdf8" font-size="12" font-weight="700">🚦 Protected Route Gates</text>
-      <text x="10" y="42" fill="#94a3b8" font-size="10.5">• React Router v7</text>
-      <text x="10" y="58" fill="#94a3b8" font-size="10.5">• RBAC Interceptors</text>
-      <text x="10" y="74" fill="#94a3b8" font-size="10.5">• Session Expiry Detection</text>
-      <text x="10" y="90" fill="#94a3b8" font-size="10.5">• Role-Aware Redirects</text>
-      <text x="10" y="106" fill="#94a3b8" font-size="10.5">• 1-Click Persona Switcher</text>
+    <!-- PostgREST API Box -->
+    <g transform="translate(15, 270)">
+      <rect width="245" height="190" rx="12" fill="#022c22" stroke="#10b981" stroke-width="1.2" />
+      <text x="14" y="24" fill="#6ee7b7" font-size="13.5" font-weight="900">⚡ PostgREST Automated API</text>
+      <text x="14" y="48" fill="#a7f3d0" font-size="11.5">• Parameterized Prepared SQL</text>
+      <text x="14" y="68" fill="#a7f3d0" font-size="11.5">• 100% SQL Injection Immunity</text>
+      <text x="14" y="88" fill="#a7f3d0" font-size="11.5">• Instant Typed CRUD Endpoints</text>
+      <text x="14" y="108" fill="#a7f3d0" font-size="11.5">• Sub-Millisecond Latency</text>
+      <text x="14" y="128" fill="#a7f3d0" font-size="11.5">• TLS 1.3 Transport Encryption</text>
+      <text x="14" y="148" fill="#a7f3d0" font-size="11.5">• Foreign Key Cascading Safety</text>
+      <text x="14" y="168" fill="#a7f3d0" font-size="11.5">• JSON Structured Responses</text>
     </g>
 
-    <g transform="translate(12, 305)">
-      <rect width="206" height="135" rx="10" fill="#0f172a" stroke="#38bdf8" stroke-width="1" />
-      <text x="10" y="22" fill="#38bdf8" font-size="12" font-weight="700">📱 18 Domain Modules</text>
-      <text x="10" y="42" fill="#94a3b8" font-size="10.5">• Executive Admin Dashboard</text>
-      <text x="10" y="58" fill="#94a3b8" font-size="10.5">• Instructor Lesson Portal</text>
-      <text x="10" y="74" fill="#94a3b8" font-size="10.5">• Student Learner Portal</text>
-      <text x="10" y="90" fill="#94a3b8" font-size="10.5">• Student Payments &amp; Fee Hub</text>
-      <text x="10" y="106" fill="#94a3b8" font-size="10.5">• 7-Stage Journey Pipeline</text>
-      <text x="10" y="122" fill="#94a3b8" font-size="10.5">• Trilingual Highway Code Hub</text>
-    </g>
+    <!-- Row-Level Security Box -->
+    <g transform="translate(15, 475)">
+      <rect width="245" height="246" rx="12" fill="#022c22" stroke="#10b981" stroke-width="1.5" />
+      <text x="14" y="24" fill="#6ee7b7" font-size="13.5" font-weight="900">🛡️ Row-Level Security (RLS)</text>
+      
+      <!-- Policy Code Snippet -->
+      <rect x="10" y="34" width="225" height="26" rx="6" fill="#064e3b" stroke="#34d399" stroke-width="0.8" />
+      <text x="18" y="51" fill="#a7f3d0" font-size="10.5" font-mono font-weight="700">driving_school_id = auth.uid()</text>
 
-    <g transform="translate(12, 450)">
-      <rect width="206" height="140" rx="10" fill="#0f172a" stroke="#10b981" stroke-width="1.5" />
-      <text x="10" y="22" fill="#34d399" font-size="12" font-weight="800">🖨️ Vector Print Engine</text>
-      <text x="10" y="42" fill="#a7f3d0" font-size="10.5">• Pure @media print CSS</text>
-      <text x="10" y="58" fill="#a7f3d0" font-size="10.5">• Zero PDF CVE Vulnerabilities</text>
-      <text x="10" y="74" fill="#a7f3d0" font-size="10.5">• DMT/SL/LOG-01 Logbook</text>
-      <text x="10" y="90" fill="#a7f3d0" font-size="10.5">• DMT/SL/ADM-PASS Slip</text>
-      <text x="10" y="106" fill="#a7f3d0" font-size="10.5">• Official Seal &amp; Signature</text>
-      <text x="10" y="122" fill="#a7f3d0" font-size="10.5">• 8-Maneuver Scorecard</text>
+      <text x="14" y="80" fill="#a7f3d0" font-size="11.5">• Kernel-Level Multi-Tenancy</text>
+      <text x="14" y="100" fill="#a7f3d0" font-size="11.5">• Zero Cross-School Data Leaks</text>
+      <text x="14" y="120" fill="#a7f3d0" font-size="11.5">• Role-Based Policy Separation</text>
+      <text x="14" y="140" fill="#a7f3d0" font-size="11.5">• Student Personal Data Scoping</text>
+      <text x="14" y="160" fill="#a7f3d0" font-size="11.5">• Instructor Practical Only Access</text>
+      <text x="14" y="180" fill="#a7f3d0" font-size="11.5">• Administrator Master Rights</text>
+      <text x="14" y="200" fill="#a7f3d0" font-size="11.5">• Enforced on All 18 DB Tables</text>
+      <text x="14" y="220" fill="#a7f3d0" font-size="11.5">• Multi-Tenant Isolation Certified</text>
     </g>
   </g>
 
-  <!-- Arrow 5 -> 6 -->
-  <path d="M 1330 420 L 1355 420" stroke="#38bdf8" stroke-width="3" fill="none" marker-end="url(#arrow)" />
+  <!-- Connective Pipe: 4 -> 5 -->
+  <g>
+    <path d="M 1270 495 L 1300 495" stroke="#38bdf8" stroke-width="4" fill="none" marker-end="url(#arrowBlue)" />
+    <rect x="1271" y="465" width="26" height="20" rx="4" fill="#0284c7" />
+    <text x="1284" y="479" fill="#ffffff" font-size="10" font-weight="900" text-anchor="middle">P4</text>
+  </g>
 
-  <!-- ================= COLUMN 6: DATA STORES ================= -->
-  <g transform="translate(1360, 115)" filter="url(#shadow)">
-    <rect width="210" height="610" rx="16" fill="url(#cardGrad1)" stroke="#334155" stroke-width="1.5" />
-    <rect width="210" height="42" rx="16" fill="#f59e0b" fill-opacity="0.2" />
-    <text x="15" y="28" fill="#fbbf24" font-size="14" font-weight="800">6. DATA STORES</text>
+  <!-- ========================================================================= -->
+  <!-- 5. COLUMN 5: FRONTEND / UI LAYER -->
+  <!-- ========================================================================= -->
+  <g transform="translate(1305, 125)" filter="url(#shadow)">
+    <rect width="280" height="740" rx="18" fill="url(#cardGradFrontend)" stroke="#0284c7" stroke-width="2" />
+    <rect width="280" height="50" rx="18" fill="#0284c7" fill-opacity="0.25" />
+    <text x="20" y="33" fill="#38bdf8" font-size="16" font-weight="900" letter-spacing="0.5">5. FRONTEND / UI</text>
+    <rect x="195" y="14" width="70" height="22" rx="6" fill="#0284c7" />
+    <text x="230" y="30" fill="#ffffff" font-size="11" font-weight="900" text-anchor="middle">REACT 19</text>
 
-    <!-- PostgreSQL Cloud -->
-    <g transform="translate(12, 55)">
-      <rect width="186" height="260" rx="10" fill="#0f172a" stroke="#f59e0b" stroke-width="1.5" />
-      <text x="10" y="22" fill="#fbbf24" font-size="12" font-weight="800">🗄️ PostgreSQL 15</text>
-      <text x="10" y="42" fill="#fde68a" font-size="10.5">• 18 Relational Tables</text>
-      <text x="10" y="58" fill="#fde68a" font-size="10.5">• Multi-Tenant Tenants</text>
-      <text x="10" y="74" fill="#94a3b8" font-size="10">• driving_schools, branches</text>
-      <text x="10" y="90" fill="#94a3b8" font-size="10">• user_profiles, instructors</text>
-      <text x="10" y="106" fill="#94a3b8" font-size="10">• vehicles, licence_categories</text>
-      <text x="10" y="122" fill="#94a3b8" font-size="10">• packages, students</text>
-      <text x="10" y="138" fill="#94a3b8" font-size="10">• student_permits</text>
-      <text x="10" y="154" fill="#94a3b8" font-size="10">• student_medical_records</text>
-      <text x="10" y="170" fill="#94a3b8" font-size="10">• student_exam_trials</text>
-      <text x="10" y="186" fill="#94a3b8" font-size="10">• practical_sessions</text>
-      <text x="10" y="202" fill="#94a3b8" font-size="10">• student_payments</text>
-      <text x="10" y="218" fill="#94a3b8" font-size="10">• ai_readiness_evals</text>
-      <text x="10" y="234" fill="#94a3b8" font-size="10">• theory_questions (40-Q)</text>
+    <!-- React 19 Core -->
+    <g transform="translate(15, 65)">
+      <rect width="250" height="135" rx="12" fill="#04182b" stroke="#0284c7" stroke-width="1.2" />
+      <text x="14" y="24" fill="#38bdf8" font-size="13.5" font-weight="900">💻 React 19 SPA + Tailwind v4</text>
+      <text x="14" y="48" fill="#94a3b8" font-size="11.5">• Vite 7 Next-Gen Bundler</text>
+      <text x="14" y="68" fill="#94a3b8" font-size="11.5">• Lucide React Icon System</text>
+      <text x="14" y="88" fill="#94a3b8" font-size="11.5">• Glassmorphic Modern UI</text>
+      <text x="14" y="108" fill="#94a3b8" font-size="11.5">• Mobile &amp; Desktop Responsive</text>
+      <text x="14" y="126" fill="#94a3b8" font-size="11.5">• Sub-Second Screen Renders</text>
     </g>
 
-    <!-- Persistent Storage Fallback -->
-    <g transform="translate(12, 335)">
-      <rect width="186" height="255" rx="10" fill="#0f172a" stroke="#38bdf8" stroke-width="1.2" />
-      <text x="10" y="22" fill="#38bdf8" font-size="12" font-weight="800">💾 Fallback Storage</text>
-      <text x="10" y="42" fill="#93c5fd" font-size="10.5">• Persistent Local Cache</text>
-      <text x="10" y="58" fill="#93c5fd" font-size="10.5">• Keys: trialready_*</text>
-      <text x="10" y="74" fill="#94a3b8" font-size="10">• 100% Offline Capability</text>
-      <text x="10" y="90" fill="#94a3b8" font-size="10">• Deterministic Seeding</text>
-      <text x="10" y="106" fill="#94a3b8" font-size="10">• Royal Driving Academy</text>
-      <text x="10" y="122" fill="#94a3b8" font-size="10">• 5 Diverse Personas</text>
-      <text x="10" y="138" fill="#94a3b8" font-size="10">• Schema-Matched Sync</text>
-      <text x="10" y="154" fill="#94a3b8" font-size="10">• Zero Cloud Downtime</text>
-      <text x="10" y="170" fill="#94a3b8" font-size="10">• Instant State Reset</text>
+    <!-- RBAC Gatekeeper -->
+    <g transform="translate(15, 215)">
+      <rect width="250" height="135" rx="12" fill="#04182b" stroke="#0284c7" stroke-width="1.2" />
+      <text x="14" y="24" fill="#38bdf8" font-size="13.5" font-weight="900">🚦 RBAC Route Gatekeepers</text>
+      <text x="14" y="48" fill="#94a3b8" font-size="11.5">• React Router v7 Interceptors</text>
+      <text x="14" y="68" fill="#94a3b8" font-size="11.5">• Admin / Instructor / Student</text>
+      <text x="14" y="88" fill="#94a3b8" font-size="11.5">• Automatic Unauthenticated Redir</text>
+      <text x="14" y="108" fill="#94a3b8" font-size="11.5">• 1-Click Demo Persona Bar</text>
+      <text x="14" y="126" fill="#94a3b8" font-size="11.5">• Real-Time Auth State Sync</text>
+    </g>
+
+    <!-- 18 Integrated Feature Modules -->
+    <g transform="translate(15, 365)">
+      <rect width="250" height="175" rx="12" fill="#04182b" stroke="#0284c7" stroke-width="1.2" />
+      <text x="14" y="24" fill="#38bdf8" font-size="13.5" font-weight="900">📱 18 Integrated Modules</text>
+      <text x="14" y="48" fill="#94a3b8" font-size="11.5">• Admin &amp; Student Portals</text>
+      <text x="14" y="68" fill="#94a3b8" font-size="11.5">• Best Performing Leaderboard</text>
+      <text x="14" y="88" fill="#94a3b8" font-size="11.5">• Fees &amp; Payments Manager</text>
+      <text x="14" y="108" fill="#94a3b8" font-size="11.5">• 7-Stage Learner Journey</text>
+      <text x="14" y="128" fill="#94a3b8" font-size="11.5">• Trilingual Theory Exam Hub</text>
+      <text x="14" y="148" fill="#94a3b8" font-size="11.5">• Vehicle Fleet &amp; Instructors</text>
+      <text x="14" y="166" fill="#94a3b8" font-size="11.5">• Executive Analytics &amp; CSV</text>
+    </g>
+
+    <!-- Zero-PDF Print Engine -->
+    <g transform="translate(15, 555)">
+      <rect width="250" height="166" rx="12" fill="#04182b" stroke="#10b981" stroke-width="1.5" />
+      <text x="14" y="24" fill="#34d399" font-size="13.5" font-weight="900">🖨️ Zero-PDF Vector Print</text>
+      <text x="14" y="48" fill="#a7f3d0" font-size="11.5">• Pure @media print CSS Engine</text>
+      <text x="14" y="68" fill="#a7f3d0" font-size="11.5">• Eliminates Server-Side PDF CVEs</text>
+      <text x="14" y="88" fill="#a7f3d0" font-size="11.5">• DMT/SL/LOG-01 Logbook</text>
+      <text x="14" y="108" fill="#a7f3d0" font-size="11.5">• DMT/SL/ADM-PASS Trial Slip</text>
+      <text x="14" y="128" fill="#a7f3d0" font-size="11.5">• 8-Maneuver Scorecard Matrix</text>
+      <text x="14" y="148" fill="#a7f3d0" font-size="11.5">• Official Stamp &amp; Sign Blocks</text>
     </g>
   </g>
 
-  <!-- ================= BOTTOM STRIP: EXTERNAL SERVICES & APIS ================= -->
-  <g transform="translate(30, 745)" filter="url(#shadow)">
-    <rect width="1540" height="125" rx="14" fill="#0f172a" stroke="#475569" stroke-width="1.5" />
-    <rect width="1540" height="32" rx="14" fill="#6366f1" fill-opacity="0.2" />
-    <text x="20" y="22" fill="#a5b4fc" font-size="13" font-weight="800">7. INTEGRATED EXTERNAL SERVICES &amp; REGULATORY APIS</text>
+  <!-- Connective Pipe: 5 -> 6 -->
+  <g>
+    <path d="M 1585 495 L 1615 495" stroke="#f59e0b" stroke-width="4" fill="none" marker-end="url(#arrowGold)" />
+    <rect x="1586" y="465" width="26" height="20" rx="4" fill="#d97706" />
+    <text x="1599" y="479" fill="#ffffff" font-size="10" font-weight="900" text-anchor="middle">P5</text>
+  </g>
 
-    <!-- Ext 1: Supabase -->
-    <g transform="translate(20, 42)">
-      <rect width="280" height="70" rx="8" fill="#1e293b" stroke="#334155" />
-      <text x="12" y="22" fill="#34d399" font-size="12" font-weight="700">☁️ Supabase Cloud Platform</text>
-      <text x="12" y="40" fill="#94a3b8" font-size="10">• PostgreSQL 15 Relational BaaS</text>
-      <text x="12" y="56" fill="#94a3b8" font-size="10">• GoTrue Auth &amp; PostgREST</text>
+  <!-- ========================================================================= -->
+  <!-- 6. COLUMN 6: DATA STORES & STORAGE ARCHITECTURE -->
+  <!-- ========================================================================= -->
+  <g transform="translate(1620, 125)" filter="url(#shadow)">
+    <rect width="265" height="740" rx="18" fill="url(#cardGradStores)" stroke="#f59e0b" stroke-width="2" />
+    <rect width="265" height="50" rx="18" fill="#f59e0b" fill-opacity="0.25" />
+    <text x="20" y="33" fill="#fbbf24" font-size="16" font-weight="900" letter-spacing="0.5">6. DATA STORES</text>
+    <rect x="180" y="14" width="70" height="22" rx="6" fill="#f59e0b" />
+    <text x="215" y="30" fill="#000000" font-size="11" font-weight="900" text-anchor="middle">HYBRID</text>
+
+    <!-- Primary PostgreSQL Database -->
+    <g transform="translate(15, 65)">
+      <rect width="235" height="340" rx="12" fill="#1c0f02" stroke="#f59e0b" stroke-width="1.5" />
+      <text x="14" y="24" fill="#fde68a" font-size="13.5" font-weight="900">🗄️ PostgreSQL 15 (Cloud)</text>
+      <text x="14" y="46" fill="#fde68a" font-size="11.5" font-weight="700">18 Multi-Tenant Tables:</text>
+
+      <g transform="translate(14, 52)" font-size="10.5" fill="#cbd5e1" font-family="monospace">
+        <text x="0" y="16">• driving_schools</text>
+        <text x="0" y="32">• branches</text>
+        <text x="0" y="48">• user_profiles</text>
+        <text x="0" y="64">• instructors</text>
+        <text x="0" y="80">• vehicles</text>
+        <text x="0" y="96">• licence_categories</text>
+        <text x="0" y="112">• packages</text>
+        <text x="0" y="128">• students</text>
+        <text x="0" y="144">• student_permits</text>
+        <text x="0" y="160">• student_medical_records</text>
+        <text x="0" y="176">• student_exam_trials</text>
+        <text x="0" y="192">• practical_sessions</text>
+        <text x="0" y="208">• student_payments</text>
+        <text x="0" y="224">• ai_readiness_evals</text>
+        <text x="0" y="240">• theory_questions (40-Q)</text>
+        <text x="0" y="256">• audit_logs</text>
+        <text x="0" y="272">• student_enrolments</text>
+      </g>
     </g>
 
-    <!-- Ext 2: Vercel -->
-    <g transform="translate(325, 42)">
-      <rect width="280" height="70" rx="8" fill="#1e293b" stroke="#334155" />
-      <text x="12" y="22" fill="#ffffff" font-size="12" font-weight="700">▲ Vercel Edge Network</text>
-      <text x="12" y="40" fill="#94a3b8" font-size="10">• Anycast Serverless Edge CDN</text>
-      <text x="12" y="56" fill="#94a3b8" font-size="10">• HTTPS / HTTP/2 / TLS 1.3</text>
+    <!-- Persistent Offline Fallback Storage -->
+    <g transform="translate(15, 420)">
+      <rect width="235" height="300" rx="12" fill="#1c0f02" stroke="#38bdf8" stroke-width="1.2" />
+      <text x="14" y="24" fill="#38bdf8" font-size="13.5" font-weight="900">💾 Offline Fallback Engine</text>
+      <text x="14" y="48" fill="#93c5fd" font-size="11.5">• Persistent LocalStorage Cache</text>
+      <text x="14" y="68" fill="#93c5fd" font-size="11.5">• Namespace: trialready_*</text>
+      <text x="14" y="88" fill="#94a3b8" font-size="11">• 100% Offline App Execution</text>
+      <text x="14" y="108" fill="#94a3b8" font-size="11">• Zero Cloud Downtime Impact</text>
+      <text x="14" y="128" fill="#94a3b8" font-size="11">• Deterministic Demo Dataset</text>
+      <text x="14" y="148" fill="#94a3b8" font-size="11">• Royal Driving Academy Preset</text>
+      <text x="14" y="168" fill="#94a3b8" font-size="11">• 5 Realistic User Personas</text>
+      <text x="14" y="188" fill="#94a3b8" font-size="11">• Schema-Matched Data Sync</text>
+      <text x="14" y="208" fill="#94a3b8" font-size="11">• Instant 1-Click State Reset</text>
+      <text x="14" y="228" fill="#94a3b8" font-size="11">• In-Memory &amp; Local Fallback</text>
+      <text x="14" y="248" fill="#94a3b8" font-size="11">• Continuous Data Protection</text>
+    </g>
+  </g>
+
+  <!-- ========================================================================= -->
+  <!-- 7. BOTTOM STRIP: INTEGRATED EXTERNAL ECOSYSTEM & REGULATORY FRAMEWORKS -->
+  <!-- ========================================================================= -->
+  <g transform="translate(35, 885)" filter="url(#shadow)">
+    <rect width="1850" height="165" rx="16" fill="#0b1222" stroke="#6366f1" stroke-width="2" />
+    <rect width="1850" height="38" rx="16" fill="#6366f1" fill-opacity="0.25" />
+    <text x="25" y="26" fill="#c7d2fe" font-size="15" font-weight="900" letter-spacing="0.5">
+      7. INTEGRATED EXTERNAL SERVICES, CLOUD INFRASTRUCTURE &amp; SRI LANKAN REGULATORY APIS
+    </text>
+
+    <!-- Ext Card 1: Supabase Cloud -->
+    <g transform="translate(25, 50)">
+      <rect width="345" height="98" rx="10" fill="#151e32" stroke="#334155" stroke-width="1.2" />
+      <text x="16" y="26" fill="#34d399" font-size="13.5" font-weight="800">☁️ Supabase Cloud Platform</text>
+      <text x="16" y="48" fill="#94a3b8" font-size="11.5">• Managed PostgreSQL 15 Relational DB</text>
+      <text x="16" y="68" fill="#94a3b8" font-size="11.5">• GoTrue Authentication &amp; JWT Engine</text>
+      <text x="16" y="86" fill="#94a3b8" font-size="11.5">• PostgREST High-Throughput REST API</text>
     </g>
 
-    <!-- Ext 3: DMT -->
-    <g transform="translate(630, 42)">
-      <rect width="280" height="70" rx="8" fill="#1e293b" stroke="#334155" />
-      <text x="12" y="22" fill="#fbbf24" font-size="12" font-weight="700">🏛️ Dept. of Motor Traffic (DMT)</text>
-      <text x="12" y="40" fill="#94a3b8" font-size="10">• Motor Traffic Act No. 14 of 1951</text>
-      <text x="12" y="56" fill="#94a3b8" font-size="10">• Werahera Practical Trial Standards</text>
+    <!-- Ext Card 2: Vercel Edge -->
+    <g transform="translate(390, 50)">
+      <rect width="345" height="98" rx="10" fill="#151e32" stroke="#334155" stroke-width="1.2" />
+      <text x="16" y="26" fill="#ffffff" font-size="13.5" font-weight="800">▲ Vercel Edge Serverless Network</text>
+      <text x="16" y="48" fill="#94a3b8" font-size="11.5">• Global Anycast Serverless CDN</text>
+      <text x="16" y="68" fill="#94a3b8" font-size="11.5">• HTTP/2, HTTP/3 &amp; TLS 1.3 Encryption</text>
+      <text x="16" y="86" fill="#94a3b8" font-size="11.5">• Automated CI/CD Deployment Pipeline</text>
     </g>
 
-    <!-- Ext 4: NTMI -->
-    <g transform="translate(935, 42)">
-      <rect width="280" height="70" rx="8" fill="#1e293b" stroke="#334155" />
-      <text x="12" y="22" fill="#38bdf8" font-size="12" font-weight="700">🏥 NTMI Medical Institute</text>
-      <text x="12" y="40" fill="#94a3b8" font-size="10">• Medical Fitness Standards</text>
-      <text x="12" y="56" fill="#94a3b8" font-size="10">• Certificate Barcode Validation</text>
+    <!-- Ext Card 3: DMT Standards -->
+    <g transform="translate(755, 50)">
+      <rect width="345" height="98" rx="10" fill="#151e32" stroke="#334155" stroke-width="1.2" />
+      <text x="16" y="26" fill="#fbbf24" font-size="13.5" font-weight="800">🏛️ Dept. of Motor Traffic (DMT)</text>
+      <text x="16" y="48" fill="#94a3b8" font-size="11.5">• Motor Traffic Act No. 14 of 1951</text>
+      <text x="16" y="68" fill="#94a3b8" font-size="11.5">• Werahera Practical Trial Ground Spec</text>
+      <text x="16" y="86" fill="#94a3b8" font-size="11.5">• 7 Statutory Maneuver Assessment Rules</text>
     </g>
 
-    <!-- Ext 5: LankaQR -->
-    <g transform="translate(1240, 42)">
-      <rect width="280" height="70" rx="8" fill="#1e293b" stroke="#334155" />
-      <text x="12" y="22" fill="#c084fc" font-size="12" font-weight="700">💳 LankaQR &amp; CBSL Rails</text>
-      <text x="12" y="40" fill="#94a3b8" font-size="10">• National QR Payment Rails</text>
-      <text x="12" y="56" fill="#94a3b8" font-size="10">• CEFT &amp; Card Gateway Protocols</text>
+    <!-- Ext Card 4: NTMI Directives -->
+    <g transform="translate(1120, 50)">
+      <rect width="345" height="98" rx="10" fill="#151e32" stroke="#334155" stroke-width="1.2" />
+      <text x="16" y="26" fill="#38bdf8" font-size="13.5" font-weight="800">🏥 NTMI Medical Institute</text>
+      <text x="16" y="48" fill="#94a3b8" font-size="11.5">• National Medical Fitness Directives</text>
+      <text x="16" y="68" fill="#94a3b8" font-size="11.5">• Certificate Barcode Verification</text>
+      <text x="16" y="86" fill="#94a3b8" font-size="11.5">• 6-Month Medical Clearance Horizon</text>
+    </g>
+
+    <!-- Ext Card 5: LankaQR & CBSL -->
+    <g transform="translate(1485, 50)">
+      <rect width="340" height="98" rx="10" fill="#151e32" stroke="#334155" stroke-width="1.2" />
+      <text x="16" y="26" fill="#c084fc" font-size="13.5" font-weight="800">💳 LankaQR / CBSL Banking Rails</text>
+      <text x="16" y="48" fill="#94a3b8" font-size="11.5">• Central Bank of Sri Lanka QR Standard</text>
+      <text x="16" y="68" fill="#94a3b8" font-size="11.5">• CEFT Instant Interbank Transfer Verification</text>
+      <text x="16" y="86" fill="#94a3b8" font-size="11.5">• Tuition Installment &amp; Receipt Invoicing</text>
     </g>
   </g>
 </svg>

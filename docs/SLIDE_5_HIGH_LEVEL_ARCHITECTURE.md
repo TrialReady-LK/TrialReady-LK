@@ -10,93 +10,105 @@
 
 ## 1. High-Level Architecture Diagram (Left-to-Right Flow)
 
+> 🖼️ **Full High-Resolution Diagram (1920x1080 Full HD):**  
+> Direct Vector File: [`docs/assets/high_level_system_architecture_slide5.svg`](./assets/high_level_system_architecture_slide5.svg)
+
+---
+
+### 🎨 High-Resolution System Architecture Map (Slide 5)
+
+![TrialReady LK - High-Level System Architecture Diagram](./assets/high_level_system_architecture_slide5.svg)
+
+---
+
+### 🧭 High-Level Data Flow Topology (Stage-by-Stage)
+
 ```mermaid
-flowchart LR
+flowchart TD
     %% =========================================================================
-    %% SLIDE 5: HIGH-LEVEL SYSTEM ARCHITECTURE (LEFT-TO-RIGHT DATA FLOW)
+    %% SLIDE 5: HIGH-LEVEL ARCHITECTURE PIPELINE (READABLE TOPOLOGY)
     %% =========================================================================
 
-    subgraph DS["1. DATA SOURCES"]
-        direction TB
-        DS1["🧑‍🎓 Student Enrolments<br/>• NIC & DOB Verification<br/>• Contact & Residential Data"]
-        DS2["🏥 NTMI Medical Records<br/>• Clinical Fitness Certificate<br/>• Barcode & Clinic Branch"]
-        DS3["📜 DMT Learner Permits<br/>• 6-Month Permit No<br/>• Issue & Expiry Timestamps"]
-        DS4["🚗 Practical Sessions<br/>• 1-5★ Instructor Star Ratings<br/>• 7 Core Maneuvers Covered"]
-        DS5["📝 Mock Theory Exams<br/>• 40-Q Trilingual Submissions<br/>• Time Elapsed & Category Scores"]
-        DS6["💳 Financial Transactions<br/>• Bank Slip / LankaQR / Card<br/>• Fee Package Subscriptions"]
+    subgraph S1["1. DATA SOURCES & INGESTION"]
+        DS1["🧑‍🎓 Student Enrolments (NIC, DOB, Contact, Branch)"]
+        DS2["🏥 NTMI Medical Records (Clinical Fitness Barcode)"]
+        DS3["📜 DMT Learner Permits (6-Month Validity & Expiry)"]
+        DS4["🚗 Practical Sessions (1-5★ Star Ratings & Maneuvers)"]
+        DS5["📝 Mock Theory Exams (40-Q Trilingual Submissions)"]
+        DS6["💳 Tuition Payments (Bank Slips, LankaQR, Cards)"]
     end
 
-    subgraph PP["2. PREPROCESSING LAYER"]
-        direction TB
-        PP1["⚙️ Input Validator & Zod Schema<br/>• Type Sanitization<br/>• Anti-XSS DOM Encoding"]
-        PP2["⏱️ Permit Expiry Countdown<br/>• Δt = Expiry - Current<br/>• 30-Day Warning Engine"]
-        PP3["🎯 Maneuver Vectorizer<br/>• 7-Skill Bitmask Aggregator<br/>• Practical Hours Summation"]
-        PP4["🌐 Trilingual Token Mapper<br/>• Locale Fallback (EN/SI/TA)<br/>• Question Bank Loader"]
-        PP5["🛡️ RFC-4180 CSV Sanitizer<br/>• Formula Injection Defense<br/>• UTF-8 Excel BOM Encoding"]
+    subgraph S2["2. PREPROCESSING & VALIDATION LAYER"]
+        PP1["⚙️ Zod Strict Type Sanitizer & Anti-XSS Virtual DOM"]
+        PP2["⏱️ Permit Countdown Engine (Δt = Expiry - Current)"]
+        PP3["🎯 7-Maneuver Bitmask & Practical Hours Vectorizer"]
+        PP4["🌐 Trilingual Context Token Mapper (EN / SI / TA)"]
+        PP5["🛡️ RFC-4180 CSV Anti-Formula Injection Sanitizer"]
     end
 
-    subgraph ML["3. MODEL & INFERENCE LAYER"]
-        direction TB
-        ML1["🧠 6-Factor AI Readiness Engine<br/>• Composite Score: S = Σ(Wi · si)<br/>• Medical(15%) + Permit(15%) + Theory(15%)<br/>  + Hours(25%) + Maneuvers(20%) + Rating(10%)"]
-        ML2["🚫 Regulatory Veto Classifier<br/>• Critical Blocker Detection<br/>• Hard Lock for Expired Permits"]
-        ML3["📊 Adaptive Diagnostic Engine<br/>• Category Weakness Profiling<br/>• Targeted Remedial Drill Gen"]
-        ML4["📅 Scheduling Conflict Engine<br/>• Temporal Intersection Filter<br/>• Instructor/Fleet Double-Book Guard"]
+    subgraph S3["3. AI MODEL & INFERENCE ENGINE"]
+        ML1["🧠 6-Factor AI Trial Readiness Composite Scoring (0-100%)<br/>Medical(15%) + Permit(15%) + Theory(15%) + Hours(25%) + Maneuvers(20%) + Rating(10%)"]
+        ML2["🚫 Regulatory Veto Classifier (Hard Lock for Expired Permits / Missing Medicals)"]
+        ML3["📊 Adaptive Theory Diagnostics (Highway Code Weakness Profiler & Remedial Drills)"]
+        ML4["📅 Scheduling Conflict Engine (Instructor & Vehicle Fleet Double-Book Shield)"]
     end
 
-    subgraph BE["4. BACKEND LAYER"]
-        direction TB
-        BE1["🔐 GoTrue Auth Engine<br/>• JWT Stateless Token Issuance<br/>• Bcrypt Password Hashing (Salt≥10)"]
-        BE2["⚡ PostgREST Automated API<br/>• Parameterized Prepared Queries<br/>• Instant REST CRUD Endpoints"]
-        BE3["🛡️ Row-Level Security (RLS)<br/>• Kernel-Level Multi-Tenancy<br/>• Tenant ID Driving School Filter"]
+    subgraph S4["4. BACKEND & CYBER SECURITY LAYER"]
+        BE1["🔐 GoTrue Auth Engine (Bcrypt Salt≥10, Stateless JWT Token Lifecycle)"]
+        BE2["⚡ PostgREST Automated API (Prepared Parameterized SQL, 100% Anti-SQLi)"]
+        BE3["🛡️ Kernel-Level Row-Level Security (RLS Tenant Isolation per driving_school_id)"]
     end
 
-    subgraph FE["5. FRONTEND / UI LAYER"]
-        direction TB
-        FE1["💻 React 19 SPA + Tailwind v4<br/>• Lucide React Icon System<br/>• Responsive Glassmorphic UI"]
-        FE2["🚦 React Router v7 Gatekeeper<br/>• RBAC: Admin, Instructor, Student<br/>• Protected Route Interceptors"]
-        FE3["📱 18 Integrated Domain Modules<br/>• Admin, Instructor, Student Portals<br/>• Trilingual Theory Hub & 40-Q Exam<br/>• Payments, Sessions, & Analytics"]
-        FE4["🖨️ Vector Print Engine (@media print)<br/>• Official DMT Logbook (DMT/SL/LOG-01)<br/>• Trial Admission Slip (DMT/SL/ADM-PASS)"]
+    subgraph S5["5. FRONTEND & PRESENTATION LAYER"]
+        FE1["💻 React 19 SPA + Vite 7 + Tailwind CSS v4 Glassmorphic UI"]
+        FE2["🚦 React Router v7 RBAC Gatekeepers (Admin, Instructor, Student Portals)"]
+        FE3["📱 18 Integrated Feature Modules (Leaderboard, Payments, Journey, Theory Hub)"]
+        FE4["🖨️ Zero-PDF Vector Print Engine (Official DMT Logbook & Trial Admission Passes)"]
     end
 
-    subgraph ST["6. DATA STORES"]
-        direction TB
-        ST1["🗄️ Primary Cloud Database<br/>• Supabase PostgreSQL 15<br/>• 18 Multi-Tenant Relational Tables<br/>• Foreign Key Cascades & Constraints"]
-        ST2["💾 Persistent Client Fallback Cache<br/>• LocalStorage (trialready_*)<br/>• Deterministic Seed & Offline State<br/>• Schema-Matched Data Sync"]
+    subgraph S6["6. HYBRID DATA STORES & PERSISTENCE"]
+        ST1["🗄️ Primary PostgreSQL 15 Cloud Database (18 Multi-Tenant Relational Tables)"]
+        ST2["💾 Persistent Client Fallback Cache (trialready_* LocalStorage Offline Engine)"]
     end
 
-    subgraph EXT["7. EXTERNAL SERVICES & APIS"]
-        direction TB
-        EXT1["☁️ Supabase Cloud (BaaS Infrastructure)"]
-        EXT2["🚀 Vercel Edge Serverless CDN"]
-        EXT3["🏛️ Dept. of Motor Traffic (DMT Standards)"]
-        EXT4["🏥 National Transport Medical Institute (NTMI)"]
-        EXT5["💳 LankaQR / Central Bank of Sri Lanka (CBSL)"]
+    subgraph S7["7. INTEGRATED EXTERNAL SERVICES & REGULATORY APIS"]
+        EXT1["☁️ Supabase Cloud BaaS (Auth, PostgreSQL 15, PostgREST)"]
+        EXT2["▲ Vercel Edge Network (Anycast CDN, TLS 1.3, Serverless Hosting)"]
+        EXT3["🏛️ Dept. of Motor Traffic (Motor Traffic Act No. 14 of 1951, Werahera Standards)"]
+        EXT4["🏥 National Transport Medical Institute (NTMI Fitness Clearance Protocols)"]
+        EXT5["💳 LankaQR / Central Bank of Sri Lanka (National Payment Rails)"]
     end
 
-    %% Left-to-Right Connections
-    DS -->|1. Ingest Raw Records| PP
-    PP -->|2. Normalized Vectors| ML
-    ML -->|3. Evaluations & Predictions| BE
-    BE <-->|4. Authenticated SQL with RLS| ST
-    BE -->|5. RESTful JSON API| FE
-    FE -->|6. User Mutations & Queries| BE
-    FE <-->|7. Standalone / Offline Fallback| ST2
+    %% Flow Pipeline
+    S1 ==>|1. Raw Ingestion| S2
+    S2 ==>|2. Cleaned Feature Vectors| S3
+    S3 ==>|3. Scoring & Predictions| S4
+    S4 <==>|4. Authenticated Prepared Queries with RLS| S6
+    S4 ==>|5. Typed RESTful JSON Payload| S5
+    S5 ==>|6. User Mutations & Real-Time Queries| S4
+    S5 <==>|7. Deterministic Offline Fallback Sync| ST2
 
-    EXT1 -.->|BaaS & Auth Hosting| BE
-    EXT2 -.->|Edge CDN Delivery| FE
-    EXT3 -.->|Statutory Syllabus Alignment| ML
-    EXT4 -.->|Medical Protocol Rules| ML
-    EXT5 -.->|Payment Standard Integration| FE
+    EXT1 -.->|BaaS Hosting| S4
+    EXT2 -.->|Edge CDN Delivery| S5
+    EXT3 -.->|Statutory Test Rules| S3
+    EXT4 -.->|Medical Directives| S3
+    EXT5 -.->|Banking Protocol| S5
 
-    classDef primary fill:#1e293b,stroke:#3b82f6,stroke-width:2px,color:#fff;
-    classDef accent fill:#0f172a,stroke:#10b981,stroke-width:2px,color:#fff;
-    classDef warning fill:#1e1b4b,stroke:#f59e0b,stroke-width:2px,color:#fff;
-    classDef ext fill:#18181b,stroke:#a855f7,stroke-width:2px,color:#fff;
-    
-    class DS,PP,ML,BE,FE,ST primary;
-    class ML accent;
-    class BE,ST warning;
-    class EXT ext;
+    classDef stage1 fill:#0f172a,stroke:#3b82f6,stroke-width:2px,color:#fff;
+    classDef stage2 fill:#0f172a,stroke:#0284c7,stroke-width:2px,color:#fff;
+    classDef stage3 fill:#1e1b4b,stroke:#8b5cf6,stroke-width:2px,color:#fff;
+    classDef stage4 fill:#064e3b,stroke:#10b981,stroke-width:2px,color:#fff;
+    classDef stage5 fill:#0c2d48,stroke:#38bdf8,stroke-width:2px,color:#fff;
+    classDef stage6 fill:#3d2204,stroke:#f59e0b,stroke-width:2px,color:#fff;
+    classDef stage7 fill:#18181b,stroke:#a855f7,stroke-width:2px,color:#fff;
+
+    class S1 stage1;
+    class S2 stage2;
+    class S3 stage3;
+    class S4 stage4;
+    class S5 stage5;
+    class S6 stage6;
+    class S7 stage7;
 ```
 
 ---
