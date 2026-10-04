@@ -64,13 +64,10 @@ export const PaymentReceiptModal: React.FC<PaymentReceiptModalProps> = ({
             <div>
               <div className="flex items-center gap-2.5">
                 <img
-                  src="/logo-icon.png"
-                  alt="TrialReady"
-                  className="h-9 w-9 object-contain"
+                  src="/logo-horizontal.png"
+                  alt="TrialReady.lk"
+                  className="h-8 w-auto object-contain"
                 />
-                <h2 className="text-lg font-black tracking-tight text-slate-900">
-                  TrialReady Driving Academy
-                </h2>
               </div>
               <p className="text-[11px] text-slate-500 mt-1">
                 Department of Motor Traffic (DMT) Registered Driving School

@@ -53,9 +53,9 @@ export const LoginForm: React.FC = () => {
       >
         <div className="text-center mb-5 sm:mb-6">
           <img
-            src="/logo-icon.png"
-            alt="TrialReady LK Logo"
-            className="h-10 sm:h-12 w-auto mx-auto mb-2 sm:mb-3 object-contain"
+            src="/logo-horizontal.png"
+            alt="TrialReady.lk"
+            className="h-9 sm:h-11 w-auto mx-auto mb-2 sm:mb-3 object-contain"
           />
           <h1 className="text-xl sm:text-2xl font-black tracking-tight text-slate-900">
             Sign In to TrialReady LK

@@ -150,26 +150,21 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
         }`}
       >
         {/* Brand Header */}
-        <div className="flex h-16 items-center justify-between border-b border-slate-200 px-6">
+        <div className="flex h-16 items-center justify-between border-b border-slate-200 px-5">
           <Link
             to={dashboardRoute}
             onClick={onClose}
-            className="flex items-center gap-2.5 group cursor-pointer transition-opacity hover:opacity-85 focus:outline-none"
+            className="flex flex-col justify-center group cursor-pointer transition-opacity hover:opacity-85 focus:outline-none"
             title="Go to Dashboard"
           >
             <img
-              src="/logo-icon.png"
-              alt="TrialReady LK Logo"
-              className="h-9 w-9 object-contain shrink-0 transition-transform group-hover:scale-105"
+              src="/logo-horizontal.png"
+              alt="TrialReady.lk"
+              className="h-7 sm:h-8 w-auto object-contain object-left transition-transform group-hover:scale-[1.02]"
             />
-            <div>
-              <span className="text-base font-extrabold tracking-tight text-slate-900 group-hover:text-blue-600 transition-colors">
-                TrialReady<span className="text-blue-600">.LK</span>
-              </span>
-              <p className="text-[10px] font-medium text-slate-500 uppercase tracking-widest">
-                Operations
-              </p>
-            </div>
+            <span className="text-[9px] font-extrabold text-slate-400 uppercase tracking-widest pl-1 mt-0.5">
+              Operations
+            </span>
           </Link>
 
           {/* Close button on mobile */}
