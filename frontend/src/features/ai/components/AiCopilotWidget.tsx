@@ -7,8 +7,8 @@ import {
   Sparkles,
   GraduationCap,
   BookOpen,
-  Code2,
-  Calculator,
+  Compass,
+  AlertTriangle,
   Trash2,
 } from 'lucide-react'
 import { useAuth } from '../../auth/context/AuthContext'
@@ -252,14 +252,14 @@ export const AiCopilotWidget: React.FC = () => {
 
   const getInitialGreeting = (lang: TheoryLanguage): ChatMessage => {
     let text =
-      '👋 Ayubowan / Vanakkam / Hello! I am your **TrialReady AI Assistant** (powered by Google Gemini).\n\nAsk me anything! I can assist you with:\n• 📐 **Mathematics & Science:** Calculations, formulas, and step-by-step solutions\n• 💻 **Programming & Tech:** Python, JavaScript, SQL, algorithms, and code debugs\n• 📚 **Academic & Coursework:** Explanations, summaries, English writing, and study tips\n• 🚦 **Sri Lanka Highway Code & Trials:** Road rules, speed limits, Hill Start, and parking maneuvers\n\nFeel free to ask questions in English, Sinhala (සිංහල), or Tamil (தமிழ்)!'
+      '👋 Ayubowan / Vanakkam / Hello! I am your **TrialReady AI Assistant** (powered by Google Gemini).\n\nAsk me anything about your driving journey and highway regulations:\n• 🚦 **Sri Lanka Highway Code:** Speed limits, right of way, road markings, and expressway rules\n• 🚗 **DMT Practical Trial Maneuvers:** Hill Start, Reverse S-Bend, 3-Point Turn, and Parallel Parking\n• 🛑 **Road Signs & Signals:** Mandatory, warning, informative signs, and traffic light priorities\n• 📊 **Learner Progress & Readiness:** Tracking lessons, logbook, and test preparation\n\nFeel free to ask questions in English, Sinhala (සිංහල), or Tamil (தமிழ்)!'
 
     if (lang === 'si') {
       text =
-        '👋 ආයුබෝවන්! මම ඔබේ **TrialReady AI සහායකයා** (Google Gemini මගින් බලගැන්වේ).\n\nගණිතය, පරිගණක ක්‍රමලේඛනය (Coding), අධ්‍යයන කටයුතු, සාමාන්‍ය දැනුම, හෝ ශ්‍රී ලංකා මාර්ග නීති සහ DMT රියදුරු විභාග පිළිබඳ ඕනෑම ප්‍රශ්නයක් විමසන්න!'
+        '👋 ආයුබෝවන්! මම ඔබේ **TrialReady AI සහායකයා** (Google Gemini මගින් බලගැන්වේ).\n\nශ්‍රී ලංකා මාර්ග නීති, මාර්ග සංඥා, කඳුකර ආරම්භය (Hill Start), S-හැඩයේ පසුපස ධාවනය (Reverse S-bend), සහ DMT ප්‍රායෝගික රියදුරු විභාග පිළිබඳ ඕනෑම ප්‍රශ්නයක් විමසන්න!'
     } else if (lang === 'ta') {
       text =
-        '👋 வணக்கம்! நான் உங்கள் **TrialReady AI உதவியாளர்** (Google Gemini மூலம் இயக்கப்படுகிறது).\n\nகணிதம், நிரலாக்கம் (Coding), கல்விசார் வினாக்கள், பொது அறிவு, அல்லது இலங்கை போக்குவரத்து விதிகள் மற்றும் ஓட்டுநர் பரீட்சை பற்றி எதுவாக இருந்தாலும் கேட்கலாம்!'
+        '👋 வணக்கம்! நான் உங்கள் **TrialReady AI உதவியாளர்** (Google Gemini மூலம் இயக்கப்படுகிறது).\n\nஇலங்கை போக்குவரத்து விதிகள், வீதி சமிக்ஞைகள், Hill Start, Reverse S-bend, மற்றும் DMT செய்முறை ஓட்டுநர் பரீட்சை தொடர்பான எந்தவொரு கேள்வியையும் கேட்கலாம்!'
     }
 
     return {
@@ -268,10 +268,10 @@ export const AiCopilotWidget: React.FC = () => {
       text,
       timestamp: 'Just now',
       suggestions: [
-        'Solve 2x + 5 = 15 step-by-step',
-        'Write a Python function to reverse a string',
         'What are the speed limits in Sri Lanka?',
         'How to do Hill Start without rollback?',
+        'Tips for DMT Reverse S-Bend maneuver',
+        'Explain mandatory vs warning road signs',
       ],
     }
   }
@@ -288,24 +288,9 @@ export const AiCopilotWidget: React.FC = () => {
 
   const quickPrompts = [
     {
-      label: 'Math Solution',
-      icon: Calculator,
-      query: 'Solve 3x + 12 = 45 step-by-step',
-    },
-    {
-      label: 'Python Code',
-      icon: Code2,
-      query: 'Write a Python function to check if a string is a palindrome',
-    },
-    {
-      label: 'English Grammar',
-      icon: BookOpen,
-      query: 'Explain the difference between "affect" and "effect" with examples',
-    },
-    {
       label: 'Highway Code',
       icon: Sparkles,
-      query: 'What are the legal speed limits in Sri Lanka?',
+      query: 'What are the legal speed limits and highway rules in Sri Lanka?',
     },
     {
       label: 'Hill Start Tips',
@@ -313,9 +298,24 @@ export const AiCopilotWidget: React.FC = () => {
       query: 'How do I perform a perfect Hill Start without engine stalling or rollback?',
     },
     {
-      label: 'Student Portal',
+      label: 'Reverse S-Bend',
+      icon: Compass,
+      query: 'What are the key reference points for passing the DMT Reverse S-Bend test?',
+    },
+    {
+      label: 'Road Signs',
+      icon: BookOpen,
+      query: 'Explain the difference between regulatory, warning, and informative road signs in Sri Lanka.',
+    },
+    {
+      label: 'Readiness Score',
       icon: GraduationCap,
       query: 'How does the TrialReady Learner Journey and Readiness Score work?',
+    },
+    {
+      label: 'Common Failures',
+      icon: AlertTriangle,
+      query: 'What are the most common reasons learners fail the DMT practical trial test and how to avoid them?',
     },
   ]
 
@@ -409,7 +409,7 @@ export const AiCopilotWidget: React.FC = () => {
               AI Copilot <span className="text-[9px] font-normal text-amber-200">Gemini</span>
             </p>
             <p className="text-[10px] text-blue-100 font-medium leading-tight">
-              General AI & Academy Assistant
+              Driving & Highway Code AI
             </p>
           </div>
           <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse ml-1" />
@@ -434,7 +434,7 @@ export const AiCopilotWidget: React.FC = () => {
                   </span>
                 </h3>
                 <p className="text-[10px] text-slate-400">
-                  Ask anything • Multi-turn Copilot
+                  Driving Tutor • Highway Code Copilot
                 </p>
               </div>
             </div>
@@ -574,10 +574,10 @@ export const AiCopilotWidget: React.FC = () => {
               onChange={(e) => setInputQuery(e.target.value)}
               placeholder={
                 language === 'si'
-                  ? 'ගණිතය, කෝඩින්, හෝ ඕනෑම ප්‍රශ්නයක් අසන්න...'
+                  ? 'මාර්ග නීති, ප්‍රායෝගික විභාග පුහුණුව, හෝ සංඥා පිළිබඳ අසන්න...'
                   : language === 'ta'
-                  ? 'கணிதம், கோடிங், அல்லது எந்த கேள்வியையும் கேளுங்கள்...'
-                  : 'Ask about math, coding, university, highway code...'
+                  ? 'போக்குவரத்து விதிகள், செய்முறைப் பரீட்சை, அல்லது சமிக்ஞைகள் பற்றிக் கேட்கவும்...'
+                  : 'Ask about Highway Code, trial maneuvers, road signs, readiness...'
               }
               className="flex-1 rounded-xl border border-slate-300 bg-slate-50 px-3 py-2 text-xs text-slate-900 placeholder:text-slate-400 focus:bg-white focus:border-blue-500 focus:outline-hidden transition-all"
             />
