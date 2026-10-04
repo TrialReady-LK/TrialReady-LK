@@ -24,11 +24,8 @@ import {
   Sparkles,
   Zap,
   Percent,
-  Smartphone,
-  ArrowRight,
-  Split,
 } from 'lucide-react'
-import type { StudentFinancialLedger, StudentPayment, PaymentMethod } from '../../../financials/types/financials'
+import type { StudentFinancialLedger, StudentPayment } from '../../../financials/types/financials'
 import { formatLKR, formatPaymentMethod, getPaymentStatus } from '../../../financials/utils/financialUtils'
 import { PaymentReceiptModal } from '../../../financials/components/PaymentReceiptModal'
 import { recordStudentPayment } from '../../../financials/services/financialService'
