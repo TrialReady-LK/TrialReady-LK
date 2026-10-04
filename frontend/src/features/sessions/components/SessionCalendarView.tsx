@@ -85,7 +85,7 @@ export const SessionCalendarView: React.FC<SessionCalendarViewProps> = ({
     return map
   }, [sessions])
 
-  const getStatusColor = (status: string, attendance: string) => {
+  const getStatusColor = (status: string, attendance: string, isViva?: boolean) => {
     if (status === 'cancelled') {
       return 'bg-red-50 border-red-200 text-red-700 opacity-60 line-through'
     }
@@ -94,6 +94,9 @@ export const SessionCalendarView: React.FC<SessionCalendarViewProps> = ({
     }
     if (attendance === 'absent' || status === 'no_show') {
       return 'bg-amber-50 border-amber-300 text-amber-900'
+    }
+    if (isViva) {
+      return 'bg-purple-50/80 border-purple-300 text-purple-950 hover:border-purple-400 shadow-xs'
     }
     return 'bg-blue-50 border-blue-300 text-blue-950 hover:border-blue-400'
   }
@@ -144,35 +147,52 @@ export const SessionCalendarView: React.FC<SessionCalendarViewProps> = ({
 
       {/* Week Days Header Row */}
       <div className="grid grid-cols-7 border-b border-slate-200 text-center text-xs font-semibold">
-        {weekDays.map((day) => (
-          <div
-            key={day.iso}
-            className={`border-r border-slate-200 py-2.5 last:border-r-0 ${
-              day.isToday ? 'bg-blue-50/80 text-blue-700' : 'bg-slate-50 text-slate-700'
-            }`}
-          >
-            <p className="text-[11px] font-bold uppercase tracking-wider">{day.dayName}</p>
-            <p
-              className={`mx-auto mt-0.5 flex h-6 w-6 items-center justify-center rounded-full text-xs font-bold ${
-                day.isToday ? 'bg-blue-600 text-white' : 'text-slate-900'
+        {weekDays.map((day) => {
+          const isVivaDay = day.iso === '2026-10-06'
+          return (
+            <div
+              key={day.iso}
+              className={`border-r border-slate-200 py-2.5 last:border-r-0 ${
+                isVivaDay
+                  ? 'bg-purple-50 text-purple-900'
+                  : day.isToday
+                  ? 'bg-blue-50/80 text-blue-700'
+                  : 'bg-slate-50 text-slate-700'
               }`}
             >
-              {day.dayNumber}
-            </p>
-          </div>
-        ))}
+              <p className="text-[11px] font-bold uppercase tracking-wider">{day.dayName}</p>
+              <p
+                className={`mx-auto mt-0.5 flex h-6 w-6 items-center justify-center rounded-full text-xs font-bold ${
+                  day.isToday
+                    ? 'bg-blue-600 text-white'
+                    : isVivaDay
+                    ? 'bg-purple-600 text-white'
+                    : 'text-slate-900'
+                }`}
+              >
+                {day.dayNumber}
+              </p>
+              {isVivaDay && (
+                <span className="mt-1 inline-block rounded-full bg-purple-200/80 px-1.5 py-0.2 text-[8px] font-black tracking-tight text-purple-900 uppercase">
+                  Viva Day
+                </span>
+              )}
+            </div>
+          )
+        })}
       </div>
 
       {/* Calendar Week Columns Container */}
       <div className="grid grid-cols-7 min-h-[500px] divide-x divide-slate-200">
         {weekDays.map((day) => {
           const daySessions = sessionsByDate.get(day.iso) || []
+          const isVivaDay = day.iso === '2026-10-06'
 
           return (
             <div
               key={day.iso}
               className={`p-1.5 space-y-2 ${
-                day.isToday ? 'bg-blue-50/15' : 'bg-white'
+                isVivaDay ? 'bg-purple-50/20' : day.isToday ? 'bg-blue-50/15' : 'bg-white'
               }`}
             >
               {daySessions.length === 0 ? (
@@ -182,6 +202,10 @@ export const SessionCalendarView: React.FC<SessionCalendarViewProps> = ({
               ) : (
                 daySessions.map((sess) => {
                   const duration = formatSessionDuration(sess.start_time, sess.end_time)
+                  const isVivaSession =
+                    sess.session_date === '2026-10-06' ||
+                    Boolean(sess.instructor_feedback?.includes('Viva')) ||
+                    sess.skills_covered?.some((sk) => sk.toLowerCase().includes('viva'))
 
                   return (
                     <div
@@ -189,13 +213,18 @@ export const SessionCalendarView: React.FC<SessionCalendarViewProps> = ({
                       className={`group relative rounded-xl border p-2.5 shadow-xs transition-all hover:shadow-md cursor-pointer ${getStatusColor(
                         sess.status,
                         sess.attendance_status,
+                        isVivaSession,
                       )}`}
                       onClick={() => onSelectSession(sess)}
                     >
                       {/* Top Row: Time & Category */}
                       <div className="flex items-center justify-between text-[11px] font-bold">
                         <span>{formatTime12Hour(sess.start_time)}</span>
-                        <span className="rounded bg-white/80 px-1 py-0.2 text-[9px] font-extrabold uppercase border border-slate-300/40">
+                        <span className={`rounded px-1 py-0.2 text-[9px] font-extrabold uppercase border ${
+                          isVivaSession
+                            ? 'bg-purple-100 text-purple-800 border-purple-300'
+                            : 'bg-white/80 border-slate-300/40'
+                        }`}>
                           {sess.licence_category?.code}
                         </span>
                       </div>
@@ -204,6 +233,15 @@ export const SessionCalendarView: React.FC<SessionCalendarViewProps> = ({
                       <p className="mt-1 text-xs font-bold truncate">
                         {sess.student?.full_name ?? 'Student'}
                       </p>
+
+                      {/* Viva presentation badge */}
+                      {isVivaSession && (
+                        <div className="mt-0.5">
+                          <span className="inline-block rounded bg-purple-100/90 px-1 py-0.2 text-[9px] font-bold text-purple-800 border border-purple-200 truncate max-w-full">
+                            🎓 Viva Defense
+                          </span>
+                        </div>
+                      )}
 
                       {/* Instructor & Vehicle summary */}
                       <div className="mt-1 text-[10px] space-y-0.5 opacity-80">
@@ -242,7 +280,9 @@ export const SessionCalendarView: React.FC<SessionCalendarViewProps> = ({
                               e.stopPropagation()
                               onOpenAttendance(sess)
                             }}
-                            className="rounded bg-blue-600 px-1.5 py-0.5 text-[9px] font-bold text-white hover:bg-blue-700 transition-all"
+                            className={`rounded px-1.5 py-0.5 text-[9px] font-bold text-white transition-all ${
+                              isVivaSession ? 'bg-purple-600 hover:bg-purple-700' : 'bg-blue-600 hover:bg-blue-700'
+                            }`}
                           >
                             Mark
                           </button>
