@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="100%" height="100%" style="background:#070b14; font-family:'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1450" width="100%" height="100%" style="background:#070b14; font-family:'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;">
   <defs>
     <!-- Background Gradient -->
     <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -7,387 +7,322 @@
       <stop offset="100%" stop-color="#050811" />
     </linearGradient>
 
-    <!-- Header Gradient -->
+    <!-- Top Banner Gradient -->
     <linearGradient id="headerGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#0f172a" />
-      <stop offset="30%" stop-color="#1e3a8a" />
-      <stop offset="70%" stop-color="#2563eb" />
-      <stop offset="100%" stop-color="#0284c7" />
+      <stop offset="0%" stop-color="#1e3a8a" />
+      <stop offset="35%" stop-color="#2563eb" />
+      <stop offset="70%" stop-color="#0284c7" />
+      <stop offset="100%" stop-color="#0d9488" />
     </linearGradient>
 
-    <!-- Tier Row Gradients -->
-    <linearGradient id="tier1Grad" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#0c2d48" />
-      <stop offset="100%" stop-color="#071b2d" />
+    <!-- Tier Card Gradients -->
+    <linearGradient id="cardGrad1" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0f1f38" />
+      <stop offset="100%" stop-color="#091222" />
     </linearGradient>
 
-    <linearGradient id="tier2Grad" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#1e1b4b" />
-      <stop offset="100%" stop-color="#0f0e26" />
+    <linearGradient id="cardGrad2" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#19173b" />
+      <stop offset="100%" stop-color="#0c0b1f" />
     </linearGradient>
 
-    <linearGradient id="tier3Grad" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#064e3b" />
-      <stop offset="100%" stop-color="#02271e" />
+    <linearGradient id="cardGrad3" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#06382b" />
+      <stop offset="100%" stop-color="#021c15" />
     </linearGradient>
 
-    <linearGradient id="tier4Grad" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#2e1065" />
-      <stop offset="100%" stop-color="#160633" />
+    <linearGradient id="cardGrad4" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#2a1045" />
+      <stop offset="100%" stop-color="#120621" />
     </linearGradient>
 
-    <linearGradient id="tier5Grad" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#042f2e" />
-      <stop offset="100%" stop-color="#021a19" />
+    <linearGradient id="cardGrad5" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#043230" />
+      <stop offset="100%" stop-color="#021918" />
     </linearGradient>
 
-    <linearGradient id="tier6Grad" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#451a03" />
-      <stop offset="100%" stop-color="#220c01" />
+    <linearGradient id="cardGrad6" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#361704" />
+      <stop offset="100%" stop-color="#170901" />
     </linearGradient>
 
-    <linearGradient id="tier7Grad" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#1e293b" />
-      <stop offset="100%" stop-color="#0f172a" />
+    <linearGradient id="cardGrad7" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#18233a" />
+      <stop offset="100%" stop-color="#0a101d" />
     </linearGradient>
 
-    <!-- Filters -->
-    <filter id="shadow" x="-5%" y="-5%" width="110%" height="115%">
-      <feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#000000" flood-opacity="0.6"/>
+    <!-- Drop Shadow Filter -->
+    <filter id="cardShadow" x="-3%" y="-5%" width="106%" height="115%">
+      <feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="#000000" flood-opacity="0.6"/>
     </filter>
 
-    <!-- Arrow Down Markers -->
-    <marker id="arrowDownBlue" viewBox="0 0 10 10" refX="5" refY="6" markerWidth="6" markerHeight="6" orient="auto">
-      <path d="M 1.5 0 L 5 9 L 8.5 0 z" fill="#38bdf8" />
-    </marker>
-    <marker id="arrowDownGreen" viewBox="0 0 10 10" refX="5" refY="6" markerWidth="6" markerHeight="6" orient="auto">
-      <path d="M 1.5 0 L 5 9 L 8.5 0 z" fill="#10b981" />
-    </marker>
-    <marker id="arrowDownPurple" viewBox="0 0 10 10" refX="5" refY="6" markerWidth="6" markerHeight="6" orient="auto">
-      <path d="M 1.5 0 L 5 9 L 8.5 0 z" fill="#a855f7" />
-    </marker>
-    <marker id="arrowDownGold" viewBox="0 0 10 10" refX="5" refY="6" markerWidth="6" markerHeight="6" orient="auto">
-      <path d="M 1.5 0 L 5 9 L 8.5 0 z" fill="#f59e0b" />
+    <!-- Marker Arrow -->
+    <marker id="arrowDown" viewBox="0 0 10 10" refX="5" refY="6" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 1.5 0 L 5 8.5 L 8.5 0 z" fill="#38bdf8" />
     </marker>
   </defs>
 
-  <!-- Background Canvas -->
-  <rect width="1920" height="1080" fill="url(#bgGrad)" />
+  <!-- Background Base -->
+  <rect width="1600" height="1450" fill="url(#bgGrad)" />
 
   <!-- ========================================================================= -->
-  <!-- TOP BANNER -->
+  <!-- TOP PRESENTATION HEADER -->
   <!-- ========================================================================= -->
-  <g transform="translate(40, 20)" filter="url(#shadow)">
-    <rect width="1840" height="70" rx="14" fill="url(#headerGrad)" stroke="#38bdf8" stroke-width="1.5" />
-    <text x="30" y="44" fill="#ffffff" font-size="23" font-weight="900" letter-spacing="1">
-      TOP-TO-BOTTOM TIERED SYSTEM ARCHITECTURE
+  <g transform="translate(40, 20)" filter="url(#cardShadow)">
+    <rect width="1520" height="70" rx="12" fill="url(#headerGrad)" stroke="#38bdf8" stroke-width="1.5" />
+    <text x="30" y="44" fill="#ffffff" font-size="22" font-weight="900" letter-spacing="0.5">
+      TOP-TO-BOTTOM HIGH-LEVEL SYSTEM ARCHITECTURE
     </text>
-    <text x="750" y="44" fill="#bae6fd" font-size="14.5" font-weight="600">
-      TrialReady LK — Enterprise Cloud SaaS for Driving Academy Management &amp; DMT AI Compliance
+    <text x="640" y="44" fill="#bae6fd" font-size="14.5" font-weight="600">
+      TrialReady LK — Sri Lankan Driving Academy Management &amp; AI Trial Readiness Platform
     </text>
+    <g transform="translate(1330, 13)">
+      <rect width="160" height="44" rx="8" fill="#000000" fill-opacity="0.4" stroke="#ffffff" stroke-opacity="0.3" stroke-width="1" />
+      <text x="80" y="27" fill="#38bdf8" font-size="12" font-weight="800" text-anchor="middle">LAYER 1 → 7</text>
+    </g>
+  </g>
+
+  <!-- ========================================================================= -->
+  <!-- LAYER 1: PRESENTATION & CLIENT PLATFORMS -->
+  <!-- ========================================================================= -->
+  <g transform="translate(40, 110)" filter="url(#cardShadow)">
+    <rect width="1520" height="130" rx="12" fill="url(#cardGrad1)" stroke="#0284c7" stroke-width="2" />
     
-    <g transform="translate(1620, 13)">
-      <rect width="190" height="44" rx="8" fill="#000000" fill-opacity="0.35" stroke="#ffffff" stroke-opacity="0.3" stroke-width="1" />
-      <text x="95" y="27" fill="#38bdf8" font-size="12.5" font-weight="800" text-anchor="middle">TOP-TO-BOTTOM FLOW</text>
+    <!-- Title Bar -->
+    <rect width="1520" height="34" rx="12" fill="#0284c7" fill-opacity="0.25" />
+    <text x="760" y="23" fill="#38bdf8" font-size="14.5" font-weight="900" letter-spacing="1" text-anchor="middle">
+      LAYER 1: PRESENTATION &amp; CLIENT PLATFORMS
+    </text>
+
+    <!-- Tools & Tech Line -->
+    <g transform="translate(30, 56)">
+      <text x="0" y="0" fill="#facc15" font-size="13" font-weight="800">🛠️ TOOLS &amp; TECH:</text>
+      <text x="145" y="0" fill="#ffffff" font-size="13" font-weight="700">React 19 SPA  •  TypeScript 5.8  •  Tailwind CSS v4  •  Vite 7  •  React Router v7  •  Lucide React</text>
+    </g>
+
+    <!-- Bullet Points in 2 Columns -->
+    <g transform="translate(30, 84)" font-size="12.5" fill="#cbd5e1" font-weight="500">
+      <!-- Left Column -->
+      <text x="0" y="0">• <tspan fill="#ffffff" font-weight="700">Administrator Dashboard</tspan> — Campus branches, staff roster, fleet management, and billing ledgers</text>
+      <text x="0" y="24">• <tspan fill="#ffffff" font-weight="700">Instructor Practical Portal</tspan> — Daily in-car lessons, attendance, 7-maneuver grading, and session notes</text>
+
+      <!-- Right Column -->
+      <text x="780" y="0">• <tspan fill="#ffffff" font-weight="700">Student Learner Hub</tspan> — 7-Stage journey, mock theory exam simulator, and fee statements</text>
+      <text x="780" y="24">• <tspan fill="#ffffff" font-weight="700">18 Feature Subsystems</tspan> — Best Performing Leaderboard, Glassmorphic responsive mobile/desktop UI</text>
     </g>
   </g>
 
+  <!-- Connector 1 -> 2 -->
+  <g transform="translate(800, 240)">
+    <line x1="0" y1="0" x2="0" y2="40" stroke="#38bdf8" stroke-width="2.5" marker-end="url(#arrowDown)" />
+    <rect x="-115" y="10" width="230" height="20" rx="6" fill="#0f172a" stroke="#0284c7" stroke-width="1" />
+    <text x="0" y="24" fill="#38bdf8" font-size="11" font-weight="800" text-anchor="middle">(HTTPS / TLS 1.3 Anycast)</text>
+  </g>
+
   <!-- ========================================================================= -->
-  <!-- LAYER 1: CLIENT & PRESENTATION TIER (TOP) -->
+  <!-- LAYER 2: EDGE CDN & TRANSPORT SECURITY -->
   <!-- ========================================================================= -->
-  <g transform="translate(40, 105)" filter="url(#shadow)">
-    <rect width="1840" height="110" rx="14" fill="url(#tier1Grad)" stroke="#0284c7" stroke-width="2" />
+  <g transform="translate(40, 280)" filter="url(#cardShadow)">
+    <rect width="1520" height="115" rx="12" fill="url(#cardGrad2)" stroke="#6366f1" stroke-width="2" />
     
-    <!-- Tier Label Header -->
-    <rect x="0" y="0" width="280" height="30" rx="14" fill="#0284c7" />
-    <text x="15" y="20" fill="#ffffff" font-size="12.5" font-weight="900" letter-spacing="0.5">LAYER 1: PRESENTATION &amp; CLIENTS</text>
+    <rect width="1520" height="34" rx="12" fill="#6366f1" fill-opacity="0.25" />
+    <text x="760" y="23" fill="#a5b4fc" font-size="14.5" font-weight="900" letter-spacing="1" text-anchor="middle">
+      LAYER 2: EDGE CDN &amp; TRANSPORT SECURITY
+    </text>
 
-    <!-- Sub-Cards -->
-    <g transform="translate(20, 38)">
-      <!-- Card 1: Portals -->
-      <g transform="translate(0, 0)">
-        <rect width="390" height="60" rx="8" fill="#0b172a" stroke="#0284c7" stroke-width="1" />
-        <text x="12" y="22" fill="#38bdf8" font-size="12.5" font-weight="800">🧑‍💼 Role-Based Web &amp; Mobile Portals</text>
-        <text x="12" y="42" fill="#94a3b8" font-size="11">• Admin Dashboard • Instructor Portal • Student Learner Hub</text>
-      </g>
+    <!-- Tools & Tech Line -->
+    <g transform="translate(30, 56)">
+      <text x="0" y="0" fill="#facc15" font-size="13" font-weight="800">🛠️ TOOLS &amp; TECH:</text>
+      <text x="145" y="0" fill="#ffffff" font-size="13" font-weight="700">Vercel Serverless Edge CDN  •  TLS 1.3 / HTTP/2 / HTTP/3  •  Anycast DNS  •  Edge DDoS Shield</text>
+    </g>
 
-      <!-- Card 2: React 19 Core -->
-      <g transform="translate(410, 0)">
-        <rect width="390" height="60" rx="8" fill="#0b172a" stroke="#0284c7" stroke-width="1" />
-        <text x="12" y="22" fill="#38bdf8" font-size="12.5" font-weight="800">💻 Modern React 19 SPA &amp; Tailwind v4</text>
-        <text x="12" y="42" fill="#94a3b8" font-size="11">• Vite 7 Bundler • Lucide React • Glassmorphic Responsive UI</text>
-      </g>
+    <!-- Bullet Points in 2 Columns -->
+    <g transform="translate(30, 84)" font-size="12.5" fill="#cbd5e1" font-weight="500">
+      <text x="0" y="0">• <tspan fill="#ffffff" font-weight="700">Global Edge Delivery (&lt;50ms Latency)</tspan> — Distributed cache for single-page assets and instant hydration</text>
+      <text x="0" y="18">• <tspan fill="#ffffff" font-weight="700">Perfect Forward Secrecy (PFS)</tspan> — Strict TLS 1.3 encryption neutralizing eavesdropping and MITM attacks</text>
 
-      <!-- Card 3: RBAC Router -->
-      <g transform="translate(820, 0)">
-        <rect width="390" height="60" rx="8" fill="#0b172a" stroke="#0284c7" stroke-width="1" />
-        <text x="12" y="22" fill="#38bdf8" font-size="12.5" font-weight="800">🚦 RBAC Route Gatekeepers</text>
-        <text x="12" y="42" fill="#94a3b8" font-size="11">• React Router v7 Interceptors • 1-Click Demo Persona Bar</text>
-      </g>
-
-      <!-- Card 4: 18 Modules -->
-      <g transform="translate(1230, 0)">
-        <rect width="570" height="60" rx="8" fill="#0b172a" stroke="#0284c7" stroke-width="1" />
-        <text x="12" y="22" fill="#38bdf8" font-size="12.5" font-weight="800">📱 18 Domain Feature Subsystems</text>
-        <text x="12" y="42" fill="#94a3b8" font-size="11">• Best Performing Leaderboard • 7-Stage Journey • Payments &amp; Invoicing • Theory Hub</text>
-      </g>
+      <text x="780" y="0">• <tspan fill="#ffffff" font-weight="700">Automated Git CI/CD Deployments</tspan> — Atomic zero-downtime production rollouts via Vercel Edge</text>
+      <text x="780" y="18">• <tspan fill="#ffffff" font-weight="700">CORS Strict Domain Isolation</tspan> — Restricted cross-origin policies and auth route perimeter rate limiting</text>
     </g>
   </g>
 
-  <!-- Flow Connector 1 -> 2 -->
-  <path d="M 960 215 L 960 235" stroke="#38bdf8" stroke-width="3" fill="none" marker-end="url(#arrowDownBlue)" />
+  <!-- Connector 2 -> 3 -->
+  <g transform="translate(800, 395)">
+    <line x1="0" y1="0" x2="0" y2="40" stroke="#10b981" stroke-width="2.5" marker-end="url(#arrowDown)" />
+    <rect x="-110" y="10" width="220" height="20" rx="6" fill="#0f172a" stroke="#10b981" stroke-width="1" />
+    <text x="0" y="24" fill="#34d399" font-size="11" font-weight="800" text-anchor="middle">(Encrypted API Gateway)</text>
+  </g>
 
   <!-- ========================================================================= -->
-  <!-- LAYER 2: EDGE CDN, NETWORK SECURITY & TRANSPORT TIER -->
+  <!-- LAYER 3: PREPROCESSING, INPUT VALIDATION & AUTHENTICATION -->
   <!-- ========================================================================= -->
-  <g transform="translate(40, 240)" filter="url(#shadow)">
-    <rect width="1840" height="95" rx="14" fill="url(#tier2Grad)" stroke="#6366f1" stroke-width="2" />
-    <rect x="0" y="0" width="310" height="28" rx="14" fill="#6366f1" />
-    <text x="15" y="19" fill="#ffffff" font-size="12" font-weight="900" letter-spacing="0.5">LAYER 2: EDGE CDN &amp; TRANSPORT SECURITY</text>
+  <g transform="translate(40, 435)" filter="url(#cardShadow)">
+    <rect width="1520" height="150" rx="12" fill="url(#cardGrad3)" stroke="#10b981" stroke-width="2" />
+    
+    <rect width="1520" height="34" rx="12" fill="#10b981" fill-opacity="0.25" />
+    <text x="760" y="23" fill="#34d399" font-size="14.5" font-weight="900" letter-spacing="1" text-anchor="middle">
+      LAYER 3: PREPROCESSING, INPUT VALIDATION &amp; AUTHENTICATION
+    </text>
 
-    <g transform="translate(20, 36)">
-      <!-- Edge 1 -->
-      <g transform="translate(0, 0)">
-        <rect width="580" height="48" rx="8" fill="#0f172a" stroke="#6366f1" stroke-width="1" />
-        <text x="14" y="20" fill="#a5b4fc" font-size="12" font-weight="800">▲ Vercel Edge Serverless Network</text>
-        <text x="14" y="38" fill="#94a3b8" font-size="10.5">• Global Anycast Edge CDN • Sub-50ms Global Response Time • Automated CI/CD Deployments</text>
-      </g>
+    <!-- Tools & Tech Line -->
+    <g transform="translate(30, 56)">
+      <text x="0" y="0" fill="#facc15" font-size="13" font-weight="800">🛠️ TOOLS &amp; TECH:</text>
+      <text x="145" y="0" fill="#ffffff" font-size="13" font-weight="700">Zod v3 Schemas  •  GoTrue Auth Engine  •  Bcrypt (Salt ≥ 10)  •  Stateless JWT (RFC 7519)  •  UTF-8 BOM</text>
+    </g>
 
-      <!-- Edge 2 -->
-      <g transform="translate(600, 0)">
-        <rect width="580" height="48" rx="8" fill="#0f172a" stroke="#6366f1" stroke-width="1" />
-        <text x="14" y="20" fill="#a5b4fc" font-size="12" font-weight="800">🔒 Transport Layer Security (TLS 1.3 / HTTP/2)</text>
-        <text x="14" y="38" fill="#94a3b8" font-size="10.5">• HTTPS Enforced Everywhere • Perfect Forward Secrecy • Zero Plaintext Transmission</text>
-      </g>
+    <!-- Bullet Points in 2 Columns -->
+    <g transform="translate(30, 84)" font-size="12.5" fill="#cbd5e1" font-weight="500">
+      <text x="0" y="0">• <tspan fill="#ffffff" font-weight="700">Zod Strict Type Sanitizer</tspan> — Schema-driven payload validation preventing prototype pollution</text>
+      <text x="0" y="22">• <tspan fill="#ffffff" font-weight="700">30-Day Permit Expiry Countdown (Δt)</tspan> — Real-time timer tracking statutory renewal deadlines</text>
+      <text x="0" y="44">• <tspan fill="#ffffff" font-weight="700">Trilingual Context Token Resolver</tspan> — Dynamic i18n runtime switching across English, Sinhala, Tamil</text>
 
-      <!-- Edge 3 -->
-      <g transform="translate(1200, 0)">
-        <rect width="600" height="48" rx="8" fill="#0f172a" stroke="#6366f1" stroke-width="1" />
-        <text x="14" y="20" fill="#a5b4fc" font-size="12" font-weight="800">🛡️ Network Perimeter &amp; DDoS Defense</text>
-        <text x="14" y="38" fill="#94a3b8" font-size="10.5">• Rate Limiting on Auth Routes • DNS Spoofing Protection • CORS Isolation Scopes</text>
-      </g>
+      <text x="780" y="0">• <tspan fill="#ffffff" font-weight="700">Anti-XSS Virtual DOM Encoding</tspan> — React JSX data binding eliminating DOM script execution</text>
+      <text x="780" y="22">• <tspan fill="#ffffff" font-weight="700">7-Maneuver Mandatory Skill Bitmask</tspan> — Bitwise competency tracker across official DMT skills</text>
+      <text x="780" y="44">• <tspan fill="#ffffff" font-weight="700">RFC-4180 CSV Formula Sanitizer</tspan> — Neutralizes spreadsheet RCE injection (`=`, `+`, `-`, `@`)</text>
     </g>
   </g>
 
-  <!-- Flow Connector 2 -> 3 -->
-  <path d="M 960 335 L 960 355" stroke="#10b981" stroke-width="3" fill="none" marker-end="url(#arrowDownGreen)" />
-
-  <!-- ========================================================================= -->
-  <!-- LAYER 3: PREPROCESSING, VALIDATION & AUTHENTICATION TIER -->
-  <!-- ========================================================================= -->
-  <g transform="translate(40, 360)" filter="url(#shadow)">
-    <rect width="1840" height="110" rx="14" fill="url(#tier3Grad)" stroke="#10b981" stroke-width="2" />
-    <rect x="0" y="0" width="350" height="28" rx="14" fill="#10b981" />
-    <text x="15" y="19" fill="#022c22" font-size="12" font-weight="900" letter-spacing="0.5">LAYER 3: PREPROCESSING, VALIDATION &amp; AUTH</text>
-
-    <g transform="translate(20, 36)">
-      <!-- Card 1 -->
-      <g transform="translate(0, 0)">
-        <rect width="430" height="62" rx="8" fill="#02271e" stroke="#10b981" stroke-width="1" />
-        <text x="12" y="20" fill="#6ee7b7" font-size="12" font-weight="800">⚙️ Zod Type Sanitizer &amp; Anti-XSS</text>
-        <text x="12" y="38" fill="#a7f3d0" font-size="10.5">• Schema-Driven Validation • Virtual DOM Encoding</text>
-        <text x="12" y="52" fill="#a7f3d0" font-size="10.5">• Prototype Pollution Guard • Strict Phone/NIC Parse</text>
-      </g>
-
-      <!-- Card 2 -->
-      <g transform="translate(450, 0)">
-        <rect width="430" height="62" rx="8" fill="#02271e" stroke="#10b981" stroke-width="1" />
-        <text x="12" y="20" fill="#6ee7b7" font-size="12" font-weight="800">⏱️ Permit Countdown &amp; Vectorizer</text>
-        <text x="12" y="38" fill="#a7f3d0" font-size="10.5">• Δt = Expiry - Current • 30-Day Warning Horizon</text>
-        <text x="12" y="52" fill="#a7f3d0" font-size="10.5">• 7-Maneuver Bitmask • Practical Hours Accumulator</text>
-      </g>
-
-      <!-- Card 3 -->
-      <g transform="translate(900, 0)">
-        <rect width="430" height="62" rx="8" fill="#02271e" stroke="#10b981" stroke-width="1" />
-        <text x="12" y="20" fill="#6ee7b7" font-size="12" font-weight="800">🌐 Trilingual Context Token Mapper</text>
-        <text x="12" y="38" fill="#a7f3d0" font-size="10.5">• EN ↔ SI ↔ TA Dynamic Token Resolution</text>
-        <text x="12" y="52" fill="#a7f3d0" font-size="10.5">• Fallback Schema Engine • DMT Syllabus Loader</text>
-      </g>
-
-      <!-- Card 4 -->
-      <g transform="translate(1350, 0)">
-        <rect width="450" height="62" rx="8" fill="#02271e" stroke="#10b981" stroke-width="1" />
-        <text x="12" y="20" fill="#6ee7b7" font-size="12" font-weight="800">🔐 GoTrue Stateless Auth &amp; CSV Shield</text>
-        <text x="12" y="38" fill="#a7f3d0" font-size="10.5">• Stateless JWT Tokens • Bcrypt Salt Rounds ≥ 10</text>
-        <text x="12" y="52" fill="#a7f3d0" font-size="10.5">• RFC-4180 CSV Anti-Formula Injection (=, +, -, @)</text>
-      </g>
-    </g>
+  <!-- Connector 3 -> 4 -->
+  <g transform="translate(800, 585)">
+    <line x1="0" y1="0" x2="0" y2="40" stroke="#a855f7" stroke-width="2.5" marker-end="url(#arrowDown)" />
+    <rect x="-125" y="10" width="250" height="20" rx="6" fill="#0f172a" stroke="#a855f7" stroke-width="1" />
+    <text x="0" y="24" fill="#c084fc" font-size="11" font-weight="800" text-anchor="middle">(Feature Vectors &amp; Auth Claims)</text>
   </g>
-
-  <!-- Flow Connector 3 -> 4 -->
-  <path d="M 960 470 L 960 490" stroke="#a855f7" stroke-width="3" fill="none" marker-end="url(#arrowDownPurple)" />
 
   <!-- ========================================================================= -->
   <!-- LAYER 4: AI INFERENCE & CORE BUSINESS LOGIC ENGINES -->
   <!-- ========================================================================= -->
-  <g transform="translate(40, 495)" filter="url(#shadow)">
-    <rect width="1840" height="155" rx="14" fill="url(#tier4Grad)" stroke="#a855f7" stroke-width="2.5" />
-    <rect x="0" y="0" width="370" height="28" rx="14" fill="#a855f7" />
-    <text x="15" y="19" fill="#ffffff" font-size="12" font-weight="900" letter-spacing="0.5">LAYER 4: AI INFERENCE &amp; CORE BUSINESS ENGINES</text>
+  <g transform="translate(40, 625)" filter="url(#cardShadow)">
+    <rect width="1520" height="195" rx="12" fill="url(#cardGrad4)" stroke="#a855f7" stroke-width="2.5" />
+    
+    <rect width="1520" height="34" rx="12" fill="#a855f7" fill-opacity="0.3" />
+    <text x="760" y="23" fill="#e9d5ff" font-size="14.5" font-weight="900" letter-spacing="1" text-anchor="middle">
+      LAYER 4: AI INFERENCE &amp; CORE BUSINESS LOGIC ENGINES
+    </text>
 
-    <g transform="translate(20, 36)">
-      <!-- AI Engine 1 -->
-      <g transform="translate(0, 0)">
-        <rect width="430" height="106" rx="10" fill="#14062b" stroke="#a855f7" stroke-width="1.2" />
-        <text x="12" y="22" fill="#e9d5ff" font-size="12.5" font-weight="900">🧠 6-Factor AI Composite Readiness</text>
-        <rect x="10" y="28" width="410" height="22" rx="4" fill="#581c87" />
-        <text x="215" y="43" fill="#ffffff" font-size="11" font-weight="900" text-anchor="middle">S = Σ ( W_i × s_i )  ∈  [0, 100] %</text>
-        <text x="12" y="68" fill="#d8b4fe" font-size="10.5">• Medical (15%) • DMT Permit (15%) • Theory Mock (15%)</text>
-        <text x="12" y="84" fill="#d8b4fe" font-size="10.5">• Road Hours (25%) • 7 Maneuvers (20%) • Instructor Rating (10%)</text>
-        <text x="12" y="100" fill="#c084fc" font-size="10.5" font-weight="700">Output: Ready (85%+), Nearly, Needs Practice, Not Ready</text>
-      </g>
+    <!-- Tools & Tech Line -->
+    <g transform="translate(30, 56)">
+      <text x="0" y="0" fill="#facc15" font-size="13" font-weight="800">🛠️ TOOLS &amp; TECH:</text>
+      <text x="145" y="0" fill="#ffffff" font-size="13" font-weight="700">Multivariate Scoring Engine  •  Rule-Based AI Classifier  •  Interval Scheduling  •  CSS3 Print Engine</text>
+    </g>
 
-      <!-- AI Engine 2 -->
-      <g transform="translate(450, 0)">
-        <rect width="430" height="106" rx="10" fill="#1e0811" stroke="#ef4444" stroke-width="1.2" />
-        <text x="12" y="22" fill="#fca5a5" font-size="12.5" font-weight="900">🚫 Regulatory Veto Classifier</text>
-        <text x="12" y="44" fill="#f87171" font-size="11">• Expired DMT Permit → INSTANT HARD VETO LOCK</text>
-        <text x="12" y="62" fill="#f87171" font-size="11">• Failed / Missing NTMI Medical → TIER BLOCK</text>
-        <text x="12" y="80" fill="#f87171" font-size="11">• Under 10 Road Hours Mandate → NOT TRIAL READY</text>
-        <text x="12" y="98" fill="#cbd5e1" font-size="10.5">• Enforces Motor Traffic Act No. 14 of 1951 Regulations</text>
-      </g>
+    <!-- Bullet Points in 2 Columns -->
+    <g transform="translate(30, 84)" font-size="12.5" fill="#cbd5e1" font-weight="500">
+      <text x="0" y="0">• <tspan fill="#ffffff" font-weight="800">6-Factor AI Composite Readiness Algorithm:</tspan> <tspan fill="#f472b6" font-weight="800">S = Σ(W_i · s_i) ∈ [0, 100]%</tspan></text>
+      <text x="15" y="18" fill="#e9d5ff" font-size="11.5">[NTMI Medical 15% + DMT Permit 15% + Theory 15% + Hours 25% + Skills 20% + Stars 10%]</text>
 
-      <!-- AI Engine 3 -->
-      <g transform="translate(900, 0)">
-        <rect width="430" height="106" rx="10" fill="#14062b" stroke="#a855f7" stroke-width="1" />
-        <text x="12" y="22" fill="#e9d5ff" font-size="12.5" font-weight="900">📊 Adaptive Theory Diagnostics</text>
-        <text x="12" y="44" fill="#c4b5fd" font-size="11">• Highway Code Weakness Mapping (40-Q Exam)</text>
-        <text x="12" y="62" fill="#c4b5fd" font-size="11">• Automated Priority Remedial Drill Generator</text>
-        <text x="12" y="80" fill="#c4b5fd" font-size="11">• Real-Time Category Passing Threshold Tracker</text>
-        <text x="12" y="98" fill="#c4b5fd" font-size="11">• Road Signs vs Road Rules Radar Analytics</text>
-      </g>
+      <text x="0" y="44">• <tspan fill="#ffffff" font-weight="700">Regulatory Veto Classifier</tspan> — Instant hard lock for expired permits (&lt;0d), unpassed medicals, or &lt;10 practical hours</text>
+      <text x="0" y="66">• <tspan fill="#ffffff" font-weight="700">Adaptive Theory Diagnostics</tspan> — Highway Code category weakness profiler &amp; dynamic personalized remedial drill generator</text>
+      <text x="0" y="88">• <tspan fill="#ffffff" font-weight="700">Fleet Scheduling Collision Prevention</tspan> — Temporal intersection geometry preventing instructor and vehicle double-booking</text>
 
-      <!-- AI Engine 4 -->
-      <g transform="translate(1350, 0)">
-        <rect width="450" height="106" rx="10" fill="#03201d" stroke="#10b981" stroke-width="1.2" />
-        <text x="12" y="22" fill="#34d399" font-size="12.5" font-weight="900">🖨️ Zero-PDF Vector Print &amp; Fleet Guard</text>
-        <text x="12" y="44" fill="#a7f3d0" font-size="11">• Pure @media print CSS Official Vector Generator</text>
-        <text x="12" y="62" fill="#a7f3d0" font-size="11">• DMT/SL/LOG-01 Logbook &amp; ADM-PASS Slip</text>
-        <text x="12" y="80" fill="#a7f3d0" font-size="11">• Instructor &amp; Vehicle Overlap Collision Prevention</text>
-        <text x="12" y="98" fill="#a7f3d0" font-size="11">• Zero Server-Side PDF CVE Attack Vulnerabilities</text>
-      </g>
+      <!-- Right Side Document Print Engine -->
+      <text x="780" y="44">• <tspan fill="#ffffff" font-weight="700">Browser-Native Vector Print Engine</tspan> — Pure `@media print` CSS generating official A4 DMT Logbooks (`DMT/SL/LOG-01`)</text>
+      <text x="780" y="66">• <tspan fill="#ffffff" font-weight="700">Official Trial Admission Passes (`DMT/SL/ADM-PASS`)</tspan> — Eliminates binary PDF server exploits (Zero-PDF attack vector)</text>
+      <text x="780" y="88">• <tspan fill="#ffffff" font-weight="700">Deterministic Rule Engine</tspan> — 100% mathematical auditability with zero hallucinations or black-box drift</text>
     </g>
   </g>
 
-  <!-- Flow Connector 4 -> 5 -->
-  <path d="M 960 650 L 960 670" stroke="#10b981" stroke-width="3" fill="none" marker-end="url(#arrowDownGreen)" />
+  <!-- Connector 4 -> 5 -->
+  <g transform="translate(800, 820)">
+    <line x1="0" y1="0" x2="0" y2="40" stroke="#0d9488" stroke-width="2.5" marker-end="url(#arrowDown)" />
+    <rect x="-115" y="10" width="230" height="20" rx="6" fill="#0f172a" stroke="#0d9488" stroke-width="1" />
+    <text x="0" y="24" fill="#2dd4bf" font-size="11" font-weight="800" text-anchor="middle">(Prepared RESTful Payloads)</text>
+  </g>
 
   <!-- ========================================================================= -->
-  <!-- LAYER 5: BACKEND, API & KERNEL ROW-LEVEL SECURITY TIER -->
+  <!-- LAYER 5: BACKEND SERVICES & KERNEL ROW-LEVEL SECURITY -->
   <!-- ========================================================================= -->
-  <g transform="translate(40, 675)" filter="url(#shadow)">
-    <rect width="1840" height="110" rx="14" fill="url(#tier5Grad)" stroke="#10b981" stroke-width="2" />
-    <rect x="0" y="0" width="370" height="28" rx="14" fill="#0f766e" />
-    <text x="15" y="19" fill="#ffffff" font-size="12" font-weight="900" letter-spacing="0.5">LAYER 5: BACKEND &amp; ROW-LEVEL SECURITY</text>
+  <g transform="translate(40, 860)" filter="url(#cardShadow)">
+    <rect width="1520" height="150" rx="12" fill="url(#cardGrad5)" stroke="#0d9488" stroke-width="2" />
+    
+    <rect width="1520" height="34" rx="12" fill="#0d9488" fill-opacity="0.25" />
+    <text x="760" y="23" fill="#2dd4bf" font-size="14.5" font-weight="900" letter-spacing="1" text-anchor="middle">
+      LAYER 5: BACKEND SERVICES &amp; KERNEL ROW-LEVEL SECURITY
+    </text>
 
-    <g transform="translate(20, 36)">
-      <g transform="translate(0, 0)">
-        <rect width="580" height="62" rx="8" fill="#021f1c" stroke="#10b981" stroke-width="1" />
-        <text x="14" y="20" fill="#6ee7b7" font-size="12.5" font-weight="800">⚡ PostgREST High-Throughput REST API</text>
-        <text x="14" y="38" fill="#a7f3d0" font-size="10.5">• Parameterized Prepared SQL Statements • 100% Anti-SQL Injection</text>
-        <text x="14" y="52" fill="#a7f3d0" font-size="10.5">• Sub-Millisecond Latency • Automatic TypeScript Contract Alignment</text>
-      </g>
+    <!-- Tools & Tech Line -->
+    <g transform="translate(30, 56)">
+      <text x="0" y="0" fill="#facc15" font-size="13" font-weight="800">🛠️ TOOLS &amp; TECH:</text>
+      <text x="145" y="0" fill="#ffffff" font-size="13" font-weight="700">PostgREST API Engine  •  PostgreSQL 15 RLS  •  Prepared SQL Statements  •  RBAC Scoped Policies</text>
+    </g>
 
-      <g transform="translate(600, 0)">
-        <rect width="600" height="62" rx="8" fill="#021f1c" stroke="#10b981" stroke-width="1.5" />
-        <text x="14" y="20" fill="#6ee7b7" font-size="12.5" font-weight="900">🛡️ Kernel-Level Row-Level Security (RLS)</text>
-        <rect x="12" y="26" width="220" height="18" rx="4" fill="#064e3b" />
-        <text x="18" y="39" fill="#a7f3d0" font-size="9.5" font-mono font-weight="700">driving_school_id = auth.uid()</text>
-        <text x="240" y="39" fill="#a7f3d0" font-size="10.5">• Multi-Tenant DB Segregation</text>
-        <text x="14" y="54" fill="#a7f3d0" font-size="10.5">• Zero Cross-School Data Leaks • Role-Based Policy Scopes (Admin / Ins / Stud)</text>
-      </g>
+    <!-- Bullet Points in 2 Columns -->
+    <g transform="translate(30, 84)" font-size="12.5" fill="#cbd5e1" font-weight="500">
+      <text x="0" y="0">• <tspan fill="#ffffff" font-weight="700">PostgREST High-Throughput REST API</tspan> — Automated schema-to-REST API layer with sub-millisecond execution latency</text>
+      <text x="0" y="22">• <tspan fill="#ffffff" font-weight="700">Kernel-Level Row-Level Security (RLS)</tspan> — Database multi-tenancy enforced by <tspan fill="#5eead4" font-family="monospace">driving_school_id = auth.uid()</tspan></text>
+      <text x="0" y="44">• <tspan fill="#ffffff" font-weight="700">Zero Cross-School Tenant Leakage</tspan> — Absolute mathematical isolation between rival driving academy entities</text>
 
-      <g transform="translate(1220, 0)">
-        <rect width="580" height="62" rx="8" fill="#021f1c" stroke="#10b981" stroke-width="1" />
-        <text x="14" y="20" fill="#6ee7b7" font-size="12.5" font-weight="800">🔒 Cryptographic Audit Logging &amp; Ledger</text>
-        <text x="14" y="38" fill="#a7f3d0" font-size="10.5">• Real-Time DB Transaction Logging • Financial Ledger Balance Integrity</text>
-        <text x="14" y="52" fill="#a7f3d0" font-size="10.5">• Strict Foreign Key Cascading Rules • Tamper-Evident History</text>
-      </g>
+      <text x="780" y="0">• <tspan fill="#ffffff" font-weight="700">Parameterized Prepared SQL (Anti-SQLi)</tspan> — 100% parameter-bound queries completely mitigating SQL Injection</text>
+      <text x="780" y="22">• <tspan fill="#ffffff" font-weight="700">Role-Scoped DB Policies (Admin/Ins/Stud)</tspan> — Fine-grained read/write privileges enforcing least-privilege principles</text>
+      <text x="780" y="44">• <tspan fill="#ffffff" font-weight="700">Tamper-Evident Transaction Audit Logging</tspan> — Immutable database trigger logs for financial and exam compliance</text>
     </g>
   </g>
 
-  <!-- Flow Connector 5 -> 6 -->
-  <path d="M 960 785 L 960 805" stroke="#f59e0b" stroke-width="3" fill="none" marker-end="url(#arrowDownGold)" />
+  <!-- Connector 5 -> 6 -->
+  <g transform="translate(800, 1010)">
+    <line x1="0" y1="0" x2="0" y2="40" stroke="#f59e0b" stroke-width="2.5" marker-end="url(#arrowDown)" />
+    <rect x="-155" y="10" width="310" height="20" rx="6" fill="#0f172a" stroke="#f59e0b" stroke-width="1" />
+    <text x="0" y="24" fill="#fbbf24" font-size="11" font-weight="800" text-anchor="middle">(Authenticated SQL Queries &amp; Offline Sync)</text>
+  </g>
 
   <!-- ========================================================================= -->
-  <!-- LAYER 6: DATA STORES & PERSISTENCE ARCHITECTURE -->
+  <!-- LAYER 6: HYBRID DATA STORES & PERSISTENCE -->
   <!-- ========================================================================= -->
-  <g transform="translate(40, 810)" filter="url(#shadow)">
-    <rect width="1840" height="110" rx="14" fill="url(#tier6Grad)" stroke="#f59e0b" stroke-width="2" />
-    <rect x="0" y="0" width="330" height="28" rx="14" fill="#d97706" />
-    <text x="15" y="19" fill="#000000" font-size="12" font-weight="900" letter-spacing="0.5">LAYER 6: HYBRID PERSISTENCE &amp; STORES</text>
+  <g transform="translate(40, 1050)" filter="url(#cardShadow)">
+    <rect width="1520" height="135" rx="12" fill="url(#cardGrad6)" stroke="#f59e0b" stroke-width="2" />
+    
+    <rect width="1520" height="34" rx="12" fill="#f59e0b" fill-opacity="0.25" />
+    <text x="760" y="23" fill="#fbbf24" font-size="14.5" font-weight="900" letter-spacing="1" text-anchor="middle">
+      LAYER 6: HYBRID DATA STORES &amp; PERSISTENCE
+    </text>
 
-    <g transform="translate(20, 36)">
-      <!-- Postgres Cloud -->
-      <g transform="translate(0, 0)">
-        <rect width="900" height="62" rx="8" fill="#1c0b02" stroke="#f59e0b" stroke-width="1.2" />
-        <text x="14" y="20" fill="#fde68a" font-size="12.5" font-weight="900">🗄️ Primary PostgreSQL 15 Cloud Database (18 Multi-Tenant Tables)</text>
-        <text x="14" y="38" fill="#cbd5e1" font-size="10.5" font-family="monospace">driving_schools, branches, user_profiles, instructors, vehicles, licence_categories, packages, students,</text>
-        <text x="14" y="52" fill="#cbd5e1" font-size="10.5" font-family="monospace">student_permits, student_medical_records, student_exam_trials, practical_sessions, payments, ai_evals...</text>
-      </g>
+    <!-- Tools & Tech Line -->
+    <g transform="translate(30, 56)">
+      <text x="0" y="0" fill="#facc15" font-size="13" font-weight="800">🛠️ TOOLS &amp; TECH:</text>
+      <text x="145" y="0" fill="#ffffff" font-size="13" font-weight="700">PostgreSQL 15 Relational DB  •  HTML5 Web Storage API (LocalStorage Engine)  •  JSONB Schemas</text>
+    </g>
 
-      <!-- LocalStorage Offline Cache -->
-      <g transform="translate(920, 0)">
-        <rect width="880" height="62" rx="8" fill="#1c0b02" stroke="#38bdf8" stroke-width="1.2" />
-        <text x="14" y="20" fill="#38bdf8" font-size="12.5" font-weight="900">💾 Persistent Client Fallback Cache (trialready_* LocalStorage Engine)</text>
-        <text x="14" y="38" fill="#93c5fd" font-size="10.5">• 100% Offline Capability • Zero Cloud Downtime Failure • Schema-Matched Data Sync Engine</text>
-        <text x="14" y="52" fill="#93c5fd" font-size="10.5">• Deterministic Seeding with Royal Driving Academy • 5 Diverse User Personas • 1-Click State Reset</text>
-      </g>
+    <!-- Bullet Points in 2 Columns -->
+    <g transform="translate(30, 84)" font-size="12.5" fill="#cbd5e1" font-weight="500">
+      <text x="0" y="0">• <tspan fill="#ffffff" font-weight="700">Primary Cloud Database</tspan> — Managed PostgreSQL 15 database structured into 18 multi-tenant relational tables</text>
+      <text x="0" y="22">• <tspan fill="#ffffff" font-weight="700">Offline Fallback Engine</tspan> — Persistent client LocalStorage (<tspan fill="#fde68a" font-family="monospace">trialready_*</tspan>) delivering 100% uptime without internet</text>
+
+      <text x="780" y="0">• <tspan fill="#ffffff" font-weight="700">Deterministic Seed Dataset</tspan> — Royal Driving Academy preset configured with 5 realistic user personas</text>
+      <text x="780" y="22">• <tspan fill="#ffffff" font-weight="700">Schema-Matched State Sync</tspan> — Transparent dual-mode switching between live Supabase cloud and local storage</text>
     </g>
   </g>
 
-  <!-- Flow Connector 6 -> 7 -->
-  <path d="M 960 920 L 960 940" stroke="#a855f7" stroke-width="3" fill="none" marker-end="url(#arrowDownPurple)" />
+  <!-- Connector 6 -> 7 -->
+  <g transform="translate(800, 1185)">
+    <line x1="0" y1="0" x2="0" y2="40" stroke="#6366f1" stroke-width="2.5" marker-end="url(#arrowDown)" />
+    <rect x="-140" y="10" width="280" height="20" rx="6" fill="#0f172a" stroke="#6366f1" stroke-width="1" />
+    <text x="0" y="24" fill="#a5b4fc" font-size="11" font-weight="800" text-anchor="middle">(Statutory Alignment &amp; Cloud Hosting)</text>
+  </g>
 
   <!-- ========================================================================= -->
-  <!-- LAYER 7: EXTERNAL REGULATORY & CLOUD ECOSYSTEM (BOTTOM FOUNDATION) -->
+  <!-- LAYER 7: INTEGRATED EXTERNAL STATUTORY & REGULATORY ECOSYSTEM -->
   <!-- ========================================================================= -->
-  <g transform="translate(40, 945)" filter="url(#shadow)">
-    <rect width="1840" height="110" rx="14" fill="url(#tier7Grad)" stroke="#a855f7" stroke-width="2" />
-    <rect x="0" y="0" width="410" height="28" rx="14" fill="#7c3aed" />
-    <text x="15" y="19" fill="#ffffff" font-size="12" font-weight="900" letter-spacing="0.5">LAYER 7: EXTERNAL REGULATORY &amp; CLOUD ECOSYSTEM</text>
+  <g transform="translate(40, 1225)" filter="url(#cardShadow)">
+    <rect width="1520" height="135" rx="12" fill="url(#cardGrad7)" stroke="#6366f1" stroke-width="2" />
+    
+    <rect width="1520" height="34" rx="12" fill="#6366f1" fill-opacity="0.25" />
+    <text x="760" y="23" fill="#c7d2fe" font-size="14.5" font-weight="900" letter-spacing="1" text-anchor="middle">
+      LAYER 7: INTEGRATED EXTERNAL STATUTORY &amp; REGULATORY ECOSYSTEM
+    </text>
 
-    <g transform="translate(20, 36)">
-      <!-- Ext 1: DMT -->
-      <g transform="translate(0, 0)">
-        <rect width="345" height="62" rx="8" fill="#151e32" stroke="#475569" stroke-width="1" />
-        <text x="12" y="20" fill="#fbbf24" font-size="12" font-weight="800">🏛️ Dept. of Motor Traffic (DMT)</text>
-        <text x="12" y="38" fill="#94a3b8" font-size="10.5">• Motor Traffic Act No. 14 of 1951</text>
-        <text x="12" y="52" fill="#94a3b8" font-size="10.5">• Werahera Practical Trial Rules</text>
-      </g>
+    <!-- Tools & Tech Line -->
+    <g transform="translate(30, 56)">
+      <text x="0" y="0" fill="#facc15" font-size="13" font-weight="800">🛠️ TOOLS &amp; TECH:</text>
+      <text x="145" y="0" fill="#ffffff" font-size="13" font-weight="700">Sri Lanka Motor Traffic Act No. 14 of 1951  •  NTMI Directives  •  LankaQR / CBSL  •  Supabase BaaS  •  Vercel Edge</text>
+    </g>
 
-      <!-- Ext 2: NTMI -->
-      <g transform="translate(365, 0)">
-        <rect width="345" height="62" rx="8" fill="#151e32" stroke="#475569" stroke-width="1" />
-        <text x="12" y="20" fill="#38bdf8" font-size="12" font-weight="800">🏥 NTMI Medical Institute</text>
-        <text x="12" y="38" fill="#94a3b8" font-size="10.5">• Clinical Fitness Verification</text>
-        <text x="12" y="52" fill="#94a3b8" font-size="10.5">• Certificate Barcode Directives</text>
-      </g>
+    <!-- Bullet Points in 2 Columns -->
+    <g transform="translate(30, 84)" font-size="12.5" fill="#cbd5e1" font-weight="500">
+      <text x="0" y="0">• <tspan fill="#ffffff" font-weight="700">Department of Motor Traffic (DMT)</tspan> — Statutory testing syllabi and Werahera practical trial ground specifications</text>
+      <text x="0" y="22">• <tspan fill="#ffffff" font-weight="700">National Transport Medical Institute (NTMI)</tspan> — Official driver medical fitness clearance &amp; barcode verification</text>
 
-      <!-- Ext 3: LankaQR -->
-      <g transform="translate(730, 0)">
-        <rect width="345" height="62" rx="8" fill="#151e32" stroke="#475569" stroke-width="1" />
-        <text x="12" y="20" fill="#c084fc" font-size="12" font-weight="800">💳 LankaQR &amp; CBSL Rails</text>
-        <text x="12" y="38" fill="#94a3b8" font-size="10.5">• National Digital QR Standards</text>
-        <text x="12" y="52" fill="#94a3b8" font-size="10.5">• CEFT Interbank Direct Clearing</text>
-      </g>
-
-      <!-- Ext 4: Supabase Cloud -->
-      <g transform="translate(1095, 0)">
-        <rect width="345" height="62" rx="8" fill="#151e32" stroke="#475569" stroke-width="1" />
-        <text x="12" y="20" fill="#34d399" font-size="12" font-weight="800">☁️ Supabase Cloud BaaS</text>
-        <text x="12" y="38" fill="#94a3b8" font-size="10.5">• Managed PostgreSQL 15 Engine</text>
-        <text x="12" y="52" fill="#94a3b8" font-size="10.5">• GoTrue Auth &amp; PostgREST</text>
-      </g>
-
-      <!-- Ext 5: Vercel -->
-      <g transform="translate(1460, 0)">
-        <rect width="340" height="62" rx="8" fill="#151e32" stroke="#475569" stroke-width="1" />
-        <text x="12" y="20" fill="#ffffff" font-size="12" font-weight="800">▲ Vercel Edge Serverless</text>
-        <text x="12" y="38" fill="#94a3b8" font-size="10.5">• Global Serverless Edge Delivery</text>
-        <text x="12" y="52" fill="#94a3b8" font-size="10.5">• TLS 1.3 Anycast Edge Network</text>
-      </g>
+      <text x="780" y="0">• <tspan fill="#ffffff" font-weight="700">LankaQR / Central Bank of Sri Lanka (CBSL)</tspan> — National standard QR rails for instant tuition installment collection</text>
+      <text x="780" y="22">• <tspan fill="#ffffff" font-weight="700">Supabase Cloud &amp; Vercel Edge</tspan> — Enterprise serverless hosting, managed PostgreSQL 15, and global Anycast delivery</text>
     </g>
   </g>
 </svg>

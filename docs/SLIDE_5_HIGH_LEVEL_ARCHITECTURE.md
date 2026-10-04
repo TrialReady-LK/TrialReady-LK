@@ -5,29 +5,92 @@
 > **Degree Program:** BSc (Hons) in Cyber Security (Final Year Enterprise Project)  
 > **Author:** Ravishka Rathnayaka (*Lead Full-Stack & Security Architect*)  
 > **Live Production System:** [https://trial-ready-lk-pi.vercel.app](https://trial-ready-lk-pi.vercel.app)  
-> **Evaluation Rubric:** 6 Core Components (Data Sources, Preprocessing, Model/Inference, Backend, Frontend/UI, Data Stores) + Left-to-Right Data Flow + External Services & APIs + Left-to-Right Narration Script.
+> **Evaluation Rubric:** 6 Core Components (Data Sources, Preprocessing, Model/Inference, Backend, Frontend/UI, Data Stores) + Left-to-Right Data Flow + Top-to-Bottom 7-Tiered Stack + Tools & Tech in Every Layer + External Services & APIs + Viva Narration Script.
 
 ---
 
-## 1. High-Level Architecture Diagrams
-
-### 🎨 Representation A: Left-to-Right Stage-by-Stage Data Flow Pipeline
-
-The primary architectural paradigm is structured as a **6-stage sequential data pipeline** operating from left to right, anchored by external statutory integrations and cloud infrastructure at the foundation.
-
-![TrialReady LK - Left-to-Right High-Level System Architecture](./assets/high_level_system_architecture_slide5.svg)
+## 1. High-Level Architecture Diagrams (Dual Orientation: Top-to-Bottom & Left-to-Right)
 
 ---
 
-### 🎨 Representation B: Top-to-Bottom 7-Tiered Enterprise Architecture
+### 🎨 Representation A: Top-to-Bottom Tiered Architecture (Layer 1 → Layer 7)
 
-For architectural depth analysis, the system decomposes into **7 decoupled tiers**, progressing from client edge presentation down to statutory persistence.
+> 🖼️ **Full HD Direct Vector File:** [`docs/assets/high_level_system_architecture_top_to_bottom.svg`](./assets/high_level_system_architecture_top_to_bottom.svg)
 
 ![TrialReady LK - Top-to-Bottom Tiered System Architecture](./assets/high_level_system_architecture_top_to_bottom.svg)
 
+#### 📊 Top-to-Bottom Interactive Flowchart (Mermaid)
+
+```mermaid
+flowchart TD
+    subgraph L1["LAYER 1: PRESENTATION & CLIENT PLATFORMS"]
+        L1_TECH["🛠️ TOOLS & TECH: React 19 SPA • TypeScript 5.8 • Tailwind CSS v4 • Vite 7 • React Router v7 • Lucide React"]
+        L1_DESC["• Administrator Dashboard — Campuses, staff roster, fleet management, and billing ledgers<br/>• Instructor Practical Portal — Daily in-car lessons, attendance, 7-maneuver grading, and session notes<br/>• Student Learner Hub — 7-Stage journey, mock theory exam simulator, and fee statements<br/>• 18 Feature Subsystems — Best Performing Leaderboard, Glassmorphic responsive mobile/desktop UI"]
+    end
+
+    subgraph L2["LAYER 2: EDGE CDN & TRANSPORT SECURITY"]
+        L2_TECH["🛠️ TOOLS & TECH: Vercel Serverless Edge CDN • TLS 1.3 / HTTP/2 / HTTP/3 • Anycast Routing • DDoS Shield"]
+        L2_DESC["• Global Edge Delivery (&lt;50ms Latency) — Distributed cache for single-page assets and instant hydration<br/>• Perfect Forward Secrecy (PFS) — Strict TLS 1.3 encryption neutralizing eavesdropping and MITM attacks<br/>• Automated Git CI/CD Deployments — Atomic zero-downtime production rollouts via Vercel Edge<br/>• CORS Strict Domain Isolation — Restricted cross-origin policies and auth route perimeter rate limiting"]
+    end
+
+    subgraph L3["LAYER 3: PREPROCESSING, INPUT VALIDATION & AUTHENTICATION"]
+        L3_TECH["🛠️ TOOLS & TECH: Zod v3 Schemas • GoTrue Auth Engine • Bcrypt (Salt ≥ 10) • JWT (RFC 7519) • UTF-8 BOM"]
+        L3_DESC["• Zod Strict Type Sanitizer — Schema-driven payload validation preventing prototype pollution<br/>• 30-Day Permit Expiry Countdown (Δt) — Real-time timer tracking statutory renewal deadlines<br/>• Trilingual Context Token Resolver — Dynamic i18n runtime switching across English, Sinhala, Tamil<br/>• Anti-XSS Virtual DOM Encoding — React JSX data binding eliminating DOM script execution<br/>• 7-Maneuver Mandatory Skill Bitmask — Bitwise competency tracker across official DMT skills<br/>• RFC-4180 CSV Formula Sanitizer — Neutralizes spreadsheet RCE injection (=, +, -, @)"]
+    end
+
+    subgraph L4["LAYER 4: AI INFERENCE & CORE BUSINESS LOGIC ENGINES"]
+        L4_TECH["🛠️ TOOLS & TECH: Multivariate Scoring Engine • Rule-Based AI Classifier • Interval Scheduling • CSS3 Print Engine"]
+        L4_DESC["• 6-Factor AI Composite Readiness Algorithm: S = Σ(W_i · s_i) ∈ [0, 100]%<br/>  <i>[NTMI Medical 15% + DMT Permit 15% + Theory 15% + Hours 25% + Skills 20% + Stars 10%]</i><br/>• Regulatory Veto Classifier — Instant hard lock for expired permits (&lt;0d), unpassed medicals, or &lt;10 hours<br/>• Adaptive Theory Diagnostics — Highway Code category weakness profiler &amp; remedial drill generator<br/>• Fleet Scheduling Collision Prevention — Temporal intersection geometry preventing double-booking<br/>• Browser-Native Vector Print Engine — Pure @media print CSS generating official A4 DMT Logbooks &amp; Passes (Zero PDF)"]
+    end
+
+    subgraph L5["LAYER 5: BACKEND SERVICES & KERNEL ROW-LEVEL SECURITY"]
+        L5_TECH["🛠️ TOOLS & TECH: PostgREST API Engine • PostgreSQL RLS • Prepared SQL Statements • RBAC Scoped Policies"]
+        L5_DESC["• PostgREST High-Throughput REST API — Automated schema-to-REST API layer with sub-millisecond latency<br/>• Kernel-Level Row-Level Security (RLS) — Database multi-tenancy enforced by driving_school_id = auth.uid()<br/>• Zero Cross-School Tenant Leakage — Absolute mathematical isolation between rival driving academy entities<br/>• Parameterized Prepared SQL (Anti-SQLi) — 100% parameter-bound queries completely mitigating SQL Injection<br/>• Role-Scoped DB Policies (Admin/Ins/Stud) — Fine-grained read/write privileges enforcing least-privilege principles<br/>• Tamper-Evident Transaction Audit Logging — Immutable database trigger logs for financial compliance"]
+    end
+
+    subgraph L6["LAYER 6: HYBRID DATA STORES & PERSISTENCE"]
+        L6_TECH["🛠️ TOOLS & TECH: PostgreSQL 15 Relational DB • HTML5 Web Storage API (LocalStorage Engine) • JSONB Schemas"]
+        L6_DESC["• Primary Cloud Database — Managed PostgreSQL 15 database structured into 18 multi-tenant relational tables<br/>• Offline Fallback Engine — Persistent client LocalStorage (trialready_*) delivering 100% uptime without internet<br/>• Deterministic Seed Dataset — Royal Driving Academy preset configured with 5 realistic user personas<br/>• Schema-Matched State Sync — Transparent dual-mode switching between live Supabase cloud and local storage"]
+    end
+
+    subgraph L7["LAYER 7: INTEGRATED EXTERNAL STATUTORY & REGULATORY ECOSYSTEM"]
+        L7_TECH["🛠️ TOOLS & TECH: Sri Lanka Motor Traffic Act No. 14 of 1951 • NTMI Directives • LankaQR / CBSL • Supabase BaaS"]
+        L7_DESC["• Department of Motor Traffic (DMT) — Statutory testing syllabi and Werahera practical trial ground specifications<br/>• National Transport Medical Institute (NTMI) — Official driver medical fitness clearance &amp; barcode verification<br/>• LankaQR / Central Bank of Sri Lanka (CBSL) — National standard QR rails for instant tuition installment collection<br/>• Supabase Cloud &amp; Vercel Edge — Enterprise serverless hosting, managed PostgreSQL 15, and global Anycast delivery"]
+    end
+
+    L1 -->|"(HTTPS / TLS 1.3 Anycast)"| L2
+    L2 -->|"(Encrypted API Gateway)"| L3
+    L3 -->|"(Feature Vectors &amp; Auth Claims)"| L4
+    L4 -->|"(Prepared RESTful Payloads)"| L5
+    L5 -->|"(Authenticated SQL Queries &amp; Offline Sync)"| L6
+    L6 -->|"(Statutory Alignment &amp; Cloud Hosting)"| L7
+
+    classDef blueCard fill:#0f1f38,stroke:#0284c7,stroke-width:2px,color:#f8fafc;
+    classDef indigoCard fill:#19173b,stroke:#6366f1,stroke-width:2px,color:#f8fafc;
+    classDef greenCard fill:#06382b,stroke:#10b981,stroke-width:2px,color:#f8fafc;
+    classDef purpleCard fill:#2a1045,stroke:#a855f7,stroke-width:2px,color:#f8fafc;
+    classDef tealCard fill:#043230,stroke:#0d9488,stroke-width:2px,color:#f8fafc;
+    classDef amberCard fill:#361704,stroke:#f59e0b,stroke-width:2px,color:#f8fafc;
+    classDef slateCard fill:#18233a,stroke:#6366f1,stroke-width:2px,color:#f8fafc;
+
+    class L1 blueCard;
+    class L2 indigoCard;
+    class L3 greenCard;
+    class L4 purpleCard;
+    class L5 tealCard;
+    class L6 amberCard;
+    class L7 slateCard;
+```
+
 ---
 
-### 📊 Architectural Flowchart (Mermaid)
+### 🎨 Representation B: Left-to-Right Stage-by-Stage Data Flow Pipeline
+
+> 🖼️ **Full HD Direct Vector File:** [`docs/assets/high_level_system_architecture_slide5.svg`](./assets/high_level_system_architecture_slide5.svg)
+
+![TrialReady LK - Left-to-Right High-Level System Architecture](./assets/high_level_system_architecture_slide5.svg)
+
+#### 📊 Left-to-Right Interactive Flowchart (Mermaid)
 
 ```mermaid
 flowchart LR
@@ -113,70 +176,9 @@ flowchart LR
 
 ---
 
-## 2. Comprehensive 7-Layer Architectural Breakdown
+## 2. Tools, Technologies & Protocols Matrix Across Every Layer
 
-The architecture satisfies every requirement of enterprise cloud security, high performance, and Sri Lankan regulatory compliance.
-
-### Layer 1: Presentation & Client Platforms
-* **Core Technologies:** `React 19`, `TypeScript 5.8`, `Tailwind CSS v4`, `Vite 7`, `React Router v7`, `Lucide React Icons`
-* **Subsystems & Capabilities:**
-  * **Role-Specific Dashboards:** Custom user interfaces for **Academy Administrators**, **Practical Instructors**, and **Student Learners**.
-  * **18 Domain Modules:** Student Learner Journey, Best Performing Leaderboard, Fees & Payments Ledger, Trilingual Theory Mock Exam Hub, Fleet Management, and Session Scheduling.
-  * **Interactive Demo Persona Switcher:** 1-click credential switcher for seamless demonstration without manual token manipulation.
-  * **Zero-PDF Vector Print Engine:** Browser-native `@media print` CSS engine producing official A4 DMT Practical Logbooks (`DMT/SL/LOG-01`) and Trial Admission Passes (`DMT/SL/ADM-PASS`), eliminating server-side PDF generation vulnerabilities (CVE mitigation).
-
-### Layer 2: Edge CDN & Transport Security
-* **Core Technologies:** `Vercel Serverless Edge CDN`, `TLS 1.3`, `HTTP/2`, `HTTP/3`, `Anycast DNS`
-* **Subsystems & Capabilities:**
-  * **Global Edge Distribution:** Sub-50ms static asset and SPA bundle delivery with automatic edge caching.
-  * **Strict Transport Security:** End-to-end TLS 1.3 encryption with Perfect Forward Secrecy (PFS), blocking man-in-the-middle (MITM) attacks.
-  * **DDoS & Perimeter Shield:** Edge rate limiting on authentication routes and strict Cross-Origin Resource Sharing (CORS) policy enforcement.
-
-### Layer 3: Preprocessing, Validation & Authentication
-* **Core Technologies:** `Zod v3 Schemas`, `GoTrue Auth Engine`, `Bcrypt (Salt ≥ 10)`, `Stateless JWT (RFC 7519)`, `UTF-8 BOM`
-* **Subsystems & Capabilities:**
-  * **Zod Strict Validation:** Schema-driven input sanitization intercepting malformed payloads before domain execution.
-  * **Dynamic Permit Expiry Engine:** Real-time formula $\Delta t = \text{Date}_{\text{expiry}} - \text{Date}_{\text{current}}$ tracking 30-day renewal warnings and expired permit lockouts.
-  * **7-Maneuver Mandatory Bitmask:** Aggregates practical lesson competencies across standard DMT maneuvers.
-  * **Trilingual Context Token Mapper:** Dynamic runtime i18n resolver supporting English, Sinhala (සිංහල), and Tamil (தமிழ்) with graceful schema fallbacks.
-  * **RFC-4180 CSV Injection Defense:** Strips executable formula triggers (`=`, `+`, `-`, `@`) from exported student and financial ledgers, preventing spreadsheet remote execution exploits.
-
-### Layer 4: AI Inference & Business Logic Engines
-* **Core Technologies:** `Multivariate Composite Scoring Algorithm`, `Rule-Based AI Classifier`, `Interval Scheduling Geometry`
-* **Subsystems & Capabilities:**
-  * **6-Factor AI Composite Readiness Algorithm:** Computes an objective readiness score $S \in [0, 100]\%$ based on empirical driving metrics:
-    $$\mathbf{S = 0.15 \cdot s_{\text{medical}} + 0.15 \cdot s_{\text{permit}} + 0.15 \cdot s_{\text{theory}} + 0.25 \cdot s_{\text{hours}} + 0.20 \cdot s_{\text{maneuvers}} + 0.10 \cdot s_{\text{rating}}}$$
-  * **Regulatory Veto Classifier:** Applies hard veto overrides. If a learner's permit is expired ($\Delta t < 0$), medical clearance is missing, or practical hours are under the statutory 10-hour threshold, the candidate is locked to **"Not Ready"** regardless of other scores.
-  * **Adaptive Theory Diagnostics:** Maps incorrect answers in 40-question mock exams to specific Highway Code categories (Road Signs, Mandatory Rules, Mechanics) and dynamically generates personalized remedial drills.
-  * **Temporal Conflict & Overlap Prevention Guard:** Evaluates time-interval intersections to guarantee zero instructor or vehicle double-booking across multi-branch schedules.
-
-### Layer 5: Backend Services & Kernel Row-Level Security
-* **Core Technologies:** `Supabase Cloud BaaS`, `PostgREST API Engine`, `PostgreSQL 15 RLS`, `Prepared SQL Statements`
-* **Subsystems & Capabilities:**
-  * **Automated PostgREST Layer:** Exposes typed REST endpoints directly from database schemas with zero custom middleware vulnerabilities.
-  * **SQL Injection Immunity:** 100% parameterized queries eliminating SQL injection (SQLi) vectors.
-  * **Kernel Row-Level Security (RLS):** Database-level multi-tenancy enforcement where every query automatically filters by `driving_school_id = auth.uid()`, guaranteeing absolute tenant isolation between rival driving academies.
-  * **Tamper-Evident Audit Logging:** Real-time database transaction logs maintaining financial and operational record integrity.
-
-### Layer 6: Hybrid Persistence & Data Stores
-* **Core Technologies:** `PostgreSQL 15 Cloud Database`, `HTML5 Web Storage API (LocalStorage Engine)`
-* **Subsystems & Capabilities:**
-  * **Primary Cloud Relational Database:** Managed PostgreSQL 15 database structured into **18 normalized multi-tenant tables** (driving schools, branches, profiles, instructors, vehicles, licence categories, packages, students, permits, medicals, exam trials, sessions, payments, AI evaluations, theory questions, announcements, audit logs, enrolments).
-  * **Persistent Offline Fallback Engine:** Resilient client-side storage (`trialready_*` namespace) maintaining synchronized offline state, ensuring 100% application availability during network disruptions.
-  * **Deterministic Seeding Engine:** Pre-configured with the Royal Driving Academy operational dataset and 5 realistic user personas for deterministic viva demonstration.
-
-### Layer 7: Integrated External Services & Regulatory Ecosystem
-* **Core Standards & Platforms:**
-  * **Department of Motor Traffic (DMT):** Full alignment with Sri Lanka Motor Traffic Act No. 14 of 1951, practical trial scoring standards, and Werahera examination ground specifications.
-  * **National Transport Medical Institute (NTMI):** Official medical fitness certificate formats, barcode validation, and 6-month validity rules.
-  * **LankaQR / Central Bank of Sri Lanka (CBSL):** Sri Lankan national digital payment standards for cashless student installment collections.
-  * **Supabase Cloud & Vercel Edge:** Enterprise cloud hosting and serverless Edge computing infrastructure.
-
----
-
-## 3. Tools, Frameworks & Protocols Matrix
-
-| Layer / Stage | Subsystem | Tool / Framework | Version | Purpose & Architectural Role | Security & Compliance Safeguard |
+| Layer / Stage | Subsystem | Tools & Technologies | Version | Purpose & Architectural Role | Security & Compliance Safeguard |
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | **Layer 1: Presentation** | Client SPA | **React** | `v19.0.0` | High-performance reactive user interface | Virtual DOM encoding prevents XSS |
 | | Styling Engine | **Tailwind CSS** | `v4.0.0` | Utility-first responsive design system | Zero runtime CSS injection vulnerabilities |
@@ -204,7 +206,7 @@ The architecture satisfies every requirement of enterprise cloud security, high 
 
 ---
 
-## 4. Left-to-Right Narration Script for Viva Presentation
+## 3. Left-to-Right Narration Script for Viva Presentation
 
 > 💡 **Presentation Tip for Candidate:** Speak clearly and with authority. Move your laser pointer or cursor from **left to right** following the numbered stages on Slide 5. Emphasize the Cyber Security defenses and regulatory compliance at every step.
 
@@ -244,7 +246,7 @@ The architecture satisfies every requirement of enterprise cloud security, high 
 
 ---
 
-## 5. Defense-in-Depth Security Matrix for the Examiners
+## 4. Defense-in-Depth Security Matrix for the Examiners
 
 > [!IMPORTANT]
 > **Key Cyber Security & Architectural Defenses Implemented in TrialReady LK:**
