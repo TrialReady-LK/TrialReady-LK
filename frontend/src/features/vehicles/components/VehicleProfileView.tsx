@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Wrench } from 'lucide-react'
 import { useVehicleDetails } from '../hooks/useVehicleDetails'
 import type { VehicleWithRelations } from '../types/vehicle'
 import { VehicleAvailabilityManager } from './VehicleAvailabilityManager'
@@ -8,8 +9,10 @@ import { VehicleMaintenanceManager } from './VehicleMaintenanceManager'
 interface VehicleProfileViewProps {
   vehicleId: string
   drivingSchoolId: string
+  isInstructor?: boolean
   onBack: () => void
   onEdit: (vehicle: VehicleWithRelations) => void
+  onReportDefect?: (vehicle: VehicleWithRelations) => void
 }
 
 type TabType = 'overview' | 'documents' | 'maintenance' | 'availability'
@@ -17,8 +20,10 @@ type TabType = 'overview' | 'documents' | 'maintenance' | 'availability'
 export const VehicleProfileView: React.FC<VehicleProfileViewProps> = ({
   vehicleId,
   drivingSchoolId,
+  isInstructor = false,
   onBack,
   onEdit,
+  onReportDefect,
 }) => {
   const {
     vehicle,
@@ -69,7 +74,7 @@ export const VehicleProfileView: React.FC<VehicleProfileViewProps> = ({
             <button
               type="button"
               onClick={onBack}
-              className="rounded-lg border border-slate-300 px-3 py-1.5 text-xs font-medium text-slate-700 hover:bg-slate-50"
+              className="rounded-lg border border-slate-300 px-3 py-1.5 text-xs font-medium text-slate-700 hover:bg-slate-50 cursor-pointer"
             >
               ← Back to List
             </button>
@@ -95,13 +100,24 @@ export const VehicleProfileView: React.FC<VehicleProfileViewProps> = ({
           </div>
 
           <div className="flex flex-wrap items-center gap-2">
-            <button
-              type="button"
-              onClick={() => onEdit(vehicle)}
-              className="rounded-lg bg-blue-600 px-4 py-2 text-xs font-medium text-white hover:bg-blue-700 shadow-sm"
-            >
-              Edit Vehicle
-            </button>
+            {isInstructor ? (
+              <button
+                type="button"
+                onClick={() => onReportDefect?.(vehicle)}
+                className="inline-flex items-center gap-1.5 rounded-lg border border-amber-300 bg-amber-50 px-4 py-2 text-xs font-bold text-amber-800 hover:bg-amber-100 shadow-xs transition-colors cursor-pointer"
+              >
+                <Wrench className="h-4 w-4 text-amber-600" />
+                <span>Report Defect / Switch Vehicle</span>
+              </button>
+            ) : (
+              <button
+                type="button"
+                onClick={() => onEdit(vehicle)}
+                className="rounded-lg bg-blue-600 px-4 py-2 text-xs font-medium text-white hover:bg-blue-700 shadow-sm cursor-pointer"
+              >
+                Edit Vehicle
+              </button>
+            )}
           </div>
         </div>
 

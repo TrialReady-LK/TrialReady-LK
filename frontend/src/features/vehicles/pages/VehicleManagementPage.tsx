@@ -1,10 +1,12 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { VehicleDeactivationModal } from '../components/VehicleDeactivationModal'
+import { VehicleDefectSwitchModal } from '../components/VehicleDefectSwitchModal'
 import { VehicleForm } from '../components/VehicleForm'
 import { VehicleProfileView } from '../components/VehicleProfileView'
 import { VehicleTable } from '../components/VehicleTable'
 import { useVehicles } from '../hooks/useVehicles'
 import { createVehicle, updateVehicle } from '../services/vehicleService'
+import { useAuth } from '../../auth/context/AuthContext'
 import type {
   CreateVehicleInput,
   UpdateVehicleInput,
@@ -21,6 +23,9 @@ type ViewMode = 'list' | 'create' | 'edit' | 'details'
 export const VehicleManagementPage: React.FC<VehicleManagementPageProps> = ({
   drivingSchoolId,
 }) => {
+  const { role, profile } = useAuth()
+  const isInstructor = role === 'instructor'
+
   const {
     vehicles,
     filteredVehicles,
@@ -43,8 +48,21 @@ export const VehicleManagementPage: React.FC<VehicleManagementPageProps> = ({
     useState<VehicleWithRelations | null>(null)
   const [deactivatingVehicle, setDeactivatingVehicle] =
     useState<VehicleWithRelations | null>(null)
+  const [defectVehicle, setDefectVehicle] =
+    useState<VehicleWithRelations | null>(null)
+
+  useEffect(() => {
+    const handleVehicleUpdateEvent = () => {
+      void reloadVehicles()
+    }
+    window.addEventListener('trialready-vehicles-updated', handleVehicleUpdateEvent)
+    return () => {
+      window.removeEventListener('trialready-vehicles-updated', handleVehicleUpdateEvent)
+    }
+  }, [reloadVehicles])
 
   function openCreate() {
+    if (isInstructor) return
     setSelectedVehicle(null)
     setErrorMessage(null)
     setSuccessMessage(null)
@@ -52,6 +70,10 @@ export const VehicleManagementPage: React.FC<VehicleManagementPageProps> = ({
   }
 
   function openEdit(vehicle: VehicleWithRelations) {
+    if (isInstructor) {
+      setDefectVehicle(vehicle)
+      return
+    }
     setSelectedVehicle(vehicle)
     setErrorMessage(null)
     setSuccessMessage(null)
@@ -128,11 +150,11 @@ export const VehicleManagementPage: React.FC<VehicleManagementPageProps> = ({
             </p>
           </div>
 
-          {viewMode === 'list' && (
+          {!isInstructor && viewMode === 'list' && (
             <button
               type="button"
               onClick={openCreate}
-              className="rounded-lg bg-blue-600 px-5 py-2.5 font-medium text-white shadow-sm hover:bg-blue-700 transition-colors"
+              className="rounded-lg bg-blue-600 px-5 py-2.5 font-medium text-white shadow-sm hover:bg-blue-700 transition-colors cursor-pointer"
             >
               + Add Vehicle
             </button>
@@ -162,7 +184,7 @@ export const VehicleManagementPage: React.FC<VehicleManagementPageProps> = ({
               Loading vehicle fleet data...
             </p>
           </section>
-        ) : viewMode === 'create' || viewMode === 'edit' ? (
+        ) : (!isInstructor && (viewMode === 'create' || viewMode === 'edit')) ? (
           <VehicleForm
             key={selectedVehicle?.id ?? 'new-vehicle'}
             drivingSchoolId={drivingSchoolId}
@@ -176,8 +198,10 @@ export const VehicleManagementPage: React.FC<VehicleManagementPageProps> = ({
           <VehicleProfileView
             vehicleId={selectedVehicle.id}
             drivingSchoolId={drivingSchoolId}
+            isInstructor={isInstructor}
             onBack={returnToList}
             onEdit={openEdit}
+            onReportDefect={(veh) => setDefectVehicle(veh)}
           />
         ) : (
           <VehicleTable
@@ -186,20 +210,41 @@ export const VehicleManagementPage: React.FC<VehicleManagementPageProps> = ({
             branches={branches}
             licenceCategories={licenceCategories}
             filters={filters}
+            isInstructor={isInstructor}
             onFilterChange={setFilter}
             onResetFilters={resetFilters}
             onViewDetails={openDetails}
             onEdit={openEdit}
             onManageStatus={(vehicle) => setDeactivatingVehicle(vehicle)}
+            onReportDefect={(veh) => setDefectVehicle(veh)}
           />
         )}
 
         {/* Deactivation / Status Modal */}
-        {deactivatingVehicle && (
+        {!isInstructor && deactivatingVehicle && (
           <VehicleDeactivationModal
             vehicle={deactivatingVehicle}
             onConfirm={handleConfirmStatusChange}
             onClose={() => setDeactivatingVehicle(null)}
+          />
+        )}
+
+        {/* Defect Reporting & Replacement Switch Modal */}
+        {defectVehicle && (
+          <VehicleDefectSwitchModal
+            isOpen={Boolean(defectVehicle)}
+            onClose={() => setDefectVehicle(null)}
+            vehicle={defectVehicle}
+            availableVehicles={vehicles}
+            instructorName={profile?.full_name || 'Instructor'}
+            onSuccess={(defectiveReg, replacementReg) => {
+              setSuccessMessage(
+                replacementReg
+                  ? `Fault successfully reported for ${defectiveReg}. Assigned replacement vehicle ${replacementReg}.`
+                  : `Fault reported for ${defectiveReg}. Vehicle has been moved to maintenance.`,
+              )
+              void reloadVehicles()
+            }}
           />
         )}
       </div>
