@@ -182,6 +182,9 @@ export const RecordPaymentModal: React.FC<RecordPaymentModalProps> = ({
                 <option value="cash">Cash</option>
                 <option value="bank_transfer">Bank Transfer</option>
                 <option value="card">Card Payment</option>
+                <option value="paypal">PayPal Express</option>
+                <option value="koko">Koko (BNPL)</option>
+                <option value="mintpay">Mintpay (BNPL)</option>
                 <option value="cheque">Cheque</option>
                 <option value="online">Online Transfer</option>
               </select>

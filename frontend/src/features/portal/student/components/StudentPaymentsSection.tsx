@@ -7,7 +7,6 @@ import {
   Copy,
   Check,
   Building2,
-  QrCode,
   Receipt,
   Calendar,
   DollarSign,
@@ -21,8 +20,15 @@ import {
   AlertCircle,
   X,
   FileCheck,
+  Globe,
+  Sparkles,
+  Zap,
+  Percent,
+  Smartphone,
+  ArrowRight,
+  Split,
 } from 'lucide-react'
-import type { StudentFinancialLedger, StudentPayment } from '../../../financials/types/financials'
+import type { StudentFinancialLedger, StudentPayment, PaymentMethod } from '../../../financials/types/financials'
 import { formatLKR, formatPaymentMethod, getPaymentStatus } from '../../../financials/utils/financialUtils'
 import { PaymentReceiptModal } from '../../../financials/components/PaymentReceiptModal'
 import { recordStudentPayment } from '../../../financials/services/financialService'
@@ -46,7 +52,7 @@ export const StudentPaymentsSection: React.FC<StudentPaymentsSectionProps> = ({
   // Online Payment Simulation State
   const [isPayOnlineModalOpen, setIsPayOnlineModalOpen] = useState(false)
   const [payAmount, setPayAmount] = useState<number>(ledger?.balance || 20000)
-  const [payMethod, setPayMethod] = useState<'card' | 'bank_transfer'>('card')
+  const [payMethod, setPayMethod] = useState<'card' | 'bank_transfer' | 'paypal' | 'koko' | 'mintpay'>('card')
   const [payReference, setPayReference] = useState('')
   const [payNotes, setPayNotes] = useState('Online Course Installment')
   const [isSubmittingPay, setIsSubmittingPay] = useState(false)
@@ -59,6 +65,20 @@ export const StudentPaymentsSection: React.FC<StudentPaymentsSectionProps> = ({
   const [cardExpiry, setCardExpiry] = useState('')
   const [cardCvv, setCardCvv] = useState('')
   const [saveCard, setSaveCard] = useState(true)
+
+  // PayPal Details State
+  const [paypalEmail, setPaypalEmail] = useState(
+    ledger?.student ? `${ledger.student.admission_number.toLowerCase().replace(/[^a-z0-9]/g, '') || 'student'}@gmail.com` : 'student@gmail.com',
+  )
+  const [paypalFundingSource, setPaypalFundingSource] = useState<'balance' | 'linked_card'>('balance')
+
+  // Koko BNPL Details State
+  const [kokoPhone, setKokoPhone] = useState(ledger?.student.phone || '077 123 4567')
+  const [kokoCardType, setKokoCardType] = useState<'debit' | 'credit'>('debit')
+
+  // Mintpay BNPL Details State
+  const [mintpayPhone, setMintpayPhone] = useState(ledger?.student.phone || '077 123 4567')
+  const [mintpayCardType, setMintpayCardType] = useState<'debit' | 'credit'>('debit')
 
   // Bank Slip Upload State
   const [bankName, setBankName] = useState('Commercial Bank of Ceylon PLC')
@@ -184,13 +204,21 @@ export const StudentPaymentsSection: React.FC<StudentPaymentsSectionProps> = ({
     }
   }
 
-  const handleOpenPayModal = (amount?: number, defaultMethod?: 'card' | 'bank_transfer') => {
+  const handleOpenPayModal = (
+    amount?: number,
+    defaultMethod?: 'card' | 'bank_transfer' | 'paypal' | 'koko' | 'mintpay',
+  ) => {
     setPayAmount(amount !== undefined ? amount : (ledger.balance > 0 ? ledger.balance : 20000))
     if (defaultMethod) setPayMethod(defaultMethod)
     setCardHolder(ledger.student.full_name || '')
     setCardNumber('')
     setCardExpiry('')
     setCardCvv('')
+    setPaypalEmail(
+      ledger?.student ? `${ledger.student.admission_number.toLowerCase().replace(/[^a-z0-9]/g, '') || 'student'}@gmail.com` : 'student@gmail.com',
+    )
+    setKokoPhone(ledger?.student.phone || '077 123 4567')
+    setMintpayPhone(ledger?.student.phone || '077 123 4567')
     setSlipFile(null)
     setSlipPreviewUrl(null)
     setFormErrorMsg(null)
@@ -243,6 +271,29 @@ export const StudentPaymentsSection: React.FC<StudentPaymentsSectionProps> = ({
       }
     }
 
+    if (payMethod === 'paypal') {
+      if (!paypalEmail || !paypalEmail.includes('@')) {
+        setFormErrorMsg('Please enter a valid PayPal account email address.')
+        return
+      }
+    }
+
+    if (payMethod === 'koko') {
+      const cleanPhone = kokoPhone.replace(/\s+/g, '')
+      if (!cleanPhone || cleanPhone.length < 9) {
+        setFormErrorMsg('Please enter a valid Koko-registered Sri Lankan mobile number.')
+        return
+      }
+    }
+
+    if (payMethod === 'mintpay') {
+      const cleanPhone = mintpayPhone.replace(/\s+/g, '')
+      if (!cleanPhone || cleanPhone.length < 9) {
+        setFormErrorMsg('Please enter a valid Mintpay-registered mobile number.')
+        return
+      }
+    }
+
     try {
       setIsSubmittingPay(true)
 
@@ -253,12 +304,25 @@ export const StudentPaymentsSection: React.FC<StudentPaymentsSectionProps> = ({
       const generatedReference =
         payMethod === 'card'
           ? (payReference.trim() || `CARD-${cardInfo.badge.toUpperCase()}-${last4}-${Date.now().toString().slice(-4)}`)
-          : (payReference.trim() || `DEP-${bankName.split(' ')[0].toUpperCase()}-${Date.now().toString().slice(-6)}`)
+          : payMethod === 'bank_transfer'
+          ? (payReference.trim() || `DEP-${bankName.split(' ')[0].toUpperCase()}-${Date.now().toString().slice(-6)}`)
+          : payMethod === 'paypal'
+          ? (payReference.trim() || `PP-EXP-${Date.now().toString().slice(-6)}`)
+          : payMethod === 'koko'
+          ? (payReference.trim() || `KOKO-3X-${Date.now().toString().slice(-6)}`)
+          : (payReference.trim() || `MINTPAY-3X-${Date.now().toString().slice(-6)}`)
 
+      const installmentPart = Math.round(payAmount / 3)
       const generatedNotes =
         payMethod === 'card'
           ? `${payNotes || 'Online Card Payment'} [${cardInfo.brand} •••• ${last4} | Holder: ${cardHolder || ledger.student.full_name}]`
-          : `${payNotes || 'Tuition Bank Deposit'} [${bankName} | Date: ${depositDate}${slipFile ? ` | Slip: ${slipFile.name}` : ''}]`
+          : payMethod === 'bank_transfer'
+          ? `${payNotes || 'Tuition Bank Deposit'} [${bankName} | Date: ${depositDate}${slipFile ? ` | Slip: ${slipFile.name}` : ''}]`
+          : payMethod === 'paypal'
+          ? `${payNotes || 'PayPal Express Checkout'} [Account: ${paypalEmail} | Source: ${paypalFundingSource === 'balance' ? 'PayPal Balance' : 'Linked Card'} | Amount: ${formatLKR(payAmount)}]`
+          : payMethod === 'koko'
+          ? `${payNotes || 'Koko BNPL (3x Installments)'} [Phone: ${kokoPhone} | 1st Inst: ${formatLKR(installmentPart)} | 3x ${formatLKR(installmentPart)} | ${kokoCardType.toUpperCase()}]`
+          : `${payNotes || 'Mintpay BNPL (3x Installments)'} [Account: ${mintpayPhone} | 3x ${formatLKR(installmentPart)} | ${mintpayCardType.toUpperCase()}]`
 
       const recorded = await recordStudentPayment({
         driving_school_id: drivingSchoolId,
@@ -271,7 +335,7 @@ export const StudentPaymentsSection: React.FC<StudentPaymentsSectionProps> = ({
         notes: generatedNotes,
       })
 
-      setPaySuccessMsg(`Payment of ${formatLKR(payAmount)} processed successfully! Receipt: ${recorded.receipt_number}`)
+      setPaySuccessMsg(`Payment of ${formatLKR(payAmount)} processed successfully via ${formatPaymentMethod(payMethod)}! Receipt: ${recorded.receipt_number}`)
       setTimeout(() => {
         setPaySuccessMsg(null)
         setIsPayOnlineModalOpen(false)
@@ -723,29 +787,125 @@ export const StudentPaymentsSection: React.FC<StudentPaymentsSectionProps> = ({
               </div>
             </div>
 
-            {/* Channel 4: LankaQR Scan */}
-            <div className="rounded-2xl border border-slate-200 bg-slate-50/70 p-5 space-y-3">
-              <div className="flex items-center gap-2 text-slate-900 font-bold text-sm">
-                <QrCode className="h-4 w-4 text-emerald-600" />
-                <span>4. LankaQR Instant Mobile Payment</span>
+            {/* Channel 4: PayPal Express & International Payments */}
+            <div className="rounded-2xl border border-blue-200 bg-blue-50/50 p-5 space-y-3">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2 text-slate-900 font-bold text-sm">
+                  <Globe className="h-4 w-4 text-blue-600" />
+                  <span>4. PayPal Express (International Checkout)</span>
+                </div>
+                <span className="rounded-md bg-blue-100 px-2 py-0.5 text-[10px] font-bold text-blue-800">
+                  Global / USD &amp; LKR
+                </span>
               </div>
               <p className="text-xs text-slate-500">
-                Scan with your favorite banking app (Commercial Bank Q+, Flash, FriMi, Genie, iPay):
+                Pay tuition instantly using your PayPal balance, linked overseas bank cards, or PayPal Credit:
               </p>
 
-              <div className="rounded-xl border border-slate-200 bg-white p-3.5 flex items-center gap-4 text-xs">
-                <div className="flex h-16 w-16 items-center justify-center rounded-lg bg-slate-900 text-white shrink-0">
-                  <QrCode className="h-10 w-10" />
+              <div className="rounded-xl border border-blue-100 bg-white p-3.5 space-y-3 text-xs">
+                <div className="flex items-center justify-between text-slate-600">
+                  <span>Funding Options:</span>
+                  <span className="font-bold text-slate-800">PayPal Balance • Visa/Master/Amex • PayPal Credit</span>
                 </div>
-                <div className="space-y-1">
-                  <strong className="text-slate-900 block">LankaQR National Standard</strong>
-                  <p className="text-[11px] text-slate-500">
-                    Merchant ID: <span className="font-mono font-bold text-slate-700">LQR-9810-ROYAL</span>
-                  </p>
-                  <p className="text-[10px] text-emerald-700 font-semibold">
-                    Zero transaction fee for student tuition
-                  </p>
+                <div className="flex items-center justify-between text-slate-600">
+                  <span>Current Balance Due:</span>
+                  <strong className="text-blue-900 text-sm">{formatLKR(ledger.balance)}</strong>
                 </div>
+
+                <button
+                  type="button"
+                  onClick={() => handleOpenPayModal(ledger.balance > 0 ? ledger.balance : 15000, 'paypal')}
+                  className="w-full rounded-xl bg-gradient-to-r from-blue-700 to-sky-600 py-2.5 text-xs font-bold text-white shadow-xs hover:from-blue-800 hover:to-sky-700 transition-all cursor-pointer flex items-center justify-center gap-1.5"
+                >
+                  <Globe className="h-3.5 w-3.5" />
+                  <span>Launch PayPal Checkout</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Channel 5: Koko BNPL (3x Interest-Free Installments) */}
+            <div className="rounded-2xl border border-pink-200 bg-pink-50/40 p-5 space-y-3">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2 text-slate-900 font-bold text-sm">
+                  <Sparkles className="h-4 w-4 text-pink-600" />
+                  <span>5. Koko: Buy Now, Pay Later (3x Installments)</span>
+                </div>
+                <span className="rounded-md bg-pink-100 px-2 py-0.5 text-[10px] font-bold text-pink-700">
+                  0% Interest
+                </span>
+              </div>
+              <p className="text-xs text-slate-500">
+                Split your driving academy tuition into 3 easy monthly payments with zero interest using your Debit or Credit Card:
+              </p>
+
+              <div className="rounded-xl border border-pink-100 bg-white p-3.5 space-y-3 text-xs">
+                <div className="grid grid-cols-3 gap-2 text-center">
+                  <div className="rounded-lg bg-pink-50/70 p-2 border border-pink-100">
+                    <span className="text-[10px] font-bold text-pink-800 block">Today (1/3)</span>
+                    <span className="text-xs font-black text-pink-900 mt-0.5 block">
+                      {formatLKR(Math.round((ledger.balance > 0 ? ledger.balance : 15000) / 3))}
+                    </span>
+                  </div>
+                  <div className="rounded-lg bg-slate-50 p-2 border border-slate-100">
+                    <span className="text-[10px] font-semibold text-slate-500 block">In 30 Days</span>
+                    <span className="text-xs font-bold text-slate-700 mt-0.5 block">
+                      {formatLKR(Math.round((ledger.balance > 0 ? ledger.balance : 15000) / 3))}
+                    </span>
+                  </div>
+                  <div className="rounded-lg bg-slate-50 p-2 border border-slate-100">
+                    <span className="text-[10px] font-semibold text-slate-500 block">In 60 Days</span>
+                    <span className="text-xs font-bold text-slate-700 mt-0.5 block">
+                      {formatLKR(Math.round((ledger.balance > 0 ? ledger.balance : 15000) / 3))}
+                    </span>
+                  </div>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => handleOpenPayModal(ledger.balance > 0 ? ledger.balance : 15000, 'koko')}
+                  className="w-full rounded-xl bg-gradient-to-r from-pink-600 to-rose-600 py-2.5 text-xs font-bold text-white shadow-xs hover:from-pink-700 hover:to-rose-700 transition-all cursor-pointer flex items-center justify-center gap-1.5"
+                >
+                  <Percent className="h-3.5 w-3.5" />
+                  <span>Pay with Koko (3x Installments)</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Channel 6: Mintpay BNPL (3x Installments) */}
+            <div className="rounded-2xl border border-teal-200 bg-teal-50/40 p-5 space-y-3">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2 text-slate-900 font-bold text-sm">
+                  <Zap className="h-4 w-4 text-teal-600" />
+                  <span>6. Mintpay: Split in 3 (Debit / Credit)</span>
+                </div>
+                <span className="rounded-md bg-teal-100 px-2 py-0.5 text-[10px] font-bold text-teal-800">
+                  Instant Approval + Cashback
+                </span>
+              </div>
+              <p className="text-xs text-slate-500">
+                Pay in 3 equal monthly installments. Works seamlessly with any Sri Lankan debit or credit card:
+              </p>
+
+              <div className="rounded-xl border border-teal-100 bg-white p-3.5 space-y-3 text-xs">
+                <div className="flex items-center justify-between text-slate-600">
+                  <span>Pay Today (1st Part):</span>
+                  <strong className="text-teal-900 text-sm">
+                    {formatLKR(Math.round((ledger.balance > 0 ? ledger.balance : 15000) / 3))}
+                  </strong>
+                </div>
+                <div className="flex items-center justify-between text-[11px] text-teal-700 font-medium">
+                  <span>• 0% Interest Guaranteed</span>
+                  <span>• Automatic Monthly Deductions</span>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => handleOpenPayModal(ledger.balance > 0 ? ledger.balance : 15000, 'mintpay')}
+                  className="w-full rounded-xl bg-gradient-to-r from-teal-600 to-emerald-600 py-2.5 text-xs font-bold text-white shadow-xs hover:from-teal-700 hover:to-emerald-700 transition-all cursor-pointer flex items-center justify-center gap-1.5"
+                >
+                  <Zap className="h-3.5 w-3.5" />
+                  <span>Pay with Mintpay (Split in 3)</span>
+                </button>
               </div>
             </div>
           </div>
@@ -768,21 +928,49 @@ export const StudentPaymentsSection: React.FC<StudentPaymentsSectionProps> = ({
       {/* Online Payment & Bank Slip Gateway Modal */}
       {isPayOnlineModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 p-4 backdrop-blur-xs overflow-y-auto">
-          <div className="w-full max-w-xl rounded-3xl bg-white p-6 sm:p-7 shadow-2xl border border-slate-200 space-y-5 animate-in fade-in zoom-in-95 my-8">
+          <div className="w-full max-w-2xl rounded-3xl bg-white p-6 sm:p-7 shadow-2xl border border-slate-200 space-y-5 animate-in fade-in zoom-in-95 my-8">
             {/* Modal Header */}
             <div className="flex items-center justify-between border-b border-slate-100 pb-3.5">
               <div className="flex items-center gap-2.5">
-                <div className={`flex h-9 w-9 items-center justify-center rounded-xl border ${
-                  payMethod === 'card' ? 'bg-purple-50 text-purple-600 border-purple-200' : 'bg-blue-50 text-blue-600 border-blue-200'
-                }`}>
-                  {payMethod === 'card' ? <CreditCard className="h-5 w-5" /> : <UploadCloud className="h-5 w-5" />}
+                <div
+                  className={`flex h-9 w-9 items-center justify-center rounded-xl border ${
+                    payMethod === 'card'
+                      ? 'bg-purple-50 text-purple-600 border-purple-200'
+                      : payMethod === 'bank_transfer'
+                      ? 'bg-blue-50 text-blue-600 border-blue-200'
+                      : payMethod === 'paypal'
+                      ? 'bg-sky-50 text-sky-700 border-sky-200'
+                      : payMethod === 'koko'
+                      ? 'bg-pink-50 text-pink-600 border-pink-200'
+                      : 'bg-teal-50 text-teal-700 border-teal-200'
+                  }`}
+                >
+                  {payMethod === 'card' ? (
+                    <CreditCard className="h-5 w-5" />
+                  ) : payMethod === 'bank_transfer' ? (
+                    <UploadCloud className="h-5 w-5" />
+                  ) : payMethod === 'paypal' ? (
+                    <Globe className="h-5 w-5" />
+                  ) : payMethod === 'koko' ? (
+                    <Sparkles className="h-5 w-5" />
+                  ) : (
+                    <Zap className="h-5 w-5" />
+                  )}
                 </div>
                 <div>
                   <h3 className="text-base font-bold text-slate-900">
                     Online Tuition Payment Gateway
                   </h3>
                   <p className="text-[11px] text-slate-500">
-                    {payMethod === 'card' ? 'Instant Secure Credit/Debit Card Checkout' : 'Bank Transfer & Slip Verification Portal'}
+                    {payMethod === 'card'
+                      ? 'Instant Secure Credit/Debit Card Checkout'
+                      : payMethod === 'bank_transfer'
+                      ? 'Bank Transfer & Slip Verification Portal'
+                      : payMethod === 'paypal'
+                      ? 'PayPal Express & International Checkout'
+                      : payMethod === 'koko'
+                      ? 'Koko Pay - 3x Interest-Free Monthly Installments'
+                      : 'Mintpay - Split Tuition into 3 Equal Monthly Payments'}
                   </p>
                 </div>
               </div>
@@ -881,54 +1069,125 @@ export const StudentPaymentsSection: React.FC<StudentPaymentsSectionProps> = ({
                 )}
               </div>
 
-              {/* Payment Method Selector */}
+              {/* Payment Method Selector (5 Options) */}
               <div>
                 <label className="block font-bold text-slate-700 mb-1.5">
                   Select Payment Option *
                 </label>
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                  {/* Option 1: Card */}
                   <button
                     type="button"
                     onClick={() => {
                       setPayMethod('card')
                       setFormErrorMsg(null)
                     }}
-                    className={`rounded-2xl p-3.5 text-left border cursor-pointer transition-all flex flex-col gap-1 ${
+                    className={`rounded-xl p-3 text-left border cursor-pointer transition-all flex flex-col justify-between gap-1 ${
                       payMethod === 'card'
-                        ? 'border-purple-600 bg-purple-50/70 text-purple-950 ring-2 ring-purple-600/20 shadow-xs'
+                        ? 'border-purple-600 bg-purple-50/80 text-purple-950 ring-2 ring-purple-600/20 shadow-xs'
                         : 'border-slate-200 bg-white text-slate-600 hover:bg-slate-50'
                     }`}
                   >
                     <div className="flex items-center justify-between">
-                      <span className="font-bold flex items-center gap-1.5">
-                        <CreditCard className="h-4 w-4 text-purple-600" />
+                      <span className="font-bold flex items-center gap-1.5 text-xs text-purple-900">
+                        <CreditCard className="h-4 w-4 text-purple-600 shrink-0" />
                         <span>Card (Visa/Master)</span>
                       </span>
-                      {payMethod === 'card' && <CheckCircle2 className="h-4 w-4 text-purple-600" />}
+                      {payMethod === 'card' && <CheckCircle2 className="h-3.5 w-3.5 text-purple-600" />}
                     </div>
-                    <span className="text-[11px] text-slate-500">Instant gateway clearance</span>
+                    <span className="text-[10px] text-slate-500">Instant gateway clearance</span>
                   </button>
 
+                  {/* Option 2: Bank Transfer */}
                   <button
                     type="button"
                     onClick={() => {
                       setPayMethod('bank_transfer')
                       setFormErrorMsg(null)
                     }}
-                    className={`rounded-2xl p-3.5 text-left border cursor-pointer transition-all flex flex-col gap-1 ${
+                    className={`rounded-xl p-3 text-left border cursor-pointer transition-all flex flex-col justify-between gap-1 ${
                       payMethod === 'bank_transfer'
-                        ? 'border-blue-600 bg-blue-50/70 text-blue-950 ring-2 ring-blue-600/20 shadow-xs'
+                        ? 'border-blue-600 bg-blue-50/80 text-blue-950 ring-2 ring-blue-600/20 shadow-xs'
                         : 'border-slate-200 bg-white text-slate-600 hover:bg-slate-50'
                     }`}
                   >
                     <div className="flex items-center justify-between">
-                      <span className="font-bold flex items-center gap-1.5">
-                        <Building2 className="h-4 w-4 text-blue-600" />
+                      <span className="font-bold flex items-center gap-1.5 text-xs text-blue-900">
+                        <Building2 className="h-4 w-4 text-blue-600 shrink-0" />
                         <span>Bank Transfer Slip</span>
                       </span>
-                      {payMethod === 'bank_transfer' && <CheckCircle2 className="h-4 w-4 text-blue-600" />}
+                      {payMethod === 'bank_transfer' && <CheckCircle2 className="h-3.5 w-3.5 text-blue-600" />}
                     </div>
-                    <span className="text-[11px] text-slate-500">Attach deposit receipt slip</span>
+                    <span className="text-[10px] text-slate-500">Attach deposit receipt</span>
+                  </button>
+
+                  {/* Option 3: PayPal */}
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setPayMethod('paypal')
+                      setFormErrorMsg(null)
+                    }}
+                    className={`rounded-xl p-3 text-left border cursor-pointer transition-all flex flex-col justify-between gap-1 ${
+                      payMethod === 'paypal'
+                        ? 'border-sky-600 bg-sky-50/80 text-sky-950 ring-2 ring-sky-600/20 shadow-xs'
+                        : 'border-slate-200 bg-white text-slate-600 hover:bg-slate-50'
+                    }`}
+                  >
+                    <div className="flex items-center justify-between">
+                      <span className="font-bold flex items-center gap-1.5 text-xs text-sky-900">
+                        <Globe className="h-4 w-4 text-sky-600 shrink-0" />
+                        <span>PayPal Express</span>
+                      </span>
+                      {payMethod === 'paypal' && <CheckCircle2 className="h-3.5 w-3.5 text-sky-600" />}
+                    </div>
+                    <span className="text-[10px] text-slate-500">Global &amp; USD checkout</span>
+                  </button>
+
+                  {/* Option 4: Koko BNPL */}
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setPayMethod('koko')
+                      setFormErrorMsg(null)
+                    }}
+                    className={`rounded-xl p-3 text-left border cursor-pointer transition-all flex flex-col justify-between gap-1 ${
+                      payMethod === 'koko'
+                        ? 'border-pink-600 bg-pink-50/80 text-pink-950 ring-2 ring-pink-600/20 shadow-xs'
+                        : 'border-slate-200 bg-white text-slate-600 hover:bg-slate-50'
+                    }`}
+                  >
+                    <div className="flex items-center justify-between">
+                      <span className="font-bold flex items-center gap-1.5 text-xs text-pink-900">
+                        <Sparkles className="h-4 w-4 text-pink-600 shrink-0" />
+                        <span>Koko (3x BNPL)</span>
+                      </span>
+                      {payMethod === 'koko' && <CheckCircle2 className="h-3.5 w-3.5 text-pink-600" />}
+                    </div>
+                    <span className="text-[10px] text-pink-700 font-semibold">3 interest-free parts</span>
+                  </button>
+
+                  {/* Option 5: Mintpay BNPL */}
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setPayMethod('mintpay')
+                      setFormErrorMsg(null)
+                    }}
+                    className={`rounded-xl p-3 text-left border cursor-pointer transition-all flex flex-col justify-between gap-1 ${
+                      payMethod === 'mintpay'
+                        ? 'border-teal-600 bg-teal-50/80 text-teal-950 ring-2 ring-teal-600/20 shadow-xs'
+                        : 'border-slate-200 bg-white text-slate-600 hover:bg-slate-50'
+                    }`}
+                  >
+                    <div className="flex items-center justify-between">
+                      <span className="font-bold flex items-center gap-1.5 text-xs text-teal-900">
+                        <Zap className="h-4 w-4 text-teal-600 shrink-0" />
+                        <span>Mintpay (BNPL)</span>
+                      </span>
+                      {payMethod === 'mintpay' && <CheckCircle2 className="h-3.5 w-3.5 text-teal-600" />}
+                    </div>
+                    <span className="text-[10px] text-teal-700 font-semibold">Split in 3 + Cashback</span>
                   </button>
                 </div>
               </div>
@@ -1218,6 +1477,290 @@ export const StudentPaymentsSection: React.FC<StudentPaymentsSectionProps> = ({
                 </div>
               )}
 
+              {/* ========================================================= */}
+              {/* CONDITIONAL SECTION 3: PAYPAL EXPRESS CHECKOUT            */}
+              {/* ========================================================= */}
+              {payMethod === 'paypal' && (
+                <div className="space-y-3.5 rounded-2xl border border-sky-200 bg-sky-50/30 p-4 transition-all animate-in fade-in">
+                  <div className="flex items-center justify-between border-b border-sky-100 pb-2">
+                    <span className="text-xs font-bold text-sky-950 flex items-center gap-1.5">
+                      <Globe className="h-3.5 w-3.5 text-sky-600" />
+                      PayPal Express &amp; Global Account Details
+                    </span>
+                    <span className="text-[10px] font-bold text-sky-800 bg-sky-100 px-2 py-0.5 rounded-md">
+                      PayPal Verified • Global Access
+                    </span>
+                  </div>
+
+                  {/* PayPal Email */}
+                  <div>
+                    <label className="block font-semibold text-slate-700 mb-1">
+                      PayPal Account Email Address *
+                    </label>
+                    <input
+                      type="email"
+                      required
+                      placeholder="e.g. yourname@gmail.com"
+                      value={paypalEmail}
+                      onChange={(e) => setPaypalEmail(e.target.value)}
+                      className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-xs font-medium text-slate-900 focus:border-sky-500 focus:ring-1 focus:ring-sky-500 focus:outline-none"
+                    />
+                  </div>
+
+                  {/* Funding Source Selector */}
+                  <div>
+                    <label className="block font-semibold text-slate-700 mb-1.5">
+                      Preferred PayPal Funding Source
+                    </label>
+                    <div className="grid grid-cols-2 gap-2">
+                      <label className={`flex items-center gap-2 p-2.5 rounded-xl border cursor-pointer ${
+                        paypalFundingSource === 'balance' ? 'border-sky-500 bg-sky-50/80 text-sky-900 font-bold' : 'border-slate-200 bg-white text-slate-600'
+                      }`}>
+                        <input
+                          type="radio"
+                          name="paypal_funding"
+                          checked={paypalFundingSource === 'balance'}
+                          onChange={() => setPaypalFundingSource('balance')}
+                          className="text-sky-600 focus:ring-sky-500"
+                        />
+                        <span className="text-[11px]">PayPal Balance</span>
+                      </label>
+                      <label className={`flex items-center gap-2 p-2.5 rounded-xl border cursor-pointer ${
+                        paypalFundingSource === 'linked_card' ? 'border-sky-500 bg-sky-50/80 text-sky-900 font-bold' : 'border-slate-200 bg-white text-slate-600'
+                      }`}>
+                        <input
+                          type="radio"
+                          name="paypal_funding"
+                          checked={paypalFundingSource === 'linked_card'}
+                          onChange={() => setPaypalFundingSource('linked_card')}
+                          className="text-sky-600 focus:ring-sky-500"
+                        />
+                        <span className="text-[11px]">Linked International Card</span>
+                      </label>
+                    </div>
+                  </div>
+
+                  {/* USD Conversion Estimate */}
+                  <div className="rounded-xl bg-white border border-sky-100 p-3 flex items-center justify-between text-xs">
+                    <div>
+                      <span className="text-[10px] uppercase font-bold text-slate-400 block">Estimated USD Amount</span>
+                      <strong className="text-sky-900 text-sm font-black">
+                        ${(payAmount / 300).toFixed(2)} USD
+                      </strong>
+                    </div>
+                    <span className="text-[11px] text-slate-500">
+                      Standard FX rate @ 1 USD ≈ 300 LKR
+                    </span>
+                  </div>
+
+                  {/* PayPal Security Banner */}
+                  <div className="flex items-center gap-2 rounded-xl bg-sky-100/60 p-2.5 text-[11px] text-sky-900">
+                    <ShieldCheck className="h-4 w-4 text-sky-700 shrink-0" />
+                    <span>PayPal Buyer Protection • Instant Automated Receipt Voucher</span>
+                  </div>
+                </div>
+              )}
+
+              {/* ========================================================= */}
+              {/* CONDITIONAL SECTION 4: KOKO BNPL (3x INSTALLMENTS)        */}
+              {/* ========================================================= */}
+              {payMethod === 'koko' && (
+                <div className="space-y-3.5 rounded-2xl border border-pink-200 bg-pink-50/30 p-4 transition-all animate-in fade-in">
+                  <div className="flex items-center justify-between border-b border-pink-100 pb-2">
+                    <span className="text-xs font-bold text-pink-950 flex items-center gap-1.5">
+                      <Sparkles className="h-3.5 w-3.5 text-pink-600" />
+                      Koko 3-Step Interest-Free Installment Plan
+                    </span>
+                    <span className="text-[10px] font-bold text-pink-700 bg-pink-100 px-2 py-0.5 rounded-md">
+                      0% Interest • No Fees
+                    </span>
+                  </div>
+
+                  {/* 3-Step Installment Timeline */}
+                  <div className="grid grid-cols-3 gap-2 text-center">
+                    <div className="rounded-xl bg-pink-100/80 p-2.5 border border-pink-200 shadow-xs">
+                      <span className="text-[10px] font-bold text-pink-800 uppercase block">1. Today</span>
+                      <strong className="text-xs font-black text-pink-950 mt-0.5 block">
+                        {formatLKR(Math.round(payAmount / 3))}
+                      </strong>
+                      <span className="text-[9px] text-pink-700 font-semibold mt-0.5 block">Charged Now</span>
+                    </div>
+                    <div className="rounded-xl bg-white p-2.5 border border-slate-200">
+                      <span className="text-[10px] font-semibold text-slate-500 uppercase block">2. In 30 Days</span>
+                      <strong className="text-xs font-bold text-slate-800 mt-0.5 block">
+                        {formatLKR(Math.round(payAmount / 3))}
+                      </strong>
+                      <span className="text-[9px] text-slate-400 mt-0.5 block">Auto-Debit</span>
+                    </div>
+                    <div className="rounded-xl bg-white p-2.5 border border-slate-200">
+                      <span className="text-[10px] font-semibold text-slate-500 uppercase block">3. In 60 Days</span>
+                      <strong className="text-xs font-bold text-slate-800 mt-0.5 block">
+                        {formatLKR(payAmount - Math.round(payAmount / 3) * 2)}
+                      </strong>
+                      <span className="text-[9px] text-slate-400 mt-0.5 block">Auto-Debit</span>
+                    </div>
+                  </div>
+
+                  {/* Koko Registered Mobile */}
+                  <div>
+                    <label className="block font-semibold text-slate-700 mb-1">
+                      Koko Registered Sri Lankan Mobile Number *
+                    </label>
+                    <div className="relative">
+                      <span className="absolute left-3 top-1/2 -translate-y-1/2 font-bold text-slate-400 text-xs">
+                        🇱🇰 +94
+                      </span>
+                      <input
+                        type="tel"
+                        required
+                        placeholder="77 123 4567"
+                        value={kokoPhone}
+                        onChange={(e) => setKokoPhone(e.target.value)}
+                        className="w-full rounded-xl border border-slate-300 bg-white pl-16 pr-3 py-2 text-xs font-mono font-bold text-slate-900 focus:border-pink-500 focus:ring-1 focus:ring-pink-500 focus:outline-none"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Card Choice for Koko Deductions */}
+                  <div>
+                    <label className="block font-semibold text-slate-700 mb-1.5">
+                      Select Card for Koko Auto-Debit
+                    </label>
+                    <div className="grid grid-cols-2 gap-2">
+                      <label className={`flex items-center gap-2 p-2.5 rounded-xl border cursor-pointer ${
+                        kokoCardType === 'debit' ? 'border-pink-500 bg-pink-50/80 text-pink-900 font-bold' : 'border-slate-200 bg-white text-slate-600'
+                      }`}>
+                        <input
+                          type="radio"
+                          name="koko_card"
+                          checked={kokoCardType === 'debit'}
+                          onChange={() => setKokoCardType('debit')}
+                          className="text-pink-600 focus:ring-pink-500"
+                        />
+                        <span className="text-[11px]">Debit Card (Commercial/BOC/Sampath)</span>
+                      </label>
+                      <label className={`flex items-center gap-2 p-2.5 rounded-xl border cursor-pointer ${
+                        kokoCardType === 'credit' ? 'border-pink-500 bg-pink-50/80 text-pink-900 font-bold' : 'border-slate-200 bg-white text-slate-600'
+                      }`}>
+                        <input
+                          type="radio"
+                          name="koko_card"
+                          checked={kokoCardType === 'credit'}
+                          onChange={() => setKokoCardType('credit')}
+                          className="text-pink-600 focus:ring-pink-500"
+                        />
+                        <span className="text-[11px]">Credit Card (Any Bank)</span>
+                      </label>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-2 rounded-xl bg-pink-100/60 p-2.5 text-[11px] text-pink-900">
+                    <ShieldCheck className="h-4 w-4 text-pink-700 shrink-0" />
+                    <span>Instant Koko Approval via SMS OTP • 0% Interest Guaranteed</span>
+                  </div>
+                </div>
+              )}
+
+              {/* ========================================================= */}
+              {/* CONDITIONAL SECTION 5: MINTPAY BNPL (3x INSTALLMENTS)     */}
+              {/* ========================================================= */}
+              {payMethod === 'mintpay' && (
+                <div className="space-y-3.5 rounded-2xl border border-teal-200 bg-teal-50/30 p-4 transition-all animate-in fade-in">
+                  <div className="flex items-center justify-between border-b border-teal-100 pb-2">
+                    <span className="text-xs font-bold text-teal-950 flex items-center gap-1.5">
+                      <Zap className="h-3.5 w-3.5 text-teal-600" />
+                      Mintpay 3-Part Installment Checkout &amp; Rewards
+                    </span>
+                    <span className="text-[10px] font-bold text-teal-800 bg-teal-100 px-2 py-0.5 rounded-md">
+                      1% Tuition Cashback
+                    </span>
+                  </div>
+
+                  {/* 3-Step Installment Timeline */}
+                  <div className="grid grid-cols-3 gap-2 text-center">
+                    <div className="rounded-xl bg-teal-100/80 p-2.5 border border-teal-200 shadow-xs">
+                      <span className="text-[10px] font-bold text-teal-800 uppercase block">1. Part 1 (Today)</span>
+                      <strong className="text-xs font-black text-teal-950 mt-0.5 block">
+                        {formatLKR(Math.round(payAmount / 3))}
+                      </strong>
+                      <span className="text-[9px] text-teal-700 font-semibold mt-0.5 block">Paid Instantly</span>
+                    </div>
+                    <div className="rounded-xl bg-white p-2.5 border border-slate-200">
+                      <span className="text-[10px] font-semibold text-slate-500 uppercase block">2. Part 2 (30d)</span>
+                      <strong className="text-xs font-bold text-slate-800 mt-0.5 block">
+                        {formatLKR(Math.round(payAmount / 3))}
+                      </strong>
+                      <span className="text-[9px] text-slate-400 mt-0.5 block">Auto-Deducted</span>
+                    </div>
+                    <div className="rounded-xl bg-white p-2.5 border border-slate-200">
+                      <span className="text-[10px] font-semibold text-slate-500 uppercase block">3. Part 3 (60d)</span>
+                      <strong className="text-xs font-bold text-slate-800 mt-0.5 block">
+                        {formatLKR(payAmount - Math.round(payAmount / 3) * 2)}
+                      </strong>
+                      <span className="text-[9px] text-slate-400 mt-0.5 block">Auto-Deducted</span>
+                    </div>
+                  </div>
+
+                  {/* Mintpay Registered Mobile or Account */}
+                  <div>
+                    <label className="block font-semibold text-slate-700 mb-1">
+                      Mintpay Registered Mobile Number *
+                    </label>
+                    <div className="relative">
+                      <span className="absolute left-3 top-1/2 -translate-y-1/2 font-bold text-slate-400 text-xs">
+                        🇱🇰 +94
+                      </span>
+                      <input
+                        type="tel"
+                        required
+                        placeholder="77 123 4567"
+                        value={mintpayPhone}
+                        onChange={(e) => setMintpayPhone(e.target.value)}
+                        className="w-full rounded-xl border border-slate-300 bg-white pl-16 pr-3 py-2 text-xs font-mono font-bold text-slate-900 focus:border-teal-500 focus:ring-1 focus:ring-teal-500 focus:outline-none"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Card Choice for Mintpay */}
+                  <div>
+                    <label className="block font-semibold text-slate-700 mb-1.5">
+                      Card Preference
+                    </label>
+                    <div className="grid grid-cols-2 gap-2">
+                      <label className={`flex items-center gap-2 p-2.5 rounded-xl border cursor-pointer ${
+                        mintpayCardType === 'debit' ? 'border-teal-500 bg-teal-50/80 text-teal-900 font-bold' : 'border-slate-200 bg-white text-slate-600'
+                      }`}>
+                        <input
+                          type="radio"
+                          name="mintpay_card"
+                          checked={mintpayCardType === 'debit'}
+                          onChange={() => setMintpayCardType('debit')}
+                          className="text-teal-600 focus:ring-teal-500"
+                        />
+                        <span className="text-[11px]">Debit Card</span>
+                      </label>
+                      <label className={`flex items-center gap-2 p-2.5 rounded-xl border cursor-pointer ${
+                        mintpayCardType === 'credit' ? 'border-teal-500 bg-teal-50/80 text-teal-900 font-bold' : 'border-slate-200 bg-white text-slate-600'
+                      }`}>
+                        <input
+                          type="radio"
+                          name="mintpay_card"
+                          checked={mintpayCardType === 'credit'}
+                          onChange={() => setMintpayCardType('credit')}
+                          className="text-teal-600 focus:ring-teal-500"
+                        />
+                        <span className="text-[11px]">Credit Card</span>
+                      </label>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-2 rounded-xl bg-teal-100/60 p-2.5 text-[11px] text-teal-900">
+                    <ShieldCheck className="h-4 w-4 text-teal-700 shrink-0" />
+                    <span>Official Mintpay Education Merchant • Direct LMS Integration</span>
+                  </div>
+                </div>
+              )}
+
               {/* Remarks / Purpose */}
               <div>
                 <label className="block font-bold text-slate-700 mb-1">
@@ -1247,7 +1790,13 @@ export const StudentPaymentsSection: React.FC<StudentPaymentsSectionProps> = ({
                   className={`w-2/3 rounded-xl py-2.5 font-bold text-white shadow-md transition-all cursor-pointer disabled:opacity-50 flex items-center justify-center gap-1.5 text-xs ${
                     payMethod === 'card'
                       ? 'bg-purple-600 hover:bg-purple-700'
-                      : 'bg-emerald-600 hover:bg-emerald-700'
+                      : payMethod === 'bank_transfer'
+                      ? 'bg-blue-600 hover:bg-blue-700'
+                      : payMethod === 'paypal'
+                      ? 'bg-sky-600 hover:bg-sky-700'
+                      : payMethod === 'koko'
+                      ? 'bg-pink-600 hover:bg-pink-700'
+                      : 'bg-teal-600 hover:bg-teal-700'
                   }`}
                 >
                   {isSubmittingPay ? (
@@ -1257,10 +1806,25 @@ export const StudentPaymentsSection: React.FC<StudentPaymentsSectionProps> = ({
                       <CreditCard className="h-4 w-4" />
                       <span>Confirm &amp; Pay {formatLKR(payAmount)}</span>
                     </>
-                  ) : (
+                  ) : payMethod === 'bank_transfer' ? (
                     <>
                       <UploadCloud className="h-4 w-4" />
                       <span>Submit Slip &amp; Pay {formatLKR(payAmount)}</span>
+                    </>
+                  ) : payMethod === 'paypal' ? (
+                    <>
+                      <Globe className="h-4 w-4" />
+                      <span>Pay with PayPal (${(payAmount / 300).toFixed(2)} USD)</span>
+                    </>
+                  ) : payMethod === 'koko' ? (
+                    <>
+                      <Sparkles className="h-4 w-4" />
+                      <span>Pay 1st Installment with Koko ({formatLKR(Math.round(payAmount / 3))})</span>
+                    </>
+                  ) : (
+                    <>
+                      <Zap className="h-4 w-4" />
+                      <span>Pay Part 1 with Mintpay ({formatLKR(Math.round(payAmount / 3))})</span>
                     </>
                   )}
                 </button>

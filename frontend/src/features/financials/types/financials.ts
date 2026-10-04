@@ -4,6 +4,9 @@ export type PaymentMethod =
   | 'card'
   | 'cheque'
   | 'online'
+  | 'paypal'
+  | 'koko'
+  | 'mintpay'
 
 export type PaymentStatus = 'fully_paid' | 'partially_paid' | 'unpaid'
 

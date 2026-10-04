@@ -59,6 +59,12 @@ export function formatPaymentMethod(method: PaymentMethod): string {
       return 'Cheque'
     case 'online':
       return 'Online Payment'
+    case 'paypal':
+      return 'PayPal Express'
+    case 'koko':
+      return 'Koko (Buy Now Pay Later)'
+    case 'mintpay':
+      return 'Mintpay (BNPL)'
     default:
       return method
   }
