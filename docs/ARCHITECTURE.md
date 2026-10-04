@@ -78,11 +78,9 @@
 
 ### 🎨 High-Resolution System Architecture Map
 
-<p align="center">
-  <a href="./assets/high_level_system_architecture_slide5.svg" target="_blank">
-    <img src="./assets/high_level_system_architecture_slide5.svg" alt="TrialReady LK - High-Level System Architecture" width="100%" />
-  </a>
-</p>
+[![TrialReady LK - High-Level System Architecture](https://raw.githubusercontent.com/ravishkarathnayaka/TrialReady-LK/main/docs/assets/high_level_system_architecture_slide5.svg)](https://raw.githubusercontent.com/ravishkarathnayaka/TrialReady-LK/main/docs/assets/high_level_system_architecture_slide5.svg)
+
+> 💡 *Click the diagram above or [open the direct SVG link](https://raw.githubusercontent.com/ravishkarathnayaka/TrialReady-LK/main/docs/assets/high_level_system_architecture_slide5.svg) to view or download the 1920x1080 Full HD image for your presentation slide.*
 
 ---
 
