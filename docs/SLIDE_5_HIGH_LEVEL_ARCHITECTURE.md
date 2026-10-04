@@ -24,91 +24,62 @@
 ### 🧭 High-Level Data Flow Topology (Stage-by-Stage)
 
 ```mermaid
-flowchart TD
-    %% =========================================================================
-    %% SLIDE 5: HIGH-LEVEL ARCHITECTURE PIPELINE (READABLE TOPOLOGY)
-    %% =========================================================================
-
-    subgraph S1["1. DATA SOURCES & INGESTION"]
-        DS1["🧑‍🎓 Student Enrolments (NIC, DOB, Contact, Branch)"]
-        DS2["🏥 NTMI Medical Records (Clinical Fitness Barcode)"]
-        DS3["📜 DMT Learner Permits (6-Month Validity & Expiry)"]
-        DS4["🚗 Practical Sessions (1-5★ Star Ratings & Maneuvers)"]
-        DS5["📝 Mock Theory Exams (40-Q Trilingual Submissions)"]
-        DS6["💳 Tuition Payments (Bank Slips, LankaQR, Cards)"]
+flowchart LR
+    subgraph S1["1. Data Sources"]
+        direction TB
+        DS1["Student Enrolments"]
+        DS2["NTMI Medicals"]
+        DS3["DMT Permits"]
+        DS4["Practical Lessons"]
+        DS5["Mock Theory Exams"]
+        DS6["Tuition Payments"]
     end
 
-    subgraph S2["2. PREPROCESSING & VALIDATION LAYER"]
-        PP1["⚙️ Zod Strict Type Sanitizer & Anti-XSS Virtual DOM"]
-        PP2["⏱️ Permit Countdown Engine (Δt = Expiry - Current)"]
-        PP3["🎯 7-Maneuver Bitmask & Practical Hours Vectorizer"]
-        PP4["🌐 Trilingual Context Token Mapper (EN / SI / TA)"]
-        PP5["🛡️ RFC-4180 CSV Anti-Formula Injection Sanitizer"]
+    subgraph S2["2. Preprocessing"]
+        direction TB
+        PP1["Zod Schema Validation"]
+        PP2["Permit Expiry Countdown"]
+        PP3["7-Maneuver Vectorizer"]
+        PP4["Trilingual Token Mapper"]
+        PP5["RFC-4180 CSV Sanitizer"]
     end
 
-    subgraph S3["3. AI MODEL & INFERENCE ENGINE"]
-        ML1["🧠 6-Factor AI Trial Readiness Composite Scoring (0-100%)<br/>Medical(15%) + Permit(15%) + Theory(15%) + Hours(25%) + Maneuvers(20%) + Rating(10%)"]
-        ML2["🚫 Regulatory Veto Classifier (Hard Lock for Expired Permits / Missing Medicals)"]
-        ML3["📊 Adaptive Theory Diagnostics (Highway Code Weakness Profiler & Remedial Drills)"]
-        ML4["📅 Scheduling Conflict Engine (Instructor & Vehicle Fleet Double-Book Shield)"]
+    subgraph S3["3. AI Model Engine"]
+        direction TB
+        ML1["6-Factor Readiness Score"]
+        ML2["Regulatory Veto Classifier"]
+        ML3["Adaptive Theory Diagnostic"]
+        ML4["Fleet Collision Detector"]
     end
 
-    subgraph S4["4. BACKEND & CYBER SECURITY LAYER"]
-        BE1["🔐 GoTrue Auth Engine (Bcrypt Salt≥10, Stateless JWT Token Lifecycle)"]
-        BE2["⚡ PostgREST Automated API (Prepared Parameterized SQL, 100% Anti-SQLi)"]
-        BE3["🛡️ Kernel-Level Row-Level Security (RLS Tenant Isolation per driving_school_id)"]
+    subgraph S4["4. Backend & Security"]
+        direction TB
+        BE1["GoTrue JWT Auth"]
+        BE2["PostgREST Prepared API"]
+        BE3["Kernel Row-Level Security"]
     end
 
-    subgraph S5["5. FRONTEND & PRESENTATION LAYER"]
-        FE1["💻 React 19 SPA + Vite 7 + Tailwind CSS v4 Glassmorphic UI"]
-        FE2["🚦 React Router v7 RBAC Gatekeepers (Admin, Instructor, Student Portals)"]
-        FE3["📱 18 Integrated Feature Modules (Leaderboard, Payments, Journey, Theory Hub)"]
-        FE4["🖨️ Zero-PDF Vector Print Engine (Official DMT Logbook & Trial Admission Passes)"]
+    subgraph S5["5. Frontend UI"]
+        direction TB
+        FE1["React 19 SPA & Tailwind"]
+        FE2["RBAC Route Gatekeeper"]
+        FE3["18 Domain Modules"]
+        FE4["Zero-PDF Vector Print"]
     end
 
-    subgraph S6["6. HYBRID DATA STORES & PERSISTENCE"]
-        ST1["🗄️ Primary PostgreSQL 15 Cloud Database (18 Multi-Tenant Relational Tables)"]
-        ST2["💾 Persistent Client Fallback Cache (trialready_* LocalStorage Offline Engine)"]
+    subgraph S6["6. Data Stores"]
+        direction TB
+        ST1["PostgreSQL 15 Cloud DB"]
+        ST2["Offline Fallback Cache"]
     end
 
-    subgraph S7["7. INTEGRATED EXTERNAL SERVICES & REGULATORY APIS"]
-        EXT1["☁️ Supabase Cloud BaaS (Auth, PostgreSQL 15, PostgREST)"]
-        EXT2["▲ Vercel Edge Network (Anycast CDN, TLS 1.3, Serverless Hosting)"]
-        EXT3["🏛️ Dept. of Motor Traffic (Motor Traffic Act No. 14 of 1951, Werahera Standards)"]
-        EXT4["🏥 National Transport Medical Institute (NTMI Fitness Clearance Protocols)"]
-        EXT5["💳 LankaQR / Central Bank of Sri Lanka (National Payment Rails)"]
-    end
-
-    %% Flow Pipeline
-    S1 ==>|1. Raw Ingestion| S2
-    S2 ==>|2. Cleaned Feature Vectors| S3
-    S3 ==>|3. Scoring & Predictions| S4
-    S4 <==>|4. Authenticated Prepared Queries with RLS| S6
-    S4 ==>|5. Typed RESTful JSON Payload| S5
-    S5 ==>|6. User Mutations & Real-Time Queries| S4
-    S5 <==>|7. Deterministic Offline Fallback Sync| ST2
-
-    EXT1 -.->|BaaS Hosting| S4
-    EXT2 -.->|Edge CDN Delivery| S5
-    EXT3 -.->|Statutory Test Rules| S3
-    EXT4 -.->|Medical Directives| S3
-    EXT5 -.->|Banking Protocol| S5
-
-    classDef stage1 fill:#0f172a,stroke:#3b82f6,stroke-width:2px,color:#fff;
-    classDef stage2 fill:#0f172a,stroke:#0284c7,stroke-width:2px,color:#fff;
-    classDef stage3 fill:#1e1b4b,stroke:#8b5cf6,stroke-width:2px,color:#fff;
-    classDef stage4 fill:#064e3b,stroke:#10b981,stroke-width:2px,color:#fff;
-    classDef stage5 fill:#0c2d48,stroke:#38bdf8,stroke-width:2px,color:#fff;
-    classDef stage6 fill:#3d2204,stroke:#f59e0b,stroke-width:2px,color:#fff;
-    classDef stage7 fill:#18181b,stroke:#a855f7,stroke-width:2px,color:#fff;
-
-    class S1 stage1;
-    class S2 stage2;
-    class S3 stage3;
-    class S4 stage4;
-    class S5 stage5;
-    class S6 stage6;
-    class S7 stage7;
+    S1 -->|Raw Input| S2
+    S2 -->|Clean Vectors| S3
+    S3 -->|Readiness| S4
+    S4 <-->|RLS SQL| S6
+    S4 -->|REST API| S5
+    S5 -->|Mutations| S4
+    S5 <-->|Local Sync| ST2
 ```
 
 ---
