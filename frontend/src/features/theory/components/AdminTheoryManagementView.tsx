@@ -114,6 +114,20 @@ export const AdminTheoryManagementView: React.FC<
 
   useEffect(() => {
     void loadData()
+
+    const handleUpdate = () => {
+      void loadData()
+    }
+
+    window.addEventListener('trialready-theory-updated', handleUpdate)
+    window.addEventListener('trialready-signs-updated', handleUpdate)
+    window.addEventListener('storage', handleUpdate)
+
+    return () => {
+      window.removeEventListener('trialready-theory-updated', handleUpdate)
+      window.removeEventListener('trialready-signs-updated', handleUpdate)
+      window.removeEventListener('storage', handleUpdate)
+    }
   }, [drivingSchoolId])
 
   const showToast = (msg: string) => {

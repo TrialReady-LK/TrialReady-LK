@@ -117,7 +117,7 @@ export const SRI_LANKA_DMT_MASTER_QUESTIONS: TheoryQuestion[] = [
     category: 'road_signs_regulatory',
     question_text:
       'A circular sign with a red border containing the number "50" inside indicates:',
-    image_url: '⑯ 50',
+    image_url: '50',
     options: [
       'Minimum speed limit of 50 km/h',
       'Maximum speed limit of 50 km/h in this road zone',
@@ -279,7 +279,7 @@ export const SRI_LANKA_DMT_MASTER_QUESTIONS: TheoryQuestion[] = [
     category: 'road_signs_regulatory',
     question_text:
       'A circular sign with a red border containing two cars side by side (one black, one red) signifies:',
-    image_url: '🚫 🚗🚗',
+    image_url: '🚫🚗',
     options: [
       'Overtaking prohibited for all motor vehicles',
       'Dual carriageway begins ahead',
@@ -337,7 +337,7 @@ export const SRI_LANKA_DMT_MASTER_QUESTIONS: TheoryQuestion[] = [
     category: 'road_signs_warning',
     question_text:
       'An equilateral triangular sign with a red border showing a pedestrian on a zebra crossing indicates:',
-    image_url: '⚠️ 🚶',
+    image_url: '🚶',
     options: [
       'Pedestrian crossing (Zebra Crossing) ahead; prepare to slow down and stop',
       'Pedestrians prohibited on this road',
@@ -391,7 +391,7 @@ export const SRI_LANKA_DMT_MASTER_QUESTIONS: TheoryQuestion[] = [
     category: 'road_signs_warning',
     question_text:
       'A triangular warning sign displaying a steam locomotive engine alerts the driver to:',
-    image_url: '⚠️ 🚂',
+    image_url: '🚂',
     options: [
       'Railway level crossing without gates or barriers ahead',
       'Railway station entrance ahead',
@@ -445,7 +445,7 @@ export const SRI_LANKA_DMT_MASTER_QUESTIONS: TheoryQuestion[] = [
     category: 'road_signs_warning',
     question_text:
       'A triangular warning sign showing a car skidding with wavy tracks beneath warns of:',
-    image_url: '⚠️ 🚗〰️',
+    image_url: 'sign-slippery-road',
     options: [
       'Slippery road surface ahead; reduce speed and avoid sudden braking',
       'Car racing track zone',
@@ -499,7 +499,7 @@ export const SRI_LANKA_DMT_MASTER_QUESTIONS: TheoryQuestion[] = [
     category: 'road_signs_warning',
     question_text:
       'A warning sign depicting a fence or gate structure inside a red triangle means:',
-    image_url: '⚠️ 🚧',
+    image_url: '🚧',
     options: [
       'Railway level crossing with gates or barriers ahead',
       'Farm boundary fence ahead',
@@ -1099,7 +1099,7 @@ export const SRI_LANKA_DMT_MASTER_QUESTIONS: TheoryQuestion[] = [
     category: 'road_signs_informative',
     question_text:
       'What are the minimum and maximum legal speed limits for cars on Sri Lankan Expressways (e.g., E01 Southern Expressway)?',
-    image_url: '🛣️ 100',
+    image_url: '100',
     options: [
       'Minimum: 40 km/h | Maximum: 100 km/h',
       'Minimum: 20 km/h | Maximum: 70 km/h',
@@ -1153,7 +1153,7 @@ export const SRI_LANKA_DMT_MASTER_QUESTIONS: TheoryQuestion[] = [
     category: 'road_signs_informative',
     question_text:
       'A blue rectangular sign featuring a white capital letter "H" on Sri Lankan roads designates:',
-    image_url: '🏥 H',
+    image_url: '🏥',
     options: [
       'Hospital / medical treatment facility ahead (Maintain silence, no unnecessary horn blowing)',
       'Helipad / Helicopter landing site',

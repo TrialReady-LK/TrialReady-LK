@@ -19,7 +19,22 @@ export const RoadSignsFlashcards: React.FC = () => {
   const [isFlipped, setIsFlipped] = useState(false)
 
   useEffect(() => {
-    void getRoadSigns().then((data) => setSigns(data))
+    const loadData = () => {
+      void getRoadSigns().then((data) => setSigns(data))
+    }
+    loadData()
+
+    const handleUpdate = () => {
+      loadData()
+    }
+
+    window.addEventListener('trialready-signs-updated', handleUpdate)
+    window.addEventListener('storage', handleUpdate)
+
+    return () => {
+      window.removeEventListener('trialready-signs-updated', handleUpdate)
+      window.removeEventListener('storage', handleUpdate)
+    }
   }, [])
 
   const filteredSigns = signs.filter((s) => {

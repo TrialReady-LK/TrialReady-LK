@@ -9,6 +9,8 @@ import {
   Sparkles,
 } from 'lucide-react'
 import type { TheoryQuestion, TheoryQuestionCategory } from '../types/theory'
+import type { RoadSignItem } from '../types/roadSign'
+import { getRoadSigns } from '../services/roadSignService'
 import { RoadSignIllustration } from './RoadSignIllustration'
 
 interface QuestionFormModalProps {
@@ -30,12 +32,20 @@ const CATEGORIES: { value: TheoryQuestionCategory; label: string }[] = [
 const QUICK_SIGN_PRESETS = [
   { label: 'Stop Sign', value: '🛑' },
   { label: 'Give Way', value: '▽' },
-  { label: '50 km/h', value: '⑯ 50' },
+  { label: '50 km/h', value: '50' },
+  { label: '70 km/h', value: '70' },
+  { label: '100 km/h', value: '100' },
   { label: 'No Entry', value: '⛔' },
-  { label: 'Zebra Crossing', value: '⚠️ 🚶' },
-  { label: 'Railway Ungated', value: '⚠️ 🚂' },
+  { label: 'No Parking', value: '🚫🅿️' },
+  { label: 'No Overtaking', value: '🚫🚗' },
+  { label: 'Zebra Crossing', value: '🚶' },
+  { label: 'Railway Ungated', value: '🚂' },
+  { label: 'Railway Gated', value: '🚧' },
   { label: 'Roundabout', value: '🔄' },
-  { label: 'Hospital', value: '🏥 H' },
+  { label: 'Traffic Lights', value: '🚦' },
+  { label: 'Hospital', value: '🏥' },
+  { label: 'Expressway', value: '🛣️' },
+  { label: 'Slippery Road', value: 'sign-slippery-road' },
 ]
 
 export const QuestionFormModal: React.FC<QuestionFormModalProps> = ({
@@ -68,6 +78,13 @@ export const QuestionFormModal: React.FC<QuestionFormModalProps> = ({
 
   const [activeLangTab, setActiveLangTab] = useState<'en' | 'si' | 'ta'>('en')
   const [error, setError] = useState<string | null>(null)
+  const [systemRoadSigns, setSystemRoadSigns] = useState<RoadSignItem[]>([])
+
+  useEffect(() => {
+    if (isOpen) {
+      void getRoadSigns().then((data) => setSystemRoadSigns(data))
+    }
+  }, [isOpen])
 
   useEffect(() => {
     if (initialQuestion) {
@@ -348,9 +365,9 @@ export const QuestionFormModal: React.FC<QuestionFormModalProps> = ({
             <div>
               <span className="text-[10px] font-bold text-slate-500 block mb-1.5 flex items-center gap-1">
                 <Sparkles className="h-3 w-3 text-amber-500" />
-                <span>Or select quick standard DMT road sign preset:</span>
+                <span>Select quick standard DMT road sign preset:</span>
               </span>
-              <div className="flex flex-wrap gap-1.5">
+              <div className="flex flex-wrap gap-1.5 max-h-36 overflow-y-auto p-1 rounded-xl bg-slate-100/50 border border-slate-200">
                 {QUICK_SIGN_PRESETS.map((preset) => (
                   <button
                     key={preset.label}
@@ -358,13 +375,43 @@ export const QuestionFormModal: React.FC<QuestionFormModalProps> = ({
                     onClick={() => setImageUrl(preset.value)}
                     className={`rounded-lg px-2.5 py-1 text-[11px] font-bold border transition-all cursor-pointer ${
                       imageUrl === preset.value
-                        ? 'border-blue-500 bg-blue-50 text-blue-700'
-                        : 'border-slate-200 bg-white text-slate-600 hover:border-slate-300 hover:bg-slate-100'
+                        ? 'border-blue-500 bg-blue-50 text-blue-700 shadow-xs'
+                        : 'border-slate-200 bg-white text-slate-600 hover:border-slate-300 hover:bg-slate-50'
                     }`}
                   >
-                    <span>{preset.value}</span> <span className="text-[10px] font-normal text-slate-500">{preset.label}</span>
+                    <span>{preset.value}</span>{' '}
+                    <span className="text-[10px] font-normal text-slate-500">{preset.label}</span>
                   </button>
                 ))}
+
+                {/* Additional / Custom Signs from Road Signs Database */}
+                {systemRoadSigns
+                  .filter(
+                    (s) =>
+                      !QUICK_SIGN_PRESETS.some(
+                        (p) =>
+                          p.value.toLowerCase() === (s.image_url || '').toLowerCase() ||
+                          p.label.toLowerCase() === s.name.toLowerCase(),
+                      ),
+                  )
+                  .map((sign) => (
+                    <button
+                      key={sign.id}
+                      type="button"
+                      onClick={() => setImageUrl(sign.image_url || sign.name)}
+                      className={`rounded-lg px-2.5 py-1 text-[11px] font-bold border transition-all cursor-pointer ${
+                        imageUrl === (sign.image_url || sign.name)
+                          ? 'border-purple-500 bg-purple-50 text-purple-700 shadow-xs'
+                          : 'border-purple-200 bg-white text-purple-700 hover:border-purple-300 hover:bg-purple-50/50'
+                      }`}
+                      title={sign.meaning}
+                    >
+                      <span>{sign.image_url || '📌'}</span>{' '}
+                      <span className="text-[10px] font-normal text-purple-600 truncate max-w-[120px] inline-block align-bottom">
+                        {sign.name}
+                      </span>
+                    </button>
+                  ))}
               </div>
             </div>
           </div>

@@ -20,6 +20,14 @@ export interface ExtendedMockAttempt extends MockExamAttempt {
   branch_name?: string
 }
 
+function notifyTheoryUpdated(detail?: any) {
+  if (typeof window !== 'undefined') {
+    window.dispatchEvent(
+      new CustomEvent('trialready-theory-updated', { detail }),
+    )
+  }
+}
+
 export async function getTheoryQuestions(
   category?: string,
 ): Promise<TheoryQuestion[]> {
@@ -77,6 +85,7 @@ export async function saveTheoryQuestion(
   }
 
   setStoredData(THEORY_QUESTIONS_KEY, updated)
+  notifyTheoryUpdated(question)
 
   try {
     await supabase.from('theory_questions').upsert([
@@ -106,6 +115,7 @@ export async function deleteTheoryQuestion(questionId: string): Promise<void> {
   )
   const filtered = current.filter((q) => q.id !== questionId)
   setStoredData(THEORY_QUESTIONS_KEY, filtered)
+  notifyTheoryUpdated({ id: questionId, deleted: true })
 
   try {
     await supabase.from('theory_questions').delete().eq('id', questionId)
@@ -124,9 +134,9 @@ function shuffleQuestions<T>(array: T[]): T[] {
 }
 
 export async function resetQuestionBankToDefault(): Promise<TheoryQuestion[]> {
-  // Shuffle the master bank so questions, categories, and question ordering actively change
   const shuffled = shuffleQuestions(SRI_LANKA_DMT_QUESTION_BANK)
   setStoredData(THEORY_QUESTIONS_KEY, shuffled)
+  notifyTheoryUpdated(shuffled)
   return shuffled
 }
 
@@ -138,6 +148,7 @@ export async function shuffleTheoryQuestions(): Promise<TheoryQuestion[]> {
   const source = current.length >= SRI_LANKA_DMT_QUESTION_BANK.length ? current : SRI_LANKA_DMT_QUESTION_BANK
   const shuffled = shuffleQuestions(source)
   setStoredData(THEORY_QUESTIONS_KEY, shuffled)
+  notifyTheoryUpdated(shuffled)
   return shuffled
 }
 

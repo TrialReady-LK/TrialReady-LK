@@ -5,6 +5,14 @@ import type { RoadSignItem } from '../types/roadSign'
 
 const ROAD_SIGNS_STORAGE_KEY = 'trialready_road_signs'
 
+function notifySignsUpdated(detail?: any) {
+  if (typeof window !== 'undefined') {
+    window.dispatchEvent(
+      new CustomEvent('trialready-signs-updated', { detail }),
+    )
+  }
+}
+
 export async function getRoadSigns(category?: string): Promise<RoadSignItem[]> {
   try {
     const local = getStoredData<RoadSignItem[] | null>(ROAD_SIGNS_STORAGE_KEY, null)
@@ -51,6 +59,7 @@ export async function saveRoadSign(sign: RoadSignItem): Promise<RoadSignItem> {
   }
 
   setStoredData(ROAD_SIGNS_STORAGE_KEY, updated)
+  notifySignsUpdated(sign)
 
   try {
     await supabase.from('road_signs').upsert([
@@ -81,6 +90,7 @@ export async function deleteRoadSign(signId: string): Promise<void> {
   )
   const filtered = current.filter((s) => s.id !== signId)
   setStoredData(ROAD_SIGNS_STORAGE_KEY, filtered)
+  notifySignsUpdated({ id: signId, deleted: true })
 
   try {
     await supabase.from('road_signs').delete().eq('id', signId)
@@ -91,5 +101,6 @@ export async function deleteRoadSign(signId: string): Promise<void> {
 
 export async function resetRoadSignsToDefault(): Promise<RoadSignItem[]> {
   setStoredData(ROAD_SIGNS_STORAGE_KEY, DEFAULT_SRI_LANKA_ROAD_SIGNS)
+  notifySignsUpdated(DEFAULT_SRI_LANKA_ROAD_SIGNS)
   return DEFAULT_SRI_LANKA_ROAD_SIGNS
 }

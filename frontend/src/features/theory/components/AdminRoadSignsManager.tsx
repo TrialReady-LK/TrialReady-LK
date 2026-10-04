@@ -67,6 +67,18 @@ export const AdminRoadSignsManager: React.FC = () => {
 
   useEffect(() => {
     void loadSigns()
+
+    const handleUpdate = () => {
+      void loadSigns()
+    }
+
+    window.addEventListener('trialready-signs-updated', handleUpdate)
+    window.addEventListener('storage', handleUpdate)
+
+    return () => {
+      window.removeEventListener('trialready-signs-updated', handleUpdate)
+      window.removeEventListener('storage', handleUpdate)
+    }
   }, [])
 
   const showToast = (msg: string) => {
