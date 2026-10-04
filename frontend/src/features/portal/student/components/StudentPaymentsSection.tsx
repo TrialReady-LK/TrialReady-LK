@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import {
   CreditCard,
   CheckCircle2,
@@ -12,6 +12,15 @@ import {
   Calendar,
   DollarSign,
   Wallet,
+  UploadCloud,
+  FileText,
+  Image as ImageIcon,
+  Trash2,
+  Lock,
+  ShieldCheck,
+  AlertCircle,
+  X,
+  FileCheck,
 } from 'lucide-react'
 import type { StudentFinancialLedger, StudentPayment } from '../../../financials/types/financials'
 import { formatLKR, formatPaymentMethod, getPaymentStatus } from '../../../financials/utils/financialUtils'
@@ -42,6 +51,22 @@ export const StudentPaymentsSection: React.FC<StudentPaymentsSectionProps> = ({
   const [payNotes, setPayNotes] = useState('Online Course Installment')
   const [isSubmittingPay, setIsSubmittingPay] = useState(false)
   const [paySuccessMsg, setPaySuccessMsg] = useState<string | null>(null)
+  const [formErrorMsg, setFormErrorMsg] = useState<string | null>(null)
+
+  // Card Details State
+  const [cardHolder, setCardHolder] = useState(ledger?.student.full_name || '')
+  const [cardNumber, setCardNumber] = useState('')
+  const [cardExpiry, setCardExpiry] = useState('')
+  const [cardCvv, setCardCvv] = useState('')
+  const [saveCard, setSaveCard] = useState(true)
+
+  // Bank Slip Upload State
+  const [bankName, setBankName] = useState('Commercial Bank of Ceylon PLC')
+  const [depositDate, setDepositDate] = useState(new Date().toISOString().split('T')[0])
+  const [slipFile, setSlipFile] = useState<File | null>(null)
+  const [slipPreviewUrl, setSlipPreviewUrl] = useState<string | null>(null)
+  const [isDraggingFile, setIsDraggingFile] = useState(false)
+  const fileInputRef = useRef<HTMLInputElement>(null)
 
   if (!ledger) {
     return (
@@ -99,6 +124,82 @@ export const StudentPaymentsSection: React.FC<StudentPaymentsSectionProps> = ({
     },
   ]
 
+  const detectCardBrand = (num: string) => {
+    const clean = num.replace(/\s+/g, '')
+    if (clean.startsWith('4')) return { brand: 'Visa', badge: 'VISA', bg: 'bg-blue-600 text-white' }
+    if (/^5[1-5]/.test(clean) || /^2[2-7]/.test(clean)) return { brand: 'MasterCard', badge: 'Mastercard', bg: 'bg-orange-600 text-white' }
+    if (/^3[47]/.test(clean)) return { brand: 'Amex', badge: 'AMEX', bg: 'bg-sky-600 text-white' }
+    if (clean.startsWith('6')) return { brand: 'LankaPay', badge: 'LankaPay', bg: 'bg-emerald-600 text-white' }
+    return { brand: 'Card', badge: 'Card', bg: 'bg-slate-700 text-white' }
+  }
+
+  const handleCardNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const raw = e.target.value.replace(/\D/g, '').slice(0, 16)
+    const formatted = raw.match(/.{1,4}/g)?.join(' ') || raw
+    setCardNumber(formatted)
+  }
+
+  const handleExpiryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let val = e.target.value.replace(/\D/g, '').slice(0, 4)
+    if (val.length >= 3) {
+      val = `${val.slice(0, 2)}/${val.slice(2)}`
+    }
+    setCardExpiry(val)
+  }
+
+  const handleCvvChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const val = e.target.value.replace(/\D/g, '').slice(0, 4)
+    setCardCvv(val)
+  }
+
+  const handleFileSelect = (file: File | null) => {
+    if (!file) return
+    const allowed = ['image/jpeg', 'image/png', 'image/jpg', 'application/pdf']
+    if (!allowed.includes(file.type)) {
+      setFormErrorMsg('Invalid file format. Please upload a PNG, JPG, or PDF bank deposit slip.')
+      return
+    }
+    if (file.size > 5 * 1024 * 1024) {
+      setFormErrorMsg('File exceeds 5MB limit. Please upload a smaller deposit slip.')
+      return
+    }
+    setFormErrorMsg(null)
+    setSlipFile(file)
+    if (file.type.startsWith('image/')) {
+      const reader = new FileReader()
+      reader.onload = (ev) => {
+        setSlipPreviewUrl(ev.target?.result as string)
+      }
+      reader.readAsDataURL(file)
+    } else {
+      setSlipPreviewUrl(null)
+    }
+  }
+
+  const handleRemoveFile = () => {
+    setSlipFile(null)
+    setSlipPreviewUrl(null)
+    if (fileInputRef.current) {
+      fileInputRef.current.value = ''
+    }
+  }
+
+  const handleOpenPayModal = (amount?: number, defaultMethod?: 'card' | 'bank_transfer') => {
+    setPayAmount(amount !== undefined ? amount : (ledger.balance > 0 ? ledger.balance : 20000))
+    if (defaultMethod) setPayMethod(defaultMethod)
+    setCardHolder(ledger.student.full_name || '')
+    setCardNumber('')
+    setCardExpiry('')
+    setCardCvv('')
+    setSlipFile(null)
+    setSlipPreviewUrl(null)
+    setFormErrorMsg(null)
+    setPaySuccessMsg(null)
+    setPayReference('')
+    setPayNotes('Online Course Installment')
+    setIsPayOnlineModalOpen(true)
+  }
+
   const handleCopyAccountNo = () => {
     navigator.clipboard.writeText('1000 2489 7712')
     setCopiedBankNo(true)
@@ -112,19 +213,62 @@ export const StudentPaymentsSection: React.FC<StudentPaymentsSectionProps> = ({
 
   const handleExecuteOnlinePayment = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (payAmount <= 0) return
+    setFormErrorMsg(null)
+
+    if (payAmount <= 0) {
+      setFormErrorMsg('Please enter a valid payment amount greater than LKR 0.')
+      return
+    }
+
+    if (payMethod === 'card') {
+      const clean = cardNumber.replace(/\s+/g, '')
+      if (clean.length < 15) {
+        setFormErrorMsg('Please enter a valid 16-digit credit/debit card number.')
+        return
+      }
+      if (!cardExpiry || cardExpiry.length < 5) {
+        setFormErrorMsg('Please enter a valid card expiry date (MM/YY).')
+        return
+      }
+      if (!cardCvv || cardCvv.length < 3) {
+        setFormErrorMsg('Please enter a valid 3 or 4-digit CVV security code.')
+        return
+      }
+    }
+
+    if (payMethod === 'bank_transfer') {
+      if (!payReference && !slipFile) {
+        setFormErrorMsg('Please provide the Bank Transaction Reference ID or attach your deposit slip.')
+        return
+      }
+    }
 
     try {
       setIsSubmittingPay(true)
+
+      const cardInfo = detectCardBrand(cardNumber)
+      const cleanCard = cardNumber.replace(/\s+/g, '')
+      const last4 = cleanCard.slice(-4) || '4412'
+
+      const generatedReference =
+        payMethod === 'card'
+          ? (payReference.trim() || `CARD-${cardInfo.badge.toUpperCase()}-${last4}-${Date.now().toString().slice(-4)}`)
+          : (payReference.trim() || `DEP-${bankName.split(' ')[0].toUpperCase()}-${Date.now().toString().slice(-6)}`)
+
+      const generatedNotes =
+        payMethod === 'card'
+          ? `${payNotes || 'Online Card Payment'} [${cardInfo.brand} •••• ${last4} | Holder: ${cardHolder || ledger.student.full_name}]`
+          : `${payNotes || 'Tuition Bank Deposit'} [${bankName} | Date: ${depositDate}${slipFile ? ` | Slip: ${slipFile.name}` : ''}]`
+
       const recorded = await recordStudentPayment({
         driving_school_id: drivingSchoolId,
         student_id: ledger.student.id,
         enrolment_id: ledger.enrolment?.id,
         amount: payAmount,
-        payment_date: new Date().toISOString().split('T')[0],
+        payment_date: payMethod === 'bank_transfer' ? depositDate : new Date().toISOString().split('T')[0],
         payment_method: payMethod,
-        payment_reference: payReference || `ONLINE-${Date.now().toString().slice(-6)}`,
-        notes: payNotes,
+        payment_reference: generatedReference,
+        notes: generatedNotes,
       })
 
       setPaySuccessMsg(`Payment of ${formatLKR(payAmount)} processed successfully! Receipt: ${recorded.receipt_number}`)
@@ -135,7 +279,7 @@ export const StudentPaymentsSection: React.FC<StudentPaymentsSectionProps> = ({
         handleOpenReceipt(recorded)
       }, 1500)
     } catch {
-      setPaySuccessMsg('Failed to process payment. Please try again.')
+      setFormErrorMsg('Failed to process payment. Please verify your details and try again.')
     } finally {
       setIsSubmittingPay(false)
     }
@@ -171,10 +315,7 @@ export const StudentPaymentsSection: React.FC<StudentPaymentsSectionProps> = ({
           {ledger.balance > 0 && (
             <button
               type="button"
-              onClick={() => {
-                setPayAmount(ledger.balance)
-                setIsPayOnlineModalOpen(true)
-              }}
+              onClick={() => handleOpenPayModal(ledger.balance, 'card')}
               className="inline-flex items-center gap-1.5 rounded-xl bg-emerald-600 px-4 py-2 text-xs font-bold text-white shadow-md hover:bg-emerald-700 transition-all cursor-pointer"
             >
               <Wallet className="h-3.5 w-3.5" />
@@ -509,6 +650,15 @@ export const StudentPaymentsSection: React.FC<StudentPaymentsSectionProps> = ({
                   ⚠️ <strong>Important:</strong> Put your Admission Number (<strong>{ledger.student.admission_number}</strong>) in the transaction reference/remarks.
                 </div>
               </div>
+
+              <button
+                type="button"
+                onClick={() => handleOpenPayModal(ledger.balance > 0 ? ledger.balance : 15000, 'bank_transfer')}
+                className="w-full rounded-xl bg-blue-600 py-2.5 text-xs font-bold text-white shadow-xs hover:bg-blue-700 transition-all cursor-pointer flex items-center justify-center gap-1.5"
+              >
+                <UploadCloud className="h-3.5 w-3.5" />
+                <span>Attach &amp; Submit Bank Transfer Slip</span>
+              </button>
             </div>
 
             {/* Channel 2: Front Desk & POS */}
@@ -564,14 +714,11 @@ export const StudentPaymentsSection: React.FC<StudentPaymentsSectionProps> = ({
 
                 <button
                   type="button"
-                  onClick={() => {
-                    setPayAmount(ledger.balance > 0 ? ledger.balance : 15000)
-                    setIsPayOnlineModalOpen(true)
-                  }}
+                  onClick={() => handleOpenPayModal(ledger.balance > 0 ? ledger.balance : 15000, 'card')}
                   className="w-full rounded-xl bg-purple-600 py-2.5 text-xs font-bold text-white shadow-xs hover:bg-purple-700 transition-all cursor-pointer flex items-center justify-center gap-1.5"
                 >
                   <CreditCard className="h-3.5 w-3.5" />
-                  <span>Launch Online Payment Portal</span>
+                  <span>Launch Online Card Portal</span>
                 </button>
               </div>
             </div>
@@ -618,131 +765,504 @@ export const StudentPaymentsSection: React.FC<StudentPaymentsSectionProps> = ({
         />
       )}
 
-      {/* Online Payment Simulator Modal */}
+      {/* Online Payment & Bank Slip Gateway Modal */}
       {isPayOnlineModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 p-4 backdrop-blur-xs">
-          <div className="w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl border border-slate-200 space-y-5 animate-in fade-in zoom-in-95">
-            <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-              <div className="flex items-center gap-2">
-                <Wallet className="h-5 w-5 text-emerald-600" />
-                <h3 className="text-sm font-bold text-slate-900">
-                  Online Tuition Payment Gateway
-                </h3>
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 p-4 backdrop-blur-xs overflow-y-auto">
+          <div className="w-full max-w-xl rounded-3xl bg-white p-6 sm:p-7 shadow-2xl border border-slate-200 space-y-5 animate-in fade-in zoom-in-95 my-8">
+            {/* Modal Header */}
+            <div className="flex items-center justify-between border-b border-slate-100 pb-3.5">
+              <div className="flex items-center gap-2.5">
+                <div className={`flex h-9 w-9 items-center justify-center rounded-xl border ${
+                  payMethod === 'card' ? 'bg-purple-50 text-purple-600 border-purple-200' : 'bg-blue-50 text-blue-600 border-blue-200'
+                }`}>
+                  {payMethod === 'card' ? <CreditCard className="h-5 w-5" /> : <UploadCloud className="h-5 w-5" />}
+                </div>
+                <div>
+                  <h3 className="text-base font-bold text-slate-900">
+                    Online Tuition Payment Gateway
+                  </h3>
+                  <p className="text-[11px] text-slate-500">
+                    {payMethod === 'card' ? 'Instant Secure Credit/Debit Card Checkout' : 'Bank Transfer & Slip Verification Portal'}
+                  </p>
+                </div>
               </div>
               <button
                 type="button"
                 onClick={() => setIsPayOnlineModalOpen(false)}
-                className="rounded-lg p-1 text-slate-400 hover:bg-slate-100 cursor-pointer"
+                className="rounded-xl p-1.5 text-slate-400 hover:bg-slate-100 hover:text-slate-600 transition-colors cursor-pointer"
               >
-                ✕
+                <X className="h-5 w-5" />
               </button>
             </div>
 
+            {/* Success & Error Banners */}
             {paySuccessMsg && (
-              <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-3 text-xs font-semibold text-emerald-800">
-                {paySuccessMsg}
+              <div className="rounded-2xl border border-emerald-200 bg-emerald-50 p-4 text-xs font-semibold text-emerald-800 flex items-start gap-2.5">
+                <CheckCircle2 className="h-5 w-5 text-emerald-600 shrink-0 mt-0.5" />
+                <div>
+                  <p className="font-bold">{paySuccessMsg}</p>
+                  <p className="text-[11px] text-emerald-700 mt-0.5">Generating your official receipt voucher...</p>
+                </div>
               </div>
             )}
 
-            <form onSubmit={handleExecuteOnlinePayment} className="space-y-4 text-xs">
-              <div>
-                <label className="block font-bold text-slate-700 mb-1">
-                  Student Name &amp; Admission
-                </label>
-                <input
-                  type="text"
-                  disabled
-                  value={`${ledger.student.full_name} (${ledger.student.admission_number})`}
-                  className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-xs font-semibold text-slate-700"
-                />
+            {formErrorMsg && (
+              <div className="rounded-2xl border border-rose-200 bg-rose-50 p-3.5 text-xs font-semibold text-rose-800 flex items-center gap-2">
+                <AlertCircle className="h-4 w-4 text-rose-600 shrink-0" />
+                <span>{formErrorMsg}</span>
               </div>
+            )}
 
+            {/* Student & Course Badge Bar */}
+            <div className="rounded-2xl border border-slate-100 bg-slate-50/80 p-3.5 flex flex-wrap items-center justify-between gap-2 text-xs">
+              <div className="space-y-0.5">
+                <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Learner Profile</span>
+                <p className="font-bold text-slate-900">{ledger.student.full_name} <span className="font-mono font-normal text-slate-500">({ledger.student.admission_number})</span></p>
+              </div>
+              <div className="text-right space-y-0.5">
+                <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Outstanding Balance</span>
+                <p className="font-black text-amber-600 text-sm">{formatLKR(ledger.balance)}</p>
+              </div>
+            </div>
+
+            <form onSubmit={handleExecuteOnlinePayment} className="space-y-4 text-xs">
+              {/* Payment Amount */}
               <div>
                 <label className="block font-bold text-slate-700 mb-1">
                   Payment Amount (LKR) *
                 </label>
-                <input
-                  type="number"
-                  min="1000"
-                  required
-                  value={payAmount}
-                  onChange={(e) => setPayAmount(Number(e.target.value))}
-                  className="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm font-black text-slate-900 focus:border-blue-500 focus:outline-none"
-                />
-                <p className="text-[11px] text-slate-500 mt-0.5">
-                  Outstanding balance: {formatLKR(ledger.balance)}
-                </p>
+                <div className="relative">
+                  <span className="absolute left-3.5 top-1/2 -translate-y-1/2 font-black text-slate-400 text-sm">
+                    Rs.
+                  </span>
+                  <input
+                    type="number"
+                    min="500"
+                    step="500"
+                    required
+                    value={payAmount}
+                    onChange={(e) => setPayAmount(Number(e.target.value))}
+                    className="w-full rounded-xl border border-slate-300 pl-11 pr-3 py-2.5 text-sm font-black text-slate-900 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none"
+                  />
+                </div>
+                {ledger.balance > 0 && (
+                  <div className="flex flex-wrap gap-1.5 mt-2">
+                    <button
+                      type="button"
+                      onClick={() => setPayAmount(ledger.balance)}
+                      className="rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1 text-[11px] font-semibold text-slate-700 hover:bg-slate-100 cursor-pointer"
+                    >
+                      Full Balance ({formatLKR(ledger.balance)})
+                    </button>
+                    {ledger.balance > 10000 && (
+                      <button
+                        type="button"
+                        onClick={() => setPayAmount(Math.round(ledger.balance / 2))}
+                        className="rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1 text-[11px] font-semibold text-slate-700 hover:bg-slate-100 cursor-pointer"
+                      >
+                        50% ({formatLKR(Math.round(ledger.balance / 2))})
+                      </button>
+                    )}
+                    <button
+                      type="button"
+                      onClick={() => setPayAmount(10000)}
+                      className="rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1 text-[11px] font-semibold text-slate-700 hover:bg-slate-100 cursor-pointer"
+                    >
+                      LKR 10,000
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setPayAmount(20000)}
+                      className="rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1 text-[11px] font-semibold text-slate-700 hover:bg-slate-100 cursor-pointer"
+                    >
+                      LKR 20,000
+                    </button>
+                  </div>
+                )}
               </div>
 
+              {/* Payment Method Selector */}
               <div>
-                <label className="block font-bold text-slate-700 mb-1">
-                  Payment Method *
+                <label className="block font-bold text-slate-700 mb-1.5">
+                  Select Payment Option *
                 </label>
-                <div className="grid grid-cols-2 gap-2">
+                <div className="grid grid-cols-2 gap-3">
                   <button
                     type="button"
-                    onClick={() => setPayMethod('card')}
-                    className={`rounded-xl p-2.5 text-center font-bold border cursor-pointer transition-all ${
+                    onClick={() => {
+                      setPayMethod('card')
+                      setFormErrorMsg(null)
+                    }}
+                    className={`rounded-2xl p-3.5 text-left border cursor-pointer transition-all flex flex-col gap-1 ${
                       payMethod === 'card'
-                        ? 'border-blue-600 bg-blue-50 text-blue-700'
-                        : 'border-slate-200 bg-white text-slate-600'
+                        ? 'border-purple-600 bg-purple-50/70 text-purple-950 ring-2 ring-purple-600/20 shadow-xs'
+                        : 'border-slate-200 bg-white text-slate-600 hover:bg-slate-50'
                     }`}
                   >
-                    💳 Card (Visa/Master)
+                    <div className="flex items-center justify-between">
+                      <span className="font-bold flex items-center gap-1.5">
+                        <CreditCard className="h-4 w-4 text-purple-600" />
+                        <span>Card (Visa/Master)</span>
+                      </span>
+                      {payMethod === 'card' && <CheckCircle2 className="h-4 w-4 text-purple-600" />}
+                    </div>
+                    <span className="text-[11px] text-slate-500">Instant gateway clearance</span>
                   </button>
+
                   <button
                     type="button"
-                    onClick={() => setPayMethod('bank_transfer')}
-                    className={`rounded-xl p-2.5 text-center font-bold border cursor-pointer transition-all ${
+                    onClick={() => {
+                      setPayMethod('bank_transfer')
+                      setFormErrorMsg(null)
+                    }}
+                    className={`rounded-2xl p-3.5 text-left border cursor-pointer transition-all flex flex-col gap-1 ${
                       payMethod === 'bank_transfer'
-                        ? 'border-blue-600 bg-blue-50 text-blue-700'
-                        : 'border-slate-200 bg-white text-slate-600'
+                        ? 'border-blue-600 bg-blue-50/70 text-blue-950 ring-2 ring-blue-600/20 shadow-xs'
+                        : 'border-slate-200 bg-white text-slate-600 hover:bg-slate-50'
                     }`}
                   >
-                    🏦 Bank Transfer Slip
+                    <div className="flex items-center justify-between">
+                      <span className="font-bold flex items-center gap-1.5">
+                        <Building2 className="h-4 w-4 text-blue-600" />
+                        <span>Bank Transfer Slip</span>
+                      </span>
+                      {payMethod === 'bank_transfer' && <CheckCircle2 className="h-4 w-4 text-blue-600" />}
+                    </div>
+                    <span className="text-[11px] text-slate-500">Attach deposit receipt slip</span>
                   </button>
                 </div>
               </div>
 
-              <div>
-                <label className="block font-bold text-slate-700 mb-1">
-                  Transaction Reference / Card Last 4
-                </label>
-                <input
-                  type="text"
-                  placeholder="e.g. BOC-TXN-881920 or Card ending 4412"
-                  value={payReference}
-                  onChange={(e) => setPayReference(e.target.value)}
-                  className="w-full rounded-xl border border-slate-300 px-3 py-2 text-xs text-slate-900 focus:border-blue-500 focus:outline-none"
-                />
-              </div>
+              {/* ========================================================= */}
+              {/* CONDITIONAL SECTION 1: CARD DETAILS (Visa / Master / LP)  */}
+              {/* ========================================================= */}
+              {payMethod === 'card' && (
+                <div className="space-y-3.5 rounded-2xl border border-purple-100 bg-purple-50/30 p-4 transition-all animate-in fade-in">
+                  <div className="flex items-center justify-between border-b border-purple-100 pb-2">
+                    <span className="text-xs font-bold text-purple-900 flex items-center gap-1.5">
+                      <CreditCard className="h-3.5 w-3.5 text-purple-600" />
+                      Card Details &amp; Verification
+                    </span>
+                    <span className="text-[10px] font-semibold text-purple-700 bg-purple-100 px-2 py-0.5 rounded-md">
+                      Visa • Mastercard • LankaPay
+                    </span>
+                  </div>
 
+                  {/* Cardholder Name */}
+                  <div>
+                    <label className="block font-semibold text-slate-700 mb-1">
+                      Cardholder Name *
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="e.g. K. L. Ravishka Rathnayaka"
+                      value={cardHolder}
+                      onChange={(e) => setCardHolder(e.target.value)}
+                      className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-xs font-medium text-slate-900 focus:border-purple-500 focus:ring-1 focus:ring-purple-500 focus:outline-none"
+                    />
+                  </div>
+
+                  {/* Card Number with Brand Badge */}
+                  <div>
+                    <label className="block font-semibold text-slate-700 mb-1">
+                      Card Number *
+                    </label>
+                    <div className="relative">
+                      <input
+                        type="text"
+                        maxLength={19}
+                        required
+                        placeholder="4532 •••• •••• 8821"
+                        value={cardNumber}
+                        onChange={handleCardNumberChange}
+                        className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 pr-20 text-xs font-mono font-bold text-slate-900 focus:border-purple-500 focus:ring-1 focus:ring-purple-500 focus:outline-none tracking-wider"
+                      />
+                      <div className="absolute right-2 top-1/2 -translate-y-1/2">
+                        {cardNumber ? (
+                          <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${detectCardBrand(cardNumber).bg}`}>
+                            {detectCardBrand(cardNumber).badge}
+                          </span>
+                        ) : (
+                          <span className="px-1.5 py-0.5 rounded bg-slate-100 text-[10px] font-bold text-slate-400">
+                            CARD
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Expiry Date & CVV (2 Columns) */}
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <label className="block font-semibold text-slate-700 mb-1">
+                        Expiry Date (MM/YY) *
+                      </label>
+                      <input
+                        type="text"
+                        maxLength={5}
+                        required
+                        placeholder="MM / YY"
+                        value={cardExpiry}
+                        onChange={handleExpiryChange}
+                        className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-xs font-mono font-bold text-slate-900 focus:border-purple-500 focus:ring-1 focus:ring-purple-500 focus:outline-none text-center"
+                      />
+                    </div>
+
+                    <div>
+                      <div className="flex items-center justify-between mb-1">
+                        <label className="block font-semibold text-slate-700">
+                          CVV / CVC *
+                        </label>
+                        <span className="text-[10px] text-slate-400 flex items-center gap-0.5">
+                          <Lock className="h-2.5 w-2.5" /> 3-4 digits
+                        </span>
+                      </div>
+                      <input
+                        type="password"
+                        maxLength={4}
+                        required
+                        placeholder="•••"
+                        value={cardCvv}
+                        onChange={handleCvvChange}
+                        className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-xs font-mono font-bold text-slate-900 focus:border-purple-500 focus:ring-1 focus:ring-purple-500 focus:outline-none text-center"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Save Card Toggle */}
+                  <label className="flex items-center gap-2 cursor-pointer pt-1">
+                    <input
+                      type="checkbox"
+                      checked={saveCard}
+                      onChange={(e) => setSaveCard(e.target.checked)}
+                      className="rounded border-slate-300 text-purple-600 focus:ring-purple-500 h-3.5 w-3.5"
+                    />
+                    <span className="text-[11px] text-slate-600">
+                      Save card token safely for upcoming milestone installment settlements
+                    </span>
+                  </label>
+
+                  {/* Security Banner */}
+                  <div className="flex items-center gap-2 rounded-xl bg-purple-100/60 p-2.5 text-[11px] text-purple-900">
+                    <ShieldCheck className="h-4 w-4 text-purple-700 shrink-0" />
+                    <span>256-bit SSL Bank-Grade Encryption • Direct LankaPay Switch</span>
+                  </div>
+                </div>
+              )}
+
+              {/* ========================================================= */}
+              {/* CONDITIONAL SECTION 2: BANK TRANSFER SLIP ATTACHMENT      */}
+              {/* ========================================================= */}
+              {payMethod === 'bank_transfer' && (
+                <div className="space-y-3.5 rounded-2xl border border-blue-100 bg-blue-50/30 p-4 transition-all animate-in fade-in">
+                  <div className="flex items-center justify-between border-b border-blue-100 pb-2">
+                    <span className="text-xs font-bold text-blue-950 flex items-center gap-1.5">
+                      <Building2 className="h-3.5 w-3.5 text-blue-600" />
+                      Bank Transfer Details &amp; Slip Attachment
+                    </span>
+                    <span className="text-[10px] font-semibold text-blue-700 bg-blue-100 px-2 py-0.5 rounded-md">
+                      CEFT / SLIPS / Counter Deposit
+                    </span>
+                  </div>
+
+                  {/* Bank Name Selector & Deposit Date */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                      <label className="block font-semibold text-slate-700 mb-1">
+                        Deposited / Transferred Bank *
+                      </label>
+                      <select
+                        value={bankName}
+                        onChange={(e) => setBankName(e.target.value)}
+                        className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-xs font-medium text-slate-900 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none"
+                      >
+                        <option value="Commercial Bank of Ceylon PLC">Commercial Bank of Ceylon PLC</option>
+                        <option value="Bank of Ceylon (BOC)">Bank of Ceylon (BOC)</option>
+                        <option value="Sampath Bank PLC">Sampath Bank PLC</option>
+                        <option value="Hatton National Bank (HNB)">Hatton National Bank (HNB)</option>
+                        <option value="People's Bank">People&apos;s Bank</option>
+                        <option value="Nations Trust Bank (NTB)">Nations Trust Bank (NTB)</option>
+                        <option value="Seylan Bank PLC">Seylan Bank PLC</option>
+                        <option value="National Savings Bank (NSB)">National Savings Bank (NSB)</option>
+                        <option value="Other Bank / Online Transfer">Other Bank / Online Transfer</option>
+                      </select>
+                    </div>
+
+                    <div>
+                      <label className="block font-semibold text-slate-700 mb-1">
+                        Deposit / Transfer Date *
+                      </label>
+                      <input
+                        type="date"
+                        required
+                        value={depositDate}
+                        max={new Date().toISOString().split('T')[0]}
+                        onChange={(e) => setDepositDate(e.target.value)}
+                        className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-xs font-medium text-slate-900 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Transaction Reference Number */}
+                  <div>
+                    <label className="block font-semibold text-slate-700 mb-1">
+                      Bank Reference / Transaction / Deposit ID *
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="e.g. BOC-TXN-881920 or COMB-DEP-09412"
+                      value={payReference}
+                      onChange={(e) => setPayReference(e.target.value)}
+                      className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-xs font-mono font-bold text-slate-900 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none"
+                    />
+                  </div>
+
+                  {/* Bank Deposit Slip Attachment Area */}
+                  <div>
+                    <label className="block font-semibold text-slate-700 mb-1.5">
+                      Attach Bank Slip / Screenshot *
+                    </label>
+
+                    <input
+                      type="file"
+                      ref={fileInputRef}
+                      accept="image/png, image/jpeg, image/jpg, application/pdf"
+                      className="hidden"
+                      onChange={(e) => {
+                        const file = e.target.files?.[0] || null
+                        handleFileSelect(file)
+                      }}
+                    />
+
+                    {!slipFile ? (
+                      <div
+                        onDragOver={(e) => {
+                          e.preventDefault()
+                          setIsDraggingFile(true)
+                        }}
+                        onDragLeave={() => setIsDraggingFile(false)}
+                        onDrop={(e) => {
+                          e.preventDefault()
+                          setIsDraggingFile(false)
+                          const file = e.dataTransfer.files?.[0] || null
+                          handleFileSelect(file)
+                        }}
+                        onClick={() => fileInputRef.current?.click()}
+                        className={`rounded-2xl border-2 border-dashed p-4 text-center cursor-pointer transition-all ${
+                          isDraggingFile
+                            ? 'border-blue-500 bg-blue-100/50'
+                            : 'border-slate-300 bg-white hover:border-blue-400 hover:bg-slate-50'
+                        }`}
+                      >
+                        <UploadCloud className="mx-auto h-8 w-8 text-blue-500" />
+                        <p className="mt-1 font-bold text-slate-800">
+                          Click to browse or drag &amp; drop bank slip here
+                        </p>
+                        <p className="text-[11px] text-slate-400 mt-0.5">
+                          Supports PNG, JPG, JPEG, or PDF receipt (Max 5MB)
+                        </p>
+                        <button
+                          type="button"
+                          className="mt-2.5 inline-flex items-center gap-1.5 rounded-lg bg-blue-50 px-3 py-1 text-xs font-bold text-blue-700 border border-blue-200 hover:bg-blue-100"
+                        >
+                          <ImageIcon className="h-3 w-3" />
+                          <span>Choose Slip Document</span>
+                        </button>
+                      </div>
+                    ) : (
+                      <div className="rounded-2xl border border-emerald-200 bg-emerald-50/60 p-3.5 flex items-center justify-between gap-3">
+                        <div className="flex items-center gap-3 overflow-hidden">
+                          {slipPreviewUrl ? (
+                            <img
+                              src={slipPreviewUrl}
+                              alt="Slip Preview"
+                              className="h-14 w-14 rounded-xl object-cover border border-emerald-300 shrink-0 bg-white"
+                            />
+                          ) : (
+                            <div className="h-14 w-14 rounded-xl bg-emerald-100 border border-emerald-300 flex flex-col items-center justify-center shrink-0 text-emerald-800">
+                              <FileText className="h-6 w-6" />
+                              <span className="text-[9px] font-black uppercase">PDF</span>
+                            </div>
+                          )}
+                          <div className="min-w-0">
+                            <div className="flex items-center gap-1.5 text-emerald-800 font-bold text-xs">
+                              <FileCheck className="h-3.5 w-3.5 text-emerald-600 shrink-0" />
+                              <span className="truncate">{slipFile.name}</span>
+                            </div>
+                            <p className="text-[11px] text-slate-500 mt-0.5">
+                              {(slipFile.size / (1024 * 1024)).toFixed(2)} MB • Ready for audit submission
+                            </p>
+                          </div>
+                        </div>
+
+                        <button
+                          type="button"
+                          onClick={handleRemoveFile}
+                          className="rounded-xl border border-rose-200 bg-rose-50 p-2 text-rose-600 hover:bg-rose-100 transition-colors shrink-0 cursor-pointer"
+                          title="Remove attached slip"
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </button>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Verification Notice */}
+                  <div className="flex items-start gap-2 rounded-xl bg-blue-100/60 p-2.5 text-[11px] text-blue-900">
+                    <AlertCircle className="h-4 w-4 text-blue-700 shrink-0 mt-0.5" />
+                    <span>
+                      Your attached deposit slip will be cross-checked by the academy bursar within 2-4 business hours. The official receipt will be generated automatically.
+                    </span>
+                  </div>
+                </div>
+              )}
+
+              {/* Remarks / Purpose */}
               <div>
                 <label className="block font-bold text-slate-700 mb-1">
-                  Remarks / Purpose
+                  Payment Remarks / Notes
                 </label>
                 <input
                   type="text"
                   value={payNotes}
                   onChange={(e) => setPayNotes(e.target.value)}
+                  placeholder="e.g. Stage 1 Enrolment / Stage 2 Permit Fee"
                   className="w-full rounded-xl border border-slate-300 px-3 py-2 text-xs text-slate-900 focus:border-blue-500 focus:outline-none"
                 />
               </div>
 
-              <div className="flex gap-2 pt-2">
+              {/* Form Action Buttons */}
+              <div className="flex gap-2.5 pt-2">
                 <button
                   type="button"
                   onClick={() => setIsPayOnlineModalOpen(false)}
-                  className="w-1/2 rounded-xl border border-slate-300 py-2.5 font-bold text-slate-600 hover:bg-slate-50 cursor-pointer"
+                  className="w-1/3 rounded-xl border border-slate-300 py-2.5 font-bold text-slate-600 hover:bg-slate-50 cursor-pointer text-xs"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={isSubmittingPay}
-                  className="w-1/2 rounded-xl bg-emerald-600 py-2.5 font-bold text-white shadow-md hover:bg-emerald-700 transition-all cursor-pointer disabled:opacity-50"
+                  className={`w-2/3 rounded-xl py-2.5 font-bold text-white shadow-md transition-all cursor-pointer disabled:opacity-50 flex items-center justify-center gap-1.5 text-xs ${
+                    payMethod === 'card'
+                      ? 'bg-purple-600 hover:bg-purple-700'
+                      : 'bg-emerald-600 hover:bg-emerald-700'
+                  }`}
                 >
-                  {isSubmittingPay ? 'Processing...' : `Confirm & Pay ${formatLKR(payAmount)}`}
+                  {isSubmittingPay ? (
+                    <span>Processing Payment...</span>
+                  ) : payMethod === 'card' ? (
+                    <>
+                      <CreditCard className="h-4 w-4" />
+                      <span>Confirm &amp; Pay {formatLKR(payAmount)}</span>
+                    </>
+                  ) : (
+                    <>
+                      <UploadCloud className="h-4 w-4" />
+                      <span>Submit Slip &amp; Pay {formatLKR(payAmount)}</span>
+                    </>
+                  )}
                 </button>
               </div>
             </form>
