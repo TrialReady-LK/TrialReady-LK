@@ -139,13 +139,11 @@ export function getDefaultSessions(): PracticalSessionWithRelations[] {
     { date: '2026-10-05', sTime: '13:30:00', eTime: '14:45:00', sIdx: 1, iIdx: 2, vIdx: 0, cIdx: 0, bIdx: 2, status: 'scheduled', att: 'unmarked', fb: null, rating: null, skills: ['Lane Discipline & Roundabouts', 'Highway & City Traffic'] },
     { date: '2026-10-05', sTime: '15:15:00', eTime: '16:30:00', sIdx: 2, iIdx: 3, vIdx: 4, cIdx: 3, bIdx: 1, status: 'scheduled', att: 'unmarked', fb: null, rating: null, skills: ['Emergency Braking', 'Clutch Control & Gears'] },
 
-    // Tuesday, Oct 6: Academic Viva Presentation Day
-    { date: '2026-10-06', sTime: '08:30:00', eTime: '10:00:00', sIdx: 0, iIdx: 0, vIdx: 0, cIdx: 0, bIdx: 0, status: 'scheduled', att: 'unmarked', fb: 'Viva Evaluation Session 1: Practical Telemetry Defense & Live Gradient Appraisal.', rating: null, skills: ['Hill Start / Gradient', 'Clutch Control & Gears', 'Reverse S-Bend'] },
-    { date: '2026-10-06', sTime: '10:00:00', eTime: '11:30:00', sIdx: 1, iIdx: 1, vIdx: 1, cIdx: 0, bIdx: 0, status: 'scheduled', att: 'unmarked', fb: 'Viva Evaluation Session 2: Automatic Dual-Control Hill Start & Sensor Precision.', rating: null, skills: ['Hill Start / Gradient', 'Parallel Parking', 'Road Signs & Signals'] },
-    { date: '2026-10-06', sTime: '11:30:00', eTime: '13:00:00', sIdx: 4, iIdx: 2, vIdx: 0, cIdx: 0, bIdx: 2, status: 'scheduled', att: 'unmarked', fb: 'Viva Evaluation Session 3: Precision Reverse S-Bend & Tight Bay Maneuver Defense.', rating: null, skills: ['Reverse S-Bend', '3-Point Turn', 'Parallel Parking'] },
-    { date: '2026-10-06', sTime: '13:30:00', eTime: '15:00:00', sIdx: 5, iIdx: 3, vIdx: 1, cIdx: 0, bIdx: 1, status: 'scheduled', att: 'unmarked', fb: 'Viva Evaluation Session 4: DMT Trial Simulation & Examiner Scoring Defense.', rating: null, skills: ['Highway & City Traffic', 'Lane Discipline & Roundabouts', 'Road Signs & Signals'] },
-    { date: '2026-10-06', sTime: '15:00:00', eTime: '16:30:00', sIdx: 6, iIdx: 6, vIdx: 2, cIdx: 2, bIdx: 2, status: 'scheduled', att: 'unmarked', fb: 'Viva Evaluation Session 5: Two-Wheeler Slalom & DMT Examiner Scorecard Audit.', rating: null, skills: ['Road Signs & Signals', 'Emergency Braking', 'Highway & City Traffic'] },
-    { date: '2026-10-06', sTime: '16:30:00', eTime: '18:00:00', sIdx: 7, iIdx: 7, vIdx: 3, cIdx: 1, bIdx: 4, status: 'scheduled', att: 'unmarked', fb: 'Viva Evaluation Session 6: Night Driving Appraisal & Hazard Perception Defense.', rating: null, skills: ['Night Driving', 'Emergency Braking', 'Road Signs & Signals'] },
+    // Tuesday, Oct 6, 2026
+    { date: '2026-10-06', sTime: '08:30:00', eTime: '09:45:00', sIdx: 0, iIdx: 0, vIdx: 0, cIdx: 0, bIdx: 0, status: 'scheduled', att: 'unmarked', fb: null, rating: null, skills: ['Hill Start / Gradient', 'Clutch Control & Gears'] },
+    { date: '2026-10-06', sTime: '10:15:00', eTime: '11:30:00', sIdx: 1, iIdx: 1, vIdx: 1, cIdx: 0, bIdx: 0, status: 'scheduled', att: 'unmarked', fb: null, rating: null, skills: ['Reverse S-Bend', 'Parallel Parking'] },
+    { date: '2026-10-06', sTime: '13:30:00', eTime: '14:45:00', sIdx: 4, iIdx: 2, vIdx: 0, cIdx: 0, bIdx: 2, status: 'scheduled', att: 'unmarked', fb: null, rating: null, skills: ['Lane Discipline & Roundabouts', 'Highway & City Traffic'] },
+    { date: '2026-10-06', sTime: '15:15:00', eTime: '16:30:00', sIdx: 5, iIdx: 3, vIdx: 1, cIdx: 0, bIdx: 1, status: 'scheduled', att: 'unmarked', fb: null, rating: null, skills: ['3-Point Turn', 'Emergency Braking'] },
 
     { date: '2026-10-07', sTime: '08:30:00', eTime: '09:45:00', sIdx: 3, iIdx: 0, vIdx: 0, cIdx: 0, bIdx: 0, status: 'scheduled', att: 'unmarked', fb: null, rating: null, skills: ['Clutch Control & Gears', 'Hill Start / Gradient'] },
     { date: '2026-10-07', sTime: '10:15:00', eTime: '11:30:00', sIdx: 4, iIdx: 3, vIdx: 4, cIdx: 3, bIdx: 1, status: 'scheduled', att: 'unmarked', fb: null, rating: null, skills: ['Reverse S-Bend', 'Emergency Braking'] },
@@ -225,8 +223,17 @@ export async function getPracticalSessions(
     defaults,
   )
 
-  // If local list is empty or legacy low count, refresh with comprehensive multi-day schedule
-  if (!localList || localList.length < 30) {
+  // Auto-migrate outdated clustered session cache so all dates in the week have active sessions
+  const hasOutdatedData =
+    !localList ||
+    localList.length < 30 ||
+    localList.filter((s) => s.session_date === '2026-10-08').length > 6 ||
+    !localList.some((s) => s.session_date === '2026-10-05') ||
+    !localList.some((s) => s.session_date === '2026-10-06') ||
+    !localList.some((s) => s.session_date === '2026-10-07') ||
+    !localList.some((s) => s.session_date === '2026-10-09')
+
+  if (hasOutdatedData) {
     localList = defaults
     setStoredData(STORAGE_KEYS.SESSIONS, defaults)
   }
