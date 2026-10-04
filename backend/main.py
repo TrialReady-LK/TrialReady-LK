@@ -60,17 +60,14 @@ class ChatResponse(BaseModel):
     suggestions: Optional[List[str]] = None
 
 
-SYSTEM_INSTRUCTION = """You are the TrialReady AI Assistant (powered by Google Gemini), a versatile, friendly, and knowledgeable general-purpose AI copilot for students and learners.
+SYSTEM_INSTRUCTION = """You are the TrialReady AI Assistant (powered by Google Gemini), an expert driving instructor and Highway Code tutor for Sri Lanka driving school students.
 
-You have full capabilities to answer questions across ANY domain or topic:
-1. Mathematics & Science (calculations, step-by-step problem solving, algebra, calculus, physics, chemistry, etc.)
-2. Programming & Computer Science (Python, JavaScript, TypeScript, React, SQL, algorithms, debugging, web development, cybersecurity, etc.)
-3. Academic, University & Coursework inquiries (essays, summaries, explanations, concept breakdowns, study schedules, English grammar, writing improvements, etc.)
-4. General Knowledge, history, geography, everyday questions, analogies, creative writing, and practical life advice.
-5. TrialReady-LK & Sri Lanka Driving Education (when requested):
-   - Sri Lanka Highway Code: speed limits, road signs (regulatory, warning, informative), traffic lights, right of way, roundabout rules.
-   - DMT Practical Trial Maneuvers: Hill Start clutch balance, Reverse S-bend, Parallel Parking, 3-point turn, pre-drive checks.
-   - Student Portal: Sessions calendar, payments & fee structure, Learner Journey, Readiness Score, NTMI Medical & DMT learner permit validity.
+Your primary focus is assisting students with:
+1. Sri Lanka Highway Code & Traffic Regulations (speed limits, lane discipline, roundabouts, right-of-way, priority rules, expressway rules, warning, regulatory and informative road signs).
+2. DMT Practical Driving Trial Maneuvers (Hill Start clutch biting point & handbrake control, Reverse S-Bend test reference points, Parallel Parking, 3-Point Turn, pre-drive checks, cabin drills).
+3. Driving Theory Exam Preparation (mock question explanations, road safety principles, first aid, mechanical basics).
+4. Student Academy Portal & Training (TrialReady readiness score, learner journey milestones, NTMI medical, DMT learner permit validity).
+5. If a student asks general or everyday questions, answer accurately and politely while keeping suggestions and context focused on driving education.
 
 Guidelines:
 - If the user asks in English, respond in clear, well-structured English.
@@ -83,8 +80,11 @@ Guidelines:
 
 GEMINI_MODELS = [
     "gemini-3.8-flash",
-    "gemini-3.5-flash",
-    "gemini-flash-latest"
+    "gemini-3.7-flash",
+    "gemini-3.6-flash",
+    "gemini-flash-latest",
+    "gemini-3.5-flash-lite",
+    "gemini-3.1-flash-lite"
 ]
 
 
@@ -117,9 +117,14 @@ async def chat_endpoint(req: ChatRequest):
     valid_messages = [m for m in req.messages if m.text and m.text.strip()]
     if not valid_messages:
         return ChatResponse(
-            text="Please provide a valid question or message.",
+            text="Please ask a question about Sri Lanka Highway Code, driving trials, road signs, or your learner journey!",
             status="empty_query",
-            suggestions=["Solve a math equation", "Write a Python script", "Explain Highway Code rules", "Help me summarize a text"]
+            suggestions=[
+                "What are the speed limits in Sri Lanka?",
+                "How to do Hill Start without rollback?",
+                "Tips for DMT Reverse S-Bend maneuver",
+                "Explain mandatory vs warning road signs"
+            ]
         )
 
     # Build Gemini multi-turn contents

@@ -1,5 +1,4 @@
-import React from 'react'
-import { Check } from 'lucide-react'
+import { Check, Wrench } from 'lucide-react'
 import type { VehicleFilters, VehicleSortOption } from '../hooks/useVehicles'
 import type {
   VehicleAvailabilityStatus,
@@ -16,6 +15,7 @@ interface VehicleTableProps {
   branches: VehicleBranchSummary[]
   licenceCategories: VehicleLicenceCategorySummary[]
   filters: VehicleFilters
+  isInstructor?: boolean
   onFilterChange: <K extends keyof VehicleFilters>(
     key: K,
     value: VehicleFilters[K],
@@ -24,6 +24,7 @@ interface VehicleTableProps {
   onViewDetails: (vehicle: VehicleWithRelations) => void
   onEdit: (vehicle: VehicleWithRelations) => void
   onManageStatus: (vehicle: VehicleWithRelations) => void
+  onReportDefect?: (vehicle: VehicleWithRelations) => void
 }
 
 function getOperationalBadgeClass(status: VehicleOperationalStatus): string {
@@ -67,11 +68,13 @@ export const VehicleTable: React.FC<VehicleTableProps> = ({
   branches,
   licenceCategories,
   filters,
+  isInstructor = false,
   onFilterChange,
   onResetFilters,
   onViewDetails,
   onEdit,
   onManageStatus,
+  onReportDefect,
 }) => {
   return (
     <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
@@ -417,26 +420,41 @@ export const VehicleTable: React.FC<VehicleTableProps> = ({
                         >
                           Details
                         </button>
-                        <button
-                          type="button"
-                          onClick={() => onEdit(vehicle)}
-                          className="rounded-lg border border-blue-200 bg-blue-50 px-2.5 py-1.5 text-xs font-medium text-blue-700 hover:bg-blue-100"
-                        >
-                          Edit
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => onManageStatus(vehicle)}
-                          className={`rounded-lg px-2.5 py-1.5 text-xs font-medium ${
-                            vehicle.operational_status === 'active'
-                              ? 'bg-amber-50 text-amber-700 border border-amber-200 hover:bg-amber-100'
-                              : 'bg-green-50 text-green-700 border border-green-200 hover:bg-green-100'
-                          }`}
-                        >
-                          {vehicle.operational_status === 'active'
-                            ? 'Status'
-                            : 'Reactivate'}
-                        </button>
+
+                        {isInstructor ? (
+                          <button
+                            type="button"
+                            onClick={() => onReportDefect?.(vehicle)}
+                            className="inline-flex items-center gap-1.5 rounded-lg border border-amber-300 bg-amber-50 px-2.5 py-1.5 text-xs font-semibold text-amber-800 hover:bg-amber-100 shadow-2xs transition-colors cursor-pointer"
+                            title="Report vehicle issue and switch to an available spare vehicle"
+                          >
+                            <Wrench className="h-3.5 w-3.5 text-amber-600" />
+                            <span>Report Fault / Switch</span>
+                          </button>
+                        ) : (
+                          <>
+                            <button
+                              type="button"
+                              onClick={() => onEdit(vehicle)}
+                              className="rounded-lg border border-blue-200 bg-blue-50 px-2.5 py-1.5 text-xs font-medium text-blue-700 hover:bg-blue-100"
+                            >
+                              Edit
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => onManageStatus(vehicle)}
+                              className={`rounded-lg px-2.5 py-1.5 text-xs font-medium ${
+                                vehicle.operational_status === 'active'
+                                  ? 'bg-amber-50 text-amber-700 border border-amber-200 hover:bg-amber-100'
+                                  : 'bg-green-50 text-green-700 border border-green-200 hover:bg-green-100'
+                              }`}
+                            >
+                              {vehicle.operational_status === 'active'
+                                ? 'Status'
+                                : 'Reactivate'}
+                            </button>
+                          </>
+                        )}
                       </div>
                     </td>
                   </tr>

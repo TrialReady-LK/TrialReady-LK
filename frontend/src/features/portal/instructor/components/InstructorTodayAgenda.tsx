@@ -1,17 +1,19 @@
 import React from 'react'
-import { Check, Star, Sparkles } from 'lucide-react'
+import { Check, Star, Sparkles, Wrench } from 'lucide-react'
 import type { PracticalSessionWithRelations } from '../../../sessions/types/session'
 
 interface InstructorTodayAgendaProps {
   sessions: PracticalSessionWithRelations[]
   onOpenAttendance: (session: PracticalSessionWithRelations) => void
   onOpenAiFeedback?: (session: PracticalSessionWithRelations) => void
+  onReportVehicleFault?: (session: PracticalSessionWithRelations) => void
 }
 
 export const InstructorTodayAgenda: React.FC<InstructorTodayAgendaProps> = ({
   sessions,
   onOpenAttendance,
   onOpenAiFeedback,
+  onReportVehicleFault,
 }) => {
   const getStatusBadge = (status: string) => {
     switch (status) {
@@ -94,9 +96,24 @@ export const InstructorTodayAgenda: React.FC<InstructorTodayAgendaProps> = ({
                     </p>
                     {getStatusBadge(sess.status)}
                   </div>
-                  <p className="text-xs text-slate-500 mt-0.5">
-                    Admission: <span className="font-mono">{sess.student?.admission_number || '—'}</span> • Vehicle: <span className="font-mono font-bold text-slate-700">{sess.vehicle?.registration_number || 'Standard'}</span>
-                  </p>
+                  <div className="flex flex-wrap items-center gap-1.5 text-xs text-slate-500 mt-0.5">
+                    <span>Admission: <span className="font-mono">{sess.student?.admission_number || '—'}</span></span>
+                    <span>•</span>
+                    <span>
+                      Vehicle: <span className="font-mono font-bold text-slate-700">{sess.vehicle?.registration_number || 'Standard'}</span>
+                    </span>
+                    {onReportVehicleFault && (
+                      <button
+                        type="button"
+                        onClick={() => onReportVehicleFault(sess)}
+                        className="ml-1.5 inline-flex items-center gap-1 rounded-md bg-amber-50 px-2 py-0.5 text-[10px] font-bold text-amber-800 border border-amber-200 hover:bg-amber-100 transition-all cursor-pointer shadow-2xs"
+                        title="Report defect or issue on this vehicle and select an authorized replacement"
+                      >
+                        <Wrench className="h-3 w-3 text-amber-600" />
+                        <span>Vehicle Fault / Switch</span>
+                      </button>
+                    )}
+                  </div>
 
                   {/* Skills / Notes */}
                   {sess.skills_covered && sess.skills_covered.length > 0 && (

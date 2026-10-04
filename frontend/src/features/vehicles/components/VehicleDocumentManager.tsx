@@ -15,6 +15,7 @@ interface VehicleDocumentManagerProps {
   vehicleId: string
   drivingSchoolId: string
   documents: VehicleDocument[]
+  isInstructor?: boolean
   onAddDocument: (input: CreateVehicleDocumentInput) => Promise<VehicleDocument>
   onDeleteDocument: (documentId: string) => Promise<void>
 }
@@ -75,6 +76,7 @@ export const VehicleDocumentManager: React.FC<VehicleDocumentManagerProps> = ({
   vehicleId,
   drivingSchoolId,
   documents,
+  isInstructor = false,
   onAddDocument,
   onDeleteDocument,
 }) => {
@@ -169,11 +171,11 @@ export const VehicleDocumentManager: React.FC<VehicleDocumentManagerProps> = ({
           </p>
         </div>
 
-        {!isAdding && (
+        {!isInstructor && !isAdding && (
           <button
             type="button"
             onClick={() => setIsAdding(true)}
-            className="rounded-lg bg-blue-600 px-4 py-2 text-xs font-medium text-white hover:bg-blue-700"
+            className="rounded-lg bg-blue-600 px-4 py-2 text-xs font-medium text-white hover:bg-blue-700 cursor-pointer"
           >
             + Add Document
           </button>
@@ -392,16 +394,18 @@ export const VehicleDocumentManager: React.FC<VehicleDocumentManagerProps> = ({
                   </p>
                 )}
 
-                <div className="mt-3 flex justify-end">
-                  <button
-                    type="button"
-                    onClick={() => handleDelete(doc.id)}
-                    disabled={isDeleting}
-                    className="text-xs text-red-600 hover:text-red-700 font-medium disabled:opacity-50"
-                  >
-                    {isDeleting ? 'Removing...' : 'Delete'}
-                  </button>
-                </div>
+                {!isInstructor && (
+                  <div className="mt-3 flex justify-end">
+                    <button
+                      type="button"
+                      onClick={() => handleDelete(doc.id)}
+                      disabled={isDeleting}
+                      className="text-xs text-red-600 hover:text-red-700 font-medium disabled:opacity-50 cursor-pointer"
+                    >
+                      {isDeleting ? 'Removing...' : 'Delete'}
+                    </button>
+                  </div>
+                )}
               </div>
             )
           })}

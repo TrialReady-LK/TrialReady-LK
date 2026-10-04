@@ -14,6 +14,11 @@ import type {
   VehicleOperationalStatus,
   VehicleWithRelations,
 } from '../types/vehicle'
+import type {
+  VehicleDefectSwitchInput,
+  VehicleDefectSwitchResult,
+} from '../types/vehicleDefect'
+import { COMMON_VEHICLE_DEFECTS } from '../types/vehicleDefect'
 
 const VEHICLES_TABLE = 'vehicles'
 const BRANCHES_TABLE = 'branches'
@@ -494,3 +499,155 @@ export async function getLicenceCategoriesForSchool(
     ]
   }
 }
+
+export async function reportVehicleDefectAndSwitch(
+  input: VehicleDefectSwitchInput,
+): Promise<VehicleDefectSwitchResult> {
+  const defectPreset = COMMON_VEHICLE_DEFECTS.find((d) => d.id === input.defectCategory)
+  const categoryLabel = defectPreset ? defectPreset.label : input.defectCategory
+  const timestamp = new Date().toISOString()
+  const dateStr = timestamp.split('T')[0]
+  const instructorLabel = input.instructorName || 'Instructor'
+
+  // 1. Update defective vehicle status
+  const defectiveVehiclesList = getStoredData<VehicleWithRelations[]>(
+    STORAGE_KEYS.VEHICLES,
+    DEFAULT_FLEET_VEHICLES,
+  )
+  const targetVehicle = defectiveVehiclesList.find(
+    (v) => v.id === input.defectiveVehicleId,
+  )
+
+  const faultNote = `[DEFECT REPORTED - ${dateStr}]: ${categoryLabel} (Severity: ${input.severity.toUpperCase()}) - ${input.description}. Reported by: ${instructorLabel}.`
+
+  const updatedDefective: Partial<VehicleWithRelations> = {
+    availability_status: 'in_maintenance',
+    operational_status: input.severity === 'minor' ? 'active' : 'suspended',
+    current_odometer_km:
+      input.odometerReadingKm ?? targetVehicle?.current_odometer_km ?? null,
+    internal_notes: targetVehicle?.internal_notes
+      ? `${targetVehicle.internal_notes}\n\n${faultNote}`
+      : faultNote,
+    updated_at: timestamp,
+  }
+
+  await updateVehicle(
+    input.defectiveVehicleId,
+    updatedDefective as UpdateVehicleInput,
+  )
+
+  // 2. If replacement vehicle is chosen, ensure it is active and available
+  let replacementVeh: VehicleWithRelations | undefined
+  if (input.replacementVehicleId) {
+    const refreshedList = getStoredData<VehicleWithRelations[]>(
+      STORAGE_KEYS.VEHICLES,
+      DEFAULT_FLEET_VEHICLES,
+    )
+    replacementVeh = refreshedList.find(
+      (v) => v.id === input.replacementVehicleId,
+    )
+    if (replacementVeh) {
+      await updateVehicle(input.replacementVehicleId, {
+        availability_status: 'available',
+        operational_status: 'active',
+      })
+    }
+  }
+
+  // 3. Log a maintenance record
+  const maintenanceId =
+    crypto.randomUUID ? crypto.randomUUID() : `maint-${Date.now()}`
+  const maintenanceRecord = {
+    id: maintenanceId,
+    vehicle_id: input.defectiveVehicleId,
+    driving_school_id:
+      targetVehicle?.driving_school_id || 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
+    maintenance_date: dateStr,
+    maintenance_type: categoryLabel,
+    description: `${input.description} [Severity: ${input.severity.toUpperCase()}]`,
+    service_provider: 'Fleet Workshop / On-duty Inspection',
+    cost: null,
+    odometer_reading_km:
+      input.odometerReadingKm ?? targetVehicle?.current_odometer_km ?? null,
+    status: 'in_progress',
+    next_recommended_service_date: null,
+    unavailable_from: dateStr,
+    unavailable_until: null,
+    notes: `Fault logged by ${instructorLabel}.${
+      replacementVeh
+        ? ` Assigned substitute vehicle: ${replacementVeh.registration_number} (${replacementVeh.model}).`
+        : ' No replacement vehicle assigned.'
+    }`,
+    created_at: timestamp,
+    updated_at: timestamp,
+  }
+
+  // Persist maintenance record to local store and DB
+  try {
+    const storedMaint = getStoredData<unknown[]>(
+      'trialready_vehicle_maintenance',
+      [],
+    )
+    setStoredData('trialready_vehicle_maintenance', [
+      maintenanceRecord,
+      ...storedMaint,
+    ])
+    await supabase
+      .from('vehicle_maintenance_records')
+      .insert(maintenanceRecord)
+  } catch (err) {
+    console.warn('Maintenance record persist notice:', err)
+  }
+
+  // 4. If a sessionId was passed, reassign that session to the replacement vehicle
+  let sessionUpdated = false
+  if (input.sessionId && replacementVeh) {
+    try {
+      const storedSessions = getStoredData<any[]>(STORAGE_KEYS.SESSIONS, [])
+      const sessionIdx = storedSessions.findIndex(
+        (s) => s.id === input.sessionId,
+      )
+      if (sessionIdx !== -1) {
+        storedSessions[sessionIdx] = {
+          ...storedSessions[sessionIdx],
+          vehicle_id: replacementVeh.id,
+          vehicle: {
+            id: replacementVeh.id,
+            registration_number: replacementVeh.registration_number,
+            display_name: replacementVeh.display_name,
+            manufacturer: replacementVeh.manufacturer,
+            model: replacementVeh.model,
+            transmission_type: replacementVeh.transmission_type,
+          },
+          updated_at: timestamp,
+        }
+        setStoredData(STORAGE_KEYS.SESSIONS, storedSessions)
+        sessionUpdated = true
+        await supabase
+          .from('practical_sessions')
+          .update({
+            vehicle_id: replacementVeh.id,
+            updated_at: timestamp,
+          })
+          .eq('id', input.sessionId)
+      }
+    } catch (err) {
+      console.warn('Session vehicle switch notice:', err)
+    }
+  }
+
+  // 5. Broadcast real-time events for reactive UI updating across views
+  if (typeof window !== 'undefined') {
+    window.dispatchEvent(new CustomEvent('trialready-vehicles-updated'))
+    window.dispatchEvent(new CustomEvent('trialready-sessions-updated'))
+    window.dispatchEvent(new CustomEvent('trialready-maintenance-updated'))
+  }
+
+  return {
+    defectiveVehicleId: input.defectiveVehicleId,
+    replacementVehicleId: input.replacementVehicleId || null,
+    maintenanceRecordId: maintenanceId,
+    sessionUpdated,
+  }
+}
+

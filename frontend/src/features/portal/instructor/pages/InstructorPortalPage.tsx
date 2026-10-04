@@ -1,8 +1,15 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Calendar, Target, X } from 'lucide-react'
 import { AiSessionFeedbackModal } from '../../../ai/components/AiSessionFeedbackModal'
 import { SessionAttendanceModal } from '../../../sessions/components/SessionAttendanceModal'
+import { VehicleDefectSwitchModal } from '../../../vehicles/components/VehicleDefectSwitchModal'
+import { getVehicles } from '../../../vehicles/services/vehicleService'
+import type {
+  VehicleTransmissionType,
+  VehicleWithRelations,
+} from '../../../vehicles/types/vehicle'
+import { useAuth } from '../../../auth/context/AuthContext'
 import type {
   PracticalSessionWithRelations,
   RecordAttendanceInput,
@@ -19,6 +26,7 @@ interface InstructorPortalPageProps {
 export const InstructorPortalPage: React.FC<InstructorPortalPageProps> = ({
   drivingSchoolId,
 }) => {
+  const { profile } = useAuth()
   const {
     todaySessions,
     students,
@@ -28,9 +36,11 @@ export const InstructorPortalPage: React.FC<InstructorPortalPageProps> = ({
     successMessage,
     setErrorMessage,
     setSuccessMessage,
+    reloadData,
     handleUpdateAttendance,
   } = useInstructorPortal(drivingSchoolId)
 
+  const [allVehicles, setAllVehicles] = useState<VehicleWithRelations[]>([])
   const [selectedSessionForAttendance, setSelectedSessionForAttendance] =
     useState<PracticalSessionWithRelations | null>(null)
   const [isAttendanceModalOpen, setIsAttendanceModalOpen] = useState(false)
@@ -38,6 +48,33 @@ export const InstructorPortalPage: React.FC<InstructorPortalPageProps> = ({
   const [selectedSessionForAi, setSelectedSessionForAi] =
     useState<PracticalSessionWithRelations | null>(null)
   const [isAiModalOpen, setIsAiModalOpen] = useState(false)
+
+  const [selectedSessionForVehicleDefect, setSelectedSessionForVehicleDefect] =
+    useState<PracticalSessionWithRelations | null>(null)
+  const [activeDefectVehicle, setActiveDefectVehicle] =
+    useState<VehicleWithRelations | null>(null)
+  const [isDefectModalOpen, setIsDefectModalOpen] = useState(false)
+
+  useEffect(() => {
+    getVehicles(drivingSchoolId)
+      .then((data) => setAllVehicles(data))
+      .catch((err) => console.warn('Vehicles load notice:', err))
+  }, [drivingSchoolId])
+
+  useEffect(() => {
+    const handleSessionsUpdateEvent = () => {
+      void reloadData()
+      getVehicles(drivingSchoolId)
+        .then((data) => setAllVehicles(data))
+        .catch(() => {})
+    }
+    window.addEventListener('trialready-sessions-updated', handleSessionsUpdateEvent)
+    window.addEventListener('trialready-vehicles-updated', handleSessionsUpdateEvent)
+    return () => {
+      window.removeEventListener('trialready-sessions-updated', handleSessionsUpdateEvent)
+      window.removeEventListener('trialready-vehicles-updated', handleSessionsUpdateEvent)
+    }
+  }, [reloadData, drivingSchoolId])
 
   const handleOpenAttendance = (session: PracticalSessionWithRelations) => {
     setSelectedSessionForAttendance(session)
@@ -47,6 +84,50 @@ export const InstructorPortalPage: React.FC<InstructorPortalPageProps> = ({
   const handleOpenAiFeedback = (session: PracticalSessionWithRelations) => {
     setSelectedSessionForAi(session)
     setIsAiModalOpen(true)
+  }
+
+  const handleOpenVehicleDefect = (session: PracticalSessionWithRelations) => {
+    // Resolve vehicle object from session or allVehicles
+    let targetVeh = allVehicles.find((v) => v.id === session.vehicle_id)
+    if (!targetVeh && session.vehicle) {
+      targetVeh = allVehicles.find(
+        (v) => v.registration_number === session.vehicle?.registration_number,
+      )
+    }
+    if (!targetVeh && session.vehicle) {
+      // Create fallback relation representation
+      targetVeh = {
+        id: session.vehicle_id || 'veh-active',
+        driving_school_id: drivingSchoolId,
+        branch_id: session.branch_id || 'ba111111-1111-1111-1111-111111111111',
+        licence_category_id: session.licence_category_id || 'ca111111-1111-1111-1111-111111111111',
+        registration_number: session.vehicle.registration_number || 'WP CAB-4921',
+        display_name: `${session.vehicle.make || 'Toyota'} ${session.vehicle.model || 'Vitz'}`,
+        manufacturer: session.vehicle.make || 'Toyota',
+        model: session.vehicle.model || 'Vitz Dual-Control',
+        year_of_manufacture: 2022,
+        transmission_type: (session.vehicle.transmission_type as VehicleTransmissionType) || 'manual',
+        fuel_type: 'petrol',
+        photo_path: null,
+        date_added: '2025-01-15',
+        training_use_enabled: true,
+        operational_status: 'active',
+        availability_status: 'available',
+        current_odometer_km: 42150,
+        next_service_date: null,
+        internal_notes: null,
+        deactivation_reason: null,
+        deactivated_at: null,
+        branch: session.branch,
+        licence_category: session.licence_category,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+      }
+    }
+
+    setSelectedSessionForVehicleDefect(session)
+    setActiveDefectVehicle(targetVeh ?? allVehicles[0] ?? null)
+    setIsDefectModalOpen(true)
   }
 
   const handleSaveAttendanceDirect = async (input: RecordAttendanceInput) => {
@@ -138,6 +219,7 @@ export const InstructorPortalPage: React.FC<InstructorPortalPageProps> = ({
         sessions={todaySessions}
         onOpenAttendance={handleOpenAttendance}
         onOpenAiFeedback={handleOpenAiFeedback}
+        onReportVehicleFault={handleOpenVehicleDefect}
       />
 
       {/* 2. Assigned Students Roster */}
@@ -167,7 +249,32 @@ export const InstructorPortalPage: React.FC<InstructorPortalPageProps> = ({
           skillsCovered={selectedSessionForAi.skills_covered || ['Basic Vehicle Control']}
           studentRating={selectedSessionForAi.student_rating || 4}
           vehicleReg={selectedSessionForAi.vehicle?.registration_number || 'WP CAB-4921'}
-          instructorName="Principal Instructor"
+          instructorName={profile?.full_name || 'Principal Instructor'}
+        />
+      )}
+
+      {/* Vehicle Defect & Replacement Switch Modal */}
+      {isDefectModalOpen && activeDefectVehicle && (
+        <VehicleDefectSwitchModal
+          isOpen={isDefectModalOpen}
+          onClose={() => {
+            setIsDefectModalOpen(false)
+            setSelectedSessionForVehicleDefect(null)
+            setActiveDefectVehicle(null)
+          }}
+          vehicle={activeDefectVehicle}
+          availableVehicles={allVehicles}
+          instructorName={profile?.full_name || 'Instructor'}
+          sessionId={selectedSessionForVehicleDefect?.id}
+          sessionStudentName={selectedSessionForVehicleDefect?.student?.full_name}
+          onSuccess={(defectiveReg, replacementReg) => {
+            setSuccessMessage(
+              replacementReg
+                ? `Vehicle fault logged for ${defectiveReg}. Session successfully switched to spare vehicle ${replacementReg}.`
+                : `Vehicle fault logged for ${defectiveReg}. Defective vehicle moved to maintenance.`,
+            )
+            void reloadData()
+          }}
         />
       )}
     </div>

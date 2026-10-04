@@ -42,6 +42,7 @@ export const StudentProfilePage: React.FC<StudentProfilePageProps> = ({
 }) => {
   const { studentId: paramStudentId } = useParams<{ studentId: string }>()
   const { profile, role } = useAuth()
+  const isInstructor = role === 'instructor'
   const effectiveStudentId =
     studentId ||
     paramStudentId ||
@@ -321,11 +322,13 @@ export const StudentProfilePage: React.FC<StudentProfilePageProps> = ({
                   Student Personal Profile
                 </h2>
                 <p className="text-xs text-slate-500">
-                  Your registered student identification and contact details
+                  {isInstructor
+                    ? 'Student identification and contact records (Administration Managed)'
+                    : 'Your registered student identification and contact details'}
                 </p>
               </div>
 
-              {!isEditingPersonal ? (
+              {!isInstructor && !isEditingPersonal ? (
                 <button
                   type="button"
                   onClick={() => setIsEditingPersonal(true)}
@@ -334,7 +337,7 @@ export const StudentProfilePage: React.FC<StudentProfilePageProps> = ({
                   <Edit3 className="h-3.5 w-3.5 text-blue-600" />
                   <span>Edit Contact Details</span>
                 </button>
-              ) : (
+              ) : !isInstructor && isEditingPersonal ? (
                 <button
                   type="button"
                   onClick={() => setIsEditingPersonal(false)}
@@ -343,10 +346,23 @@ export const StudentProfilePage: React.FC<StudentProfilePageProps> = ({
                   <X className="h-3.5 w-3.5" />
                   <span>Cancel</span>
                 </button>
-              )}
+              ) : isInstructor ? (
+                <span className="rounded-full bg-slate-100 px-2.5 py-1 text-[11px] font-bold text-slate-600 border border-slate-200">
+                  Read-Only View
+                </span>
+              ) : null}
             </div>
 
-            {isEditingPersonal ? (
+            {isInstructor && (
+              <div className="rounded-xl border border-blue-200 bg-blue-50/80 p-3 text-xs text-blue-900 flex items-center gap-2">
+                <Shield className="h-4 w-4 text-blue-600 shrink-0" />
+                <span>
+                  <strong>Instructor Policy Notice:</strong> Student personal details and contact records are securely managed by Academy Administration.
+                </span>
+              </div>
+            )}
+
+            {!isInstructor && isEditingPersonal ? (
               <form onSubmit={handleSavePersonal} className="space-y-4">
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                   <div>
@@ -622,72 +638,103 @@ export const StudentProfilePage: React.FC<StudentProfilePageProps> = ({
             </div>
           </div>
 
-          {/* Change Password Card */}
-          <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-xs space-y-5">
-            <div className="flex items-center gap-3 border-b border-slate-100 pb-4">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-purple-50 border border-purple-100 text-purple-600">
-                <Lock className="h-5 w-5" />
+          {/* Change Password Card / Instructor Policy Card */}
+          {isInstructor ? (
+            <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-xs space-y-5">
+              <div className="flex items-center gap-3 border-b border-slate-100 pb-4">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-100 border border-slate-200 text-slate-600">
+                  <Shield className="h-5 w-5" />
+                </div>
+                <div>
+                  <h2 className="text-base font-bold text-slate-900">
+                    Security &amp; Credentials Access Policy
+                  </h2>
+                  <p className="text-xs text-slate-500">
+                    Student account authentication policy
+                  </p>
+                </div>
               </div>
-              <div>
-                <h2 className="text-base font-bold text-slate-900">
-                  Change Account Password
-                </h2>
-                <p className="text-xs text-slate-500">
-                  Update your security password for portal access
+
+              <div className="rounded-xl bg-slate-50 border border-slate-200 p-4 text-xs text-slate-700 space-y-3">
+                <div className="flex items-center gap-2 text-slate-900 font-bold">
+                  <Lock className="h-4 w-4 text-slate-600" />
+                  <span>Instructor Role Restriction</span>
+                </div>
+                <p className="leading-relaxed">
+                  Student passwords and authentication credentials cannot be modified by instructors. Password resets or login modifications must be performed directly by the student or by Academy Administration.
                 </p>
+                <div className="rounded-lg bg-blue-50 border border-blue-100 p-3 text-blue-900 text-[11px]">
+                  💡 If the student is having trouble logging in, please refer them to school administration or have them use the standard login credential reset procedure.
+                </div>
               </div>
             </div>
-
-            {passwordError && (
-              <div className="rounded-xl border border-red-200 bg-red-50 p-3 text-xs text-red-700">
-                {passwordError}
-              </div>
-            )}
-
-            <form onSubmit={handleUpdatePassword} className="space-y-4">
-              <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">
-                  New Password
-                </label>
-                <input
-                  type="password"
-                  value={newPassword}
-                  onChange={(e) => setNewPassword(e.target.value)}
-                  placeholder="Enter new password (min. 6 characters)"
-                  required
-                  className="w-full rounded-xl border border-slate-300 px-3.5 py-2 text-xs text-slate-900 outline-none focus:border-blue-500"
-                />
+          ) : (
+            <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-xs space-y-5">
+              <div className="flex items-center gap-3 border-b border-slate-100 pb-4">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-purple-50 border border-purple-100 text-purple-600">
+                  <Lock className="h-5 w-5" />
+                </div>
+                <div>
+                  <h2 className="text-base font-bold text-slate-900">
+                    Change Account Password
+                  </h2>
+                  <p className="text-xs text-slate-500">
+                    Update your security password for portal access
+                  </p>
+                </div>
               </div>
 
-              <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">
-                  Confirm New Password
-                </label>
-                <input
-                  type="password"
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  placeholder="Re-type new password"
-                  required
-                  className="w-full rounded-xl border border-slate-300 px-3.5 py-2 text-xs text-slate-900 outline-none focus:border-blue-500"
-                />
-              </div>
+              {passwordError && (
+                <div className="rounded-xl border border-red-200 bg-red-50 p-3 text-xs text-red-700">
+                  {passwordError}
+                </div>
+              )}
 
-              <div className="rounded-xl bg-slate-50 p-3 border border-slate-100 text-[11px] text-slate-500">
-                <p>
-                  🔒 Ensure your password is easy for you to remember but hard for others to guess.
-                </p>
-              </div>
+              <form onSubmit={handleUpdatePassword} className="space-y-4">
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 mb-1">
+                    New Password
+                  </label>
+                  <input
+                    type="password"
+                    value={newPassword}
+                    onChange={(e) => setNewPassword(e.target.value)}
+                    placeholder="Enter new password (min. 6 characters)"
+                    required
+                    className="w-full rounded-xl border border-slate-300 px-3.5 py-2 text-xs text-slate-900 outline-none focus:border-blue-500"
+                  />
+                </div>
 
-              <button
-                type="submit"
-                disabled={isChangingPassword}
-                className="w-full rounded-xl bg-blue-600 px-4 py-2.5 text-xs font-bold text-white shadow-xs hover:bg-blue-700 disabled:opacity-50 transition-all cursor-pointer"
-              >
-                Update Password
-              </button>
-            </form>
-          </div>
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 mb-1">
+                    Confirm New Password
+                  </label>
+                  <input
+                    type="password"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    placeholder="Re-type new password"
+                    required
+                    className="w-full rounded-xl border border-slate-300 px-3.5 py-2 text-xs text-slate-900 outline-none focus:border-blue-500"
+                  />
+                </div>
+
+                <div className="rounded-xl bg-slate-50 p-3 border border-slate-100 text-[11px] text-slate-500">
+                  <p>
+                    🔒 Ensure your password is easy for you to remember but hard for others to guess.
+                  </p>
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={isChangingPassword}
+                  className="w-full rounded-xl bg-blue-600 px-4 py-2.5 text-xs font-bold text-white shadow-xs hover:bg-blue-700 disabled:opacity-50 transition-all cursor-pointer"
+                >
+                  Update Password
+                </button>
+              </form>
+            </div>
+          )}
         </div>
       )}
 

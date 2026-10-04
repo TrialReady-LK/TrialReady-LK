@@ -19,31 +19,38 @@ describe('geminiChatService & copilotEngine', () => {
     globalThis.fetch = vi.fn().mockResolvedValue({
       ok: true,
       json: async () => ({
-        text: 'The solution is x = 5.',
+        text: 'The legal speed limit in urban areas is 50 km/h in Sri Lanka.',
         status: 'success',
-        suggestions: ['Next question', 'Explain in detail'],
+        suggestions: ['Expressway speed limit', 'Rural area speed limit'],
       }),
     } as Response)
 
     const result = await sendGeminiChatMessage([
-      { sender: 'user', text: 'Solve 2x + 5 = 15' },
+      { sender: 'user', text: 'What is the speed limit in urban areas?' },
     ])
 
     expect(result.status).toBe('success')
-    expect(result.text).toBe('The solution is x = 5.')
-    expect(result.suggestions).toContain('Next question')
+    expect(result.text).toBe('The legal speed limit in urban areas is 50 km/h in Sri Lanka.')
+    expect(result.suggestions).toContain('Expressway speed limit')
+  })
+
+  it('handles empty query with default driving suggestions', async () => {
+    const result = await sendGeminiChatMessage([])
+    expect(result.status).toBe('empty_query')
+    expect(result.suggestions).toContain('How to do Hill Start without rollback?')
   })
 
   it('handles network failure gracefully with friendly fallback in English', async () => {
     globalThis.fetch = vi.fn().mockRejectedValue(new Error('Network offline'))
 
     const result = await sendGeminiChatMessage(
-      [{ sender: 'user', text: 'Hello' }],
+      [{ sender: 'user', text: 'How do I do a hill start?' }],
       { language: 'en' }
     )
 
     expect(result.status).toBe('network_error')
-    expect(result.text).toContain('Could not connect to the Gemini AI server')
+    expect(result.text).toContain('trouble connecting to Gemini')
+    expect(result.suggestions).toContain('What are the speed limits in Sri Lanka?')
   })
 
   it('handles network failure with friendly fallback in Sinhala', async () => {
@@ -55,25 +62,25 @@ describe('geminiChatService & copilotEngine', () => {
     )
 
     expect(result.status).toBe('network_error')
-    expect(result.text).toContain('Gemini AI සේවාදායකය හා සම්බන්ධ වීමට නොහැකි විය')
+    expect(result.text).toContain('Gemini සේවාව හා සම්බන්ධ වීමේ')
   })
 
   it('queryGeminiCopilot correctly formats response from backend', async () => {
     globalThis.fetch = vi.fn().mockResolvedValue({
       ok: true,
       json: async () => ({
-        text: 'Here is a Python function: def is_palindrome(s): return s == s[::-1]',
+        text: 'To do a hill start: Find the clutch bite point, apply slight accelerator, and release handbrake smoothly.',
         status: 'success',
       }),
     } as Response)
 
     const response = await queryGeminiCopilot(
-      [{ sender: 'user', text: 'Write a python palindrome function' }],
+      [{ sender: 'user', text: 'How to perform hill start?' }],
       'en',
       { userName: 'Amila' }
     )
 
     expect(response.status).toBe('success')
-    expect(response.text).toContain('def is_palindrome')
+    expect(response.text).toContain('clutch bite point')
   })
 })

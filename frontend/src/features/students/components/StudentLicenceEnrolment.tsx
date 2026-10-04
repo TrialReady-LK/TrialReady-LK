@@ -14,11 +14,13 @@ import type {
 interface StudentLicenceEnrolmentProps {
   studentId: string
   drivingSchoolId: string
+  isReadOnly?: boolean
 }
 
 function StudentLicenceEnrolment({
   studentId,
   drivingSchoolId,
+  isReadOnly = false,
 }: StudentLicenceEnrolmentProps) {
   const [licenceCategories, setLicenceCategories] = useState<
     LicenceCategory[]
@@ -145,12 +147,21 @@ function StudentLicenceEnrolment({
   return (
     <section className="rounded-xl border border-slate-200 bg-white p-5">
       <div className="mb-5">
-        <h2 className="text-lg font-semibold text-slate-900">
-          Licence Category Enrolment
-        </h2>
+        <div className="flex items-center justify-between">
+          <h2 className="text-lg font-semibold text-slate-900">
+            Licence Category Enrolment
+          </h2>
+          {isReadOnly && (
+            <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-600 border border-slate-200">
+              Instructor View Mode (Read-Only)
+            </span>
+          )}
+        </div>
 
         <p className="mt-1 text-sm text-slate-500">
-          Select the licence categories this student is enrolled in.
+          {isReadOnly
+            ? 'Active licence vehicle classes assigned by academy administration.'
+            : 'Select the licence categories this student is enrolled in.'}
         </p>
       </div>
 
@@ -175,6 +186,47 @@ function StudentLicenceEnrolment({
             const isActive = activeLicenceCategoryIds.has(category.id)
             const isSaving = savingCategoryId === category.id
 
+            if (isReadOnly) {
+              return (
+                <div
+                  key={category.id}
+                  className={`rounded-xl border p-4 text-left transition ${
+                    isActive
+                      ? 'border-blue-300 bg-blue-50/70'
+                      : 'border-slate-200 bg-slate-50/50 opacity-60'
+                  }`}
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <div>
+                      <p className="font-semibold text-slate-900">
+                        {category.code}
+                      </p>
+
+                      <p className="mt-1 text-sm text-slate-600">
+                        {category.name}
+                      </p>
+                    </div>
+
+                    <span
+                      className={`rounded-full px-2.5 py-1 text-xs font-bold ${
+                        isActive
+                          ? 'bg-blue-600 text-white'
+                          : 'bg-slate-200 text-slate-600'
+                      }`}
+                    >
+                      {isActive ? 'Enrolled' : 'Not Enrolled'}
+                    </span>
+                  </div>
+
+                  {category.description && (
+                    <p className="mt-3 text-xs text-slate-500">
+                      {category.description}
+                    </p>
+                  )}
+                </div>
+              )
+            }
+
             return (
               <button
                 key={category.id}
@@ -183,7 +235,7 @@ function StudentLicenceEnrolment({
                 onClick={() => {
                   void handleToggleLicenceCategory(category.id)
                 }}
-                className={`rounded-xl border p-4 text-left transition ${
+                className={`rounded-xl border p-4 text-left transition cursor-pointer ${
                   isActive
                     ? 'border-blue-500 bg-blue-50'
                     : 'border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50'

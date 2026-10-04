@@ -50,10 +50,10 @@ export function processCopilotQuery(
   return {
     text: `Your question "${rawQuery}" is being processed by Google Gemini.`,
     suggestions: [
-      'Solve 2x + 5 = 15',
-      'Write a Python function',
-      'Highway Code rules',
-      'Hill Start tips',
+      'What are the speed limits in Sri Lanka?',
+      'How to do Hill Start without rollback?',
+      'Tips for DMT Reverse S-Bend test',
+      'Explain mandatory road signs in Sri Lanka',
     ],
   }
 }

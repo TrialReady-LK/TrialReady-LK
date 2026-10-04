@@ -17,6 +17,7 @@ interface VehicleMaintenanceManagerProps {
   drivingSchoolId: string
   currentOdometer?: number | null
   maintenanceRecords: VehicleMaintenanceRecord[]
+  isInstructor?: boolean
   onAddMaintenance: (
     input: CreateVehicleMaintenanceRecordInput,
   ) => Promise<VehicleMaintenanceRecord>
@@ -76,6 +77,7 @@ export const VehicleMaintenanceManager: React.FC<
   drivingSchoolId,
   currentOdometer,
   maintenanceRecords,
+  isInstructor = false,
   onAddMaintenance,
 }) => {
   const [isAdding, setIsAdding] = useState(false)
@@ -160,11 +162,11 @@ export const VehicleMaintenanceManager: React.FC<
           </p>
         </div>
 
-        {!isAdding && (
+        {!isInstructor && !isAdding && (
           <button
             type="button"
             onClick={() => setIsAdding(true)}
-            className="rounded-lg bg-blue-600 px-4 py-2 text-xs font-medium text-white hover:bg-blue-700"
+            className="rounded-lg bg-blue-600 px-4 py-2 text-xs font-medium text-white hover:bg-blue-700 cursor-pointer"
           >
             + Log Maintenance Record
           </button>
