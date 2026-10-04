@@ -78,69 +78,46 @@
 
 ### 🎨 High-Resolution System Architecture Map
 
-![TrialReady LK - High-Level System Architecture Diagram](./assets/high_level_system_architecture_slide5.svg)
+<p align="center">
+  <a href="./assets/high_level_system_architecture_slide5.svg" target="_blank">
+    <img src="./assets/high_level_system_architecture_slide5.svg" alt="TrialReady LK - High-Level System Architecture" width="100%" />
+  </a>
+</p>
 
 ---
 
-### 🧭 High-Level Data Flow Topology (Stage-by-Stage)
+### 🧭 High-Level Data Flow Topology (Left-to-Right Pipeline)
 
-```mermaid
-flowchart LR
-    subgraph S1["1. Data Sources"]
-        direction TB
-        DS1["Student Enrolments"]
-        DS2["NTMI Medicals"]
-        DS3["DMT Permits"]
-        DS4["Practical Lessons"]
-        DS5["Mock Theory Exams"]
-        DS6["Tuition Payments"]
-    end
-
-    subgraph S2["2. Preprocessing"]
-        direction TB
-        PP1["Zod Schema Validation"]
-        PP2["Permit Expiry Countdown"]
-        PP3["7-Maneuver Vectorizer"]
-        PP4["Trilingual Token Mapper"]
-        PP5["RFC-4180 CSV Sanitizer"]
-    end
-
-    subgraph S3["3. AI Model Engine"]
-        direction TB
-        ML1["6-Factor Readiness Score"]
-        ML2["Regulatory Veto Classifier"]
-        ML3["Adaptive Theory Diagnostic"]
-        ML4["Fleet Collision Detector"]
-    end
-
-    subgraph S4["4. Backend & Security"]
-        direction TB
-        BE1["GoTrue JWT Auth"]
-        BE2["PostgREST Prepared API"]
-        BE3["Kernel Row-Level Security"]
-    end
-
-    subgraph S5["5. Frontend UI"]
-        direction TB
-        FE1["React 19 SPA & Tailwind"]
-        FE2["RBAC Route Gatekeeper"]
-        FE3["18 Domain Modules"]
-        FE4["Zero-PDF Vector Print"]
-    end
-
-    subgraph S6["6. Data Stores"]
-        direction TB
-        ST1["PostgreSQL 15 Cloud DB"]
-        ST2["Offline Fallback Cache"]
-    end
-
-    S1 -->|Raw Input| S2
-    S2 -->|Clean Vectors| S3
-    S3 -->|Readiness| S4
-    S4 <-->|RLS SQL| S6
-    S4 -->|REST API| S5
-    S5 -->|Mutations| S4
-    S5 <-->|Local Sync| ST2
+```
+╔══════════════════════╗      ╔══════════════════════╗      ╔══════════════════════╗
+║   1. DATA SOURCES    ║      ║   2. PREPROCESSING   ║      ║  3. AI MODEL ENGINE  ║
+╠══════════════════════╣      ╠══════════════════════╣      ╠══════════════════════╣
+║ • Student KYC & NIC  ║ ───> ║ • Zod Type Validator ║ ───> ║ • 6-Factor AI Score  ║
+║ • NTMI Medical Recs  ║      ║ • Permit Countdown   ║      ║   S = Σ(W_i · s_i)   ║
+║ • DMT 6M Permits     ║      ║ • 7-Maneuver Vector  ║      ║ • Regulatory Veto    ║
+║ • Practical Lessons  ║      ║ • Trilingual Mapper  ║      ║ • Adaptive Theory    ║
+║ • Mock Theory Exams  ║      ║ • CSV Anti-Injection ║      ║ • Fleet Collision    ║
+║ • Tuition Payments   ║      ║   (RFC-4180 Shield)  ║      ║   Prevention Guard   ║
+╚══════════════════════╝      ╚══════════════════════╝      ╚══════════════════════╝
+                                                                       │
+                                                                       ▼
+╔══════════════════════╗      ╔══════════════════════╗      ╔══════════════════════╗
+║   6. DATA STORES     ║      ║ 5. FRONTEND / UI SPA ║      ║ 4. BACKEND & SECURITY║
+╠══════════════════════╣      ╠══════════════════════╣      ╠══════════════════════╣
+║ • PostgreSQL 15 DB   ║ <──> ║ • React 19 + Tailwind║ <──> ║ • GoTrue JWT Auth    ║
+║   (18 Tenant Tables) ║ (SQL)║ • RBAC Gatekeepers   ║(REST)║   (Bcrypt Salt ≥ 10) ║
+║ • Client LocalCache  ║      ║ • 18 Feature Modules ║      ║ • PostgREST API      ║
+║   (trialready_* Key) ║ <──> ║ • Vector Print Engine║      ║   (100% Anti-SQLi)   ║
+║   100% Offline Ready ║(Sync)║   (Zero-PDF CVEs)    ║      ║ • Kernel-Level RLS   ║
+╚══════════════════════╝      ╚══════════════════════╝      ╚══════════════════════╝
+                                        ▲
+                                        │
+┌───────────────────────────────────────┴──────────────────────────────────────┐
+│             7. INTEGRATED EXTERNAL SERVICES & REGULATORY APIS                │
+│  • Dept. of Motor Traffic (DMT)           • NTMI Driver Medical Directives   │
+│  • Supabase Cloud BaaS Infrastructure     • Vercel Edge Serverless CDN       │
+│  • LankaQR / Central Bank of Sri Lanka (CBSL National Payment Rails)         │
+└──────────────────────────────────────────────────────────────────────────────┘
 ```
 
 ---
