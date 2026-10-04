@@ -8,6 +8,7 @@ interface MedicalStatusCardProps {
   studentId: string
   drivingSchoolId: string
   medical: StudentMedicalRecord | null
+  isAdmin?: boolean
   onSaveMedical: (input: SaveMedicalInput) => Promise<void>
 }
 
@@ -15,6 +16,7 @@ export const MedicalStatusCard: React.FC<MedicalStatusCardProps> = ({
   studentId,
   drivingSchoolId,
   medical,
+  isAdmin = true,
   onSaveMedical,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -146,14 +148,20 @@ export const MedicalStatusCard: React.FC<MedicalStatusCardProps> = ({
       )}
 
       {/* Action Button */}
-      <div className="flex justify-end">
-        <button
-          type="button"
-          onClick={() => setIsModalOpen(true)}
-          className="rounded-xl border border-slate-300 bg-white px-4 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50 transition-all cursor-pointer"
-        >
-          {medical ? 'Update Medical Record' : '+ Record NTMI Medical'}
-        </button>
+      <div className="flex justify-end items-center gap-2">
+        {isAdmin ? (
+          <button
+            type="button"
+            onClick={() => setIsModalOpen(true)}
+            className="rounded-xl border border-slate-300 bg-white px-4 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50 transition-all cursor-pointer"
+          >
+            {medical ? 'Update Medical Record' : '+ Record NTMI Medical'}
+          </button>
+        ) : (
+          <span className="text-[11px] font-medium text-slate-400 bg-slate-100 px-2.5 py-1 rounded-lg border border-slate-200">
+            🔒 Admin Access Required to Modify Medical
+          </span>
+        )}
       </div>
 
       <MedicalModal

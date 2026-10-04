@@ -12,6 +12,8 @@ interface ExamTrialMilestonesProps {
   drivingSchoolId: string
   theoryExams: StudentExamTrial[]
   practicalTrials: StudentExamTrial[]
+  isAdmin?: boolean
+  isInstructor?: boolean
   onSaveExamTrial: (input: SaveExamTrialInput) => Promise<void>
 }
 
@@ -20,11 +22,16 @@ export const ExamTrialMilestones: React.FC<ExamTrialMilestonesProps> = ({
   drivingSchoolId,
   theoryExams,
   practicalTrials,
+  isAdmin = true,
+  isInstructor = false,
   onSaveExamTrial,
 }) => {
   const [modalOpen, setModalOpen] = useState(false)
   const [modalExamType, setModalExamType] = useState<ExamType>('theory')
   const [modalAttemptCount, setModalAttemptCount] = useState(0)
+
+  const canEditTheory = isAdmin
+  const canEditTrial = isAdmin || isInstructor
 
   const handleOpenSchedule = (type: ExamType, count: number) => {
     setModalExamType(type)
@@ -80,13 +87,19 @@ export const ExamTrialMilestones: React.FC<ExamTrialMilestonesProps> = ({
             </div>
           </div>
 
-          <button
-            type="button"
-            onClick={() => handleOpenSchedule('theory', theoryExams.length)}
-            className="rounded-xl border border-purple-200 bg-purple-50/60 px-3 py-1.5 text-xs font-bold text-purple-700 hover:bg-purple-100 transition-all cursor-pointer"
-          >
-            + Schedule Theory
-          </button>
+          {canEditTheory ? (
+            <button
+              type="button"
+              onClick={() => handleOpenSchedule('theory', theoryExams.length)}
+              className="rounded-xl border border-purple-200 bg-purple-50/60 px-3 py-1.5 text-xs font-bold text-purple-700 hover:bg-purple-100 transition-all cursor-pointer"
+            >
+              + Schedule Theory
+            </button>
+          ) : (
+            <span className="text-[10px] font-medium text-slate-400 bg-slate-100 px-2 py-0.5 rounded-lg border border-slate-200">
+              🔒 Admin Managed
+            </span>
+          )}
         </div>
 
         {theoryExams.length === 0 ? (
@@ -133,15 +146,17 @@ export const ExamTrialMilestones: React.FC<ExamTrialMilestonesProps> = ({
             </div>
           </div>
 
-          <button
-            type="button"
-            onClick={() =>
-              handleOpenSchedule('practical_trial', practicalTrials.length)
-            }
-            className="rounded-xl border border-amber-200 bg-amber-50/60 px-3 py-1.5 text-xs font-bold text-amber-800 hover:bg-amber-100 transition-all cursor-pointer"
-          >
-            + Schedule Trial
-          </button>
+          {canEditTrial && (
+            <button
+              type="button"
+              onClick={() =>
+                handleOpenSchedule('practical_trial', practicalTrials.length)
+              }
+              className="rounded-xl border border-amber-200 bg-amber-50/60 px-3 py-1.5 text-xs font-bold text-amber-800 hover:bg-amber-100 transition-all cursor-pointer"
+            >
+              + Schedule Trial
+            </button>
+          )}
         </div>
 
         {practicalTrials.length === 0 ? (
