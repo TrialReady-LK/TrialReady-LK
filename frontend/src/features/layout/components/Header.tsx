@@ -84,12 +84,16 @@ export const Header: React.FC<HeaderProps> = ({ onToggleSidebar }) => {
         {/* Notification Bell Dropdown */}
         <NotificationBellDropdown />
 
-        <div className="flex items-center gap-2.5 rounded-xl border border-slate-200 bg-slate-50/80 px-3 py-1.5">
-          <div className="flex h-7 w-7 items-center justify-center rounded-full bg-blue-600 text-xs font-bold text-white shadow-xs">
+        <Link
+          to={role === 'student' ? '/student/profile' : dashboardRoute}
+          className="flex items-center gap-2.5 rounded-xl border border-slate-200 bg-slate-50/80 px-3 py-1.5 hover:bg-slate-100 hover:border-slate-300 transition-all cursor-pointer group"
+          title={role === 'student' ? 'View My Profile & Account' : 'Dashboard'}
+        >
+          <div className="flex h-7 w-7 items-center justify-center rounded-full bg-blue-600 text-xs font-bold text-white shadow-xs group-hover:bg-blue-700 transition-colors">
             {profile?.full_name?.charAt(0).toUpperCase() ?? 'U'}
           </div>
           <div className="hidden text-left sm:block">
-            <p className="text-xs font-bold text-slate-800 leading-tight">
+            <p className="text-xs font-bold text-slate-800 leading-tight group-hover:text-blue-600 transition-colors">
               {profile?.full_name ?? 'Active User'}
             </p>
             <span
@@ -100,7 +104,7 @@ export const Header: React.FC<HeaderProps> = ({ onToggleSidebar }) => {
               {role ?? 'User'}
             </span>
           </div>
-        </div>
+        </Link>
 
         {/* Sign Out Button */}
         <button

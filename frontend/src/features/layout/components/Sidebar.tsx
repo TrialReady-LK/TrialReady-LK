@@ -100,6 +100,12 @@ const NAV_ITEMS: NavItem[] = [
   {
     label: 'My Student Portal',
     to: '/student/portal',
+    icon: LayoutDashboard,
+    roles: ['student'],
+  },
+  {
+    label: 'My Profile & Account',
+    to: '/student/profile',
     icon: User,
     roles: ['student'],
   },

@@ -21,6 +21,7 @@ import TheoryPracticeHubPage from '../features/theory/pages/TheoryPracticeHubPag
 import MockExamSessionPage from '../features/theory/pages/MockExamSessionPage'
 import InstructorPortalPage from '../features/portal/instructor/pages/InstructorPortalPage'
 import StudentPortalPage from '../features/portal/student/pages/StudentPortalPage'
+import StudentProfilePage from '../features/portal/student/pages/StudentProfilePage'
 import PracticalSessionManagementPage from '../features/sessions/pages/PracticalSessionManagementPage'
 import VehicleManagementPage from '../features/vehicles/pages/VehicleManagementPage'
 import NotFoundPage from '../features/layout/pages/NotFoundPage'
@@ -180,6 +181,14 @@ export const AppRoutes: React.FC = () => {
           element={
             <ProtectedRoute allowedRoles={['administrator', 'student']}>
               <StudentPortalPage drivingSchoolId={drivingSchoolId} />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/student/profile"
+          element={
+            <ProtectedRoute allowedRoles={['administrator', 'student']}>
+              <StudentProfilePage drivingSchoolId={drivingSchoolId} />
             </ProtectedRoute>
           }
         />
