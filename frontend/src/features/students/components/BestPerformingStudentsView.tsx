@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import {
   Trophy,
+  Medal,
+  Award,
   Star,
   Car,
   Target,
@@ -9,6 +11,7 @@ import {
   ChevronRight,
   Search,
   Route as RouteIcon,
+  BarChart3,
 } from 'lucide-react'
 import type { StudentReadinessProfile } from '../../readiness/types/readiness'
 import { getReadinessTierInfo } from '../../readiness/utils/readinessEngine'
@@ -97,35 +100,38 @@ export const BestPerformingStudentsView: React.FC<
 
   return (
     <div className="space-y-6">
-      {/* 1. Champion Podium for Top 3 Students */}
+      {/* 1. Executive Top 3 Candidate Cards */}
       {top3.length >= 3 && (
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3 items-end">
-          {/* 🥈 2nd Place (Silver) */}
-          <div className="order-2 md:order-1 rounded-3xl border border-slate-200 bg-linear-to-b from-slate-50 to-white p-6 shadow-xs text-center space-y-3 relative hover:shadow-md transition-all">
-            <div className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-200 text-2xl font-black text-slate-800 shadow-xs border border-slate-300 mx-auto">
-              🥈
-            </div>
-            <div>
-              <span className="text-[10px] font-extrabold uppercase tracking-widest text-slate-500 block">
-                Rank #2 Runner Up
+          {/* Rank 2 (Silver / Runner Up) */}
+          <div className="order-2 md:order-1 rounded-3xl border border-slate-200/90 bg-white p-6 shadow-xs text-center space-y-4 relative hover:border-slate-300 hover:shadow-md transition-all">
+            <div className="flex flex-col items-center gap-2">
+              <div className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-100 text-slate-700 shadow-2xs border border-slate-200">
+                <Medal className="h-6 w-6 text-slate-600" />
+              </div>
+              <span className="inline-flex items-center gap-1 rounded-full bg-slate-100 px-3 py-0.5 text-[10px] font-bold uppercase tracking-wider text-slate-700 border border-slate-200">
+                <Award className="h-3 w-3 text-slate-500" />
+                <span>Rank #2 • Runner Up</span>
               </span>
-              <h3 className="text-lg font-black text-slate-900 mt-1">
+            </div>
+
+            <div>
+              <h3 className="text-lg font-bold text-slate-900 leading-tight">
                 {top3[1].student.full_name}
               </h3>
-              <p className="text-xs text-slate-500 font-mono">
-                {top3[1].student.admission_number} • {top3[1].student.branch_name || 'Main Branch'}
+              <p className="text-xs text-slate-500 font-mono mt-0.5">
+                {top3[1].student.admission_number} • {top3[1].student.branch_name || 'Main Campus'}
               </p>
             </div>
 
-            <div className="flex justify-center items-center gap-3 bg-slate-100/80 p-3 rounded-2xl">
-              <div>
-                <span className="text-[10px] font-bold text-slate-400 uppercase block">AI Score</span>
-                <strong className="text-xl font-black text-blue-700">{top3[1].evaluation.readiness_score}%</strong>
+            <div className="grid grid-cols-2 gap-2 bg-slate-50/80 p-3 rounded-2xl border border-slate-100">
+              <div className="text-center space-y-0.5">
+                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">AI Readiness</span>
+                <strong className="text-lg font-black text-blue-700">{top3[1].evaluation.readiness_score}%</strong>
               </div>
-              <div className="h-8 w-px bg-slate-200" />
-              <div>
-                <span className="text-[10px] font-bold text-slate-400 uppercase block">Rating</span>
-                <strong className="text-xl font-black text-amber-600 flex items-center gap-0.5 justify-center">
+              <div className="text-center space-y-0.5">
+                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Instructor</span>
+                <strong className="text-lg font-black text-amber-600 flex items-center justify-center gap-1">
                   <span>{(top3[1].averageInstructorRating ?? 5.0).toFixed(1)}</span>
                   <Star className="h-3.5 w-3.5 fill-amber-400 text-amber-500" />
                 </strong>
@@ -135,45 +141,48 @@ export const BestPerformingStudentsView: React.FC<
             <button
               type="button"
               onClick={() => handleOpenDossier(top3[1], 2)}
-              className="w-full rounded-xl border border-slate-300 bg-white py-2 text-xs font-bold text-slate-700 hover:bg-slate-50 transition-all cursor-pointer"
+              className="w-full inline-flex items-center justify-center gap-1.5 rounded-xl border border-slate-200 bg-white py-2.5 text-xs font-bold text-slate-700 hover:bg-slate-50 hover:text-slate-900 transition-all cursor-pointer shadow-2xs"
             >
-              View Full Details →
+              <span>View Candidate Dossier</span>
+              <ChevronRight className="h-3.5 w-3.5" />
             </button>
           </div>
 
-          {/* 🥇 1st Place (Gold Champion - Tallest) */}
-          <div className="order-1 md:order-2 rounded-3xl border-2 border-amber-300 bg-linear-to-b from-amber-500/10 via-amber-50/50 to-white p-7 shadow-lg text-center space-y-3.5 relative transform md:-translate-y-2 hover:shadow-xl transition-all">
-            <div className="inline-flex h-16 w-16 items-center justify-center rounded-3xl bg-amber-400 text-3xl font-black text-slate-950 shadow-md border-2 border-amber-300 mx-auto animate-bounce">
-              🏆
-            </div>
-            <div>
-              <span className="inline-block rounded-full bg-amber-400 px-3 py-0.5 text-[10px] font-black uppercase tracking-widest text-slate-950 border border-amber-300">
-                🥇 #1 Top Performer Champion
+          {/* Rank 1 (Gold / Top Performer - Featured) */}
+          <div className="order-1 md:order-2 rounded-3xl border border-amber-300/90 bg-linear-to-b from-amber-50/40 via-white to-white p-6.5 shadow-md text-center space-y-4 relative transform md:-translate-y-2 hover:shadow-lg hover:border-amber-400 transition-all ring-1 ring-amber-200/60">
+            <div className="flex flex-col items-center gap-2">
+              <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-amber-500 text-white shadow-xs border border-amber-400">
+                <Trophy className="h-7 w-7 text-white" />
+              </div>
+              <span className="inline-flex items-center gap-1 rounded-full bg-amber-100 px-3.5 py-1 text-[11px] font-extrabold uppercase tracking-wider text-amber-900 border border-amber-300">
+                <Award className="h-3.5 w-3.5 text-amber-700" />
+                <span>Rank #1 • Top Performer</span>
               </span>
-              <h3 className="text-xl font-black text-slate-900 mt-1.5">
+            </div>
+
+            <div>
+              <h3 className="text-xl font-bold text-slate-900 leading-tight">
                 {top3[0].student.full_name}
               </h3>
-              <p className="text-xs text-slate-600 font-mono">
-                {top3[0].student.admission_number} • {top3[0].student.branch_name || 'Main Branch'}
+              <p className="text-xs text-slate-600 font-mono mt-0.5">
+                {top3[0].student.admission_number} • {top3[0].student.branch_name || 'Main Campus'}
               </p>
             </div>
 
-            <div className="flex justify-center items-center gap-4 bg-amber-100/60 p-3.5 rounded-2xl border border-amber-200">
-              <div>
-                <span className="text-[10px] font-bold text-amber-800 uppercase block">AI Score</span>
-                <strong className="text-2xl font-black text-slate-950">{top3[0].evaluation.readiness_score}%</strong>
+            <div className="grid grid-cols-3 gap-2 bg-amber-50/70 p-3 rounded-2xl border border-amber-200/70">
+              <div className="text-center space-y-0.5">
+                <span className="text-[10px] font-bold text-amber-800 uppercase tracking-wider block">AI Readiness</span>
+                <strong className="text-xl font-black text-slate-950">{top3[0].evaluation.readiness_score}%</strong>
               </div>
-              <div className="h-9 w-px bg-amber-200" />
-              <div>
-                <span className="text-[10px] font-bold text-amber-800 uppercase block">Instructor</span>
-                <strong className="text-2xl font-black text-amber-700 flex items-center gap-1 justify-center">
+              <div className="text-center space-y-0.5">
+                <span className="text-[10px] font-bold text-amber-800 uppercase tracking-wider block">Instructor</span>
+                <strong className="text-xl font-black text-amber-700 flex items-center justify-center gap-1">
                   <span>{(top3[0].averageInstructorRating ?? 5.0).toFixed(1)}</span>
-                  <Star className="h-4 w-4 fill-amber-400 text-amber-500" />
+                  <Star className="h-3.5 w-3.5 fill-amber-400 text-amber-500" />
                 </strong>
               </div>
-              <div className="h-9 w-px bg-amber-200" />
-              <div>
-                <span className="text-[10px] font-bold text-amber-800 uppercase block">Maneuvers</span>
+              <div className="text-center space-y-0.5">
+                <span className="text-[10px] font-bold text-amber-800 uppercase tracking-wider block">Maneuvers</span>
                 <strong className="text-xl font-black text-emerald-700">{top3[0].evaluation.skills_mastered_count}/7</strong>
               </div>
             </div>
@@ -181,38 +190,42 @@ export const BestPerformingStudentsView: React.FC<
             <button
               type="button"
               onClick={() => handleOpenDossier(top3[0], 1)}
-              className="w-full rounded-xl bg-amber-500 py-2.5 text-xs font-black text-slate-950 shadow-md hover:bg-amber-400 transition-all cursor-pointer"
+              className="w-full inline-flex items-center justify-center gap-1.5 rounded-xl bg-slate-900 py-2.5 text-xs font-bold text-white shadow-xs hover:bg-slate-800 transition-all cursor-pointer"
             >
-              View Champion Dossier →
+              <span>View Candidate Dossier</span>
+              <ChevronRight className="h-3.5 w-3.5" />
             </button>
           </div>
 
-          {/* 🥉 3rd Place (Bronze) */}
-          <div className="order-3 rounded-3xl border border-slate-200 bg-linear-to-b from-slate-50 to-white p-6 shadow-xs text-center space-y-3 relative hover:shadow-md transition-all">
-            <div className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-700/20 text-2xl font-black text-amber-900 shadow-xs border border-amber-700/30 mx-auto">
-              🥉
-            </div>
-            <div>
-              <span className="text-[10px] font-extrabold uppercase tracking-widest text-slate-500 block">
-                Rank #3 High Achiever
+          {/* Rank 3 (Bronze / High Achiever) */}
+          <div className="order-3 rounded-3xl border border-slate-200/90 bg-white p-6 shadow-xs text-center space-y-4 relative hover:border-slate-300 hover:shadow-md transition-all">
+            <div className="flex flex-col items-center gap-2">
+              <div className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-50 text-amber-800 shadow-2xs border border-amber-200">
+                <Medal className="h-6 w-6 text-amber-700" />
+              </div>
+              <span className="inline-flex items-center gap-1 rounded-full bg-amber-50 px-3 py-0.5 text-[10px] font-bold uppercase tracking-wider text-amber-800 border border-amber-200">
+                <Award className="h-3 w-3 text-amber-600" />
+                <span>Rank #3 • High Achiever</span>
               </span>
-              <h3 className="text-lg font-black text-slate-900 mt-1">
+            </div>
+
+            <div>
+              <h3 className="text-lg font-bold text-slate-900 leading-tight">
                 {top3[2].student.full_name}
               </h3>
-              <p className="text-xs text-slate-500 font-mono">
-                {top3[2].student.admission_number} • {top3[2].student.branch_name || 'Main Branch'}
+              <p className="text-xs text-slate-500 font-mono mt-0.5">
+                {top3[2].student.admission_number} • {top3[2].student.branch_name || 'Main Campus'}
               </p>
             </div>
 
-            <div className="flex justify-center items-center gap-3 bg-slate-100/80 p-3 rounded-2xl">
-              <div>
-                <span className="text-[10px] font-bold text-slate-400 uppercase block">AI Score</span>
-                <strong className="text-xl font-black text-blue-700">{top3[2].evaluation.readiness_score}%</strong>
+            <div className="grid grid-cols-2 gap-2 bg-slate-50/80 p-3 rounded-2xl border border-slate-100">
+              <div className="text-center space-y-0.5">
+                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">AI Readiness</span>
+                <strong className="text-lg font-black text-blue-700">{top3[2].evaluation.readiness_score}%</strong>
               </div>
-              <div className="h-8 w-px bg-slate-200" />
-              <div>
-                <span className="text-[10px] font-bold text-slate-400 uppercase block">Rating</span>
-                <strong className="text-xl font-black text-amber-600 flex items-center gap-0.5 justify-center">
+              <div className="text-center space-y-0.5">
+                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Instructor</span>
+                <strong className="text-lg font-black text-amber-600 flex items-center justify-center gap-1">
                   <span>{(top3[2].averageInstructorRating ?? 5.0).toFixed(1)}</span>
                   <Star className="h-3.5 w-3.5 fill-amber-400 text-amber-500" />
                 </strong>
@@ -222,9 +235,10 @@ export const BestPerformingStudentsView: React.FC<
             <button
               type="button"
               onClick={() => handleOpenDossier(top3[2], 3)}
-              className="w-full rounded-xl border border-slate-300 bg-white py-2 text-xs font-bold text-slate-700 hover:bg-slate-50 transition-all cursor-pointer"
+              className="w-full inline-flex items-center justify-center gap-1.5 rounded-xl border border-slate-200 bg-white py-2.5 text-xs font-bold text-slate-700 hover:bg-slate-50 hover:text-slate-900 transition-all cursor-pointer shadow-2xs"
             >
-              View Full Details →
+              <span>View Candidate Dossier</span>
+              <ChevronRight className="h-3.5 w-3.5" />
             </button>
           </div>
         </div>
@@ -234,11 +248,11 @@ export const BestPerformingStudentsView: React.FC<
       <div className="rounded-3xl border border-slate-200 bg-white p-5 shadow-xs flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
         <div>
           <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
-            <Trophy className="h-4 w-4 text-amber-500" />
-            <span>Full Student Performance Leaderboard ({filteredProfiles.length})</span>
+            <BarChart3 className="h-4 w-4 text-blue-600" />
+            <span>Candidate Performance Leaderboard ({filteredProfiles.length})</span>
           </h3>
           <p className="text-xs text-slate-500">
-            Ranked order of students evaluated across AI readiness, star ratings, and maneuver mastery
+            Ranked order of evaluated students across AI readiness, star ratings, and maneuver mastery
           </p>
         </div>
 
@@ -263,10 +277,10 @@ export const BestPerformingStudentsView: React.FC<
               onChange={(e) => setSortBy(e.target.value as SortCriterion)}
               className="rounded-xl border border-slate-300 bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 outline-none focus:border-blue-500 cursor-pointer"
             >
-              <option value="readiness">🏆 Highest AI Trial Readiness</option>
-              <option value="rating">⭐ Top Instructor Ratings</option>
-              <option value="hours">🚗 Practical Hours Completed</option>
-              <option value="skills">🎯 7/7 Maneuvers Mastered</option>
+              <option value="readiness">Highest AI Trial Readiness</option>
+              <option value="rating">Top Instructor Ratings</option>
+              <option value="hours">Practical Hours Completed</option>
+              <option value="skills">All Maneuvers Mastered</option>
             </select>
           </div>
         </div>
@@ -299,19 +313,22 @@ export const BestPerformingStudentsView: React.FC<
                   {/* Rank */}
                   <td className="px-4 py-3.5 text-center">
                     {rank === 1 ? (
-                      <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-amber-400 text-xs font-black text-slate-950 shadow-xs">
-                        1
+                      <span className="inline-flex items-center gap-1 rounded-full bg-amber-100 px-2.5 py-0.5 text-xs font-black text-amber-900 border border-amber-300">
+                        <Award className="h-3 w-3 text-amber-700" />
+                        <span>1</span>
                       </span>
                     ) : rank === 2 ? (
-                      <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-slate-200 text-xs font-black text-slate-800">
-                        2
+                      <span className="inline-flex items-center gap-1 rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-black text-slate-800 border border-slate-300">
+                        <Medal className="h-3 w-3 text-slate-600" />
+                        <span>2</span>
                       </span>
                     ) : rank === 3 ? (
-                      <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-amber-700 text-xs font-black text-white">
-                        3
+                      <span className="inline-flex items-center gap-1 rounded-full bg-amber-50 px-2.5 py-0.5 text-xs font-black text-amber-900 border border-amber-200">
+                        <Medal className="h-3 w-3 text-amber-700" />
+                        <span>3</span>
                       </span>
                     ) : (
-                      <span className="font-bold text-slate-500">#{rank}</span>
+                      <span className="font-bold text-slate-400 font-mono">#{rank}</span>
                     )}
                   </td>
 
@@ -326,7 +343,7 @@ export const BestPerformingStudentsView: React.FC<
                           {p.student.full_name}
                         </strong>
                         <span className="text-[11px] text-slate-500 font-mono">
-                          {p.student.admission_number} • {p.student.branch_name || 'Main Branch'}
+                          {p.student.admission_number} • {p.student.branch_name || 'Main Campus'}
                         </span>
                       </div>
                     </div>
@@ -374,7 +391,7 @@ export const BestPerformingStudentsView: React.FC<
 
                   {/* Instructor Rating */}
                   <td className="px-4 py-3.5">
-                    <div className="flex items-center gap-1">
+                    <div className="flex items-center gap-1.5">
                       <span className="font-bold text-slate-900 text-sm">
                         {(p.averageInstructorRating ?? 5.0).toFixed(1)}
                       </span>
@@ -452,3 +469,4 @@ export const BestPerformingStudentsView: React.FC<
 }
 
 export default BestPerformingStudentsView
+

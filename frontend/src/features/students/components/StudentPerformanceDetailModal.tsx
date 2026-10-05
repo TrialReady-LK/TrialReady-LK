@@ -16,6 +16,7 @@ import {
   Phone,
   Building2,
   Route as RouteIcon,
+  ChevronRight,
 } from 'lucide-react'
 import type { StudentReadinessProfile } from '../../readiness/types/readiness'
 import { getReadinessTierInfo } from '../../readiness/utils/readinessEngine'
@@ -66,11 +67,11 @@ export const StudentPerformanceDetailModal: React.FC<
   const getRankBadge = (r: number) => {
     switch (r) {
       case 1:
-        return { label: '🥇 1st Place (Top Performer)', bg: 'bg-amber-400 text-slate-950 border-amber-300' }
+        return { label: 'Rank #1 • Top Performer', bg: 'bg-amber-100 text-amber-900 border-amber-300' }
       case 2:
-        return { label: '🥈 2nd Place (Runner Up)', bg: 'bg-slate-200 text-slate-900 border-slate-300' }
+        return { label: 'Rank #2 • Runner Up', bg: 'bg-slate-100 text-slate-800 border-slate-300' }
       case 3:
-        return { label: '🥉 3rd Place (High Achiever)', bg: 'bg-amber-700 text-white border-amber-800' }
+        return { label: 'Rank #3 • High Achiever', bg: 'bg-amber-50 text-amber-900 border-amber-200' }
       default:
         return { label: `Rank #${r}`, bg: 'bg-blue-100 text-blue-800 border-blue-200' }
     }
@@ -310,10 +311,11 @@ export const StudentPerformanceDetailModal: React.FC<
               <div className="flex gap-2">
                 <Link
                   to={`/students/${student.id}/journey`}
-                  className="inline-flex items-center gap-1.5 rounded-xl bg-blue-600 px-4 py-2 text-xs font-bold text-white hover:bg-blue-700 transition-all cursor-pointer"
+                  className="inline-flex items-center gap-1.5 rounded-xl bg-blue-600 px-4 py-2 text-xs font-bold text-white hover:bg-blue-700 transition-all cursor-pointer shadow-2xs"
                 >
                   <RouteIcon className="h-3.5 w-3.5" />
-                  <span>Learner Journey →</span>
+                  <span>Learner Journey</span>
+                  <ChevronRight className="h-3.5 w-3.5" />
                 </Link>
               </div>
             </div>
