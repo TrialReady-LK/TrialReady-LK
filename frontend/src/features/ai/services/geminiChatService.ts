@@ -142,10 +142,10 @@ export async function sendGeminiChatMessage(
     }
 
     while (contents.length > 0 && contents[0].role !== 'user') {
-      contents.pop()
+      contents.shift()
     }
 
-    if (contents.length > 0) {
+    if (contents.length > 0 && apiKey) {
       const trimmed = contents.length > 16 ? contents.slice(-16) : contents
       if (trimmed[0].role !== 'user') trimmed.shift()
 
@@ -210,6 +210,51 @@ export async function sendGeminiChatMessage(
 
   // 3. Graceful localized fallback if network is completely offline
   const lang = options?.language || 'en'
+  const latestQuery = [...validMessages].reverse().find(m => m.sender === 'user')?.text || ''
+  const q = latestQuery.toLowerCase().trim()
+
+  const isOutOfScope =
+    /\b(python|javascript|typescript|java|c\+\+|html|css|php|sql|react|code|coding|function|algorithm|script|compile|debug|def |class |import |print\(|console\.log)\b/i.test(q) ||
+    /\b(math|mathematics|equation|calculate|calculus|integral|derivative|algebra|geometry|matrix|trigonometry|solve \d|\d\s*[\+\-\*\/]\s*\d|\bsin\(|\bcos\()\b/i.test(q) ||
+    /\b(essay|poem|song|story|movie|cinema|actor|president|politics|parliament|election|cricket|football|nba|recipe|cook)\b/i.test(q)
+
+  if (isOutOfScope) {
+    if (lang === 'si') {
+      return {
+        text: 'මම TrialReady රියදුරු පුහුණු සහායකයා වන අතර, ශ්‍රී ලංකා මාර්ග නීති, ප්‍රායෝගික රියදුරු විභාග (DMT Trials), සහ ශිෂ්‍ය ද්වාරය පිළිබඳ විමසීම් සඳහා පමණක් සහාය ලබා දෙමි. වෙනත් විෂයයන් පිළිබඳ ප්‍රශ්න මගේ විෂය පථයෙන් බැහැර වේ. රියදුරු පුහුණුව හෝ මාර්ග නීති පිළිබඳ ඕනෑම ප්‍රශ්නයක් විමසන්න!',
+        status: 'success',
+        suggestions: [
+          'ශ්‍රී ලංකාවේ වේග සීමා මොනවාද?',
+          'Hill Start නිවැරදිව කරන්නේ කෙසේද?',
+          'DMT Reverse S-Bend විභාග උපදෙස්',
+          'මාර්ග සංඥා වර්ගීකරණය',
+        ],
+      }
+    }
+    if (lang === 'ta') {
+      return {
+        text: 'நான் TrialReady ஓட்டுநர் பயிற்சி உதவியாளர் ஆவேன். இலங்கை போக்குவரத்து விதிகள், செய்முறை ஓட்டுநர் பரீட்சை மற்றும் மாணவர் தளம் தொடர்பான விடயங்களுக்கு மட்டுமே என்னால் உதவ முடியும். ஏனைய விடயங்கள் எனது எல்லைக்கு அப்பாற்பட்டவை. ஓட்டுநர் பயிற்சி அல்லது வீதி விதிகள் தொடர்பான வினாக்களை தயவுசெய்து கேட்கவும்!',
+        status: 'success',
+        suggestions: [
+          'இலங்கையின் வேக வரம்புகள் என்ன?',
+          'Hill Start செய்வது எப்படி?',
+          'DMT Reverse S-Bend குறிப்புகள்',
+          'வீதி சமிக்ஞைகள் விளக்கம்',
+        ],
+      }
+    }
+    return {
+      text: 'I am the TrialReady AI Assistant, dedicated exclusively to Sri Lanka driving licence training, Highway Code regulations, practical trial maneuvers, and student portal assistance. Answering questions on this topic is beyond my knowledge scope. Please feel free to ask me anything related to road rules, driving trials, or your learner journey!',
+      status: 'success',
+      suggestions: [
+        'What are the speed limits in Sri Lanka?',
+        'How to do Hill Start without rollback?',
+        'Tips for DMT Reverse S-Bend maneuver',
+        'Explain mandatory vs warning road signs',
+      ],
+    }
+  }
+
   let fallbackMessage =
     'I apologize, but I am having trouble connecting to Gemini right now. Please check your internet connection and try asking your question again in a moment.'
 
@@ -232,3 +277,4 @@ export async function sendGeminiChatMessage(
     ],
   }
 }
+
