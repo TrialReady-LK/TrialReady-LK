@@ -10,6 +10,8 @@ import type { StudentReadinessProfile } from '../../../readiness/types/readiness
 import { getPracticalSessions } from '../../../sessions/services/sessionService'
 import type { PracticalSessionWithRelations } from '../../../sessions/types/session'
 
+import { DEMO_STUDENT_AMAYA_ID } from '../../../demo/data/generateDemo100Data'
+
 export function useStudentPortal(drivingSchoolId: string, explicitStudentId?: string) {
   const [journey, setJourney] = useState<StudentJourneyOverview | null>(null)
   const [ledger, setLedger] = useState<StudentFinancialLedger | null>(null)
@@ -32,7 +34,7 @@ export function useStudentPortal(drivingSchoolId: string, explicitStudentId?: st
         if (localStudents.length > 0) {
           targetStudentId = localStudents[0].id
         } else {
-          targetStudentId = '33333333-3333-3333-3333-111111111111'
+          targetStudentId = DEMO_STUDENT_AMAYA_ID
         }
 
         try {
@@ -52,7 +54,7 @@ export function useStudentPortal(drivingSchoolId: string, explicitStudentId?: st
       }
 
       const resolvedStudentId: string =
-        targetStudentId || '33333333-3333-3333-3333-111111111111'
+        targetStudentId || DEMO_STUDENT_AMAYA_ID
 
       const [journeyData, ledgerData, readinessData, allSessions] =
         await Promise.all([

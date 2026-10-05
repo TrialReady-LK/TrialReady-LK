@@ -85,27 +85,8 @@ export const DmtStudentLogbookDocument: React.FC<DmtStudentLogbookDocumentProps>
         </div>
       </div>
 
-      {/* Section 2: DMT Learner Permit & NTMI Medical */}
+      {/* Section 2: NTMI Medical & DMT Learner Permit */}
       <div className="mb-4 grid grid-cols-2 gap-4">
-        <div className="border border-slate-300 rounded-lg p-3">
-          <h3 className="text-[10px] font-black uppercase tracking-wider text-slate-700 mb-2">
-            DMT Learner Permit
-          </h3>
-          {data.permit ? (
-            <div className="space-y-1">
-              <p><span className="font-bold text-slate-500">Permit No:</span> <span className="font-black">{data.permit.permitNumber}</span></p>
-              <p><span className="font-bold text-slate-500">Issued:</span> {data.permit.issueDate}</p>
-              <p><span className="font-bold text-slate-500">Expiry:</span> <span className="font-black text-red-700">{data.permit.expiryDate}</span></p>
-              <p><span className="font-bold text-slate-500">Status:</span>{' '}
-                <span className={`font-black ${data.permit.status === 'active' ? 'text-emerald-700' : 'text-red-700'}`}>
-                  {data.permit.status.toUpperCase()}
-                </span>
-              </p>
-            </div>
-          ) : (
-            <p className="text-slate-400 italic">Not recorded</p>
-          )}
-        </div>
         <div className="border border-slate-300 rounded-lg p-3">
           <h3 className="text-[10px] font-black uppercase tracking-wider text-slate-700 mb-2">
             NTMI Medical Certificate
@@ -118,6 +99,25 @@ export const DmtStudentLogbookDocument: React.FC<DmtStudentLogbookDocumentProps>
               <p><span className="font-bold text-slate-500">Status:</span>{' '}
                 <span className={`font-black ${data.medical.status === 'passed' ? 'text-emerald-700' : 'text-amber-700'}`}>
                   {data.medical.status.toUpperCase()}
+                </span>
+              </p>
+            </div>
+          ) : (
+            <p className="text-slate-400 italic">Not recorded</p>
+          )}
+        </div>
+        <div className="border border-slate-300 rounded-lg p-3">
+          <h3 className="text-[10px] font-black uppercase tracking-wider text-slate-700 mb-2">
+            DMT Learner Permit (Post-Theory)
+          </h3>
+          {data.permit ? (
+            <div className="space-y-1">
+              <p><span className="font-bold text-slate-500">Permit No:</span> <span className="font-black">{data.permit.permitNumber}</span></p>
+              <p><span className="font-bold text-slate-500">Issued:</span> {data.permit.issueDate}</p>
+              <p><span className="font-bold text-slate-500">Expiry:</span> <span className="font-black text-red-700">{data.permit.expiryDate}</span></p>
+              <p><span className="font-bold text-slate-500">Status:</span>{' '}
+                <span className={`font-black ${data.permit.status === 'active' ? 'text-emerald-700' : 'text-red-700'}`}>
+                  {data.permit.status.toUpperCase()}
                 </span>
               </p>
             </div>

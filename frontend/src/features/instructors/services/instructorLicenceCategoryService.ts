@@ -19,12 +19,12 @@ const INSTRUCTOR_LICENCE_CATEGORIES_TABLE = 'instructor_licence_categories'
 export const DEFAULT_INSTRUCTOR_LICENCE_CATEGORIES: InstructorLicenceCategoryWithDetails[] =
   [
     {
-      instructor_id: '11111111-1111-1111-1111-111111111111',
-      licence_category_id: 'ca111111-1111-1111-1111-111111111111',
+      instructor_id: 'd41f8a29-7c3e-4b95-a841-3b7c89f10001',
+      licence_category_id: 'c1a789c2-5d41-4e89-9b12-8f7a63450001',
       driving_school_id: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
       created_at: '2026-08-01T00:00:00Z',
       licence_category: {
-        id: 'ca111111-1111-1111-1111-111111111111',
+        id: 'c1a789c2-5d41-4e89-9b12-8f7a63450001',
         driving_school_id: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
         code: 'B',
         name: 'Dual Purpose / Light Motor Car (Auto & Manual)',
@@ -36,12 +36,12 @@ export const DEFAULT_INSTRUCTOR_LICENCE_CATEGORIES: InstructorLicenceCategoryWit
       },
     },
     {
-      instructor_id: '11111111-1111-1111-1111-111111111111',
-      licence_category_id: 'ca222222-2222-2222-2222-222222222222',
+      instructor_id: 'd41f8a29-7c3e-4b95-a841-3b7c89f10001',
+      licence_category_id: 'c1a789c2-5d41-4e89-9b12-8f7a63450002',
       driving_school_id: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
       created_at: '2026-08-01T00:00:00Z',
       licence_category: {
-        id: 'ca222222-2222-2222-2222-222222222222',
+        id: 'c1a789c2-5d41-4e89-9b12-8f7a63450002',
         driving_school_id: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
         code: 'B1',
         name: 'Light Motor Cycle & Three Wheeler',
@@ -52,12 +52,12 @@ export const DEFAULT_INSTRUCTOR_LICENCE_CATEGORIES: InstructorLicenceCategoryWit
       },
     },
     {
-      instructor_id: '22222222-2222-2222-2222-222222222222',
-      licence_category_id: 'ca111111-1111-1111-1111-111111111111',
+      instructor_id: 'd41f8a29-7c3e-4b95-a841-3b7c89f10002',
+      licence_category_id: 'c1a789c2-5d41-4e89-9b12-8f7a63450001',
       driving_school_id: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
       created_at: '2026-08-01T00:00:00Z',
       licence_category: {
-        id: 'ca111111-1111-1111-1111-111111111111',
+        id: 'c1a789c2-5d41-4e89-9b12-8f7a63450001',
         driving_school_id: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
         code: 'B',
         name: 'Dual Purpose / Light Motor Car (Auto & Manual)',

@@ -19,8 +19,8 @@ export const StudentPaymentDetailPage: React.FC = () => {
   const effectiveStudentId =
     paramStudentId ||
     (role === 'student'
-      ? profile?.id || '11111111-1111-1111-1111-111111111111'
-      : '11111111-1111-1111-1111-111111111111')
+      ? profile?.id || 'e73a0c54-47b1-4eb7-82bf-5e723528ef01'
+      : 'e73a0c54-47b1-4eb7-82bf-5e723528ef01')
 
   const {
     ledger,

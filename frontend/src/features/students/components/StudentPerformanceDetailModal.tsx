@@ -12,6 +12,7 @@ import {
   Printer,
   Ticket,
   Star,
+  Award,
   X,
   Phone,
   Building2,
@@ -67,13 +68,13 @@ export const StudentPerformanceDetailModal: React.FC<
   const getRankBadge = (r: number) => {
     switch (r) {
       case 1:
-        return { label: 'Rank #1 • Top Performer', bg: 'bg-amber-100 text-amber-900 border-amber-300' }
+        return { label: 'Rank #1 • Top Candidate', bg: 'bg-blue-100 text-blue-900 border-blue-300' }
       case 2:
-        return { label: 'Rank #2 • Runner Up', bg: 'bg-slate-100 text-slate-800 border-slate-300' }
+        return { label: 'Rank #2 • High Readiness', bg: 'bg-slate-100 text-slate-800 border-slate-300' }
       case 3:
-        return { label: 'Rank #3 • High Achiever', bg: 'bg-amber-50 text-amber-900 border-amber-200' }
+        return { label: 'Rank #3 • Trial Eligible', bg: 'bg-slate-100 text-slate-800 border-slate-200' }
       default:
-        return { label: `Rank #${r}`, bg: 'bg-blue-100 text-blue-800 border-blue-200' }
+        return { label: `Rank #${r}`, bg: 'bg-blue-50 text-blue-800 border-blue-200' }
     }
   }
 
@@ -289,6 +290,14 @@ export const StudentPerformanceDetailModal: React.FC<
             {/* Quick Action Buttons */}
             <div className="flex flex-wrap items-center justify-between gap-3 border-t border-slate-100 pt-4">
               <div className="flex flex-wrap gap-2">
+                <Link
+                  to={`/students/${student.id}/readiness`}
+                  className="inline-flex items-center gap-1.5 rounded-xl border border-amber-300 bg-amber-50 px-3.5 py-2 text-xs font-bold text-amber-900 hover:bg-amber-100 transition-all cursor-pointer"
+                >
+                  <Award className="h-3.5 w-3.5 text-amber-600" />
+                  <span>Grade / Mark Skills</span>
+                </Link>
+
                 <button
                   type="button"
                   onClick={() => setShowLogbook(true)}

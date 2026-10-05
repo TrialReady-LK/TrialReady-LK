@@ -32,10 +32,10 @@ const VEHICLE_SELECT_RELATIONS = `
 
 export const DEFAULT_FLEET_VEHICLES: VehicleWithRelations[] = [
   {
-    id: '22222222-2222-2222-2222-111111111111',
+    id: 'f1a789c2-5d41-4e89-9b12-8f7a63450001',
     driving_school_id: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
-    branch_id: 'ba111111-1111-1111-1111-111111111111',
-    licence_category_id: 'ca111111-1111-1111-1111-111111111111',
+    branch_id: 'b1a789c2-5d41-4e89-9b12-8f7a63450001',
+    licence_category_id: 'c1a789c2-5d41-4e89-9b12-8f7a63450001',
     registration_number: 'WP CAB-4921',
     display_name: 'Toyota Vitz Dual-Control',
     manufacturer: 'Toyota',
@@ -53,16 +53,16 @@ export const DEFAULT_FLEET_VEHICLES: VehicleWithRelations[] = [
     internal_notes: 'Primary manual training hatchback in Colombo Central.',
     deactivation_reason: null,
     deactivated_at: null,
-    branch: { id: 'ba111111-1111-1111-1111-111111111111', name: 'Colombo Central (Nugegoda)' },
-    licence_category: { id: 'ca111111-1111-1111-1111-111111111111', code: 'B', name: 'Dual Purpose / Light Motor Car (Auto & Manual)' },
+    branch: { id: 'b1a789c2-5d41-4e89-9b12-8f7a63450001', name: 'Colombo Central (Nugegoda)' },
+    licence_category: { id: 'c1a789c2-5d41-4e89-9b12-8f7a63450001', code: 'B', name: 'Dual Purpose / Light Motor Car (Auto & Manual)' },
     created_at: '2025-01-15T08:00:00.000Z',
     updated_at: new Date().toISOString(),
   },
   {
-    id: '22222222-2222-2222-2222-222222222222',
+    id: 'f1a789c2-5d41-4e89-9b12-8f7a63450002',
     driving_school_id: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
-    branch_id: 'ba111111-1111-1111-1111-111111111111',
-    licence_category_id: 'ca111111-1111-1111-1111-111111111111',
+    branch_id: 'b1a789c2-5d41-4e89-9b12-8f7a63450001',
+    licence_category_id: 'c1a789c2-5d41-4e89-9b12-8f7a63450001',
     registration_number: 'WP CBC-8821',
     display_name: 'Suzuki Swift Auto Dual-Control',
     manufacturer: 'Suzuki',
@@ -80,16 +80,16 @@ export const DEFAULT_FLEET_VEHICLES: VehicleWithRelations[] = [
     internal_notes: 'Primary auto training car in Colombo Central.',
     deactivation_reason: null,
     deactivated_at: null,
-    branch: { id: 'ba111111-1111-1111-1111-111111111111', name: 'Colombo Central (Nugegoda)' },
-    licence_category: { id: 'ca111111-1111-1111-1111-111111111111', code: 'B', name: 'Dual Purpose / Light Motor Car (Auto & Manual)' },
+    branch: { id: 'b1a789c2-5d41-4e89-9b12-8f7a63450001', name: 'Colombo Central (Nugegoda)' },
+    licence_category: { id: 'c1a789c2-5d41-4e89-9b12-8f7a63450001', code: 'B', name: 'Dual Purpose / Light Motor Car (Auto & Manual)' },
     created_at: '2025-03-10T08:00:00.000Z',
     updated_at: new Date().toISOString(),
   },
   {
-    id: '22222222-2222-2222-2222-333333333333',
+    id: 'f1a789c2-5d41-4e89-9b12-8f7a63450003',
     driving_school_id: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
-    branch_id: 'ba111111-1111-1111-1111-111111111111',
-    licence_category_id: 'ca333333-3333-3333-3333-333333333333',
+    branch_id: 'b1a789c2-5d41-4e89-9b12-8f7a63450001',
+    licence_category_id: 'c3a789c2-5d41-4e89-9b12-8f7a63450003',
     registration_number: 'CP BC-3042',
     display_name: 'Yamaha FZ 150 Training Bike',
     manufacturer: 'Yamaha',
@@ -107,16 +107,16 @@ export const DEFAULT_FLEET_VEHICLES: VehicleWithRelations[] = [
     internal_notes: 'Category A motorcycle practical training.',
     deactivation_reason: null,
     deactivated_at: null,
-    branch: { id: 'ba111111-1111-1111-1111-111111111111', name: 'Colombo Central (Nugegoda)' },
-    licence_category: { id: 'ca333333-3333-3333-3333-333333333333', code: 'A', name: 'Heavy Motor Cycle (> 250cc)' },
+    branch: { id: 'b1a789c2-5d41-4e89-9b12-8f7a63450001', name: 'Colombo Central (Nugegoda)' },
+    licence_category: { id: 'c3a789c2-5d41-4e89-9b12-8f7a63450003', code: 'A', name: 'Heavy Motor Cycle (> 250cc)' },
     created_at: '2025-04-01T08:00:00.000Z',
     updated_at: new Date().toISOString(),
   },
   {
-    id: '22222222-2222-2222-2222-444444444444',
+    id: 'f1a789c2-5d41-4e89-9b12-8f7a63450004',
     driving_school_id: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
-    branch_id: 'ba222222-2222-2222-2222-222222222222',
-    licence_category_id: 'ca222222-2222-2222-2222-222222222222',
+    branch_id: 'b2a789c2-5d41-4e89-9b12-8f7a63450002',
+    licence_category_id: 'c2a789c2-5d41-4e89-9b12-8f7a63450002',
     registration_number: 'WP LY-9120',
     display_name: 'Bajaj RE 4-Stroke Three Wheeler',
     manufacturer: 'Bajaj',
@@ -134,16 +134,16 @@ export const DEFAULT_FLEET_VEHICLES: VehicleWithRelations[] = [
     internal_notes: 'Category B1 three wheeler training in Gampaha.',
     deactivation_reason: null,
     deactivated_at: null,
-    branch: { id: 'ba222222-2222-2222-2222-222222222222', name: 'Gampaha Branch (Yakkala)' },
-    licence_category: { id: 'ca222222-2222-2222-2222-222222222222', code: 'B1', name: 'Light Motor Cycle & Three Wheeler' },
+    branch: { id: 'b2a789c2-5d41-4e89-9b12-8f7a63450002', name: 'Gampaha Branch (Yakkala)' },
+    licence_category: { id: 'c2a789c2-5d41-4e89-9b12-8f7a63450002', code: 'B1', name: 'Light Motor Cycle & Three Wheeler' },
     created_at: '2025-05-15T08:00:00.000Z',
     updated_at: new Date().toISOString(),
   },
   {
-    id: '22222222-2222-2222-2222-555555555555',
+    id: 'f1a789c2-5d41-4e89-9b12-8f7a63450005',
     driving_school_id: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
-    branch_id: 'ba333333-3333-3333-3333-333333333333',
-    licence_category_id: 'ca444444-4444-4444-4444-444444444444',
+    branch_id: 'b3a789c2-5d41-4e89-9b12-8f7a63450003',
+    licence_category_id: 'c4a789c2-5d41-4e89-9b12-8f7a63450004',
     registration_number: 'WP GA-7712',
     display_name: 'Isuzu Elf Heavy Dual-Control Lorry',
     manufacturer: 'Isuzu',
@@ -161,8 +161,8 @@ export const DEFAULT_FLEET_VEHICLES: VehicleWithRelations[] = [
     internal_notes: 'Category C heavy vehicle training in Kandy City.',
     deactivation_reason: null,
     deactivated_at: null,
-    branch: { id: 'ba333333-3333-3333-3333-333333333333', name: 'Kandy City Branch (Peradeniya)' },
-    licence_category: { id: 'ca444444-4444-4444-4444-444444444444', code: 'C', name: 'Dual Control Heavy Commercial Truck' },
+    branch: { id: 'b3a789c2-5d41-4e89-9b12-8f7a63450003', name: 'Kandy City Branch (Peradeniya)' },
+    licence_category: { id: 'c4a789c2-5d41-4e89-9b12-8f7a63450004', code: 'C', name: 'Dual Control Heavy Commercial Truck' },
     created_at: '2025-06-01T08:00:00.000Z',
     updated_at: new Date().toISOString(),
   },
@@ -262,34 +262,34 @@ export async function createVehicle(
   const branchSummary: VehicleBranchSummary = payload.branch_id
     ? {
         id: payload.branch_id,
-        name: payload.branch_id.includes('2222')
+        name: payload.branch_id.endsWith('0005')
           ? 'Gampaha Branch (Yakkala)'
-          : payload.branch_id.includes('3333')
+          : payload.branch_id.endsWith('0002')
           ? 'Kandy City Branch (Peradeniya)'
           : 'Colombo Central (Nugegoda)',
       }
-    : { id: 'ba111111-1111-1111-1111-111111111111', name: 'Colombo Central (Nugegoda)' }
+    : { id: 'b1a789c2-5d41-4e89-9b12-8f7a63450001', name: 'Colombo Central (Nugegoda)' }
 
   const categorySummary: VehicleLicenceCategorySummary = payload.licence_category_id
     ? {
         id: payload.licence_category_id,
-        code: payload.licence_category_id.includes('2222')
+        code: payload.licence_category_id.endsWith('0002')
           ? 'B1'
-          : payload.licence_category_id.includes('3333')
+          : payload.licence_category_id.endsWith('0003')
           ? 'A'
-          : payload.licence_category_id.includes('4444')
+          : payload.licence_category_id.endsWith('0004')
           ? 'C'
           : 'B',
-        name: payload.licence_category_id.includes('2222')
+        name: payload.licence_category_id.endsWith('0002')
           ? 'Light Motor Cycle & Three Wheeler'
-          : payload.licence_category_id.includes('3333')
+          : payload.licence_category_id.endsWith('0003')
           ? 'Heavy Motor Cycle (> 250cc)'
-          : payload.licence_category_id.includes('4444')
+          : payload.licence_category_id.endsWith('0004')
           ? 'Dual Control Heavy Commercial Truck'
           : 'Dual Purpose / Light Motor Car (Auto & Manual)',
       }
     : {
-        id: 'ca111111-1111-1111-1111-111111111111',
+        id: 'c1a789c2-5d41-4e89-9b12-8f7a63450001',
         code: 'B',
         name: 'Dual Purpose / Light Motor Car (Auto & Manual)',
       }
@@ -453,18 +453,18 @@ export async function getBranchesForSchool(
 
     if (error || !data || data.length === 0) {
       return [
-        { id: 'ba111111-1111-1111-1111-111111111111', name: 'Colombo Central (Nugegoda)' },
-        { id: 'ba222222-2222-2222-2222-222222222222', name: 'Gampaha Branch (Yakkala)' },
-        { id: 'ba333333-3333-3333-3333-333333333333', name: 'Kandy City Branch (Peradeniya)' },
+        { id: 'b1a789c2-5d41-4e89-9b12-8f7a63450001', name: 'Colombo Central (Nugegoda)' },
+        { id: 'b1a789c2-5d41-4e89-9b12-8f7a63450005', name: 'Gampaha Branch (Yakkala)' },
+        { id: 'b1a789c2-5d41-4e89-9b12-8f7a63450002', name: 'Kandy City Branch (Peradeniya)' },
       ]
     }
 
     return data as VehicleBranchSummary[]
   } catch {
     return [
-      { id: 'ba111111-1111-1111-1111-111111111111', name: 'Colombo Central (Nugegoda)' },
-      { id: 'ba222222-2222-2222-2222-222222222222', name: 'Gampaha Branch (Yakkala)' },
-      { id: 'ba333333-3333-3333-3333-333333333333', name: 'Kandy City Branch (Peradeniya)' },
+      { id: 'b1a789c2-5d41-4e89-9b12-8f7a63450001', name: 'Colombo Central (Nugegoda)' },
+      { id: 'b1a789c2-5d41-4e89-9b12-8f7a63450005', name: 'Gampaha Branch (Yakkala)' },
+      { id: 'b1a789c2-5d41-4e89-9b12-8f7a63450002', name: 'Kandy City Branch (Peradeniya)' },
     ]
   }
 }
@@ -482,20 +482,20 @@ export async function getLicenceCategoriesForSchool(
 
     if (error || !data || data.length === 0) {
       return [
-        { id: 'ca111111-1111-1111-1111-111111111111', code: 'B', name: 'Dual Purpose / Light Motor Car (Auto & Manual)' },
-        { id: 'ca222222-2222-2222-2222-222222222222', code: 'B1', name: 'Light Motor Cycle & Three Wheeler' },
-        { id: 'ca333333-3333-3333-3333-333333333333', code: 'A', name: 'Heavy Motor Cycle (> 250cc)' },
-        { id: 'ca444444-4444-4444-4444-444444444444', code: 'C', name: 'Dual Control Heavy Commercial Truck' },
+        { id: 'c1a789c2-5d41-4e89-9b12-8f7a63450001', code: 'B', name: 'Dual Purpose / Light Motor Car (Auto & Manual)' },
+        { id: 'c1a789c2-5d41-4e89-9b12-8f7a63450002', code: 'B1', name: 'Light Motor Cycle & Three Wheeler' },
+        { id: 'c1a789c2-5d41-4e89-9b12-8f7a63450003', code: 'A', name: 'Heavy Motor Cycle (> 250cc)' },
+        { id: 'c1a789c2-5d41-4e89-9b12-8f7a63450004', code: 'C', name: 'Dual Control Heavy Commercial Truck' },
       ]
     }
 
     return data as VehicleLicenceCategorySummary[]
   } catch {
     return [
-      { id: 'ca111111-1111-1111-1111-111111111111', code: 'B', name: 'Dual Purpose / Light Motor Car (Auto & Manual)' },
-      { id: 'ca222222-2222-2222-2222-222222222222', code: 'B1', name: 'Light Motor Cycle & Three Wheeler' },
-      { id: 'ca333333-3333-3333-3333-333333333333', code: 'A', name: 'Heavy Motor Cycle (> 250cc)' },
-      { id: 'ca444444-4444-4444-4444-444444444444', code: 'C', name: 'Dual Control Heavy Commercial Truck' },
+      { id: 'c1a789c2-5d41-4e89-9b12-8f7a63450001', code: 'B', name: 'Dual Purpose / Light Motor Car (Auto & Manual)' },
+      { id: 'c1a789c2-5d41-4e89-9b12-8f7a63450002', code: 'B1', name: 'Light Motor Cycle & Three Wheeler' },
+      { id: 'c1a789c2-5d41-4e89-9b12-8f7a63450003', code: 'A', name: 'Heavy Motor Cycle (> 250cc)' },
+      { id: 'c1a789c2-5d41-4e89-9b12-8f7a63450004', code: 'C', name: 'Dual Control Heavy Commercial Truck' },
     ]
   }
 }

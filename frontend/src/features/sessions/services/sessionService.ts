@@ -17,6 +17,11 @@ import type {
   UpdatePracticalSessionInput,
 } from '../types/session'
 
+import {
+  DEMO_STUDENT_AMAYA_ID,
+  generateRealisticUuid,
+} from '../../demo/data/generateDemo100Data'
+
 const SESSIONS_TABLE = 'practical_sessions'
 
 const SESSION_SELECT_RELATIONS = `
@@ -49,50 +54,50 @@ export function getDefaultSessions(): PracticalSessionWithRelations[] {
   const schoolId = 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11'
 
   const branches = [
-    { id: 'ba111111-1111-1111-1111-111111111111', name: 'Colombo Central (Nugegoda)', code: 'COL-01' },
-    { id: 'ba222222-2222-2222-2222-222222222222', name: 'Gampaha Branch (Yakkala)', code: 'GAM-01' },
-    { id: 'ba333333-3333-3333-3333-333333333333', name: 'Kandy City Branch (Peradeniya)', code: 'KAN-01' },
-    { id: 'ba444444-4444-4444-4444-444444444444', name: 'Kurunegala Branch (Dambulla Road)', code: 'KUR-01' },
-    { id: 'ba555555-5555-5555-5555-555555555555', name: 'Galle Coastal Branch (Matara Road)', code: 'GAL-01' },
+    { id: 'b1a789c2-5d41-4e89-9b12-8f7a63450001', name: 'Colombo Central (Nugegoda)', code: 'COL-01' },
+    { id: 'b1a789c2-5d41-4e89-9b12-8f7a63450005', name: 'Gampaha Branch (Yakkala)', code: 'GAM-01' },
+    { id: 'b1a789c2-5d41-4e89-9b12-8f7a63450002', name: 'Kandy City Branch (Peradeniya)', code: 'KAN-01' },
+    { id: 'b1a789c2-5d41-4e89-9b12-8f7a63450004', name: 'Kurunegala Branch (Dambulla Road)', code: 'KUR-01' },
+    { id: 'b1a789c2-5d41-4e89-9b12-8f7a63450003', name: 'Galle Coastal Branch (Matara Road)', code: 'GAL-01' },
   ]
 
   const categories = [
-    { id: 'ca111111-1111-1111-1111-111111111111', code: 'B', name: 'Dual Purpose / Light Motor Car (Auto & Manual)' },
-    { id: 'ca222222-2222-2222-2222-222222222222', code: 'B1', name: 'Light Motor Cycle & Three Wheeler' },
-    { id: 'ca333333-3333-3333-3333-333333333333', code: 'A', name: 'Heavy Motor Cycle (> 250cc)' },
-    { id: 'ca444444-4444-4444-4444-444444444444', code: 'C', name: 'Dual Control Heavy Commercial Truck' },
+    { id: 'c1a789c2-5d41-4e89-9b12-8f7a63450001', code: 'B', name: 'Dual Purpose / Light Motor Car (Auto & Manual)' },
+    { id: 'c1a789c2-5d41-4e89-9b12-8f7a63450002', code: 'B1', name: 'Light Motor Cycle & Three Wheeler' },
+    { id: 'c1a789c2-5d41-4e89-9b12-8f7a63450003', code: 'A', name: 'Heavy Motor Cycle (> 250cc)' },
+    { id: 'c1a789c2-5d41-4e89-9b12-8f7a63450004', code: 'C', name: 'Dual Control Heavy Commercial Truck' },
   ]
 
   const instructors = [
-    { id: '33333333-3333-3333-3333-111111111111', full_name: 'Nimal Jayasuriya', staff_number: 'INS-WP-001', phone: '+94 77 234 5678' },
-    { id: '33333333-3333-3333-3333-222222222222', full_name: 'Chaminda Senanayake', staff_number: 'INS-WP-002', phone: '+94 71 345 6789' },
-    { id: '33333333-3333-3333-3333-333333333333', full_name: 'Kamal Gunawardena', staff_number: 'INS-CP-003', phone: '+94 77 456 7890' },
-    { id: '33333333-3333-3333-3333-444444444444', full_name: 'Suneth Bandara', staff_number: 'INS-SP-004', phone: '+94 76 567 8901' },
-    { id: '33333333-3333-3333-3333-555555555555', full_name: 'Mahinda Rajapakse', staff_number: 'INS-WP-005', phone: '+94 72 678 9012' },
-    { id: '33333333-3333-3333-3333-666666666666', full_name: 'Priyantha Kumara', staff_number: 'INS-NW-006', phone: '+94 77 889 0123' },
-    { id: '33333333-3333-3333-3333-777777777777', full_name: 'Anura Bandara', staff_number: 'INS-CP-007', phone: '+94 71 890 2345' },
-    { id: '33333333-3333-3333-3333-888888888888', full_name: 'Dilshan Senanayake', staff_number: 'INS-SP-008', phone: '+94 75 901 3456' },
+    { id: 'd41f8a29-7c3e-4b95-a841-3b7c89f10001', full_name: 'Nimal Jayawardena', staff_number: 'INS-WP-001', phone: '+94 77 123 4567' },
+    { id: 'd41f8a29-7c3e-4b95-a841-3b7c89f10002', full_name: 'Sunil Perera', staff_number: 'INS-WP-002', phone: '+94 71 345 6789' },
+    { id: 'd41f8a29-7c3e-4b95-a841-3b7c89f10003', full_name: 'Chaminda Silva', staff_number: 'INS-CP-003', phone: '+94 77 456 7890' },
+    { id: 'd41f8a29-7c3e-4b95-a841-3b7c89f10004', full_name: 'Kanthi Wickramasinghe', staff_number: 'INS-SP-004', phone: '+94 76 567 8901' },
+    { id: 'd41f8a29-7c3e-4b95-a841-3b7c89f10005', full_name: 'Mohamed Rizwan', staff_number: 'INS-WP-005', phone: '+94 72 678 9012' },
+    { id: 'd41f8a29-7c3e-4b95-a841-3b7c89f10006', full_name: 'Priyantha Kumara', staff_number: 'INS-NW-006', phone: '+94 77 889 0123' },
+    { id: 'd41f8a29-7c3e-4b95-a841-3b7c89f10007', full_name: 'Suresh De Silva', staff_number: 'INS-CP-007', phone: '+94 71 890 2345' },
+    { id: 'd41f8a29-7c3e-4b95-a841-3b7c89f10008', full_name: 'Anura Senanayake', staff_number: 'INS-SP-008', phone: '+94 75 901 3456' },
   ]
 
   const vehicles = [
-    { id: '22222222-2222-2222-2222-111111111111', registration_number: 'WP CAB-4921', make: 'Toyota', model: 'Vitz Dual-Control', transmission_type: 'manual' },
-    { id: '22222222-2222-2222-2222-222222222222', registration_number: 'WP CBC-8821', make: 'Suzuki', model: 'Swift Auto Dual-Control', transmission_type: 'automatic' },
-    { id: '22222222-2222-2222-2222-333333333333', registration_number: 'CP BC-3042', make: 'Yamaha', model: 'FZ 150', transmission_type: 'manual' },
-    { id: '22222222-2222-2222-2222-444444444444', registration_number: 'WP ABF-1904', make: 'Bajaj', model: 'RE 4-Stroke 3-Wheeler', transmission_type: 'manual' },
-    { id: '22222222-2222-2222-2222-555555555555', registration_number: 'WP LL-4029', make: 'Isuzu', model: 'Elf Heavy Dual-Control Truck', transmission_type: 'manual' },
+    { id: 'f1a789c2-5d41-4e89-9b12-8f7a63450001', registration_number: 'WP CAB-4921', make: 'Toyota', model: 'Vitz Dual-Control', transmission_type: 'manual' },
+    { id: 'f1a789c2-5d41-4e89-9b12-8f7a63450002', registration_number: 'WP CBC-8821', make: 'Suzuki', model: 'Swift Auto Dual-Control', transmission_type: 'automatic' },
+    { id: 'f1a789c2-5d41-4e89-9b12-8f7a63450003', registration_number: 'CP BC-3042', make: 'Yamaha', model: 'FZ 150', transmission_type: 'manual' },
+    { id: 'f1a789c2-5d41-4e89-9b12-8f7a63450004', registration_number: 'WP ABF-1904', make: 'Bajaj', model: 'RE 4-Stroke 3-Wheeler', transmission_type: 'manual' },
+    { id: 'f1a789c2-5d41-4e89-9b12-8f7a63450005', registration_number: 'WP LL-4029', make: 'Isuzu', model: 'Elf Heavy Dual-Control Truck', transmission_type: 'manual' },
   ]
 
   const studentPool = [
-    { id: '11111111-1111-1111-1111-111111111111', full_name: 'Amaya Fernando', admission_number: 'ADM-2026-0042', phone: '+94 77 123 4567' },
-    { id: '11111111-1111-1111-1111-222222222222', full_name: 'Ravindu Wickramasinghe', admission_number: 'ADM-2026-0058', phone: '+94 71 456 7890' },
-    { id: '11111111-1111-1111-1111-333333333333', full_name: 'Sanduni Wickramasinghe', admission_number: 'ADM-2026-0071', phone: '+94 77 345 6789' },
-    { id: '11111111-1111-1111-1111-444444444444', full_name: 'Dinesh Perera', admission_number: 'ADM-2026-0089', phone: '+94 76 456 7890' },
-    { id: '11111111-1111-1111-1111-555555555555', full_name: 'Kavindi Silva', admission_number: 'ADM-2026-0103', phone: '+94 72 567 8901' },
-    { id: '11111111-1111-1111-1111-666666666666', full_name: 'Nethmi Jayasekara', admission_number: 'ADM-2026-0118', phone: '+94 78 678 9012' },
-    { id: '11111111-1111-1111-1111-777777777777', full_name: 'Dilshan Bandara', admission_number: 'ADM-2026-0125', phone: '+94 71 789 0123' },
-    { id: '11111111-1111-1111-1111-888888888888', full_name: 'Malith Karunaratne', admission_number: 'ADM-2026-0139', phone: '+94 75 890 1234' },
-    { id: '11111111-1111-1111-1111-999999999999', full_name: 'Kaveesha Gunaratne', admission_number: 'ADM-2026-0144', phone: '+94 70 901 2345' },
-    { id: '11111111-1111-1111-1111-000000000010', full_name: 'Hasini Senanayake', admission_number: 'ADM-2026-0157', phone: '+94 77 012 3456' },
+    { id: DEMO_STUDENT_AMAYA_ID, full_name: 'Amaya Fernando', admission_number: 'ADM-2026-0042', phone: '+94 77 123 4567' },
+    { id: generateRealisticUuid('student', 2), full_name: 'Ravindu Wickramasinghe', admission_number: 'ADM-2026-0058', phone: '+94 71 456 7890' },
+    { id: generateRealisticUuid('student', 3), full_name: 'Sanduni Wickramasinghe', admission_number: 'ADM-2026-0071', phone: '+94 77 345 6789' },
+    { id: generateRealisticUuid('student', 4), full_name: 'Dinesh Perera', admission_number: 'ADM-2026-0089', phone: '+94 76 456 7890' },
+    { id: generateRealisticUuid('student', 5), full_name: 'Kavindi Silva', admission_number: 'ADM-2026-0103', phone: '+94 72 567 8901' },
+    { id: generateRealisticUuid('student', 6), full_name: 'Nethmi Jayasekara', admission_number: 'ADM-2026-0118', phone: '+94 78 678 9012' },
+    { id: generateRealisticUuid('student', 7), full_name: 'Dilshan Bandara', admission_number: 'ADM-2026-0125', phone: '+94 71 789 0123' },
+    { id: generateRealisticUuid('student', 8), full_name: 'Malith Karunaratne', admission_number: 'ADM-2026-0139', phone: '+94 75 890 1234' },
+    { id: generateRealisticUuid('student', 9), full_name: 'Kaveesha Gunaratne', admission_number: 'ADM-2026-0144', phone: '+94 70 901 2345' },
+    { id: generateRealisticUuid('student', 10), full_name: 'Hasini Senanayake', admission_number: 'ADM-2026-0157', phone: '+94 77 012 3456' },
   ]
 
   const plan = [
@@ -361,7 +366,7 @@ export async function createPracticalSession(
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
     student: { id: input.student_id, full_name: 'Amaya Fernando', admission_number: 'ADM-2026-0042', phone: '+94 77 123 4567' },
-    instructor: { id: input.instructor_id, full_name: 'Nimal Jayasuriya', staff_number: 'INS-WP-001', phone: '+94 77 234 5678' },
+    instructor: { id: input.instructor_id, full_name: 'Nimal Jayawardena', staff_number: 'INS-WP-001', phone: '+94 77 123 4567' },
     vehicle: input.vehicle_id
       ? { id: input.vehicle_id, registration_number: 'WP CAB-4921', make: 'Toyota', model: 'Vitz Dual-Control', transmission_type: 'manual' }
       : null,
@@ -469,9 +474,9 @@ export async function getBranchesForSessions(
   _drivingSchoolId: string,
 ): Promise<SessionBranchSummary[]> {
   return [
-    { id: 'ba111111-1111-1111-1111-111111111111', name: 'Colombo Central (Nugegoda)', code: 'COL-01' },
-    { id: 'ba222222-2222-2222-2222-222222222222', name: 'Gampaha Branch (Yakkala)', code: 'GAM-01' },
-    { id: 'ba333333-3333-3333-3333-333333333333', name: 'Kandy City Branch (Peradeniya)', code: 'KAN-01' },
+    { id: 'b1a789c2-5d41-4e89-9b12-8f7a63450001', name: 'Colombo Central (Nugegoda)', code: 'COL-01' },
+    { id: 'b1a789c2-5d41-4e89-9b12-8f7a63450005', name: 'Gampaha Branch (Yakkala)', code: 'GAM-01' },
+    { id: 'b1a789c2-5d41-4e89-9b12-8f7a63450002', name: 'Kandy City Branch (Peradeniya)', code: 'KAN-01' },
   ]
 }
 
@@ -479,10 +484,10 @@ export async function getCategoriesForSessions(
   _drivingSchoolId: string,
 ): Promise<SessionCategorySummary[]> {
   return [
-    { id: 'ca111111-1111-1111-1111-111111111111', code: 'B', name: 'Dual Purpose / Light Motor Car (Auto & Manual)' },
-    { id: 'ca222222-2222-2222-2222-222222222222', code: 'B1', name: 'Light Motor Cycle & Three Wheeler' },
-    { id: 'ca333333-3333-3333-3333-333333333333', code: 'A', name: 'Heavy Motor Cycle (> 250cc)' },
-    { id: 'ca444444-4444-4444-4444-444444444444', code: 'C', name: 'Dual Control Heavy Commercial Truck' },
+    { id: 'c1a789c2-5d41-4e89-9b12-8f7a63450001', code: 'B', name: 'Dual Purpose / Light Motor Car (Auto & Manual)' },
+    { id: 'c1a789c2-5d41-4e89-9b12-8f7a63450002', code: 'B1', name: 'Light Motor Cycle & Three Wheeler' },
+    { id: 'c1a789c2-5d41-4e89-9b12-8f7a63450003', code: 'A', name: 'Heavy Motor Cycle (> 250cc)' },
+    { id: 'c1a789c2-5d41-4e89-9b12-8f7a63450004', code: 'C', name: 'Dual Control Heavy Commercial Truck' },
   ]
 }
 
@@ -490,10 +495,10 @@ export async function getInstructorsForSessions(
   _drivingSchoolId: string,
 ): Promise<SessionInstructorSummary[]> {
   return [
-    { id: '33333333-3333-3333-3333-111111111111', full_name: 'Nimal Jayasuriya', staff_number: 'INS-WP-001', phone: '+94 77 234 5678' },
-    { id: '33333333-3333-3333-3333-222222222222', full_name: 'Sunil Perera', staff_number: 'INS-WP-002', phone: '+94 71 345 6789' },
-    { id: '33333333-3333-3333-3333-333333333333', full_name: 'Chaminda Silva', staff_number: 'INS-WP-003', phone: '+94 76 456 7890' },
-    { id: '33333333-3333-3333-3333-444444444444', full_name: 'Kanthi Wickramasinghe', staff_number: 'INS-WP-004', phone: '+94 70 567 8901' },
+    { id: 'd41f8a29-7c3e-4b95-a841-3b7c89f10001', full_name: 'Nimal Jayawardena', staff_number: 'INS-WP-001', phone: '+94 77 123 4567' },
+    { id: 'd41f8a29-7c3e-4b95-a841-3b7c89f10002', full_name: 'Sunil Perera', staff_number: 'INS-WP-002', phone: '+94 71 345 6789' },
+    { id: 'd41f8a29-7c3e-4b95-a841-3b7c89f10003', full_name: 'Chaminda Silva', staff_number: 'INS-WP-003', phone: '+94 76 456 7890' },
+    { id: 'd41f8a29-7c3e-4b95-a841-3b7c89f10004', full_name: 'Kanthi Wickramasinghe', staff_number: 'INS-WP-004', phone: '+94 70 567 8901' },
   ]
 }
 
@@ -501,11 +506,11 @@ export async function getStudentsForSessions(
   _drivingSchoolId: string,
 ): Promise<SessionStudentSummary[]> {
   return [
-    { id: '11111111-1111-1111-1111-111111111111', full_name: 'Amaya Fernando', admission_number: 'ADM-2026-0042', phone: '+94 77 123 4567' },
-    { id: '11111111-1111-1111-1111-222222222222', full_name: 'Ravindu Wickramasinghe', admission_number: 'ADM-2026-0058', phone: '+94 71 456 7890' },
-    { id: '11111111-1111-1111-1111-333333333333', full_name: 'Sanduni Jayawardena', admission_number: 'ADM-2026-0071', phone: '+94 76 890 1234' },
-    { id: '11111111-1111-1111-1111-444444444444', full_name: 'Dinesh Kumara', admission_number: 'ADM-2026-0089', phone: '+94 72 345 6789' },
-    { id: '11111111-1111-1111-1111-555555555555', full_name: 'Kavindi Perera', admission_number: 'ADM-2026-0094', phone: '+94 78 901 2345' },
+    { id: DEMO_STUDENT_AMAYA_ID, full_name: 'Amaya Fernando', admission_number: 'ADM-2026-0042', phone: '+94 77 123 4567' },
+    { id: generateRealisticUuid('student', 2), full_name: 'Ravindu Wickramasinghe', admission_number: 'ADM-2026-0058', phone: '+94 71 456 7890' },
+    { id: generateRealisticUuid('student', 3), full_name: 'Sanduni Jayawardena', admission_number: 'ADM-2026-0071', phone: '+94 76 890 1234' },
+    { id: generateRealisticUuid('student', 4), full_name: 'Dinesh Kumara', admission_number: 'ADM-2026-0089', phone: '+94 72 345 6789' },
+    { id: generateRealisticUuid('student', 5), full_name: 'Kavindi Perera', admission_number: 'ADM-2026-0094', phone: '+94 78 901 2345' },
   ]
 }
 
@@ -513,10 +518,10 @@ export async function getVehiclesForSessions(
   _drivingSchoolId: string,
 ): Promise<SessionVehicleSummary[]> {
   return [
-    { id: '22222222-2222-2222-2222-111111111111', registration_number: 'WP CAB-4921', make: 'Toyota', model: 'Vitz Dual-Control', transmission_type: 'manual' },
-    { id: '22222222-2222-2222-2222-222222222222', registration_number: 'WP CBC-8821', make: 'Suzuki', model: 'Swift Auto Dual-Control', transmission_type: 'automatic' },
-    { id: '22222222-2222-2222-2222-333333333333', registration_number: 'CP BC-3042', make: 'Yamaha', model: 'FZ 150', transmission_type: 'manual' },
-    { id: '22222222-2222-2222-2222-444444444444', registration_number: 'WP LY-9120', make: 'Bajaj', model: 'RE 205 Auto', transmission_type: 'manual' },
-    { id: '22222222-2222-2222-2222-555555555555', registration_number: 'WP GA-7712', make: 'Isuzu', model: 'Elf NPR Dual-Control', transmission_type: 'manual' },
+    { id: 'f1a789c2-5d41-4e89-9b12-8f7a63450001', registration_number: 'WP CAB-4921', make: 'Toyota', model: 'Vitz Dual-Control', transmission_type: 'manual' },
+    { id: 'f1a789c2-5d41-4e89-9b12-8f7a63450002', registration_number: 'WP CBC-8821', make: 'Suzuki', model: 'Swift Auto Dual-Control', transmission_type: 'automatic' },
+    { id: 'f1a789c2-5d41-4e89-9b12-8f7a63450003', registration_number: 'CP BC-3042', make: 'Yamaha', model: 'FZ 150', transmission_type: 'manual' },
+    { id: 'f1a789c2-5d41-4e89-9b12-8f7a63450004', registration_number: 'WP LY-9120', make: 'Bajaj', model: 'RE 205 Auto', transmission_type: 'manual' },
+    { id: 'f1a789c2-5d41-4e89-9b12-8f7a63450005', registration_number: 'WP GA-7712', make: 'Isuzu', model: 'Elf NPR Dual-Control', transmission_type: 'manual' },
   ]
 }

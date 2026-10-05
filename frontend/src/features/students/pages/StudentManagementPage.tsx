@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Trophy, Users, Plus } from 'lucide-react'
+import { Award, Users, Plus } from 'lucide-react'
 import { getBranches } from '../../branches/services/branchService'
 import { getInstructors } from '../../instructors/services/instructorService'
 import StudentForm, { type StudentSelectOption } from '../components/StudentForm'
@@ -72,9 +72,9 @@ function StudentManagementPage({
         }))
         if (bOpts.length === 0) {
           setBranchOptions([
-            { value: 'ba111111-1111-1111-1111-111111111111', label: 'Colombo Central (Nugegoda)' },
-            { value: 'ba222222-2222-2222-2222-222222222222', label: 'Gampaha Branch (Yakkala)' },
-            { value: 'ba333333-3333-3333-3333-333333333333', label: 'Kandy City Branch (Peradeniya)' },
+            { value: 'b1a789c2-5d41-4e89-9b12-8f7a63450001', label: 'Colombo Central (Nugegoda)' },
+            { value: 'b1a789c2-5d41-4e89-9b12-8f7a63450005', label: 'Gampaha Branch (Yakkala)' },
+            { value: 'b1a789c2-5d41-4e89-9b12-8f7a63450002', label: 'Kandy City Branch (Peradeniya)' },
           ])
         } else {
           setBranchOptions(bOpts)
@@ -87,10 +87,10 @@ function StudentManagementPage({
         }))
         if (iOpts.length === 0) {
           setInstructorOptions([
-            { value: '11111111-1111-1111-1111-111111111111', label: 'Nimal Jayawardena (Chief Instructor)' },
-            { value: '11111111-1111-1111-1111-222222222222', label: 'Sunil Shantha (Light Vehicle)' },
-            { value: '11111111-1111-1111-1111-333333333333', label: 'Kasun Perera (Bike/Auto Specialist)' },
-            { value: '11111111-1111-1111-1111-444444444444', label: 'Mohamed Rizwan (Heavy Commercial)' },
+            { value: 'd41f8a29-7c3e-4b95-a841-3b7c89f10001', label: 'Nimal Jayasuriya (Chief Instructor)' },
+            { value: 'd41f8a29-7c3e-4b95-a841-3b7c89f10002', label: 'Sunil Perera (Light Vehicle)' },
+            { value: 'd41f8a29-7c3e-4b95-a841-3b7c89f10003', label: 'Chaminda Silva (Bike/Auto Specialist)' },
+            { value: 'd41f8a29-7c3e-4b95-a841-3b7c89f10005', label: 'Mohamed Rizwan (Heavy Commercial)' },
           ])
         } else {
           setInstructorOptions(iOpts)
@@ -271,16 +271,16 @@ function StudentManagementPage({
                 : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'
             }`}
           >
-            <Trophy className="h-4 w-4 text-amber-400" />
-            <span>Best Performing Students</span>
+            <Award className="h-4 w-4" />
+            <span>Top Performing Candidates</span>
             <span
               className={`rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider ${
                 activeTab === 'leaderboard'
-                  ? 'bg-blue-500/80 text-white border border-blue-400/40'
+                  ? 'bg-blue-500 text-white'
                   : 'bg-slate-100 text-slate-600 border border-slate-200'
               }`}
             >
-              Top Ranked
+              DMT Benchmark
             </span>
           </button>
         </div>

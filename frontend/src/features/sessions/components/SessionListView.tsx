@@ -1,5 +1,7 @@
 import React from 'react'
-import { Check } from 'lucide-react'
+import { Check, Star } from 'lucide-react'
+import { useAuth } from '../../auth/context/AuthContext'
+import { isMyInstructorSession } from './SessionCalendarView'
 import type { SessionFilters } from '../hooks/usePracticalSessions'
 import type {
   PracticalSessionWithRelations,
@@ -42,6 +44,8 @@ export const SessionListView: React.FC<SessionListViewProps> = ({
   onCancelSession,
   onDeleteSession,
 }) => {
+  const { profile, role } = useAuth()
+  const isInstructorRole = role === 'instructor'
   const getStatusBadge = (status: string, attendance: string) => {
     if (status === 'cancelled') {
       return (
@@ -225,116 +229,137 @@ export const SessionListView: React.FC<SessionListViewProps> = ({
                   </td>
                 </tr>
               ) : (
-                sessions.map((sess) => (
-                  <tr
-                    key={sess.id}
-                    className="hover:bg-slate-50/80 transition-colors"
-                  >
-                    <td className="px-4 py-3 whitespace-nowrap">
-                      <p className="font-bold text-slate-900">
-                        {sess.session_date}
-                      </p>
-                      <p className="text-[11px] text-slate-500">
-                        {formatTime12Hour(sess.start_time)} –{' '}
-                        {formatTime12Hour(sess.end_time)} (
-                        {formatSessionDuration(
-                          sess.start_time,
-                          sess.end_time,
-                        )}
-                        )
-                      </p>
-                    </td>
-
-                    <td className="px-4 py-3">
-                      <p className="font-bold text-slate-900">
-                        {sess.student?.full_name ?? '—'}
-                      </p>
-                      <p className="text-[10px] text-slate-400 font-mono">
-                        {sess.student?.admission_number}
-                      </p>
-                    </td>
-
-                    <td className="px-4 py-3 whitespace-nowrap">
-                      <span className="inline-block rounded-md bg-blue-50 px-2 py-0.5 text-xs font-bold text-blue-700 border border-blue-200">
-                        {sess.licence_category?.code}
-                      </span>
-                    </td>
-
-                    <td className="px-4 py-3">
-                      <p className="font-medium text-slate-800">
-                        {sess.instructor?.full_name}
-                      </p>
-                      <p className="text-[10px] text-slate-400">
-                        {sess.instructor?.phone}
-                      </p>
-                    </td>
-
-                    <td className="px-4 py-3 whitespace-nowrap">
-                      {sess.vehicle ? (
-                        <div>
-                          <p className="font-semibold text-slate-900">
-                            {sess.vehicle.registration_number}
+                sessions.map((sess) => {
+                  const isMySession = isMyInstructorSession(sess, profile, role)
+                  return (
+                    <tr
+                      key={sess.id}
+                      className={`transition-colors ${
+                        isInstructorRole && isMySession
+                          ? 'bg-indigo-50/50 hover:bg-indigo-100/60 border-l-4 border-l-indigo-600 font-medium'
+                          : 'hover:bg-slate-50/80'
+                      }`}
+                    >
+                      <td className="px-4 py-3 whitespace-nowrap">
+                        <div className="flex items-center gap-1.5">
+                          <p className="font-bold text-slate-900">
+                            {sess.session_date}
                           </p>
-                          <p className="text-[10px] text-slate-500">
-                            {sess.vehicle.make} {sess.vehicle.model}
+                          {isInstructorRole && isMySession && (
+                            <span className="inline-flex items-center gap-0.5 rounded-full bg-amber-400 px-1.5 py-0.2 text-[8.5px] font-black uppercase tracking-wider text-slate-950 shadow-xs">
+                              <Star className="h-2.5 w-2.5 fill-slate-950" /> MY LESSON
+                            </span>
+                          )}
+                        </div>
+                        <p className="text-[11px] text-slate-500">
+                          {formatTime12Hour(sess.start_time)} –{' '}
+                          {formatTime12Hour(sess.end_time)} (
+                          {formatSessionDuration(
+                            sess.start_time,
+                            sess.end_time,
+                          )}
+                          )
+                        </p>
+                      </td>
+
+                      <td className="px-4 py-3">
+                        <p className="font-bold text-slate-900">
+                          {sess.student?.full_name ?? '—'}
+                        </p>
+                        <p className="text-[10px] text-slate-400 font-mono">
+                          {sess.student?.admission_number}
+                        </p>
+                      </td>
+
+                      <td className="px-4 py-3 whitespace-nowrap">
+                        <span className="inline-block rounded-md bg-blue-50 px-2 py-0.5 text-xs font-bold text-blue-700 border border-blue-200">
+                          {sess.licence_category?.code}
+                        </span>
+                      </td>
+
+                      <td className="px-4 py-3">
+                        <div className="flex items-center gap-1">
+                          {isInstructorRole && isMySession && (
+                            <span className="inline-flex items-center rounded-full bg-indigo-100 px-1.5 py-0.2 text-[9px] font-bold text-indigo-900 border border-indigo-300">
+                              ⭐ YOU
+                            </span>
+                          )}
+                          <p className="font-medium text-slate-800">
+                            {sess.instructor?.full_name}
                           </p>
                         </div>
-                      ) : (
-                        <span className="text-slate-400 italic">Unassigned</span>
-                      )}
-                    </td>
+                        <p className="text-[10px] text-slate-400">
+                          {sess.instructor?.phone}
+                        </p>
+                      </td>
 
-                    <td className="px-4 py-3 whitespace-nowrap">
-                      <span className="text-slate-700">{sess.branch?.name}</span>
-                    </td>
+                      <td className="px-4 py-3 whitespace-nowrap">
+                        {sess.vehicle ? (
+                          <div>
+                            <p className="font-semibold text-slate-900">
+                              {sess.vehicle.registration_number}
+                            </p>
+                            <p className="text-[10px] text-slate-500">
+                              {sess.vehicle.make} {sess.vehicle.model}
+                            </p>
+                          </div>
+                        ) : (
+                          <span className="text-slate-400 italic">Unassigned</span>
+                        )}
+                      </td>
 
-                    <td className="px-4 py-3 whitespace-nowrap">
-                      {getStatusBadge(sess.status, sess.attendance_status)}
-                    </td>
+                      <td className="px-4 py-3 whitespace-nowrap">
+                        <span className="text-slate-700">{sess.branch?.name}</span>
+                      </td>
 
-                    <td className="px-4 py-3 text-right whitespace-nowrap">
-                      <div className="flex items-center justify-end gap-1.5">
-                        {sess.status === 'scheduled' && (
+                      <td className="px-4 py-3 whitespace-nowrap">
+                        {getStatusBadge(sess.status, sess.attendance_status)}
+                      </td>
+
+                      <td className="px-4 py-3 text-right whitespace-nowrap">
+                        <div className="flex items-center justify-end gap-1.5">
+                          {sess.status === 'scheduled' && (
+                            <button
+                              type="button"
+                              onClick={() => onOpenAttendance(sess)}
+                              className="rounded-lg bg-blue-50 px-2.5 py-1 text-xs font-bold text-blue-700 hover:bg-blue-100 transition-all cursor-pointer"
+                            >
+                              Mark
+                            </button>
+                          )}
+
                           <button
                             type="button"
-                            onClick={() => onOpenAttendance(sess)}
-                            className="rounded-lg bg-blue-50 px-2.5 py-1 text-xs font-bold text-blue-700 hover:bg-blue-100 transition-all cursor-pointer"
+                            onClick={() => onSelectSession(sess)}
+                            className="rounded-lg border border-slate-200 bg-white px-2.5 py-1 text-xs font-semibold text-slate-700 hover:bg-slate-50 transition-all cursor-pointer"
                           >
-                            Mark
+                            Edit
                           </button>
-                        )}
 
-                        <button
-                          type="button"
-                          onClick={() => onSelectSession(sess)}
-                          className="rounded-lg border border-slate-200 bg-white px-2.5 py-1 text-xs font-semibold text-slate-700 hover:bg-slate-50 transition-all cursor-pointer"
-                        >
-                          Edit
-                        </button>
+                          {sess.status === 'scheduled' && (
+                            <button
+                              type="button"
+                              onClick={() => onCancelSession(sess)}
+                              className="rounded-lg border border-red-200 bg-red-50/50 px-2 py-1 text-xs font-semibold text-red-600 hover:bg-red-100 transition-all cursor-pointer"
+                            >
+                              Cancel
+                            </button>
+                          )}
 
-                        {sess.status === 'scheduled' && (
-                          <button
-                            type="button"
-                            onClick={() => onCancelSession(sess)}
-                            className="rounded-lg border border-red-200 bg-red-50/50 px-2 py-1 text-xs font-semibold text-red-600 hover:bg-red-100 transition-all cursor-pointer"
-                          >
-                            Cancel
-                          </button>
-                        )}
-
-                        {sess.status === 'cancelled' && (
-                          <button
-                            type="button"
-                            onClick={() => onDeleteSession(sess.id)}
-                            className="rounded-lg border border-red-200 bg-white px-2 py-1 text-xs font-semibold text-red-600 hover:bg-red-50 transition-all cursor-pointer"
-                          >
-                            Delete
-                          </button>
-                        )}
-                      </div>
-                    </td>
-                  </tr>
-                ))
+                          {sess.status === 'cancelled' && (
+                            <button
+                              type="button"
+                              onClick={() => onDeleteSession(sess.id)}
+                              className="rounded-lg border border-red-200 bg-white px-2 py-1 text-xs font-semibold text-red-600 hover:bg-red-50 transition-all cursor-pointer"
+                            >
+                              Delete
+                            </button>
+                          )}
+                        </div>
+                      </td>
+                    </tr>
+                  )
+                })
               )}
             </tbody>
           </table>

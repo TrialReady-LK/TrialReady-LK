@@ -258,7 +258,7 @@ The **Student Portal** (\`/student/portal\`) is your personal central dashboard 
 1. **📊 Trial Readiness & Progress Widget:**
    • Displays your current AI Readiness Score (0-100%).
    • Shows completed practical driving hours vs. target requirement (e.g. 15 hours).
-   • Tracks your Learner Journey stage (Medical Clearance → Learner Permit → Practical Training → Trial Ready).
+   • Tracks your Learner Journey stage (Medical Clearance → Theory Exam → Learner Permit → Practical Training → Trial Ready).
 
 2. **📅 Upcoming Practical Sessions:**
    • See your booked driving lessons with assigned instructor name, contact number, vehicle model, and transmission type (Manual/Auto).
@@ -278,7 +278,7 @@ The **Student Portal** (\`/student/portal\`) is your personal central dashboard 
 1. **📊 Trial Readiness සහ ප්‍රගති දර්ශකය:**
    • ඔබේ වත්මන් AI Readiness ප්‍රතිශතය (0-100%).
    • සම්පූර්ණ කළ ප්‍රායෝගික පුහුණු පැය ගණන (උදා: පැය 15).
-   • Learner Journey හි ඔබ සිටින වත්මන් පියවර (වෛද්‍ය සහතිකය → ආධුනික බලපත්‍රය → ප්‍රායෝගික පුහුණුව → විභාගයට සුදානම්).
+   • Learner Journey හි ඔබ සිටින වත්මන් පියවර (වෛද්‍ය සහතිකය → ලිඛිත/පරිගණක විභාගය → ආධුනික බලපත්‍රය → ප්‍රායෝගික පුහුණුව → විභාගයට සුදානම්).
 
 2. **📅 ඉදිරි පුහුණු සැසි (Upcoming Sessions):**
    • වෙන්කරවා ගත් රියදුරු පාඩම්, උපදේශකගේ නම, දුරකථන අංකය, වාහන අංකය.

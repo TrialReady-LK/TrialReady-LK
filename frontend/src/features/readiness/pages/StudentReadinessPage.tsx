@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { Printer, GraduationCap, CreditCard, X } from 'lucide-react'
+import { Printer, GraduationCap, CreditCard, X, Award } from 'lucide-react'
 import { useAuth } from '../../auth/context/AuthContext'
 import { AiTrialPredictorCard } from '../../ai/components/AiTrialPredictorCard'
 import { DmtLogbookModal } from '../../logbook/components/DmtLogbookModal'
@@ -8,6 +8,10 @@ import { useStudentLogbook } from '../../logbook/hooks/useStudentLogbook'
 import { ReadinessFactorChecklist } from '../components/ReadinessFactorChecklist'
 import { ReadinessRecommendationCard } from '../components/ReadinessRecommendationCard'
 import { ReadinessScoreGauge } from '../components/ReadinessScoreGauge'
+import { CORE_DMT_PRACTICAL_SKILLS } from '../utils/readinessEngine'
+import { StudentPerformanceAssessmentModal } from '../components/StudentPerformanceAssessmentModal'
+import { recordStudentPerformanceAssessment } from '../services/readinessService'
+import type { StudentPerformanceAssessmentInput } from '../types/readiness'
 import { useStudentReadiness } from '../hooks/useStudentReadiness'
 
 export const StudentReadinessPage: React.FC = () => {
@@ -17,8 +21,8 @@ export const StudentReadinessPage: React.FC = () => {
   const effectiveStudentId =
     paramStudentId ||
     (isStudent
-      ? authProfile?.id || '11111111-1111-1111-1111-111111111111'
-      : '11111111-1111-1111-1111-111111111111')
+      ? authProfile?.id || 'e73a0c54-47b1-4eb7-82bf-5e723528ef01'
+      : 'e73a0c54-47b1-4eb7-82bf-5e723528ef01')
 
   const {
     profile,
@@ -27,12 +31,14 @@ export const StudentReadinessPage: React.FC = () => {
     successMessage,
     setErrorMessage,
     setSuccessMessage,
+    reloadProfile,
     handleSaveEvaluation,
   } = useStudentReadiness(effectiveStudentId)
 
   const { logbookData } = useStudentLogbook(drivingSchoolId, effectiveStudentId)
   const [showLogbook, setShowLogbook] = useState(false)
   const [isSaving, setIsSaving] = useState(false)
+  const [isGradingModalOpen, setIsGradingModalOpen] = useState(false)
 
   const onSave = async () => {
     try {
@@ -41,6 +47,12 @@ export const StudentReadinessPage: React.FC = () => {
     } finally {
       setIsSaving(false)
     }
+  }
+
+  const handleSaveAssessment = async (input: StudentPerformanceAssessmentInput) => {
+    await recordStudentPerformanceAssessment(input)
+    await reloadProfile()
+    setSuccessMessage('Student practical driving performance and maneuver marks recorded successfully.')
   }
 
   if (isLoading) {
@@ -91,7 +103,17 @@ export const StudentReadinessPage: React.FC = () => {
             </p>
           </div>
 
-          <div className="flex gap-2">
+          <div className="flex flex-wrap items-center gap-2">
+            {!isStudent && (
+              <button
+                type="button"
+                onClick={() => setIsGradingModalOpen(true)}
+                className="inline-flex items-center gap-1.5 rounded-xl border border-amber-300 bg-amber-50 px-3.5 py-1.5 text-xs font-bold text-amber-900 hover:bg-amber-100 transition-all cursor-pointer shadow-xs"
+              >
+                <Award className="h-3.5 w-3.5 text-amber-600" />
+                <span>Grade Performance</span>
+              </button>
+            )}
             {logbookData && (
               <button
                 type="button"
@@ -157,19 +179,38 @@ export const StudentReadinessPage: React.FC = () => {
         </div>
 
         <div className="lg:col-span-2">
-          <ReadinessFactorChecklist factors={profile.factors} />
+          <ReadinessFactorChecklist
+            factors={profile.factors}
+            canGrade={!isStudent}
+            onOpenGradingModal={() => setIsGradingModalOpen(true)}
+          />
         </div>
       </div>
 
       {/* Advanced AI Trial Outcome Predictor & Risk Forecaster */}
-      <AiTrialPredictorCard
-        practicalHours={profile.evaluation.practical_hours_completed}
-        skillsCovered={profile.evaluation.skills_missing.length === 0 ? ['Hill Start', 'Reverse S-Bend', 'Parallel Parking', '3-Point Turn', 'Traffic'] : ['Clutch Control', 'Road Signs']}
-        averageRating={profile.evaluation.readiness_score >= 80 ? 4.8 : profile.evaluation.readiness_score >= 60 ? 3.8 : 2.5}
-        permitDaysRemaining={profile.evaluation.permit_status === 'active' ? 75 : -5}
-        hasMedicalCleared={profile.evaluation.medical_status === 'passed'}
-        hasTheoryPassed={profile.evaluation.theory_exam_status === 'passed'}
-      />
+      {(() => {
+        const masteredSkills = CORE_DMT_PRACTICAL_SKILLS.filter(
+          (s) => !profile.evaluation.skills_missing?.includes(s),
+        )
+        return (
+          <AiTrialPredictorCard
+            practicalHours={profile.evaluation.practical_hours_completed}
+            skillsCovered={masteredSkills}
+            averageRating={
+              profile.averageInstructorRating ??
+              (profile.evaluation.readiness_score >= 80
+                ? 4.8
+                : profile.evaluation.readiness_score >= 60
+                ? 3.8
+                : 2.5)
+            }
+            permitDaysRemaining={profile.evaluation.permit_status === 'active' ? 75 : -5}
+            hasMedicalCleared={profile.evaluation.medical_status === 'passed'}
+            hasTheoryPassed={profile.evaluation.theory_exam_status === 'passed'}
+            onOpenGradingModal={!isStudent ? () => setIsGradingModalOpen(true) : undefined}
+          />
+        )
+      })()}
 
       {/* AI Recommendation & Action Roadmap */}
       <ReadinessRecommendationCard
@@ -177,6 +218,24 @@ export const StudentReadinessPage: React.FC = () => {
         onSave={onSave}
         isSaving={isSaving}
       />
+
+      {/* Student Practical Performance Assessment & Grading Modal */}
+      {profile && (
+        <StudentPerformanceAssessmentModal
+          isOpen={isGradingModalOpen}
+          studentId={profile.student.id}
+          studentName={profile.student.full_name}
+          admissionNumber={profile.student.admission_number}
+          currentReadinessScore={profile.evaluation.readiness_score}
+          drivingSchoolId={drivingSchoolId || 'd1111111-1111-1111-1111-111111111111'}
+          initialRating={profile.evaluation.readiness_score >= 80 ? 5 : profile.evaluation.readiness_score >= 60 ? 4 : 3}
+          initialFeedback={profile.evaluation.recommendation_summary || ''}
+          isAdmin={role === 'administrator'}
+          isInstructor={role === 'instructor'}
+          onClose={() => setIsGradingModalOpen(false)}
+          onSaveAssessment={handleSaveAssessment}
+        />
+      )}
 
       {/* DMT Logbook Modal */}
       {logbookData && (

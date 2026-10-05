@@ -10,16 +10,20 @@ import type {
   Student,
   UpdateStudentInput,
 } from '../types/student'
-import { generate100SriLankanStudents } from '../../demo/data/generateDemo100Data'
+import {
+  generate100SriLankanStudents,
+  DEMO_STUDENT_AMAYA_ID,
+  generateRealisticUuid,
+} from '../../demo/data/generateDemo100Data'
 
 const STUDENTS_TABLE = 'students'
 
 export const DEFAULT_STUDENTS: Student[] = [
   {
-    id: '33333333-3333-3333-3333-111111111111',
+    id: DEMO_STUDENT_AMAYA_ID,
     driving_school_id: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
-    branch_id: 'ba111111-1111-1111-1111-111111111111',
-    primary_instructor_id: '11111111-1111-1111-1111-111111111111',
+    branch_id: 'b1a789c2-5d41-4e89-9b12-8f7a63450001',
+    primary_instructor_id: 'd41f8a29-7c3e-4b95-a841-3b7c89f10001',
     student_code: 'ADM-2026-0101',
     full_name: 'Amaya Fernando',
     nic: '200178901234',
@@ -35,10 +39,10 @@ export const DEFAULT_STUDENTS: Student[] = [
     updated_at: new Date().toISOString(),
   },
   {
-    id: '33333333-3333-3333-3333-222222222222',
+    id: generateRealisticUuid('student', 2),
     driving_school_id: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
-    branch_id: 'ba111111-1111-1111-1111-111111111111',
-    primary_instructor_id: '11111111-1111-1111-1111-222222222222',
+    branch_id: 'b1a789c2-5d41-4e89-9b12-8f7a63450001',
+    primary_instructor_id: 'd41f8a29-7c3e-4b95-a841-3b7c89f10002',
     student_code: 'ADM-2026-0102',
     full_name: 'Ravindu Rathnayaka',
     nic: '199923405812',
@@ -54,10 +58,10 @@ export const DEFAULT_STUDENTS: Student[] = [
     updated_at: new Date().toISOString(),
   },
   {
-    id: '33333333-3333-3333-3333-333333333333',
+    id: generateRealisticUuid('student', 3),
     driving_school_id: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
-    branch_id: 'ba111111-1111-1111-1111-111111111111',
-    primary_instructor_id: '11111111-1111-1111-1111-333333333333',
+    branch_id: 'b1a789c2-5d41-4e89-9b12-8f7a63450001',
+    primary_instructor_id: 'd41f8a29-7c3e-4b95-a841-3b7c89f10003',
     student_code: 'ADM-2026-0103',
     full_name: 'Sanduni Wickramasinghe',
     nic: '200265109432',
@@ -73,10 +77,10 @@ export const DEFAULT_STUDENTS: Student[] = [
     updated_at: new Date().toISOString(),
   },
   {
-    id: '33333333-3333-3333-3333-444444444444',
+    id: generateRealisticUuid('student', 4),
     driving_school_id: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
-    branch_id: 'ba222222-2222-2222-2222-222222222222',
-    primary_instructor_id: '11111111-1111-1111-1111-111111111111',
+    branch_id: 'b2a789c2-5d41-4e89-9b12-8f7a63450002',
+    primary_instructor_id: 'd41f8a29-7c3e-4b95-a841-3b7c89f10001',
     student_code: 'ADM-2026-0104',
     full_name: 'Dinesh Perera',
     nic: '199834208914',
@@ -92,10 +96,10 @@ export const DEFAULT_STUDENTS: Student[] = [
     updated_at: new Date().toISOString(),
   },
   {
-    id: '33333333-3333-3333-3333-555555555555',
+    id: generateRealisticUuid('student', 5),
     driving_school_id: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
-    branch_id: 'ba333333-3333-3333-3333-333333333333',
-    primary_instructor_id: '11111111-1111-1111-1111-444444444444',
+    branch_id: 'b3a789c2-5d41-4e89-9b12-8f7a63450003',
+    primary_instructor_id: 'd41f8a29-7c3e-4b95-a841-3b7c89f10004',
     student_code: 'ADM-2026-0105',
     full_name: 'Kavindi Silva',
     nic: '200384102941',
@@ -214,8 +218,8 @@ export async function createStudent(
   const newStudent: Student = {
     id: generatedId,
     driving_school_id: payload.driving_school_id,
-    branch_id: payload.branch_id || 'ba111111-1111-1111-1111-111111111111',
-    primary_instructor_id: payload.primary_instructor_id || '33333333-3333-3333-3333-111111111111',
+    branch_id: payload.branch_id || 'b1a789c2-5d41-4e89-9b12-8f7a63450001',
+    primary_instructor_id: payload.primary_instructor_id || 'd41f8a29-7c3e-4b95-a841-3b7c89f10001',
     student_code:
       payload.student_code ||
       `ADM-2026-${Math.floor(1000 + Math.random() * 9000)}`,

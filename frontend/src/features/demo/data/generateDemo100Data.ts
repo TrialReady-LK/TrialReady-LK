@@ -17,6 +17,28 @@ export interface DemoStudent {
   branch?: { id: string; name: string }
 }
 
+export const DEMO_STUDENT_AMAYA_ID = 'e73a0c54-47b1-4eb7-82bf-5e723528ef01'
+
+export function generateRealisticUuid(type: string, index: number): string {
+  if (type === 'student' && index === 1) {
+    return DEMO_STUDENT_AMAYA_ID
+  }
+  const typeHash = type.split('').reduce((acc, c) => ((acc << 5) - acc + c.charCodeAt(0)) | 0, 0)
+  const hash1 = (((index * 2654435761) ^ typeHash) >>> 0).toString(16).padStart(8, '0')
+  const hash2 = (((index + 101) * 2246822519 ^ (typeHash >> 2)) >>> 0).toString(16).padStart(8, '0')
+  const hash3 = (((index + 503) * 3266489917 ^ (typeHash >> 4)) >>> 0).toString(16).padStart(8, '0')
+  const hash4 = (((index + 997) * 668265263 ^ (typeHash >> 6)) >>> 0).toString(16).padStart(8, '0')
+
+  const combined = `${hash1}${hash2}${hash3}${hash4}`
+  const p1 = combined.slice(0, 8)
+  const p2 = combined.slice(8, 12)
+  const p3 = `4${combined.slice(13, 16)}`
+  const variantChars = ['8', '9', 'a', 'b']
+  const p4 = `${variantChars[index % 4]}${combined.slice(17, 20)}`
+  const p5 = combined.slice(20, 32)
+  return `${p1}-${p2}-${p3}-${p4}-${p5}`
+}
+
 export const UNIQUE_100_SRI_LANKAN_NAMES: string[] = [
   'Amaya Fernando',
   'Ravindu Rathnayaka',
@@ -177,8 +199,8 @@ export function generate100SriLankanStudents(
 
     const isMale = i % 2 === 0
     const branchIdx = (i - 1) % (branches.length || 1)
-    const branch = branches[branchIdx] || branches[0] || { id: 'ba111111-1111-1111-1111-111111111111', name: 'Colombo Central (Nugegoda)' }
-    const instructor = instructors[(i - 1) % (instructors.length || 1)] || instructors[0] || { id: '11111111-1111-1111-1111-111111111111', full_name: 'Nimal Jayasuriya' }
+    const branch = branches[branchIdx] || branches[0] || { id: 'b1a789c2-5d41-4e89-9b12-8f7a63450001', name: 'Colombo Central (Nugegoda)' }
+    const instructor = instructors[(i - 1) % (instructors.length || 1)] || instructors[0] || { id: 'd41f8a29-7c3e-4b95-a841-3b7c89f10001', full_name: 'Nimal Jayasuriya' }
 
     const branchStreetInfo = STREETS_BY_BRANCH[branchIdx] || STREETS_BY_BRANCH[0]
     const street = branchStreetInfo.streets[(i * 3) % branchStreetInfo.streets.length]
@@ -218,10 +240,7 @@ export function generate100SriLankanStudents(
     const studentCodeNum = String(100 + i).padStart(4, '0')
     const studentCode = `ADM-2026-${studentCodeNum}`
 
-    const paddedId = i <= 5
-      ? `${i}${i}${i}${i}${i}${i}${i}${i}${i}${i}${i}${i}`
-      : String(i).padStart(12, '0')
-    const id = `33333333-3333-3333-3333-${paddedId}`
+    const id = generateRealisticUuid('student', i)
 
     students.push({
       id,

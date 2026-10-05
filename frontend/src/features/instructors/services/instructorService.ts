@@ -15,9 +15,9 @@ const INSTRUCTORS_TABLE = 'instructors'
 
 export const DEFAULT_INSTRUCTORS: Instructor[] = [
   {
-    id: '33333333-3333-3333-3333-111111111111',
+    id: 'd41f8a29-7c3e-4b95-a841-3b7c89f10001',
     driving_school_id: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
-    branch_id: 'ba111111-1111-1111-1111-111111111111',
+    branch_id: 'b1a789c2-5d41-4e89-9b12-8f7a63450001',
     employee_code: 'INS-WP-001',
     full_name: 'Nimal Jayasuriya',
     nic: '197812345678',
@@ -31,9 +31,9 @@ export const DEFAULT_INSTRUCTORS: Instructor[] = [
     updated_at: new Date().toISOString(),
   },
   {
-    id: '33333333-3333-3333-3333-222222222222',
+    id: 'd41f8a29-7c3e-4b95-a841-3b7c89f10002',
     driving_school_id: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
-    branch_id: 'ba111111-1111-1111-1111-111111111111',
+    branch_id: 'b1a789c2-5d41-4e89-9b12-8f7a63450001',
     employee_code: 'INS-WP-002',
     full_name: 'Sunil Perera',
     nic: '198234567890',
@@ -47,9 +47,9 @@ export const DEFAULT_INSTRUCTORS: Instructor[] = [
     updated_at: new Date().toISOString(),
   },
   {
-    id: '33333333-3333-3333-3333-333333333333',
+    id: 'd41f8a29-7c3e-4b95-a841-3b7c89f10003',
     driving_school_id: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
-    branch_id: 'ba222222-2222-2222-2222-222222222222',
+    branch_id: 'b2a789c2-5d41-4e89-9b12-8f7a63450002',
     employee_code: 'INS-WP-003',
     full_name: 'Chaminda Silva',
     nic: '198545678901',
@@ -63,9 +63,9 @@ export const DEFAULT_INSTRUCTORS: Instructor[] = [
     updated_at: new Date().toISOString(),
   },
   {
-    id: '33333333-3333-3333-3333-444444444444',
+    id: 'd41f8a29-7c3e-4b95-a841-3b7c89f10004',
     driving_school_id: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
-    branch_id: 'ba333333-3333-3333-3333-333333333333',
+    branch_id: 'b3a789c2-5d41-4e89-9b12-8f7a63450003',
     employee_code: 'INS-WP-004',
     full_name: 'Kanthi Wickramasinghe',
     nic: '198056789012',
@@ -164,7 +164,7 @@ export async function createInstructor(
   const newInstructor: Instructor = {
     id: generatedId,
     driving_school_id: payload.driving_school_id,
-    branch_id: payload.branch_id || 'ba111111-1111-1111-1111-111111111111',
+    branch_id: payload.branch_id || 'b1a789c2-5d41-4e89-9b12-8f7a63450001',
     employee_code:
       payload.employee_code ||
       `INS-WP-00${Math.floor(5 + Math.random() * 5)}`,

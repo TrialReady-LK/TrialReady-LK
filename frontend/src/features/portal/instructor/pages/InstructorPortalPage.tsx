@@ -14,6 +14,12 @@ import type {
   PracticalSessionWithRelations,
   RecordAttendanceInput,
 } from '../../../sessions/types/session'
+import type {
+  StudentPerformanceAssessmentInput,
+  StudentReadinessProfile,
+} from '../../../readiness/types/readiness'
+import { recordStudentPerformanceAssessment } from '../../../readiness/services/readinessService'
+import { StudentPerformanceAssessmentModal } from '../../../readiness/components/StudentPerformanceAssessmentModal'
 import { InstructorStatsCards } from '../components/InstructorStatsCards'
 import { InstructorStudentsRoster } from '../components/InstructorStudentsRoster'
 import { InstructorTodayAgenda } from '../components/InstructorTodayAgenda'
@@ -54,6 +60,10 @@ export const InstructorPortalPage: React.FC<InstructorPortalPageProps> = ({
   const [activeDefectVehicle, setActiveDefectVehicle] =
     useState<VehicleWithRelations | null>(null)
   const [isDefectModalOpen, setIsDefectModalOpen] = useState(false)
+
+  const [gradingStudent, setGradingStudent] =
+    useState<StudentReadinessProfile | null>(null)
+  const [isGradingModalOpen, setIsGradingModalOpen] = useState(false)
 
   useEffect(() => {
     getVehicles(drivingSchoolId)
@@ -99,8 +109,8 @@ export const InstructorPortalPage: React.FC<InstructorPortalPageProps> = ({
       targetVeh = {
         id: session.vehicle_id || 'veh-active',
         driving_school_id: drivingSchoolId,
-        branch_id: session.branch_id || 'ba111111-1111-1111-1111-111111111111',
-        licence_category_id: session.licence_category_id || 'ca111111-1111-1111-1111-111111111111',
+        branch_id: session.branch_id || 'b1a789c2-5d41-4e89-9b12-8f7a63450001',
+        licence_category_id: session.licence_category_id || 'c1a789c2-5d41-4e89-9b12-8f7a63450001',
         registration_number: session.vehicle.registration_number || 'WP CAB-4921',
         display_name: `${session.vehicle.make || 'Toyota'} ${session.vehicle.model || 'Vitz'}`,
         manufacturer: session.vehicle.make || 'Toyota',
@@ -141,7 +151,7 @@ export const InstructorPortalPage: React.FC<InstructorPortalPageProps> = ({
         <div className="flex flex-col items-center gap-2">
           <div className="h-8 w-8 animate-spin rounded-full border-4 border-blue-600 border-t-transparent" />
           <p className="text-xs font-medium text-slate-500">
-            Loading instructor workspace...
+            Loading instructor dashboard...
           </p>
         </div>
       </div>
@@ -153,16 +163,16 @@ export const InstructorPortalPage: React.FC<InstructorPortalPageProps> = ({
       {/* Top Header */}
       <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2.5">
             <h1 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
-              Instructor Workspace
+              Instructor Dashboard
             </h1>
-            <span className="rounded-full bg-emerald-100 px-2.5 py-0.5 text-xs font-bold text-emerald-800">
-              ● Active On-Duty
+            <span className="rounded-full bg-emerald-50 px-2.5 py-0.5 text-xs font-semibold text-emerald-700 border border-emerald-200">
+              Active On-Duty
             </span>
           </div>
           <p className="mt-1 text-xs text-slate-500 sm:text-sm">
-            Manage your daily practical driving lessons, record attendance, and evaluate DMT skill mastery.
+            Daily practical driving lessons, student attendance logs, and DMT skill mastery assessments.
           </p>
         </div>
 
@@ -223,7 +233,41 @@ export const InstructorPortalPage: React.FC<InstructorPortalPageProps> = ({
       />
 
       {/* 2. Assigned Students Roster */}
-      <InstructorStudentsRoster students={students} />
+      <InstructorStudentsRoster
+        students={students}
+        onGradeStudent={(student) => {
+          setGradingStudent(student)
+          setIsGradingModalOpen(true)
+        }}
+      />
+
+      {/* Practical Performance Grading Modal */}
+      {gradingStudent && (
+        <StudentPerformanceAssessmentModal
+          isOpen={isGradingModalOpen}
+          studentId={gradingStudent.student.id}
+          studentName={gradingStudent.student.full_name}
+          admissionNumber={gradingStudent.student.admission_number}
+          currentReadinessScore={gradingStudent.evaluation.readiness_score}
+          drivingSchoolId={drivingSchoolId}
+          initialSkills={gradingStudent.evaluation.skills_missing.length === 0 ? ['Hill Start', 'Reverse S-Bend', 'Parallel Parking', '3-Point Turn', 'Traffic Discipline', 'Emergency Braking', 'Clutch & Gear Shift'] : ['Hill Start', 'Reverse S-Bend', 'Parallel Parking', '3-Point Turn']}
+          initialRating={gradingStudent.evaluation.readiness_score >= 80 ? 5 : gradingStudent.evaluation.readiness_score >= 60 ? 4 : 3}
+          initialFeedback={gradingStudent.evaluation.recommendation_summary || ''}
+          isAdmin={profile?.role === 'administrator'}
+          isInstructor={true}
+          onClose={() => {
+            setIsGradingModalOpen(false)
+            setGradingStudent(null)
+          }}
+          onSaveAssessment={async (input: StudentPerformanceAssessmentInput) => {
+            await recordStudentPerformanceAssessment(input)
+            await reloadData()
+            setSuccessMessage(
+              `Performance marks and maneuver evaluation updated for ${gradingStudent.student.full_name}.`,
+            )
+          }}
+        />
+      )}
 
       {/* Attendance Modal */}
       <SessionAttendanceModal

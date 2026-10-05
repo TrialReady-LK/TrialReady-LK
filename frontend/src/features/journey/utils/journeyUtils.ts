@@ -119,56 +119,56 @@ export function computeJourneyStages(data: {
     badgeText: stage2Badge,
   }
 
-  // Stage 3: Learner's Permit
+  // Stage 3: Theory Exam
+  const passedTheory = theoryExams.find((e) => e.status === 'passed')
+  const scheduledTheory = theoryExams.find((e) => e.status === 'scheduled')
   let stage3Status: JourneyStageInfo['status'] = 'pending'
-  let stage3Badge = 'Not Applied'
-  if (permit) {
-    const validity = calculatePermitValidity(permit.expiry_date)
-    if (validity.state === 'expired') {
-      stage3Status = 'blocked'
-      stage3Badge = 'Expired'
-    } else {
-      stage3Status = 'completed'
-      stage3Badge = permit.permit_number
-    }
+  let stage3Badge = 'Pending'
+  if (passedTheory) {
+    stage3Status = 'completed'
+    stage3Badge = `Passed (${passedTheory.score ?? 100}%)`
+  } else if (scheduledTheory) {
+    stage3Status = 'in_progress'
+    stage3Badge = `Exam on ${scheduledTheory.scheduled_date}`
   } else if (stage2Status === 'completed') {
     stage3Status = 'in_progress'
-    stage3Badge = 'Ready to Apply'
+    stage3Badge = 'Eligible for Exam'
   }
   const stage3: JourneyStageInfo = {
     stageNumber: 3,
-    key: 'permit',
-    title: "Learner's Permit (DMT)",
-    status: stage3Status,
-    description: permit
-      ? `Permit #${permit.permit_number} (Exp: ${permit.expiry_date})`
-      : "Official Department of Motor Traffic learner's permit.",
-    badgeText: stage3Badge,
-  }
-
-  // Stage 4: Theory Exam
-  const passedTheory = theoryExams.find((e) => e.status === 'passed')
-  const scheduledTheory = theoryExams.find((e) => e.status === 'scheduled')
-  let stage4Status: JourneyStageInfo['status'] = 'pending'
-  let stage4Badge = 'Pending'
-  if (passedTheory) {
-    stage4Status = 'completed'
-    stage4Badge = `Passed (${passedTheory.score ?? 100}%)`
-  } else if (scheduledTheory) {
-    stage4Status = 'in_progress'
-    stage4Badge = `Exam on ${scheduledTheory.scheduled_date}`
-  } else if (stage3Status === 'completed') {
-    stage4Status = 'in_progress'
-    stage4Badge = 'Eligible for Exam'
-  }
-  const stage4: JourneyStageInfo = {
-    stageNumber: 4,
     key: 'theory',
     title: 'DMT Theory Exam',
-    status: stage4Status,
+    status: stage3Status,
     description: passedTheory
       ? `Passed computerized test on ${passedTheory.scheduled_date}.`
       : 'Computerized traffic road rules and signs exam.',
+    badgeText: stage3Badge,
+  }
+
+  // Stage 4: Learner's Permit
+  let stage4Status: JourneyStageInfo['status'] = 'pending'
+  let stage4Badge = 'Not Applied'
+  if (permit) {
+    const validity = calculatePermitValidity(permit.expiry_date)
+    if (validity.state === 'expired') {
+      stage4Status = 'blocked'
+      stage4Badge = 'Expired'
+    } else {
+      stage4Status = 'completed'
+      stage4Badge = permit.permit_number
+    }
+  } else if (stage3Status === 'completed') {
+    stage4Status = 'in_progress'
+    stage4Badge = 'Ready to Issue Permit'
+  }
+  const stage4: JourneyStageInfo = {
+    stageNumber: 4,
+    key: 'permit',
+    title: "Learner's Permit (DMT)",
+    status: stage4Status,
+    description: permit
+      ? `Permit #${permit.permit_number} (Exp: ${permit.expiry_date})`
+      : "Official Department of Motor Traffic learner's permit.",
     badgeText: stage4Badge,
   }
 

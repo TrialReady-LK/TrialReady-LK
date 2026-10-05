@@ -37,8 +37,8 @@ describe('Vehicle Defect Reporting and Replacement Switch', () => {
   })
 
   it('marks defective vehicle as in_maintenance and suspended when critical fault is reported', async () => {
-    const defectiveId = '22222222-2222-2222-2222-111111111111'
-    const replacementId = '22222222-2222-2222-2222-222222222222'
+    const defectiveId = 'f1a789c2-5d41-4e89-9b12-8f7a63450001'
+    const replacementId = 'f1a789c2-5d41-4e89-9b12-8f7a63450002'
 
     const result = await reportVehicleDefectAndSwitch({
       defectiveVehicleId: defectiveId,
@@ -66,18 +66,18 @@ describe('Vehicle Defect Reporting and Replacement Switch', () => {
   })
 
   it('automatically updates practical session vehicle assignment when sessionId is passed', async () => {
-    const defectiveId = '22222222-2222-2222-2222-111111111111'
-    const replacementId = '22222222-2222-2222-2222-222222222222'
+    const defectiveId = 'f1a789c2-5d41-4e89-9b12-8f7a63450001'
+    const replacementId = 'f1a789c2-5d41-4e89-9b12-8f7a63450002'
     const testSessionId = 'sess-test-defect-switch'
 
     const mockSession: PracticalSessionWithRelations = {
       id: testSessionId,
       driving_school_id: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
-      branch_id: 'ba111111-1111-1111-1111-111111111111',
-      student_id: '11111111-1111-1111-1111-111111111111',
-      instructor_id: '33333333-3333-3333-3333-111111111111',
+      branch_id: 'b1a789c2-5d41-4e89-9b12-8f7a63450001',
+      student_id: 'e73a0c54-47b1-4eb7-82bf-5e723528ef01',
+      instructor_id: 'd41f8a29-7c3e-4b95-a841-3b7c89f10001',
       vehicle_id: defectiveId,
-      licence_category_id: 'ca111111-1111-1111-1111-111111111111',
+      licence_category_id: 'c1a789c2-5d41-4e89-9b12-8f7a63450001',
       session_date: '2026-10-05',
       start_time: '10:00:00',
       end_time: '11:30:00',
@@ -90,13 +90,13 @@ describe('Vehicle Defect Reporting and Replacement Switch', () => {
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
       student: {
-        id: '11111111-1111-1111-1111-111111111111',
+        id: 'e73a0c54-47b1-4eb7-82bf-5e723528ef01',
         full_name: 'Amaya Fernando',
         admission_number: 'ADM-2026-0042',
         phone: '+94 77 123 4567',
       },
       instructor: {
-        id: '33333333-3333-3333-3333-111111111111',
+        id: 'd41f8a29-7c3e-4b95-a841-3b7c89f10001',
         full_name: 'Nimal Jayasuriya',
         staff_number: 'INS-WP-001',
         phone: '+94 77 234 5678',
@@ -109,12 +109,12 @@ describe('Vehicle Defect Reporting and Replacement Switch', () => {
         transmission_type: 'manual',
       },
       licence_category: {
-        id: 'ca111111-1111-1111-1111-111111111111',
+        id: 'c1a789c2-5d41-4e89-9b12-8f7a63450001',
         code: 'B',
         name: 'Dual Purpose / Light Motor Car (Auto & Manual)',
       },
       branch: {
-        id: 'ba111111-1111-1111-1111-111111111111',
+        id: 'b1a789c2-5d41-4e89-9b12-8f7a63450001',
         name: 'Colombo Central (Nugegoda)',
         code: 'COL-01',
       },

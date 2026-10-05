@@ -11,7 +11,6 @@ import {
   Users,
   UserCheck,
   Building2,
-  ShieldCheck,
   FileCheck,
   ArrowRight,
 } from 'lucide-react'
@@ -21,7 +20,7 @@ import { supabase } from '../../../lib/supabase'
 import { getStoredData, STORAGE_KEYS } from '../../../lib/persistentStorage'
 
 export const AdminDashboardPage: React.FC = () => {
-  const { profile, role, drivingSchoolId } = useAuth()
+  const { profile, drivingSchoolId } = useAuth()
   const [stats, setStats] = useState({
     vehicles: 12,
     students: 25,
@@ -142,7 +141,7 @@ export const AdminDashboardPage: React.FC = () => {
     },
     {
       title: 'Learner Journey',
-      description: 'DMT permits, NTMI medicals & exam trial milestones',
+      description: 'NTMI medicals, theory exams, DMT permits & trial milestones',
       to: '/journey',
       icon: GraduationCap,
       color: 'bg-blue-500/10 text-blue-600 border-blue-200',
@@ -186,32 +185,28 @@ export const AdminDashboardPage: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      {/* Welcome Banner */}
-      <section className="rounded-2xl bg-linear-to-r from-blue-600 to-indigo-700 p-6 text-white shadow-lg">
+      {/* Executive Header Banner */}
+      <section className="rounded-2xl bg-linear-to-r from-slate-900 via-slate-800 to-blue-950 p-6 text-white shadow-md border border-slate-800">
         <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
           <div className="min-w-0">
-            <div className="inline-flex items-center gap-1.5 rounded-full bg-white/20 px-2.5 py-0.5 text-xs font-semibold backdrop-blur-xs mb-2">
-              <ShieldCheck className="h-3.5 w-3.5 text-amber-300" />
-              <span className="capitalize">{role ?? 'Administrator'} Workspace</span>
-            </div>
-            <h1 className="text-xl font-black tracking-tight sm:text-2xl md:text-3xl break-words">
-              Welcome back, {profile?.full_name ?? 'Administrator'}!
+            <h1 className="text-xl font-bold tracking-tight sm:text-2xl md:text-3xl break-words">
+              {profile?.driving_school?.name ?? 'Royal Driving Academy'}
             </h1>
-            <p className="mt-1 text-xs text-blue-100 sm:text-sm truncate">
-              {profile?.driving_school?.name ?? 'TrialReady Driving Academy'} • Sri Lanka Multi-Tenant Platform
+            <p className="mt-1 text-xs text-slate-300 sm:text-sm">
+              Sri Lanka DMT Statutory Academy Administration &amp; Compliance System
             </p>
           </div>
 
           <div className="mt-2 md:mt-0 flex gap-2 shrink-0">
             <Link
               to="/vehicles"
-              className="rounded-xl bg-white px-4 py-2 text-xs font-bold text-blue-700 shadow-xs hover:bg-blue-50 transition-all cursor-pointer"
+              className="rounded-xl bg-blue-600 px-4 py-2 text-xs font-bold text-white shadow-xs hover:bg-blue-500 transition-all cursor-pointer"
             >
               + Add Vehicle
             </Link>
             <Link
               to="/students"
-              className="rounded-xl bg-blue-500/40 border border-white/30 px-4 py-2 text-xs font-bold text-white hover:bg-blue-500/60 transition-all cursor-pointer"
+              className="rounded-xl bg-white/10 border border-white/20 px-4 py-2 text-xs font-bold text-white hover:bg-white/20 transition-all cursor-pointer"
             >
               + Register Student
             </Link>

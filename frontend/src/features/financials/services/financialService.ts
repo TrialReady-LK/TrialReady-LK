@@ -16,10 +16,14 @@ import type {
   UpdatePackageInput,
 } from '../types/financials'
 import { generateReceiptNumber, getPaymentStatus } from '../utils/financialUtils'
+import {
+  DEMO_STUDENT_AMAYA_ID,
+  generateRealisticUuid,
+} from '../../demo/data/generateDemo100Data'
 
 export const DEFAULT_PACKAGES: Package[] = [
   {
-    id: 'pa111111-1111-1111-1111-111111111111',
+    id: 'e1a789c2-5d41-4e89-9b12-8f7a63450001',
     driving_school_id: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
     name: 'Dual Combo (Car B Manual + Bike A)',
     code: 'PKG-COMBO-BM',
@@ -32,7 +36,7 @@ export const DEFAULT_PACKAGES: Package[] = [
     updated_at: new Date().toISOString(),
   },
   {
-    id: 'pa222222-2222-2222-2222-222222222222',
+    id: 'e1a789c2-5d41-4e89-9b12-8f7a63450002',
     driving_school_id: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
     name: 'Light Motor Car (Auto Only)',
     code: 'PKG-CAR-AUTO',
@@ -45,7 +49,7 @@ export const DEFAULT_PACKAGES: Package[] = [
     updated_at: new Date().toISOString(),
   },
   {
-    id: 'pa333333-3333-3333-3333-333333333333',
+    id: 'e1a789c2-5d41-4e89-9b12-8f7a63450003',
     driving_school_id: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
     name: 'Motorcycle & Three Wheeler (B1 + A)',
     code: 'PKG-BIKE-3WH',
@@ -60,12 +64,12 @@ export const DEFAULT_PACKAGES: Package[] = [
 ]
 
 export const DEFAULT_PAYMENTS: StudentPayment[] = [
-  // 1. Student Amaya Fernando (Primary Student Portal account: 33333333-3333-3333-3333-111111111111)
+  // 1. Student Amaya Fernando (Primary Student Portal account)
   {
     id: 'pay-amaya-01',
     driving_school_id: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
-    student_id: '33333333-3333-3333-3333-111111111111',
-    enrolment_id: 'ea111111-1111-1111-1111-111111111111',
+    student_id: DEMO_STUDENT_AMAYA_ID,
+    enrolment_id: 'e1a789c2-5d41-4e89-9b12-8f7a63450001',
     receipt_number: 'REC-20260510-0042',
     payment_date: '2026-05-10',
     amount: 25000,
@@ -79,8 +83,8 @@ export const DEFAULT_PAYMENTS: StudentPayment[] = [
   {
     id: 'pay-amaya-02',
     driving_school_id: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
-    student_id: '33333333-3333-3333-3333-111111111111',
-    enrolment_id: 'ea111111-1111-1111-1111-111111111111',
+    student_id: DEMO_STUDENT_AMAYA_ID,
+    enrolment_id: 'e1a789c2-5d41-4e89-9b12-8f7a63450001',
     receipt_number: 'REC-20260620-0089',
     payment_date: '2026-06-20',
     amount: 20000,
@@ -91,12 +95,12 @@ export const DEFAULT_PAYMENTS: StudentPayment[] = [
     created_at: '2026-06-20T10:00:00.000Z',
     updated_at: new Date().toISOString(),
   },
-  // 2. Student Ravindu Wickramasinghe (33333333-3333-3333-3333-222222222222)
+  // 2. Student Ravindu Rathnayaka
   {
     id: 'pay-ravindu-01',
     driving_school_id: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
-    student_id: '33333333-3333-3333-3333-222222222222',
-    enrolment_id: 'ea222222-2222-2222-2222-222222222222',
+    student_id: generateRealisticUuid('student', 2),
+    enrolment_id: 'e1a789c2-5d41-4e89-9b12-8f7a63450002',
     receipt_number: 'REC-20260601-0201',
     payment_date: '2026-06-01',
     amount: 30000,
@@ -107,12 +111,12 @@ export const DEFAULT_PAYMENTS: StudentPayment[] = [
     created_at: '2026-06-01T10:00:00.000Z',
     updated_at: new Date().toISOString(),
   },
-  // 3. Student Sanduni Jayasuriya (33333333-3333-3333-3333-333333333333)
+  // 3. Student Sanduni Wickramasinghe
   {
     id: 'pay-sanduni-01',
     driving_school_id: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
-    student_id: '33333333-3333-3333-3333-333333333333',
-    enrolment_id: 'ea333333-3333-3333-3333-333333333333',
+    student_id: generateRealisticUuid('student', 3),
+    enrolment_id: 'e1a789c2-5d41-4e89-9b12-8f7a63450003',
     receipt_number: 'REC-20260715-0301',
     payment_date: '2026-07-15',
     amount: 20000,
@@ -123,12 +127,12 @@ export const DEFAULT_PAYMENTS: StudentPayment[] = [
     created_at: '2026-07-15T10:00:00.000Z',
     updated_at: new Date().toISOString(),
   },
-  // 4. Student Kasun Bandara (33333333-3333-3333-3333-444444444444)
+  // 4. Student Dinesh Perera
   {
-    id: 'pay-kasun-01',
+    id: 'pay-dinesh-01',
     driving_school_id: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
-    student_id: '33333333-3333-3333-3333-444444444444',
-    enrolment_id: 'ea444444-4444-4444-4444-444444444444',
+    student_id: generateRealisticUuid('student', 4),
+    enrolment_id: 'e1a789c2-5d41-4e89-9b12-8f7a63450004',
     receipt_number: 'REC-20260320-0401',
     payment_date: '2026-03-20',
     amount: 10000,
@@ -139,13 +143,13 @@ export const DEFAULT_PAYMENTS: StudentPayment[] = [
     created_at: '2026-03-20T10:00:00.000Z',
     updated_at: new Date().toISOString(),
   },
-  // 5. Student Kavindu Dilshan (11111111-1111-1111-1111-111111111111)
+  // 5. Student Kavindi Silva
   {
-    id: 'pay-001',
+    id: 'pay-kavindi-01',
     driving_school_id: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
-    student_id: '11111111-1111-1111-1111-111111111111',
-    enrolment_id: 'ea111111-1111-1111-1111-111111111111',
-    receipt_number: 'REC-20260610-0101',
+    student_id: generateRealisticUuid('student', 5),
+    enrolment_id: 'e1a789c2-5d41-4e89-9b12-8f7a63450005',
+    receipt_number: 'REC-20260610-0501',
     payment_date: '2026-06-10',
     amount: 45000,
     payment_method: 'bank_transfer',
@@ -156,11 +160,11 @@ export const DEFAULT_PAYMENTS: StudentPayment[] = [
     updated_at: new Date().toISOString(),
   },
   {
-    id: 'pay-002',
+    id: 'pay-kavindi-02',
     driving_school_id: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
-    student_id: '11111111-1111-1111-1111-111111111111',
-    enrolment_id: 'ea111111-1111-1111-1111-111111111111',
-    receipt_number: 'REC-20260715-0102',
+    student_id: generateRealisticUuid('student', 5),
+    enrolment_id: 'e1a789c2-5d41-4e89-9b12-8f7a63450005',
+    receipt_number: 'REC-20260715-0502',
     payment_date: '2026-07-15',
     amount: 20000,
     payment_method: 'cash',
@@ -170,13 +174,13 @@ export const DEFAULT_PAYMENTS: StudentPayment[] = [
     created_at: '2026-07-15T10:00:00.000Z',
     updated_at: new Date().toISOString(),
   },
-  // 6. Student Nadeesha Fernando (11111111-1111-1111-1111-222222222222)
+  // 6. Student Nethmi Jayasekara
   {
-    id: 'pay-003',
+    id: 'pay-nethmi-01',
     driving_school_id: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
-    student_id: '11111111-1111-1111-1111-222222222222',
-    enrolment_id: 'ea222222-2222-2222-2222-222222222222',
-    receipt_number: 'REC-20260601-0202',
+    student_id: generateRealisticUuid('student', 6),
+    enrolment_id: 'e1a789c2-5d41-4e89-9b12-8f7a63450001',
+    receipt_number: 'REC-20260601-0601',
     payment_date: '2026-06-01',
     amount: 30000,
     payment_method: 'card',
@@ -186,13 +190,13 @@ export const DEFAULT_PAYMENTS: StudentPayment[] = [
     created_at: '2026-06-01T10:00:00.000Z',
     updated_at: new Date().toISOString(),
   },
-  // 7. Student Sahan Ranasinghe (11111111-1111-1111-1111-333333333333)
+  // 7. Student Dilshan Bandara
   {
-    id: 'pay-004',
+    id: 'pay-dilshan-01',
     driving_school_id: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
-    student_id: '11111111-1111-1111-1111-333333333333',
-    enrolment_id: 'ea333333-3333-3333-3333-333333333333',
-    receipt_number: 'REC-20260715-0302',
+    student_id: generateRealisticUuid('student', 7),
+    enrolment_id: 'e1a789c2-5d41-4e89-9b12-8f7a63450002',
+    receipt_number: 'REC-20260715-0701',
     payment_date: '2026-07-15',
     amount: 20000,
     payment_method: 'cash',
@@ -570,63 +574,47 @@ export async function deletePayment(id: string): Promise<void> {
 export async function getStudentFinancialLedger(
   studentId: string,
 ): Promise<StudentFinancialLedger> {
+  const localStudents = getStoredData<any[]>(STORAGE_KEYS.STUDENTS, [])
+  const localS = localStudents.find(
+    (st) =>
+      st.id === studentId ||
+      (st.student_code && st.student_code.toLowerCase() === studentId.toLowerCase()),
+  )
+  const targetId = localS ? localS.id : studentId
+
   const [enrolment, payments] = await Promise.all([
-    getStudentEnrolment(studentId),
-    getStudentPayments(studentId),
+    getStudentEnrolment(targetId),
+    getStudentPayments(targetId),
   ])
 
   let studentData = {
-    id: studentId,
-    full_name: 'Amaya Fernando',
-    admission_number: 'ADM-2026-0042',
-    phone: '+94 77 456 7890',
-    email: 'amaya.fernando@gmail.com',
-    branch_name: 'Colombo Central (Nugegoda)',
+    id: targetId,
+    full_name: localS?.full_name || 'Amaya Fernando',
+    admission_number: localS?.student_code || 'ADM-2026-0101',
+    phone: localS?.phone || '+94 77 123 4567',
+    email: localS?.email || 'amaya.fernando@gmail.com',
+    branch_name: localS?.branch?.name || 'Colombo Central (Nugegoda)',
   }
 
   try {
     const { data: s } = await supabase
       .from('students')
       .select('id, full_name, student_code, phone, email, branches(name)')
-      .eq('id', studentId)
+      .eq('id', targetId)
       .maybeSingle()
 
     if (s) {
       studentData = {
         id: s.id,
         full_name: s.full_name,
-        admission_number: (s as any).student_code ?? 'ADM-2026-0042',
+        admission_number: (s as any).student_code ?? 'ADM-2026-0101',
         phone: s.phone ?? null,
         email: s.email ?? null,
         branch_name: (s.branches as any)?.name ?? 'Colombo Central (Nugegoda)',
       }
-    } else {
-      const localStudents = getStoredData<any[]>(STORAGE_KEYS.STUDENTS, [])
-      const localS = localStudents.find((st) => st.id === studentId)
-      if (localS) {
-        studentData = {
-          id: localS.id,
-          full_name: localS.full_name,
-          admission_number: localS.student_code ?? 'ADM-2026-0042',
-          phone: localS.phone ?? null,
-          email: localS.email ?? null,
-          branch_name: localS.branch?.name ?? 'Colombo Central (Nugegoda)',
-        }
-      }
     }
   } catch {
-    const localStudents = getStoredData<any[]>(STORAGE_KEYS.STUDENTS, [])
-    const localS = localStudents.find((st) => st.id === studentId)
-    if (localS) {
-      studentData = {
-        id: localS.id,
-        full_name: localS.full_name,
-        admission_number: localS.student_code ?? 'ADM-2026-0042',
-        phone: localS.phone ?? null,
-        email: localS.email ?? null,
-        branch_name: localS.branch?.name ?? 'Colombo Central (Nugegoda)',
-      }
-    }
+    // fallback to localS
   }
 
   const totalFee = enrolment
@@ -663,13 +651,13 @@ export async function getAllFinancialLedgers(
     localStudents.length > 0
       ? localStudents.map((s) => s.id)
       : [
-          '33333333-3333-3333-3333-111111111111',
-          '33333333-3333-3333-3333-222222222222',
-          '33333333-3333-3333-3333-333333333333',
-          '33333333-3333-3333-3333-444444444444',
-          '11111111-1111-1111-1111-111111111111',
-          '11111111-1111-1111-1111-222222222222',
-          '11111111-1111-1111-1111-333333333333',
+          DEMO_STUDENT_AMAYA_ID,
+          generateRealisticUuid('student', 2),
+          generateRealisticUuid('student', 3),
+          generateRealisticUuid('student', 4),
+          generateRealisticUuid('student', 5),
+          generateRealisticUuid('student', 6),
+          generateRealisticUuid('student', 7),
         ]
 
   try {

@@ -138,8 +138,8 @@ export const StudentJourneyOverviewPage: React.FC<
               <option value="all">All Stages</option>
               <option value="1">1. Registration</option>
               <option value="2">2. NTMI Medical</option>
-              <option value="3">3. Learner's Permit</option>
-              <option value="4">4. Theory Exam</option>
+              <option value="3">3. Theory Exam</option>
+              <option value="4">4. Learner's Permit</option>
               <option value="5">5. Practical Lessons</option>
               <option value="6">6. DMT Practical Trial</option>
               <option value="7">7. Licence Issued</option>
@@ -212,9 +212,9 @@ export const StudentJourneyOverviewPage: React.FC<
                 <tr>
                   <th className="px-4 py-3">Student</th>
                   <th className="px-4 py-3">Current Stage</th>
-                  <th className="px-4 py-3">Learner's Permit</th>
                   <th className="px-4 py-3">NTMI Medical</th>
                   <th className="px-4 py-3">Theory Exam</th>
+                  <th className="px-4 py-3">Learner's Permit</th>
                   <th className="px-4 py-3">Practical Trial</th>
                   <th className="px-4 py-3 text-right">Actions</th>
                 </tr>
@@ -270,25 +270,6 @@ export const StudentJourneyOverviewPage: React.FC<
                         </td>
 
                         <td className="px-4 py-3 whitespace-nowrap">
-                          {j.permit ? (
-                            <div>
-                              <p className="font-mono text-xs font-bold text-slate-900">
-                                {j.permit.permit_number}
-                              </p>
-                              <span
-                                className={`inline-block mt-0.5 rounded px-1.5 py-0.2 text-[9px] font-semibold border ${permitVal.badgeClass}`}
-                              >
-                                {permitVal.label}
-                              </span>
-                            </div>
-                          ) : (
-                            <span className="text-slate-400 italic text-[11px]">
-                              Not Issued
-                            </span>
-                          )}
-                        </td>
-
-                        <td className="px-4 py-3 whitespace-nowrap">
                           {j.medical?.status === 'passed' ? (
                             <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] font-bold text-emerald-800 border border-emerald-200">
                               <Check className="h-3 w-3" />
@@ -318,6 +299,25 @@ export const StudentJourneyOverviewPage: React.FC<
                           ) : (
                             <span className="text-slate-400 italic text-[11px]">
                               Not Taken
+                            </span>
+                          )}
+                        </td>
+
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          {j.permit ? (
+                            <div>
+                              <p className="font-mono text-xs font-bold text-slate-900">
+                                {j.permit.permit_number}
+                              </p>
+                              <span
+                                className={`inline-block mt-0.5 rounded px-1.5 py-0.2 text-[9px] font-semibold border ${permitVal.badgeClass}`}
+                              >
+                                {permitVal.label}
+                              </span>
+                            </div>
+                          ) : (
+                            <span className="text-slate-400 italic text-[11px]">
+                              Not Issued
                             </span>
                           )}
                         </td>

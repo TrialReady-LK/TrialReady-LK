@@ -35,7 +35,7 @@ describe('TrialReady-LK Dedicated Test Accounts Verification', () => {
     expect(instructor.email).toBe('instructor@drivingschool.lk')
     expect(instructor.password).toBe('Instructor@123')
     expect(instructor.portalPath).toBe('/instructor/portal')
-    expect(instructor.profileId).toBe('11111111-1111-1111-1111-111111111111')
+    expect(instructor.profileId).toBe('d41f8a29-7c3e-4b95-a841-3b7c89f10001')
     expect(instructor.name).toBe('Nimal Jayawardena')
   })
 
@@ -44,7 +44,7 @@ describe('TrialReady-LK Dedicated Test Accounts Verification', () => {
     expect(student.email).toBe('student@drivingschool.lk')
     expect(student.password).toBe('Student@123')
     expect(student.portalPath).toBe('/student/portal')
-    expect(student.profileId).toBe('33333333-3333-3333-3333-111111111111')
+    expect(student.profileId).toBe('e73a0c54-47b1-4eb7-82bf-5e723528ef01')
     expect(student.name).toBe('Amaya Fernando')
   })
 

@@ -8,6 +8,7 @@ import {
   Lightbulb,
   Calendar,
   Target,
+  Award,
 } from 'lucide-react'
 import { predictTrialOutcome } from '../utils/predictiveModel'
 
@@ -18,6 +19,7 @@ interface AiTrialPredictorCardProps {
   permitDaysRemaining: number
   hasMedicalCleared: boolean
   hasTheoryPassed: boolean
+  onOpenGradingModal?: () => void
 }
 
 export const AiTrialPredictorCard: React.FC<AiTrialPredictorCardProps> = ({
@@ -27,6 +29,7 @@ export const AiTrialPredictorCard: React.FC<AiTrialPredictorCardProps> = ({
   permitDaysRemaining,
   hasMedicalCleared,
   hasTheoryPassed,
+  onOpenGradingModal,
 }) => {
   const prediction = predictTrialOutcome({
     practicalHours,
@@ -40,12 +43,12 @@ export const AiTrialPredictorCard: React.FC<AiTrialPredictorCardProps> = ({
   return (
     <div className="rounded-3xl border border-indigo-200/80 bg-gradient-to-br from-white via-indigo-50/20 to-blue-50/40 p-6 shadow-sm space-y-6">
       {/* Header */}
-      <div className="flex items-start justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
         <div className="space-y-1">
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             <Sparkles className="h-5 w-5 text-indigo-600" />
             <h3 className="text-base font-black text-slate-900 tracking-tight">
-              AI Trial Outcome Predictor & Risk Forecaster
+              AI Trial Outcome Predictor &amp; Risk Forecaster
             </h3>
             <span className="rounded-full bg-indigo-100 text-indigo-800 text-[10px] font-extrabold px-2 py-0.5 border border-indigo-300">
               Confidence: {prediction.confidenceScore}%
@@ -56,15 +59,29 @@ export const AiTrialPredictorCard: React.FC<AiTrialPredictorCardProps> = ({
           </p>
         </div>
 
-        {/* Big Probability Badge */}
-        <div className="text-right">
-          <div className="inline-flex flex-col items-end">
-            <span className="text-3xl font-black text-indigo-700 tracking-tight">
-              {prediction.passProbability}%
-            </span>
-            <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">
-              1st Attempt Pass Probability
-            </span>
+        {/* Big Probability Badge & Grade Button */}
+        <div className="flex items-center gap-3 self-end sm:self-auto">
+          {onOpenGradingModal && (
+            <button
+              type="button"
+              onClick={onOpenGradingModal}
+              className="inline-flex items-center gap-1.5 rounded-xl border border-amber-300 bg-amber-50 px-3 py-1.5 text-xs font-bold text-amber-900 hover:bg-amber-100 transition-all cursor-pointer shadow-xs"
+              title="Assign marks and update student practical driving maneuvers"
+            >
+              <Award className="h-3.5 w-3.5 text-amber-600" />
+              <span>Evaluate Maneuvers</span>
+            </button>
+          )}
+
+          <div className="text-right">
+            <div className="inline-flex flex-col items-end">
+              <span className="text-3xl font-black text-indigo-700 tracking-tight">
+                {prediction.passProbability}%
+              </span>
+              <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">
+                1st Attempt Pass Probability
+              </span>
+            </div>
           </div>
         </div>
       </div>

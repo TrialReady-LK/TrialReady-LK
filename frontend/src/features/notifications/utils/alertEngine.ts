@@ -14,26 +14,26 @@ export function formatChannelBadge(channel: NotificationChannel): {
       return {
         label: 'WhatsApp',
         badgeClass: 'bg-emerald-100 text-emerald-800 border-emerald-300',
-        icon: '📱',
+        icon: 'whatsapp',
       }
     case 'sms':
       return {
         label: 'SMS Text',
         badgeClass: 'bg-indigo-100 text-indigo-800 border-indigo-300',
-        icon: '💬',
+        icon: 'sms',
       }
     case 'email':
       return {
         label: 'Email',
         badgeClass: 'bg-purple-100 text-purple-800 border-purple-300',
-        icon: '✉️',
+        icon: 'email',
       }
     case 'in_app':
     default:
       return {
         label: 'In-App',
         badgeClass: 'bg-blue-100 text-blue-800 border-blue-300',
-        icon: '🔔',
+        icon: 'bell',
       }
   }
 }
@@ -70,18 +70,18 @@ export function formatPriorityBadge(priority: NotificationPriority): {
 export function formatNotificationTypeIcon(type: NotificationType): string {
   switch (type) {
     case 'permit_expiring':
-      return '📄'
+      return 'file-text'
     case 'medical_expiring':
-      return '🏥'
+      return 'activity'
     case 'session_reminder':
-      return '🚗'
+      return 'car'
     case 'payment_due':
-      return '💳'
+      return 'credit-card'
     case 'trial_scheduled':
-      return '🎯'
+      return 'target'
     case 'announcement':
-      return '📢'
+      return 'megaphone'
     default:
-      return '🔔'
+      return 'bell'
   }
 }

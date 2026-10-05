@@ -252,14 +252,14 @@ export const AiCopilotWidget: React.FC = () => {
 
   const getInitialGreeting = (lang: TheoryLanguage): ChatMessage => {
     let text =
-      '👋 Ayubowan / Vanakkam / Hello! I am your **TrialReady AI Assistant** (powered by Google Gemini).\n\nAsk me anything about your driving journey and highway regulations:\n• 🚦 **Sri Lanka Highway Code:** Speed limits, right of way, road markings, and expressway rules\n• 🚗 **DMT Practical Trial Maneuvers:** Hill Start, Reverse S-Bend, 3-Point Turn, and Parallel Parking\n• 🛑 **Road Signs & Signals:** Mandatory, warning, informative signs, and traffic light priorities\n• 📊 **Learner Progress & Readiness:** Tracking lessons, logbook, and test preparation\n\nFeel free to ask questions in English, Sinhala (සිංහල), or Tamil (தமிழ்)!'
+      'Ayubowan / Vanakkam / Hello. I am the **TrialReady AI Regulatory & Training Tutor** (powered by Google Gemini).\n\nYou can ask questions regarding Sri Lankan driving regulations and trial preparation:\n• **Sri Lanka Highway Code:** Speed limits, right-of-way, road markings, and expressway rules\n• **DMT Practical Trial Maneuvers:** Hill Start, Reverse S-Bend, 3-Point Turn, and Parallel Parking\n• **Road Signs & Signals:** Regulatory, warning, informative signs, and traffic light priorities\n• **Learner Progress & Readiness:** Tracking practical lessons, logbook verification, and trial preparation\n\nAssistance is available in English, Sinhala (සිංහල), and Tamil (தமிழ்).'
 
     if (lang === 'si') {
       text =
-        '👋 ආයුබෝවන්! මම ඔබේ **TrialReady AI සහායකයා** (Google Gemini මගින් බලගැන්වේ).\n\nශ්‍රී ලංකා මාර්ග නීති, මාර්ග සංඥා, කඳුකර ආරම්භය (Hill Start), S-හැඩයේ පසුපස ධාවනය (Reverse S-bend), සහ DMT ප්‍රායෝගික රියදුරු විභාග පිළිබඳ ඕනෑම ප්‍රශ්නයක් විමසන්න!'
+        'ආයුබෝවන්. මම ඔබේ **TrialReady AI පුහුණු සහායකයා** (Google Gemini මගින් ක්‍රියාත්මකයි).\n\nශ්‍රී ලංකා මාර්ග නීති, මාර්ග සංඥා, කඳුකර ආරම්භය (Hill Start), S-හැඩයේ පසුපස ධාවනය (Reverse S-bend), සහ DMT ප්‍රායෝගික රියදුරු විභාග පිළිබඳ ඕනෑම විමසීමක් සිදු කරන්න.'
     } else if (lang === 'ta') {
       text =
-        '👋 வணக்கம்! நான் உங்கள் **TrialReady AI உதவியாளர்** (Google Gemini மூலம் இயக்கப்படுகிறது).\n\nஇலங்கை போக்குவரத்து விதிகள், வீதி சமிக்ஞைகள், Hill Start, Reverse S-bend, மற்றும் DMT செய்முறை ஓட்டுநர் பரீட்சை தொடர்பான எந்தவொரு கேள்வியையும் கேட்கலாம்!'
+        'வணக்கம். நான் உங்கள் **TrialReady AI பயிற்றுவிப்பாளர்** (Google Gemini மூலம் இயங்குகிறது).\n\nஇலங்கை போக்குவரத்து விதிகள், வீதி சமිකஞைகள், Hill Start, Reverse S-bend, மற்றும் DMT செய்முறை ஓட்டுநர் பரீட்சை தொடர்பான சந்தேகங்களை வினவலாம்.'
     }
 
     return {

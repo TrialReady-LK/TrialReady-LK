@@ -21,6 +21,7 @@ export const STORAGE_KEYS = {
   SESSIONS: 'trialready_sessions',
   STUDENT_LICENCE_ENROLMENTS: 'trialready_student_licence_enrolments',
   INSTRUCTOR_LICENCE_CATEGORIES: 'trialready_instructor_licence_categories',
+  NOTIFICATIONS: 'trialready_notifications',
 } as const
 
 export function getStoredData<T>(key: string, fallback: T): T {

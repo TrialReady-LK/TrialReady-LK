@@ -38,8 +38,9 @@ This guide provides a structured walkthrough for the viva examination panel, dem
    - Click **`📄 View DMT Logbook`** $\rightarrow$ Show the pixel-perfect A4 official practical logbook (`DMT/SL/LOG-01`) complete with session history and principal instructor signature block.
    - Click **`🎫 Print Trial Pass`** $\rightarrow$ Show the trial admission slip (`DMT/SL/ADM-PASS`) with the **DMT Examiner 8-Maneuver Scorecard**.
 4. **AI Trial Readiness Hub (`/readiness`)**:
-   - Inspect the **6-factor radar evaluation**: Permit validity, Medical fitness, Theory clearance, Practical road hours, Maneuver checklist, Instructor rating.
+   - Inspect the **6-factor radar evaluation**: Permit validity (15 pts), Medical fitness (15 pts), Theory clearance (15 pts), Practical road hours (25 pts), Maneuver checklist (20 pts), Instructor rating (10 pts).
    - Point out how expired permits automatically trigger risk warnings and block trial registration.
+   - 📖 *See detailed algorithm guide*: [`docs/TRIAL_READINESS_AI_EVALUATION_PROCESS.md`](./TRIAL_READINESS_AI_EVALUATION_PROCESS.md)
 
 ---
 

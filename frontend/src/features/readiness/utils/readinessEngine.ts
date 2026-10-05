@@ -124,49 +124,7 @@ export function evaluateStudentTrialReadiness(data: {
   })
 
   // -------------------------------------------------------------
-  // Factor 2: DMT Learner\'s Permit (15 Points)
-  // -------------------------------------------------------------
-  let permitScore: number
-  let permitFactorStatus: ReadinessFactor['status']
-  let permitDetail = "No learner's permit recorded."
-
-  if (permit) {
-    const permitVal = calculatePermitValidity(permit.expiry_date)
-    if (permitVal.state === 'expired') {
-      permitScore = 0
-      permitFactorStatus = 'failed'
-      permitDetail = `Expired ${Math.abs(permitVal.daysLeft)} days ago! Trial blocked.`
-      riskWarnings.push("Learner's permit has expired! Practical trial cannot be booked.")
-      actionItems.push("Renew 6-month DMT Learner's Permit immediately.")
-    } else if (permitVal.state === 'expiring_soon') {
-      permitScore = 10
-      permitFactorStatus = 'warning'
-      permitDetail = `Active (${permitVal.daysLeft} days left before expiry)`
-      riskWarnings.push(`Permit expiring soon (${permitVal.daysLeft} days). Schedule trial before expiry.`)
-      actionItems.push('Fast-track trial booking or apply for permit extension.')
-    } else {
-      permitScore = 15
-      permitFactorStatus = 'passed'
-      permitDetail = `Valid: #${permit.permit_number} (${permitVal.daysLeft} days remaining)`
-    }
-  } else {
-    permitScore = 0
-    permitFactorStatus = 'failed'
-    riskWarnings.push("No DMT Learner's Permit recorded.")
-    actionItems.push("Apply for Department of Motor Traffic learner's permit.")
-  }
-
-  factors.push({
-    key: 'permit',
-    title: "DMT Learner's Permit",
-    score: permitScore,
-    maxScore: 15,
-    status: permitFactorStatus,
-    detail: permitDetail,
-  })
-
-  // -------------------------------------------------------------
-  // Factor 3: DMT Theory Exam (15 Points)
+  // Factor 2: DMT Theory Exam (15 Points)
   // -------------------------------------------------------------
   let theoryScore: number
   let theoryFactorStatus: ReadinessFactor['status']
@@ -198,6 +156,48 @@ export function evaluateStudentTrialReadiness(data: {
     maxScore: 15,
     status: theoryFactorStatus,
     detail: theoryDetail,
+  })
+
+  // -------------------------------------------------------------
+  // Factor 3: DMT Learner's Permit (15 Points)
+  // -------------------------------------------------------------
+  let permitScore: number
+  let permitFactorStatus: ReadinessFactor['status']
+  let permitDetail = "No learner's permit recorded."
+
+  if (permit) {
+    const permitVal = calculatePermitValidity(permit.expiry_date)
+    if (permitVal.state === 'expired') {
+      permitScore = 0
+      permitFactorStatus = 'failed'
+      permitDetail = `Expired ${Math.abs(permitVal.daysLeft)} days ago! Trial blocked.`
+      riskWarnings.push("Learner's permit has expired! Practical trial cannot be booked.")
+      actionItems.push("Renew 6-month DMT Learner's Permit immediately.")
+    } else if (permitVal.state === 'expiring_soon') {
+      permitScore = 10
+      permitFactorStatus = 'warning'
+      permitDetail = `Active (${permitVal.daysLeft} days left before expiry)`
+      riskWarnings.push(`Permit expiring soon (${permitVal.daysLeft} days). Schedule trial before expiry.`)
+      actionItems.push('Fast-track trial booking or apply for permit extension.')
+    } else {
+      permitScore = 15
+      permitFactorStatus = 'passed'
+      permitDetail = `Valid: #${permit.permit_number} (${permitVal.daysLeft} days remaining)`
+    }
+  } else {
+    permitScore = 0
+    permitFactorStatus = 'failed'
+    riskWarnings.push("No DMT Learner's Permit recorded.")
+    actionItems.push("Apply for Department of Motor Traffic learner's permit upon theory clearance.")
+  }
+
+  factors.push({
+    key: 'permit',
+    title: "DMT Learner's Permit",
+    score: permitScore,
+    maxScore: 15,
+    status: permitFactorStatus,
+    detail: permitDetail,
   })
 
   // -------------------------------------------------------------

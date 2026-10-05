@@ -71,3 +71,15 @@ export interface SaveReadinessEvaluationInput {
   action_items: string[]
   evaluator_type?: 'rule_engine' | 'ai_assistant'
 }
+
+export interface StudentPerformanceAssessmentInput {
+  driving_school_id: string
+  student_id: string
+  evaluator_name?: string
+  evaluator_role?: 'instructor' | 'admin' | 'chief_instructor'
+  student_rating: number // 1 to 5 stars
+  skills_covered: string[] // List of mastered skills / maneuvers
+  instructor_feedback: string
+  session_date?: string
+}
+

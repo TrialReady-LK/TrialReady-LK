@@ -46,7 +46,7 @@ export const StudentProfilePage: React.FC<StudentProfilePageProps> = ({
   const effectiveStudentId =
     studentId ||
     paramStudentId ||
-    (role === 'student' ? profile?.id || '11111111-1111-1111-1111-111111111111' : undefined)
+    (role === 'student' ? profile?.id || 'e73a0c54-47b1-4eb7-82bf-5e723528ef01' : undefined)
 
   const {
     journey,
@@ -745,9 +745,9 @@ export const StudentProfilePage: React.FC<StudentProfilePageProps> = ({
           <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-xs space-y-4">
             <div className="flex items-center justify-between border-b border-slate-100 pb-3">
               <div className="flex items-center gap-2.5">
-                <FileText className="h-5 w-5 text-blue-600" />
+                <Activity className="h-5 w-5 text-emerald-600" />
                 <h3 className="text-sm font-bold text-slate-900">
-                  DMT Government Driving Authorization
+                  Medical &amp; DMT Driving Authorization
                 </h3>
               </div>
               <span
@@ -757,45 +757,15 @@ export const StudentProfilePage: React.FC<StudentProfilePageProps> = ({
               </span>
             </div>
 
-            <div className="grid grid-cols-2 gap-3 text-xs">
-              <div className="rounded-xl bg-slate-50 p-3 border border-slate-100">
-                <span className="text-slate-400 font-medium">Permit Number</span>
-                <p className="font-bold font-mono text-slate-900 text-sm mt-0.5">
-                  {permit?.permit_number || 'WP-992140'}
-                </p>
-              </div>
-
-              <div className="rounded-xl bg-slate-50 p-3 border border-slate-100">
-                <span className="text-slate-400 font-medium">DMT Reference #</span>
-                <p className="font-bold font-mono text-slate-700 mt-0.5">
-                  {permit?.dmt_reference || 'WER-2026-PER-0042'}
-                </p>
-              </div>
-
-              <div className="rounded-xl bg-slate-50 p-3 border border-slate-100">
-                <span className="text-slate-400 font-medium">Issue Date</span>
-                <p className="font-semibold text-slate-800 mt-0.5">
-                  {permit?.issue_date || '2026-05-15'}
-                </p>
-              </div>
-
-              <div className="rounded-xl bg-slate-50 p-3 border border-slate-100">
-                <span className="text-slate-400 font-medium">Permit Expiry</span>
-                <p className="font-semibold text-slate-800 mt-0.5">
-                  {permit?.expiry_date || '2026-11-15'}
-                </p>
-              </div>
-            </div>
-
-            {/* Medical Info */}
-            <div className="border-t border-slate-100 pt-3">
-              <div className="flex items-center justify-between mb-2">
+            {/* 1. Medical Info (First Step) */}
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
                 <span className="text-xs font-bold text-slate-800 flex items-center gap-1.5">
                   <Activity className="h-4 w-4 text-emerald-600" />
-                  <span>NTMI Medical Fitness Certificate</span>
+                  <span>1. NTMI Medical Fitness Certificate</span>
                 </span>
                 <span className="rounded-full bg-emerald-100 px-2 py-0.5 text-[10px] font-bold text-emerald-800">
-                  Fitness Cleared
+                  {medical?.status === 'passed' ? 'Fitness Cleared' : 'Pending'}
                 </span>
               </div>
               <div className="rounded-xl bg-emerald-50/50 p-3 border border-emerald-100 grid grid-cols-2 gap-2 text-xs">
@@ -809,6 +779,49 @@ export const StudentProfilePage: React.FC<StudentProfilePageProps> = ({
                   <span className="text-slate-400 font-medium">NTMI Center</span>
                   <p className="font-bold text-slate-900">
                     {medical?.ntmi_branch || 'Nugegoda NTMI Center'}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* 2. DMT Learner Permit (Issued after Theory Exam) */}
+            <div className="border-t border-slate-100 pt-3 space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                  <FileText className="h-4 w-4 text-blue-600" />
+                  <span>2. DMT Learner Driving Permit</span>
+                </span>
+                <span className="text-[10px] text-slate-400">
+                  (Issued after Theory Exam)
+                </span>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3 text-xs">
+                <div className="rounded-xl bg-slate-50 p-3 border border-slate-100">
+                  <span className="text-slate-400 font-medium">Permit Number</span>
+                  <p className="font-bold font-mono text-slate-900 text-sm mt-0.5">
+                    {permit?.permit_number || 'WP-992140'}
+                  </p>
+                </div>
+
+                <div className="rounded-xl bg-slate-50 p-3 border border-slate-100">
+                  <span className="text-slate-400 font-medium">DMT Reference #</span>
+                  <p className="font-bold font-mono text-slate-700 mt-0.5">
+                    {permit?.dmt_reference || 'WER-2026-PER-0042'}
+                  </p>
+                </div>
+
+                <div className="rounded-xl bg-slate-50 p-3 border border-slate-100">
+                  <span className="text-slate-400 font-medium">Issue Date</span>
+                  <p className="font-semibold text-slate-800 mt-0.5">
+                    {permit?.issue_date || '2026-05-15'}
+                  </p>
+                </div>
+
+                <div className="rounded-xl bg-slate-50 p-3 border border-slate-100">
+                  <span className="text-slate-400 font-medium">Permit Expiry</span>
+                  <p className="font-semibold text-slate-800 mt-0.5">
+                    {permit?.expiry_date || '2026-11-15'}
                   </p>
                 </div>
               </div>

@@ -15,12 +15,16 @@ import type {
   StudentPermit,
 } from '../types/journey'
 import { computeJourneyStages } from '../utils/journeyUtils'
+import {
+  DEMO_STUDENT_AMAYA_ID,
+  generateRealisticUuid,
+} from '../../demo/data/generateDemo100Data'
 
 export const DEFAULT_PERMITS: StudentPermit[] = [
   {
     id: 'per-001',
     driving_school_id: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
-    student_id: '11111111-1111-1111-1111-111111111111',
+    student_id: DEMO_STUDENT_AMAYA_ID,
     permit_number: 'DMT-WP-2026-08129',
     issue_date: '2026-01-20',
     expiry_date: '2027-01-20',
@@ -34,7 +38,7 @@ export const DEFAULT_PERMITS: StudentPermit[] = [
   {
     id: 'per-002',
     driving_school_id: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
-    student_id: '11111111-1111-1111-1111-222222222222',
+    student_id: generateRealisticUuid('student', 2),
     permit_number: 'DMT-WP-2026-09412',
     issue_date: '2026-02-10',
     expiry_date: '2027-02-10',
@@ -48,7 +52,7 @@ export const DEFAULT_PERMITS: StudentPermit[] = [
   {
     id: 'per-003',
     driving_school_id: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
-    student_id: '11111111-1111-1111-1111-333333333333',
+    student_id: generateRealisticUuid('student', 3),
     permit_number: 'DMT-CP-2026-04189',
     issue_date: '2026-03-05',
     expiry_date: '2027-03-05',
@@ -65,7 +69,7 @@ export const DEFAULT_MEDICALS: StudentMedicalRecord[] = [
   {
     id: 'med-001',
     driving_school_id: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
-    student_id: '11111111-1111-1111-1111-111111111111',
+    student_id: DEMO_STUDENT_AMAYA_ID,
     status: 'passed',
     appointment_date: '2026-01-15',
     certificate_number: 'NTMI-COL-2026-01824',
@@ -81,7 +85,7 @@ export const DEFAULT_MEDICALS: StudentMedicalRecord[] = [
   {
     id: 'med-002',
     driving_school_id: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
-    student_id: '11111111-1111-1111-1111-222222222222',
+    student_id: generateRealisticUuid('student', 2),
     status: 'passed',
     appointment_date: '2026-02-05',
     certificate_number: 'NTMI-COL-2026-02910',
@@ -97,7 +101,7 @@ export const DEFAULT_MEDICALS: StudentMedicalRecord[] = [
   {
     id: 'med-003',
     driving_school_id: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
-    student_id: '11111111-1111-1111-1111-333333333333',
+    student_id: generateRealisticUuid('student', 3),
     status: 'passed',
     appointment_date: '2026-03-02',
     certificate_number: 'NTMI-GAM-2026-03118',
@@ -116,7 +120,7 @@ export const DEFAULT_EXAMS: StudentExamTrial[] = [
   {
     id: 'ex-001',
     driving_school_id: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
-    student_id: '11111111-1111-1111-1111-111111111111',
+    student_id: DEMO_STUDENT_AMAYA_ID,
     exam_type: 'theory',
     attempt_number: 1,
     scheduled_date: '2026-03-10',
@@ -130,7 +134,7 @@ export const DEFAULT_EXAMS: StudentExamTrial[] = [
   {
     id: 'ex-002',
     driving_school_id: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
-    student_id: '11111111-1111-1111-1111-111111111111',
+    student_id: DEMO_STUDENT_AMAYA_ID,
     exam_type: 'practical_trial',
     attempt_number: 1,
     scheduled_date: '2026-10-18',
@@ -144,7 +148,7 @@ export const DEFAULT_EXAMS: StudentExamTrial[] = [
   {
     id: 'ex-003',
     driving_school_id: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
-    student_id: '11111111-1111-1111-1111-222222222222',
+    student_id: generateRealisticUuid('student', 2),
     exam_type: 'theory',
     attempt_number: 1,
     scheduled_date: '2026-04-12',
@@ -509,20 +513,28 @@ export async function markStudentStageDone(
 export async function getStudentJourneyOverview(
   studentId: string,
 ): Promise<StudentJourneyOverview> {
+  const localStudents = getStoredData<any[]>(STORAGE_KEYS.STUDENTS, [])
+  const localS = localStudents.find(
+    (st) =>
+      st.id === studentId ||
+      (st.student_code && st.student_code.toLowerCase() === studentId.toLowerCase()),
+  )
+  const targetId = localS ? localS.id : studentId
+
   const [permit, medical, exams] = await Promise.all([
-    getCurrentPermit(studentId),
-    getStudentMedical(studentId),
-    getStudentExamTrials(studentId),
+    getCurrentPermit(targetId),
+    getStudentMedical(targetId),
+    getStudentExamTrials(targetId),
   ])
 
   let studentData = {
-    id: studentId,
-    full_name: 'Amaya Fernando',
-    admission_number: 'ADM-2026-0042',
-    phone: '+94 77 123 4567',
-    email: 'amaya.fernando@gmail.com',
-    registration_date: '2026-01-10',
-    branch_name: 'Colombo Central (Nugegoda)',
+    id: targetId,
+    full_name: localS?.full_name || 'Amaya Fernando',
+    admission_number: localS?.student_code || 'ADM-2026-0101',
+    phone: localS?.phone || '+94 77 123 4567',
+    email: localS?.email || 'amaya.fernando@gmail.com',
+    registration_date: localS?.registration_date || '2026-01-10',
+    branch_name: localS?.branch?.name || 'Colombo Central (Nugegoda)',
   }
 
   let completedLessonsCount = 12
@@ -533,14 +545,14 @@ export async function getStudentJourneyOverview(
       .select(
         'id, full_name, student_code, phone, email, registration_date, branches(name)',
       )
-      .eq('id', studentId)
+      .eq('id', targetId)
       .single()
 
     if (s) {
       studentData = {
         id: s.id,
         full_name: s.full_name,
-        admission_number: (s as any).student_code ?? 'ADM-2026-0042',
+        admission_number: (s as any).student_code ?? 'ADM-2026-0101',
         phone: s.phone ?? null,
         email: s.email ?? null,
         registration_date: s.registration_date ?? '2026-01-10',
@@ -551,29 +563,16 @@ export async function getStudentJourneyOverview(
     const { count } = await supabase
       .from('practical_sessions')
       .select('id', { count: 'exact', head: true })
-      .eq('student_id', studentId)
+      .eq('student_id', targetId)
       .eq('status', 'completed')
 
     if (count !== null && count !== undefined) {
       completedLessonsCount = count
     }
-    const localStudents = getStoredData<any[]>(STORAGE_KEYS.STUDENTS, [])
-    const localS = localStudents.find((st) => st.id === studentId)
-    if (localS) {
-      studentData = {
-        id: localS.id,
-        full_name: localS.full_name,
-        admission_number: localS.student_code ?? 'ADM-2026-0042',
-        phone: localS.phone ?? null,
-        email: localS.email ?? null,
-        registration_date: localS.registration_date ?? '2026-01-10',
-        branch_name: localS.branch?.name ?? 'Colombo Central (Nugegoda)',
-      }
-    }
 
     const localSessions = getStoredData<any[]>(STORAGE_KEYS.SESSIONS, [])
     const studentCompletedSessions = localSessions.filter(
-      (ses) => ses.student_id === studentId && ses.status === 'completed',
+      (ses) => ses.student_id === targetId && ses.status === 'completed',
     )
     if (studentCompletedSessions.length > 0) {
       completedLessonsCount = studentCompletedSessions.length
@@ -622,11 +621,11 @@ export async function getAllStudentJourneys(
     localStudents.length > 0
       ? localStudents.map((s) => s.id)
       : [
-          '11111111-1111-1111-1111-111111111111',
-          '11111111-1111-1111-1111-222222222222',
-          '11111111-1111-1111-1111-333333333333',
-          '11111111-1111-1111-1111-444444444444',
-          '11111111-1111-1111-1111-555555555555',
+          DEMO_STUDENT_AMAYA_ID,
+          generateRealisticUuid('student', 2),
+          generateRealisticUuid('student', 3),
+          generateRealisticUuid('student', 4),
+          generateRealisticUuid('student', 5),
         ]
 
   try {

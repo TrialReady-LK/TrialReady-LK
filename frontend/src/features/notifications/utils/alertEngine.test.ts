@@ -10,19 +10,19 @@ describe('alertEngine', () => {
     it('formats WhatsApp channel badge with icon', () => {
       const b = formatChannelBadge('whatsapp')
       expect(b.label).toBe('WhatsApp')
-      expect(b.icon).toBe('📱')
+      expect(b.icon).toBe('whatsapp')
     })
 
     it('formats SMS channel badge with icon', () => {
       const b = formatChannelBadge('sms')
       expect(b.label).toBe('SMS Text')
-      expect(b.icon).toBe('💬')
+      expect(b.icon).toBe('sms')
     })
 
     it('formats Email channel badge with icon', () => {
       const b = formatChannelBadge('email')
       expect(b.label).toBe('Email')
-      expect(b.icon).toBe('✉️')
+      expect(b.icon).toBe('email')
     })
   })
 
@@ -42,10 +42,10 @@ describe('alertEngine', () => {
 
   describe('formatNotificationTypeIcon', () => {
     it('returns appropriate icon for permit, medical, and trial notices', () => {
-      expect(formatNotificationTypeIcon('permit_expiring')).toBe('📄')
-      expect(formatNotificationTypeIcon('medical_expiring')).toBe('🏥')
-      expect(formatNotificationTypeIcon('trial_scheduled')).toBe('🎯')
-      expect(formatNotificationTypeIcon('announcement')).toBe('📢')
+      expect(formatNotificationTypeIcon('permit_expiring')).toBe('file-text')
+      expect(formatNotificationTypeIcon('medical_expiring')).toBe('activity')
+      expect(formatNotificationTypeIcon('trial_scheduled')).toBe('target')
+      expect(formatNotificationTypeIcon('announcement')).toBe('megaphone')
     })
   })
 })

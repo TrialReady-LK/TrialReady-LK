@@ -11,12 +11,17 @@ import type {
   StudentLicenceEnrolment,
 } from '../types/studentEnrolment'
 
+import {
+  DEMO_STUDENT_AMAYA_ID,
+  generateRealisticUuid,
+} from '../../demo/data/generateDemo100Data'
+
 const LICENCE_CATEGORIES_TABLE = 'licence_categories'
 const STUDENT_LICENCE_CATEGORIES_TABLE = 'student_licence_categories'
 
 export const DEFAULT_LICENCE_CATEGORIES: LicenceCategory[] = [
   {
-    id: 'ca111111-1111-1111-1111-111111111111',
+    id: 'c1a789c2-5d41-4e89-9b12-8f7a63450001',
     driving_school_id: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
     code: 'B',
     name: 'Dual Purpose / Light Motor Car (Auto & Manual)',
@@ -27,7 +32,7 @@ export const DEFAULT_LICENCE_CATEGORIES: LicenceCategory[] = [
     updated_at: '2026-08-01T00:00:00Z',
   },
   {
-    id: 'ca222222-2222-2222-2222-222222222222',
+    id: 'c1a789c2-5d41-4e89-9b12-8f7a63450002',
     driving_school_id: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
     code: 'B1',
     name: 'Light Motor Cycle & Three Wheeler',
@@ -37,7 +42,7 @@ export const DEFAULT_LICENCE_CATEGORIES: LicenceCategory[] = [
     updated_at: '2026-08-01T00:00:00Z',
   },
   {
-    id: 'ca333333-3333-3333-3333-333333333333',
+    id: 'c1a789c2-5d41-4e89-9b12-8f7a63450003',
     driving_school_id: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
     code: 'A',
     name: 'Heavy Motor Cycle (> 250cc)',
@@ -47,7 +52,7 @@ export const DEFAULT_LICENCE_CATEGORIES: LicenceCategory[] = [
     updated_at: '2026-08-01T00:00:00Z',
   },
   {
-    id: 'ca444444-4444-4444-4444-444444444444',
+    id: 'c1a789c2-5d41-4e89-9b12-8f7a63450004',
     driving_school_id: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
     code: 'C',
     name: 'Dual Control Heavy Commercial Truck',
@@ -61,29 +66,29 @@ export const DEFAULT_LICENCE_CATEGORIES: LicenceCategory[] = [
 
 export const DEFAULT_STUDENT_LICENCE_ENROLMENTS: StudentLicenceEnrolment[] = [
   {
-    student_id: '11111111-1111-1111-1111-111111111111',
-    licence_category_id: 'ca111111-1111-1111-1111-111111111111',
+    student_id: DEMO_STUDENT_AMAYA_ID,
+    licence_category_id: 'c1a789c2-5d41-4e89-9b12-8f7a63450001',
     driving_school_id: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
     enrolled_at: '2026-01-15T00:00:00Z',
     is_active: true,
   },
   {
-    student_id: '11111111-1111-1111-1111-111111111111',
-    licence_category_id: 'ca333333-3333-3333-3333-333333333333',
+    student_id: DEMO_STUDENT_AMAYA_ID,
+    licence_category_id: 'c1a789c2-5d41-4e89-9b12-8f7a63450003',
     driving_school_id: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
     enrolled_at: '2026-01-15T00:00:00Z',
     is_active: true,
   },
   {
-    student_id: '11111111-1111-1111-1111-222222222222',
-    licence_category_id: 'ca111111-1111-1111-1111-111111111111',
+    student_id: generateRealisticUuid('student', 2),
+    licence_category_id: 'c1a789c2-5d41-4e89-9b12-8f7a63450001',
     driving_school_id: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
     enrolled_at: '2026-01-18T00:00:00Z',
     is_active: true,
   },
   {
-    student_id: '11111111-1111-1111-1111-333333333333',
-    licence_category_id: 'ca222222-2222-2222-2222-222222222222',
+    student_id: generateRealisticUuid('student', 3),
+    licence_category_id: 'c1a789c2-5d41-4e89-9b12-8f7a63450002',
     driving_school_id: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
     enrolled_at: '2026-02-01T00:00:00Z',
     is_active: true,

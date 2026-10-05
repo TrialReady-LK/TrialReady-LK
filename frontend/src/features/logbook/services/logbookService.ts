@@ -43,6 +43,14 @@ export async function fetchStudentLogbookData(
       }
 
   // 2. Fetch student profile
+  const localStudents = getStoredData<any[]>(STORAGE_KEYS.STUDENTS, [])
+  const localStudent = localStudents.find(
+    (s) =>
+      s.id === studentId ||
+      (s.student_code && s.student_code.toLowerCase() === studentId.toLowerCase()),
+  )
+  const targetId = localStudent ? localStudent.id : studentId
+
   let studentRow: any = null
   try {
     const { data } = await supabase
@@ -50,15 +58,12 @@ export async function fetchStudentLogbookData(
       .select(
         'full_name, student_code, nic, phone, email, registration_date, branches(name)',
       )
-      .eq('id', studentId)
+      .eq('id', targetId)
       .maybeSingle()
     studentRow = data
   } catch {
     // fallback
   }
-
-  const localStudents = getStoredData<any[]>(STORAGE_KEYS.STUDENTS, [])
-  const localStudent = localStudents.find((s) => s.id === studentId)
 
   const student: LogbookStudentProfile = studentRow
     ? {
@@ -66,7 +71,7 @@ export async function fetchStudentLogbookData(
         admissionNumber:
           (studentRow as any).student_code ??
           (studentRow as any).admission_number ??
-          'ADM-2026-0042',
+          'ADM-2026-0101',
         nicPassport:
           (studentRow as any).nic ??
           (studentRow as any).nic_passport ??
@@ -84,7 +89,7 @@ export async function fetchStudentLogbookData(
     : localStudent
     ? {
         fullName: localStudent.full_name,
-        admissionNumber: localStudent.student_code ?? 'ADM-2026-0042',
+        admissionNumber: localStudent.student_code ?? 'ADM-2026-0101',
         nicPassport: localStudent.nic ?? '200178901234',
         phone: localStudent.phone ?? '+94 77 123 4567',
         email: localStudent.email ?? 'amaya.fernando@gmail.com',
@@ -93,7 +98,7 @@ export async function fetchStudentLogbookData(
       }
     : {
         fullName: 'Amaya Fernando',
-        admissionNumber: 'ADM-2026-0042',
+        admissionNumber: 'ADM-2026-0101',
         nicPassport: '200178901234',
         phone: '+94 77 123 4567',
         email: 'amaya.fernando@gmail.com',
@@ -107,7 +112,7 @@ export async function fetchStudentLogbookData(
     const { data } = await supabase
       .from('student_permits')
       .select('permit_number, issue_date, expiry_date, status')
-      .eq('student_id', studentId)
+      .eq('student_id', targetId)
       .eq('is_current', true)
       .maybeSingle()
     permitRow = data
@@ -116,7 +121,7 @@ export async function fetchStudentLogbookData(
   }
 
   const localPermits = getStoredData<any[]>(STORAGE_KEYS.PERMITS, [])
-  const localPermit = localPermits.find((p) => p.student_id === studentId)
+  const localPermit = localPermits.find((p) => p.student_id === targetId)
 
   const permit: LogbookPermitInfo | null = permitRow
     ? {
@@ -140,7 +145,7 @@ export async function fetchStudentLogbookData(
     const { data } = await supabase
       .from('student_medical_records')
       .select('certificate_number, issue_date, expiry_date, ntmi_branch, status')
-      .eq('student_id', studentId)
+      .eq('student_id', targetId)
       .order('issue_date', { ascending: false })
       .limit(1)
       .maybeSingle()
@@ -150,7 +155,7 @@ export async function fetchStudentLogbookData(
   }
 
   const localMedicals = getStoredData<any[]>(STORAGE_KEYS.MEDICALS, [])
-  const localMedical = localMedicals.find((m) => m.student_id === studentId)
+  const localMedical = localMedicals.find((m) => m.student_id === targetId)
 
   const medical: LogbookMedicalInfo | null = medicalRow
     ? {
@@ -178,7 +183,7 @@ export async function fetchStudentLogbookData(
       .select(
         'session_date, start_time, end_time, attendance_status, student_rating, skills_covered, vehicles(registration_number), instructors(full_name), licence_categories(code, name)',
       )
-      .eq('student_id', studentId)
+      .eq('student_id', targetId)
       .eq('status', 'completed')
       .eq('attendance_status', 'present')
       .order('session_date', { ascending: true })
@@ -189,7 +194,7 @@ export async function fetchStudentLogbookData(
 
   const localSessions = getStoredData<any[]>(STORAGE_KEYS.SESSIONS, [])
   const studentLocalSessions = localSessions.filter(
-    (s) => s.student_id === studentId && s.status === 'completed',
+    (s) => s.student_id === targetId && s.status === 'completed',
   )
 
   const effectiveSessions =
@@ -241,7 +246,7 @@ export async function fetchStudentLogbookData(
       .select(
         'exam_type, attempt_number, scheduled_date, status, score, location',
       )
-      .eq('student_id', studentId)
+      .eq('student_id', targetId)
       .order('scheduled_date', { ascending: true })
     if (data) examRows = data
   } catch {
@@ -249,7 +254,7 @@ export async function fetchStudentLogbookData(
   }
 
   const localExams = getStoredData<any[]>(STORAGE_KEYS.EXAMS, [])
-  const studentLocalExams = localExams.filter((e) => e.student_id === studentId)
+  const studentLocalExams = localExams.filter((e) => e.student_id === targetId)
   const effectiveExams = examRows.length > 0 ? examRows : studentLocalExams
 
   const theoryExams: LogbookTheoryExam[] = (effectiveExams ?? []).map(

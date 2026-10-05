@@ -15,7 +15,7 @@ const BRANCHES_TABLE = 'branches'
 
 export const DEFAULT_BRANCHES: Branch[] = [
   {
-    id: 'ba111111-1111-1111-1111-111111111111',
+    id: 'b1a789c2-5d41-4e89-9b12-8f7a63450001',
     driving_school_id: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
     name: 'Colombo Central (Nugegoda)',
     phone: '+94 11 281 9001',
@@ -26,7 +26,7 @@ export const DEFAULT_BRANCHES: Branch[] = [
     updated_at: new Date().toISOString(),
   },
   {
-    id: 'ba222222-2222-2222-2222-222222222222',
+    id: 'b2a789c2-5d41-4e89-9b12-8f7a63450002',
     driving_school_id: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
     name: 'Gampaha Branch (Yakkala)',
     phone: '+94 33 222 4110',
@@ -37,7 +37,7 @@ export const DEFAULT_BRANCHES: Branch[] = [
     updated_at: new Date().toISOString(),
   },
   {
-    id: 'ba333333-3333-3333-3333-333333333333',
+    id: 'b3a789c2-5d41-4e89-9b12-8f7a63450003',
     driving_school_id: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
     name: 'Kandy City Branch (Peradeniya)',
     phone: '+94 81 238 7200',

@@ -22,8 +22,8 @@ export const StudentJourneyDetailPage: React.FC = () => {
   const effectiveStudentId =
     paramStudentId ||
     (isStudent
-      ? profile?.id || '11111111-1111-1111-1111-111111111111'
-      : '11111111-1111-1111-1111-111111111111')
+      ? profile?.id || 'e73a0c54-47b1-4eb7-82bf-5e723528ef01'
+      : 'e73a0c54-47b1-4eb7-82bf-5e723528ef01')
 
   const {
     journey,
@@ -173,11 +173,11 @@ export const StudentJourneyDetailPage: React.FC = () => {
         <div>
           {isAdmin ? (
             <span>
-              🛡️ <strong>Administrator Mode:</strong> You can edit and mark as done all 7 learner journey milestones (Medical, Permit, Theory Exam, Practical Lessons, DMT Trial, and Final Licence).
+              🛡️ <strong>Administrator Mode:</strong> You can edit and mark as done all 7 learner journey milestones (Medical, Theory Exam, Permit, Practical Lessons, DMT Trial, and Final Licence).
             </span>
           ) : isInstructor ? (
             <span>
-              🚗 <strong>Instructor Mode:</strong> You are authorized to log <strong>Practical Driving Lessons</strong> and record <strong>DMT Practical Trial</strong> milestones. Administrative records (Medical, Permit, Theory) are read-only.
+              🚗 <strong>Instructor Mode:</strong> You are authorized to log <strong>Practical Driving Lessons</strong> and record <strong>DMT Practical Trial</strong> milestones. Administrative records (Medical, Theory, Permit) are read-only.
             </span>
           ) : (
             <span>
@@ -227,22 +227,22 @@ export const StudentJourneyDetailPage: React.FC = () => {
         onQuickMarkDone={handleQuickMarkComplete}
       />
 
-      {/* 2. Permits & Medical Records Grid */}
+      {/* 2. Medical Clearance & DMT Permit Records Grid */}
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-        <PermitTrackerCard
-          studentId={journey.student.id}
-          drivingSchoolId={drivingSchoolId}
-          permit={journey.permit}
-          isAdmin={isAdmin}
-          onSavePermit={handleSavePermit}
-        />
-
         <MedicalStatusCard
           studentId={journey.student.id}
           drivingSchoolId={drivingSchoolId}
           medical={journey.medical}
           isAdmin={isAdmin}
           onSaveMedical={handleSaveMedical}
+        />
+
+        <PermitTrackerCard
+          studentId={journey.student.id}
+          drivingSchoolId={drivingSchoolId}
+          permit={journey.permit}
+          isAdmin={isAdmin}
+          onSavePermit={handleSavePermit}
         />
       </div>
 
@@ -368,7 +368,7 @@ export const StudentJourneyDetailPage: React.FC = () => {
             <p className="text-slate-600">
               {hasPassedTrial
                 ? 'Student has successfully cleared the DMT Practical Trial examination. The official Smart Card Driving Licence is approved and issued by DMT Sri Lanka.'
-                : 'Student must clear all 6 preceding stages (Medical, Learner Permit, Theory Exam, Practical Lessons, and DMT Practical Trial) to be issued the official driving licence.'}
+                : 'Student must clear all 6 preceding stages (Medical, Theory Exam, Learner Permit, Practical Lessons, and DMT Practical Trial) to be issued the official driving licence.'}
             </p>
           </div>
 

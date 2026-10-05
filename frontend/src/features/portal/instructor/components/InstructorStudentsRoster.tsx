@@ -1,16 +1,17 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { Route as RouteIcon, Target } from 'lucide-react'
+import { Route as RouteIcon, Target, Award } from 'lucide-react'
 import type { StudentReadinessProfile } from '../../../readiness/types/readiness'
 import { getReadinessTierInfo } from '../../../readiness/utils/readinessEngine'
 
 interface InstructorStudentsRosterProps {
   students: StudentReadinessProfile[]
+  onGradeStudent?: (student: StudentReadinessProfile) => void
 }
 
 export const InstructorStudentsRoster: React.FC<
   InstructorStudentsRosterProps
-> = ({ students }) => {
+> = ({ students, onGradeStudent }) => {
   return (
     <div className="rounded-2xl border border-slate-200 bg-white shadow-xs overflow-hidden">
       <div className="border-b border-slate-200 bg-slate-50 px-6 py-4 flex items-center justify-between">
@@ -87,6 +88,18 @@ export const InstructorStudentsRoster: React.FC<
 
                     <td className="px-4 py-3 text-right whitespace-nowrap">
                       <div className="flex items-center justify-end gap-2">
+                        {onGradeStudent && (
+                          <button
+                            type="button"
+                            onClick={() => onGradeStudent(s)}
+                            className="inline-flex items-center gap-1 rounded-lg border border-amber-300 bg-amber-50 px-2.5 py-1 text-xs font-bold text-amber-900 hover:bg-amber-100 transition-all cursor-pointer shadow-xs"
+                            title="Evaluate student practical driving maneuvers & assign marks"
+                          >
+                            <Award className="h-3 w-3 text-amber-600" />
+                            <span>Grade</span>
+                          </button>
+                        )}
+
                         <Link
                           to={`/students/${s.student.id}/journey`}
                           className="inline-flex items-center gap-1.5 rounded-lg border border-blue-600 bg-blue-50 px-2.5 py-1 text-xs font-bold text-blue-700 hover:bg-blue-600 hover:text-white transition-all cursor-pointer shadow-xs"

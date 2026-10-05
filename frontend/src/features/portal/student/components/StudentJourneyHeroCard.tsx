@@ -31,11 +31,8 @@ export const StudentJourneyHeroCard: React.FC<StudentJourneyHeroCardProps> = ({
       {/* Top Greeting */}
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <span className="inline-block rounded-full bg-blue-500/20 px-3 py-1 text-xs font-semibold text-blue-300 border border-blue-400/30">
-            Learner Student Portal
-          </span>
-          <h2 className="mt-2 text-2xl font-black tracking-tight sm:text-3xl text-white">
-            Welcome, {student.full_name}
+          <h2 className="text-2xl font-bold tracking-tight sm:text-3xl text-white">
+            {student.full_name}
           </h2>
           <p className="mt-1 text-xs text-slate-300">
             Admission: <strong className="font-mono text-white">{student.admission_number}</strong> • Branch: {student.branch_name || 'Main Branch'}
@@ -70,35 +67,9 @@ export const StudentJourneyHeroCard: React.FC<StudentJourneyHeroCardProps> = ({
         </div>
       </div>
 
-      {/* 3 DMT Pre-requisite Badges */}
+      {/* 3 DMT Pre-requisite Badges in Statutory Order */}
       <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-3">
-        {/* 1. Learner Permit */}
-        <div className="rounded-2xl bg-white/10 p-4 backdrop-blur-xs border border-white/10 space-y-1">
-          <div className="flex items-center justify-between text-xs">
-            <span className="text-slate-300 font-semibold flex items-center gap-1.5">
-              <FileText className="h-3.5 w-3.5" /> DMT Permit
-            </span>
-            <span
-              className={`rounded px-1.5 py-0.2 text-[10px] font-bold ${
-                permitVal.state === 'valid'
-                  ? 'bg-emerald-400/20 text-emerald-300'
-                  : permitVal.state === 'expiring_soon'
-                    ? 'bg-amber-400/20 text-amber-300'
-                    : 'bg-red-400/20 text-red-300'
-              }`}
-            >
-              {permitVal.label}
-            </span>
-          </div>
-          <p className="font-mono font-bold text-white text-sm">
-            {permit ? permit.permit_number : 'Not Applied'}
-          </p>
-          <p className="text-[11px] text-slate-400">
-            {permit ? `Valid until ${permit.expiry_date}` : 'Contact academy'}
-          </p>
-        </div>
-
-        {/* 2. NTMI Medical */}
+        {/* 1. NTMI Medical */}
         <div className="rounded-2xl bg-white/10 p-4 backdrop-blur-xs border border-white/10 space-y-1">
           <div className="flex items-center justify-between text-xs">
             <span className="text-slate-300 font-semibold flex items-center gap-1.5">
@@ -122,11 +93,11 @@ export const StudentJourneyHeroCard: React.FC<StudentJourneyHeroCardProps> = ({
           </p>
         </div>
 
-        {/* 3. Theory Exam */}
+        {/* 2. Theory Exam */}
         <div className="rounded-2xl bg-white/10 p-4 backdrop-blur-xs border border-white/10 space-y-1">
           <div className="flex items-center justify-between text-xs">
             <span className="text-slate-300 font-semibold flex items-center gap-1.5">
-              <BookOpen className="h-3.5 w-3.5" /> Theory Exam
+              <BookOpen className="h-3.5 w-3.5" /> DMT Theory Exam
             </span>
             <span
               className={`rounded px-1.5 py-0.2 text-[10px] font-bold ${
@@ -145,6 +116,32 @@ export const StudentJourneyHeroCard: React.FC<StudentJourneyHeroCardProps> = ({
           </p>
           <p className="text-[11px] text-slate-400">
             {passedTheory ? `Passed on ${passedTheory.scheduled_date}` : 'Computerized DMT Test'}
+          </p>
+        </div>
+
+        {/* 3. Learner Permit */}
+        <div className="rounded-2xl bg-white/10 p-4 backdrop-blur-xs border border-white/10 space-y-1">
+          <div className="flex items-center justify-between text-xs">
+            <span className="text-slate-300 font-semibold flex items-center gap-1.5">
+              <FileText className="h-3.5 w-3.5" /> DMT Learner Permit
+            </span>
+            <span
+              className={`rounded px-1.5 py-0.2 text-[10px] font-bold ${
+                permitVal.state === 'valid'
+                  ? 'bg-emerald-400/20 text-emerald-300'
+                  : permitVal.state === 'expiring_soon'
+                    ? 'bg-amber-400/20 text-amber-300'
+                    : 'bg-red-400/20 text-red-300'
+              }`}
+            >
+              {permitVal.label}
+            </span>
+          </div>
+          <p className="font-mono font-bold text-white text-sm">
+            {permit ? permit.permit_number : 'Not Applied'}
+          </p>
+          <p className="text-[11px] text-slate-400">
+            {permit ? `Valid until ${permit.expiry_date}` : 'Issued upon passing theory exam'}
           </p>
         </div>
       </div>

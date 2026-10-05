@@ -19,6 +19,10 @@ export interface RawAnalyticsData {
   payments: any[]
   enrolments: any[]
   exams: any[]
+  permits?: any[]
+  medicals?: any[]
+  packages?: any[]
+  branches?: any[]
 }
 
 export async function getExecutiveAnalyticsData(
@@ -32,6 +36,10 @@ export async function getExecutiveAnalyticsData(
     paymentsRes,
     enrolmentsRes,
     examsRes,
+    permitsRes,
+    medicalsRes,
+    packagesRes,
+    branchesRes,
   ] = await Promise.all([
     supabase
       .from('students')
@@ -61,6 +69,22 @@ export async function getExecutiveAnalyticsData(
       .from('student_exam_trials')
       .select('*')
       .eq('driving_school_id', drivingSchoolId),
+    supabase
+      .from('student_permits')
+      .select('*')
+      .eq('driving_school_id', drivingSchoolId),
+    supabase
+      .from('student_medical_records')
+      .select('*')
+      .eq('driving_school_id', drivingSchoolId),
+    supabase
+      .from('packages')
+      .select('*')
+      .eq('driving_school_id', drivingSchoolId),
+    supabase
+      .from('branches')
+      .select('*')
+      .eq('driving_school_id', drivingSchoolId),
   ])
 
   const localStudents = getStoredData<any[]>(STORAGE_KEYS.STUDENTS, [])
@@ -70,6 +94,10 @@ export async function getExecutiveAnalyticsData(
   const localPayments = getStoredData<any[]>(STORAGE_KEYS.PAYMENTS, [])
   const localEnrolments = getStoredData<any[]>(STORAGE_KEYS.ENROLMENTS, [])
   const localExams = getStoredData<any[]>(STORAGE_KEYS.EXAMS, [])
+  const localPermits = getStoredData<any[]>(STORAGE_KEYS.PERMITS, [])
+  const localMedicals = getStoredData<any[]>(STORAGE_KEYS.MEDICALS, [])
+  const localPackages = getStoredData<any[]>(STORAGE_KEYS.PACKAGES, [])
+  const localBranches = getStoredData<any[]>(STORAGE_KEYS.BRANCHES, [])
 
   const students =
     studentsRes.data && studentsRes.data.length > 0
@@ -97,6 +125,22 @@ export async function getExecutiveAnalyticsData(
       : localEnrolments
   const exams =
     examsRes.data && examsRes.data.length > 0 ? examsRes.data : localExams
+  const permits =
+    permitsRes.data && permitsRes.data.length > 0
+      ? permitsRes.data
+      : localPermits
+  const medicals =
+    medicalsRes.data && medicalsRes.data.length > 0
+      ? medicalsRes.data
+      : localMedicals
+  const packages =
+    packagesRes.data && packagesRes.data.length > 0
+      ? packagesRes.data
+      : localPackages
+  const branches =
+    branchesRes.data && branchesRes.data.length > 0
+      ? branchesRes.data
+      : localBranches
 
   const trialAnalytics = computeTrialAnalytics(exams)
   const instructorMetrics = computeInstructorMetrics(instructors, sessions)
@@ -121,6 +165,10 @@ export async function getExecutiveAnalyticsData(
     payments,
     enrolments,
     exams,
+    permits,
+    medicals,
+    packages,
+    branches,
   }
 
   return { summary, raw }

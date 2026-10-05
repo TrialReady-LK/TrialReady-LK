@@ -40,13 +40,14 @@ graph LR
 ### 1. 🎯 AI-Assisted Trial Readiness Engine
 * **6-Factor Scientific Scoring Algorithm (0–100%)**:
   * NTMI Medical Fitness Clearance (15 pts)
-  * DMT Learner's Permit Validity & Expiry Check (15 pts)
   * DMT Computerized Theory Exam Status (15 pts)
+  * DMT Learner's Permit Validity & Expiry Check (15 pts)
   * Logged Practical Road Hours & Lessons (25 pts)
-  * Core DMT Maneuver Mastery Checklist (20 pts)
+  * 7 Core DMT Maneuver Mastery Checklist (20 pts)
   * Instructor Practical Evaluation Ratings (10 pts)
-* **Readiness Tiers**: `🏆 Trial Ready` (85%+), `⚡ Nearly Ready` (70–84%), `🚗 Needs Practice` (50–69%), `⚠️ Not Ready` (<50%).
+* **Readiness Tiers**: `🏆 Trial Ready` (80%+), `⚡ Nearly Ready` (70–79%), `🚗 Needs Practice` (50–69%), `⚠️ Not Ready` (<50%).
 * **Action Roadmaps & Risk Warnings**: Highlights expired permits, missing maneuvers (Hill Start, Reverse S-Bend), and outstanding fees.
+* 📖 **Detailed Technical & Mathematical Guide**: [`docs/TRIAL_READINESS_AI_EVALUATION_PROCESS.md`](./docs/TRIAL_READINESS_AI_EVALUATION_PROCESS.md)
 
 ### 2. 🎓 7-Stage Learner Journey Compliance Pipeline
 * Step-by-step visual tracker enforcing DMT legal prerequisites:

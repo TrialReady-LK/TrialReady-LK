@@ -1,9 +1,10 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import {
   getExecutiveAnalyticsData,
   type RawAnalyticsData,
 } from '../services/analyticsService'
-import type { ExecutiveKpiSummary, TimeRangeFilter } from '../types/analytics'
+import type { TimeRangeFilter } from '../types/analytics'
+import { computeExecutiveSummary } from '../utils/analyticsEngine'
 import {
   exportDmtCandidateAuditCsv,
   exportFinancialRevenueLedgerCsv,
@@ -12,7 +13,6 @@ import {
 
 export function useExecutiveAnalytics(drivingSchoolId: string) {
   const [timeRange, setTimeRange] = useState<TimeRangeFilter>('all_time')
-  const [summary, setSummary] = useState<ExecutiveKpiSummary | null>(null)
   const [rawData, setRawData] = useState<RawAnalyticsData | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
@@ -21,9 +21,7 @@ export function useExecutiveAnalytics(drivingSchoolId: string) {
     try {
       setIsLoading(true)
       setErrorMessage(null)
-      const { summary: sum, raw } =
-        await getExecutiveAnalyticsData(drivingSchoolId)
-      setSummary(sum)
+      const { raw } = await getExecutiveAnalyticsData(drivingSchoolId)
       setRawData(raw)
     } catch (err) {
       setErrorMessage(
@@ -46,14 +44,19 @@ export function useExecutiveAnalytics(drivingSchoolId: string) {
     }
   }, [reloadData])
 
+  const summary = useMemo(() => {
+    if (!rawData) return null
+    return computeExecutiveSummary(rawData, timeRange)
+  }, [rawData, timeRange])
+
   const handleExportDmtAudit = useCallback(() => {
     if (!rawData) return
-    exportDmtCandidateAuditCsv(rawData.students)
+    exportDmtCandidateAuditCsv(rawData.students, rawData)
   }, [rawData])
 
   const handleExportFinancialLedger = useCallback(() => {
     if (!rawData) return
-    exportFinancialRevenueLedgerCsv(rawData.payments)
+    exportFinancialRevenueLedgerCsv(rawData.payments, rawData)
   }, [rawData])
 
   const handleExportInstructorPerformance = useCallback(() => {
