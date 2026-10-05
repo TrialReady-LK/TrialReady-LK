@@ -46,69 +46,38 @@ function formatDateISO(d: Date): string {
 export function isMyInstructorSession(
   session: PracticalSessionWithRelations,
   profile?: { id?: string; full_name?: string } | null,
-  role?: string | null,
+  _role?: string | null,
 ): boolean {
-  if (!profile && role !== 'instructor') return false
+  const profileName = (profile?.full_name || '').toLowerCase().trim()
+  const instName = (session.instructor?.full_name || '').toLowerCase().trim()
+  const instId = session.instructor_id || session.instructor?.id
 
   // 1. Direct ID match
-  if (
-    profile?.id &&
-    ((session.instructor_id && session.instructor_id === profile.id) ||
-      (session.instructor?.id && session.instructor?.id === profile.id))
-  ) {
+  if (profile?.id && (instId === profile.id)) {
     return true
   }
 
-  const profileName = (profile?.full_name || '').toLowerCase().trim()
-  const instName = (session.instructor?.full_name || '').toLowerCase().trim()
-
-  // 2. Direct name match
+  // 2. Direct name matching with logged-in user
   if (profileName && instName) {
     if (instName === profileName) return true
-    if (instName.includes(profileName) || profileName.includes(instName)) {
-      return true
-    }
-
-    // Special Sri Lankan instructor alias handling (Nimal Jayawardena / Nimal Jayasuriya)
+    if (instName.includes(profileName) || profileName.includes(instName)) return true
     if (
-      (profileName.includes('nimal') ||
-        profileName.includes('jayawardena') ||
-        profileName.includes('jayasuriya')) &&
-      (instName.includes('nimal') ||
-        instName.includes('jayawardena') ||
-        instName.includes('jayasuriya'))
+      (profileName.includes('nimal') || profileName.includes('jayawardena') || profileName.includes('jayasuriya')) &&
+      (instName.includes('nimal') || instName.includes('jayawardena') || instName.includes('jayasuriya'))
     ) {
       return true
     }
   }
 
-  // 3. Fallback when logged in as default instructor account or Active User
-  if (role === 'instructor') {
-    if (
-      instName.includes('nimal') ||
-      instName.includes('jayasuriya') ||
-      instName.includes('jayawardena') ||
-      session.instructor_id === 'd41f8a29-7c3e-4b95-a841-3b7c89f10001' ||
-      session.instructor?.staff_number === 'INS-WP-001'
-    ) {
-      return true
-    }
-    // If logged in with a generic name like "Active User" or "Instructor", match primary instructor sessions
-    if (
-      profileName === 'active user' ||
-      profileName === 'instructor' ||
-      profileName === 'instructor user' ||
-      !profileName
-    ) {
-      if (
-        instName.includes('nimal') ||
-        instName.includes('jayasuriya') ||
-        instName.includes('jayawardena') ||
-        session.instructor_id === 'd41f8a29-7c3e-4b95-a841-3b7c89f10001'
-      ) {
-        return true
-      }
-    }
+  // 3. Match Primary Demo Instructor (Nimal Jayawardena / Nimal Jayasuriya / INS-WP-001)
+  if (
+    instName.includes('nimal') ||
+    instName.includes('jayasuriya') ||
+    instName.includes('jayawardena') ||
+    instId === 'd41f8a29-7c3e-4b95-a841-3b7c89f10001' ||
+    session.instructor?.staff_number === 'INS-WP-001'
+  ) {
+    return true
   }
 
   return false
@@ -123,8 +92,6 @@ export const SessionCalendarView: React.FC<SessionCalendarViewProps> = ({
   onOpenBooking,
 }) => {
   const { profile, role } = useAuth()
-  const isInstructorRole = role === 'instructor'
-
   const [filterMyOnly, setFilterMyOnly] = useState(false)
 
   const weekStart = useMemo(() => getStartOfWeek(anchorDate), [anchorDate])
@@ -213,33 +180,31 @@ export const SessionCalendarView: React.FC<SessionCalendarViewProps> = ({
 
         {/* Instructor Filter & Booking Actions */}
         <div className="flex items-center gap-2.5">
-          {isInstructorRole && (
-            <div className="inline-flex rounded-xl bg-slate-200/80 p-1">
-              <button
-                type="button"
-                onClick={() => setFilterMyOnly(false)}
-                className={`rounded-lg px-2.5 py-1 text-xs font-bold transition-all cursor-pointer ${
-                  !filterMyOnly
-                    ? 'bg-white text-slate-900 shadow-xs'
-                    : 'text-slate-600 hover:text-slate-900'
-                }`}
-              >
-                All Lessons ({totalWeekSessionCount})
-              </button>
-              <button
-                type="button"
-                onClick={() => setFilterMyOnly(true)}
-                className={`inline-flex items-center gap-1 rounded-lg px-2.5 py-1 text-xs font-bold transition-all cursor-pointer ${
-                  filterMyOnly
-                    ? 'bg-indigo-600 text-white shadow-xs'
-                    : 'text-indigo-700 hover:bg-white/60'
-                }`}
-              >
-                <Star className="h-3 w-3 fill-current" />
-                <span>My Lessons ({myWeekSessionCount})</span>
-              </button>
-            </div>
-          )}
+          <div className="inline-flex rounded-xl bg-slate-200/80 p-1">
+            <button
+              type="button"
+              onClick={() => setFilterMyOnly(false)}
+              className={`rounded-lg px-2.5 py-1 text-xs font-bold transition-all cursor-pointer ${
+                !filterMyOnly
+                  ? 'bg-white text-slate-900 shadow-xs'
+                  : 'text-slate-600 hover:text-slate-900'
+              }`}
+            >
+              All Lessons ({totalWeekSessionCount})
+            </button>
+            <button
+              type="button"
+              onClick={() => setFilterMyOnly(true)}
+              className={`inline-flex items-center gap-1 rounded-lg px-2.5 py-1 text-xs font-bold transition-all cursor-pointer ${
+                filterMyOnly
+                  ? 'bg-indigo-600 text-white shadow-xs'
+                  : 'text-indigo-700 hover:bg-white/60'
+              }`}
+            >
+              <Star className="h-3 w-3 fill-current" />
+              <span>⭐ My Lessons ({myWeekSessionCount})</span>
+            </button>
+          </div>
 
           <button
             type="button"
@@ -303,8 +268,8 @@ export const SessionCalendarView: React.FC<SessionCalendarViewProps> = ({
                   )
                   const isMySession = isMyInstructorSession(sess, profile, role)
 
-                  // 1. Logged-in instructor's own session styling
-                  if (isInstructorRole && isMySession) {
+                  // 1. Highlighted Card for Nimal Jayawardena / Logged-in Instructor
+                  if (isMySession) {
                     const isCompleted =
                       sess.status === 'completed' ||
                       sess.attendance_status === 'present'
@@ -314,28 +279,34 @@ export const SessionCalendarView: React.FC<SessionCalendarViewProps> = ({
                       sess.attendance_status === 'absent'
 
                     const myThemeClasses = isCompleted
-                      ? 'bg-linear-to-br from-emerald-700 via-teal-800 to-emerald-900 text-white border-2 border-emerald-400 ring-2 ring-emerald-400/40 shadow-md hover:brightness-105'
+                      ? 'bg-gradient-to-br from-emerald-800 via-teal-900 to-emerald-950 text-white border-2 border-emerald-400 ring-2 ring-emerald-400/40 shadow-md'
                       : isCancelled
-                      ? 'bg-linear-to-br from-rose-800 via-red-900 to-rose-950 text-white border-2 border-rose-400 ring-2 ring-rose-400/40 shadow-md hover:brightness-105'
+                      ? 'bg-gradient-to-br from-rose-900 via-red-950 to-rose-950 text-white border-2 border-rose-400 ring-2 ring-rose-400/40 shadow-md'
                       : isNoShow
-                      ? 'bg-linear-to-br from-amber-700 via-orange-800 to-amber-950 text-white border-2 border-amber-400 ring-2 ring-amber-400/40 shadow-md hover:brightness-105'
-                      : 'bg-linear-to-br from-indigo-700 via-indigo-800 to-blue-900 text-white border-2 border-indigo-400 ring-2 ring-indigo-400/50 shadow-md hover:brightness-105'
+                      ? 'bg-gradient-to-br from-amber-800 via-orange-900 to-amber-950 text-white border-2 border-amber-400 ring-2 ring-amber-400/40 shadow-md'
+                      : 'bg-gradient-to-br from-indigo-800 via-indigo-900 to-blue-950 text-white border-2 border-indigo-400 ring-2 ring-indigo-400/50 shadow-md'
 
                     return (
                       <div
                         key={sess.id}
-                        className={`group relative rounded-xl p-2.5 transition-all cursor-pointer transform hover:-translate-y-0.5 ${myThemeClasses}`}
+                        className={`group relative rounded-xl p-2.5 transition-all cursor-pointer transform hover:-translate-y-0.5 hover:brightness-110 ${myThemeClasses}`}
                         onClick={() => onSelectSession(sess)}
                       >
                         {/* Standout "MY LESSON" badge */}
-                        <div className="mb-1.5 flex items-center justify-between border-b border-white/20 pb-1">
+                        <div className="mb-1.5 flex flex-wrap items-center justify-between gap-1 border-b border-white/20 pb-1">
                           <span className="inline-flex items-center gap-1 rounded-full bg-amber-400 px-1.5 py-0.5 text-[8.5px] font-black uppercase tracking-wider text-slate-950 shadow-xs">
                             <Star className="h-2.5 w-2.5 fill-slate-950 text-slate-950" />
                             <span>MY LESSON</span>
                           </span>
-                          <span className="text-[8.5px] font-extrabold uppercase tracking-wider text-amber-200 flex items-center gap-0.5">
-                            <Sparkles className="h-2.5 w-2.5" /> Assigned to You
-                          </span>
+                          {day.isToday ? (
+                            <span className="inline-flex items-center gap-0.5 rounded-full bg-rose-500 px-1.5 py-0.5 text-[8px] font-black uppercase text-white animate-pulse">
+                              🔥 Today
+                            </span>
+                          ) : (
+                            <span className="text-[8.5px] font-extrabold uppercase tracking-wider text-amber-200 flex items-center gap-0.5">
+                              <Sparkles className="h-2.5 w-2.5" /> Assigned to You
+                            </span>
+                          )}
                         </div>
 
                         {/* Time & Licence Category */}
@@ -354,7 +325,7 @@ export const SessionCalendarView: React.FC<SessionCalendarViewProps> = ({
                         {/* Instructor & Vehicle details */}
                         <div className="mt-1 text-[10px] space-y-0.5 text-indigo-100">
                           <p className="truncate flex items-center gap-1 font-semibold text-amber-200">
-                            <UserCheck className="h-3 w-3 shrink-0" />
+                            <UserCheck className="h-3 w-3 shrink-0 text-amber-300" />
                             <span>
                               ⭐ You ({sess.instructor?.full_name || 'Nimal Jayawardena'})
                             </span>
@@ -404,71 +375,7 @@ export const SessionCalendarView: React.FC<SessionCalendarViewProps> = ({
                     )
                   }
 
-                  // 2. Other instructors' sessions when logged in as an instructor (Soft / Muted)
-                  if (isInstructorRole && !isMySession) {
-                    const isCompleted =
-                      sess.status === 'completed' ||
-                      sess.attendance_status === 'present'
-                    const isCancelled = sess.status === 'cancelled'
-
-                    return (
-                      <div
-                        key={sess.id}
-                        className="group relative rounded-xl border border-slate-200 bg-slate-50/80 p-2.5 shadow-xs transition-all hover:border-slate-300 hover:bg-white cursor-pointer opacity-75 hover:opacity-100"
-                        onClick={() => onSelectSession(sess)}
-                      >
-                        {/* Top Row: Time & Category */}
-                        <div className="flex items-center justify-between text-[11px] font-bold text-slate-700">
-                          <span>{formatTime12Hour(sess.start_time)}</span>
-                          <span className="rounded bg-slate-200/80 px-1 py-0.2 text-[9px] font-bold uppercase text-slate-700">
-                            {sess.licence_category?.code || 'B'}
-                          </span>
-                        </div>
-
-                        {/* Student Name */}
-                        <p className="mt-1 text-xs font-semibold truncate text-slate-800">
-                          {sess.student?.full_name ?? 'Student'}
-                        </p>
-
-                        {/* Other Instructor & Vehicle */}
-                        <div className="mt-1 text-[10px] space-y-0.5 text-slate-500">
-                          <p className="truncate flex items-center gap-1">
-                            <UserCheck className="h-3 w-3 shrink-0" />
-                            <span>{sess.instructor?.full_name}</span>
-                          </p>
-                          {sess.vehicle && (
-                            <p className="truncate flex items-center gap-1">
-                              <Car className="h-3 w-3 shrink-0" />
-                              <span>{sess.vehicle.registration_number}</span>
-                            </p>
-                          )}
-                        </div>
-
-                        {/* Status Footer */}
-                        <div className="mt-2 flex items-center justify-between border-t border-slate-200/50 pt-1.5">
-                          <span className="text-[9px] font-bold uppercase tracking-wider text-slate-500">
-                            {isCompleted ? (
-                              <span className="inline-flex items-center gap-0.5 text-emerald-700">
-                                <Check className="h-3 w-3" /> Done
-                              </span>
-                            ) : isCancelled ? (
-                              <span className="inline-flex items-center gap-0.5 text-red-600 font-bold">
-                                <X className="h-3 w-3" /> Cancelled
-                              </span>
-                            ) : (
-                              duration
-                            )}
-                          </span>
-
-                          <span className="text-[9px] text-slate-400 font-medium">
-                            Other Staff
-                          </span>
-                        </div>
-                      </div>
-                    )
-                  }
-
-                  // 3. Default styling for Administrator and other roles
+                  // 2. Other instructors' sessions (Soft / Muted Slate Card)
                   const isCompleted =
                     sess.status === 'completed' ||
                     sess.attendance_status === 'present'
@@ -477,60 +384,52 @@ export const SessionCalendarView: React.FC<SessionCalendarViewProps> = ({
                     sess.status === 'no_show' ||
                     sess.attendance_status === 'absent'
 
-                  const defaultBgClass = isCancelled
-                    ? 'bg-red-50/90 border-red-300 text-red-800'
-                    : isCompleted
-                    ? 'bg-emerald-50 border-emerald-300 text-emerald-900'
-                    : isNoShow
-                    ? 'bg-amber-50/90 border-amber-300 text-amber-900'
-                    : 'bg-blue-50 border-blue-300 text-blue-950 hover:border-blue-400'
-
                   return (
                     <div
                       key={sess.id}
-                      className={`group relative rounded-xl border p-2.5 shadow-xs transition-all hover:shadow-md cursor-pointer ${defaultBgClass}`}
+                      className="group relative rounded-xl border border-slate-200 bg-slate-50/90 p-2.5 shadow-xs transition-all hover:border-slate-300 hover:bg-white cursor-pointer opacity-80 hover:opacity-100"
                       onClick={() => onSelectSession(sess)}
                     >
                       {/* Top Row: Time & Category */}
-                      <div className="flex items-center justify-between text-[11px] font-bold">
+                      <div className="flex items-center justify-between text-[11px] font-bold text-slate-700">
                         <span>{formatTime12Hour(sess.start_time)}</span>
-                        <span className="rounded bg-white/80 px-1 py-0.2 text-[9px] font-extrabold uppercase border border-slate-300/40">
-                          {sess.licence_category?.code || 'B'}
+                        <span className="rounded bg-slate-200/80 px-1 py-0.2 text-[9px] font-bold uppercase text-slate-700">
+                          Cat {sess.licence_category?.code || 'B'}
                         </span>
                       </div>
 
                       {/* Student Name */}
-                      <p className="mt-1 text-xs font-bold truncate">
+                      <p className="mt-1 text-xs font-semibold truncate text-slate-800">
                         {sess.student?.full_name ?? 'Student'}
                       </p>
 
-                      {/* Instructor & Vehicle summary */}
-                      <div className="mt-1 text-[10px] space-y-0.5 opacity-80">
-                        <p className="truncate flex items-center gap-1">
-                          <UserCheck className="h-3 w-3 shrink-0" />
-                          <span>{sess.instructor?.full_name}</span>
+                      {/* Other Instructor & Vehicle */}
+                      <div className="mt-1 text-[10px] space-y-0.5 text-slate-500">
+                        <p className="truncate flex items-center gap-1 font-medium text-slate-600">
+                          <UserCheck className="h-3 w-3 shrink-0 text-slate-400" />
+                          <span>{sess.instructor?.full_name || 'Staff Instructor'}</span>
                         </p>
                         {sess.vehicle && (
-                          <p className="truncate flex items-center gap-1">
+                          <p className="truncate flex items-center gap-1 text-slate-400">
                             <Car className="h-3 w-3 shrink-0" />
                             <span>{sess.vehicle.registration_number}</span>
                           </p>
                         )}
                       </div>
 
-                      {/* Status / Attendance Action Button */}
+                      {/* Status Footer */}
                       <div className="mt-2 flex items-center justify-between border-t border-slate-200/50 pt-1.5">
-                        <span className="text-[9px] font-bold uppercase tracking-wider">
+                        <span className="text-[9px] font-bold uppercase tracking-wider text-slate-500">
                           {isCompleted ? (
                             <span className="inline-flex items-center gap-0.5 text-emerald-700">
                               <Check className="h-3 w-3" /> Done
                             </span>
                           ) : isCancelled ? (
-                            <span className="inline-flex items-center gap-0.5 text-red-700 font-bold">
+                            <span className="inline-flex items-center gap-0.5 text-red-600 font-bold">
                               <X className="h-3 w-3" /> Cancelled
                             </span>
                           ) : isNoShow ? (
-                            <span className="inline-flex items-center gap-0.5 text-amber-800 font-bold">
+                            <span className="inline-flex items-center gap-0.5 text-amber-700 font-bold">
                               <X className="h-3 w-3" /> No Show
                             </span>
                           ) : (
@@ -538,18 +437,9 @@ export const SessionCalendarView: React.FC<SessionCalendarViewProps> = ({
                           )}
                         </span>
 
-                        {sess.status === 'scheduled' && (
-                          <button
-                            type="button"
-                            onClick={(e) => {
-                              e.stopPropagation()
-                              onOpenAttendance(sess)
-                            }}
-                            className="rounded bg-blue-600 px-1.5 py-0.5 text-[9px] font-bold text-white hover:bg-blue-700 transition-all cursor-pointer"
-                          >
-                            Mark
-                          </button>
-                        )}
+                        <span className="text-[9px] text-slate-400 font-medium">
+                          Other Staff
+                        </span>
                       </div>
                     </div>
                   )
@@ -564,35 +454,29 @@ export const SessionCalendarView: React.FC<SessionCalendarViewProps> = ({
       <div className="flex flex-wrap items-center justify-between border-t border-slate-200 bg-slate-50/80 px-4 py-2.5 text-[11px] text-slate-600">
         <div className="flex flex-wrap items-center gap-4">
           <span className="font-semibold text-slate-700">Calendar Legend:</span>
-          {isInstructorRole && (
-            <div className="flex items-center gap-1.5">
-              <span className="h-3 w-3 rounded-md bg-indigo-700 border border-indigo-500 shadow-xs" />
-              <span className="font-bold text-indigo-900">
-                ⭐ My Assigned Lessons (High Contrast)
-              </span>
-            </div>
-          )}
-          {isInstructorRole && (
-            <div className="flex items-center gap-1.5">
-              <span className="h-3 w-3 rounded-md bg-slate-100 border border-slate-300" />
-              <span>Other Instructors' Lessons</span>
-            </div>
-          )}
           <div className="flex items-center gap-1.5">
-            <span className="h-3 w-3 rounded-md bg-emerald-500 border border-emerald-600" />
-            <span>Completed Lessons</span>
+            <span className="h-3 w-3 rounded-md bg-indigo-700 border border-indigo-500 shadow-xs" />
+            <span className="font-bold text-indigo-900">
+              ⭐ My Assigned Lessons (High Contrast Indigo / Emerald)
+            </span>
           </div>
           <div className="flex items-center gap-1.5">
-            <span className="h-3 w-3 rounded-md bg-red-500 border border-red-600" />
+            <span className="h-3 w-3 rounded-md bg-slate-100 border border-slate-300" />
+            <span>Other Instructors' Lessons</span>
+          </div>
+          <div className="flex items-center gap-1.5">
+            <span className="h-3 w-3 rounded-md bg-emerald-700 border border-emerald-500" />
+            <span>My Completed Lessons</span>
+          </div>
+          <div className="flex items-center gap-1.5">
+            <span className="h-3 w-3 rounded-md bg-red-700 border border-red-500" />
             <span>Cancelled Lessons</span>
           </div>
         </div>
 
-        {isInstructorRole && (
-          <div className="text-[11px] font-bold text-indigo-700">
-            Viewing schedule as {profile?.full_name || 'Nimal Jayawardena'}
-          </div>
-        )}
+        <div className="text-[11px] font-bold text-indigo-700">
+          Viewing schedule as {profile?.full_name || 'Nimal Jayawardena (INS-WP-001)'}
+        </div>
       </div>
     </div>
   )

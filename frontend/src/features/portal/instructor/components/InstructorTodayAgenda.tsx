@@ -94,6 +94,10 @@ export const InstructorTodayAgenda: React.FC<InstructorTodayAgendaProps> = ({
                     <p className="font-bold text-slate-900 text-sm">
                       {sess.student?.full_name || 'Student'}
                     </p>
+                    <span className="inline-flex items-center gap-0.5 rounded-full bg-indigo-100 px-2 py-0.5 text-[9px] font-bold text-indigo-800 border border-indigo-200">
+                      <Star className="h-2.5 w-2.5 fill-indigo-600 text-indigo-600" />
+                      <span>Assigned to You</span>
+                    </span>
                     {getStatusBadge(sess.status)}
                   </div>
                   <div className="flex flex-wrap items-center gap-1.5 text-xs text-slate-500 mt-0.5">
