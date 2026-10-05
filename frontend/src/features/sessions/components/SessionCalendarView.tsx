@@ -8,7 +8,6 @@ import {
   Check,
   X,
   Star,
-  Sparkles,
 } from 'lucide-react'
 import { useAuth } from '../../auth/context/AuthContext'
 import type { PracticalSessionWithRelations } from '../types/session'
@@ -153,14 +152,14 @@ export const SessionCalendarView: React.FC<SessionCalendarViewProps> = ({
             type="button"
             onClick={() => onChangeAnchorDate(addDays(anchorDate, -7))}
             aria-label="Previous Week"
-            className="rounded-lg border border-slate-300 bg-white p-1.5 text-slate-700 hover:bg-slate-100 transition-all cursor-pointer"
+            className="rounded-xl border border-slate-200 bg-white p-1.5 text-slate-700 hover:bg-slate-100 transition-all cursor-pointer shadow-2xs"
           >
             <ChevronLeft className="h-4 w-4" />
           </button>
           <button
             type="button"
             onClick={() => onChangeAnchorDate(new Date())}
-            className="rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 hover:bg-slate-100 transition-all cursor-pointer"
+            className="rounded-xl border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 hover:bg-slate-100 transition-all cursor-pointer shadow-2xs"
           >
             Today
           </button>
@@ -168,7 +167,7 @@ export const SessionCalendarView: React.FC<SessionCalendarViewProps> = ({
             type="button"
             onClick={() => onChangeAnchorDate(addDays(anchorDate, 7))}
             aria-label="Next Week"
-            className="rounded-lg border border-slate-300 bg-white p-1.5 text-slate-700 hover:bg-slate-100 transition-all cursor-pointer"
+            className="rounded-xl border border-slate-200 bg-white p-1.5 text-slate-700 hover:bg-slate-100 transition-all cursor-pointer shadow-2xs"
           >
             <ChevronRight className="h-4 w-4" />
           </button>
@@ -184,7 +183,7 @@ export const SessionCalendarView: React.FC<SessionCalendarViewProps> = ({
             <button
               type="button"
               onClick={() => setFilterMyOnly(false)}
-              className={`rounded-lg px-2.5 py-1 text-xs font-bold transition-all cursor-pointer ${
+              className={`rounded-lg px-3 py-1 text-xs font-bold transition-all cursor-pointer ${
                 !filterMyOnly
                   ? 'bg-white text-slate-900 shadow-xs'
                   : 'text-slate-600 hover:text-slate-900'
@@ -195,21 +194,21 @@ export const SessionCalendarView: React.FC<SessionCalendarViewProps> = ({
             <button
               type="button"
               onClick={() => setFilterMyOnly(true)}
-              className={`inline-flex items-center gap-1 rounded-lg px-2.5 py-1 text-xs font-bold transition-all cursor-pointer ${
+              className={`inline-flex items-center gap-1.5 rounded-lg px-3 py-1 text-xs font-bold transition-all cursor-pointer ${
                 filterMyOnly
                   ? 'bg-indigo-600 text-white shadow-xs'
                   : 'text-indigo-700 hover:bg-white/60'
               }`}
             >
               <Star className="h-3 w-3 fill-current" />
-              <span>⭐ My Lessons ({myWeekSessionCount})</span>
+              <span>My Lessons ({myWeekSessionCount})</span>
             </button>
           </div>
 
           <button
             type="button"
             onClick={() => onOpenBooking(formatDateISO(new Date()), '09:00')}
-            className="inline-flex items-center gap-1.5 rounded-xl bg-blue-600 px-3.5 py-1.5 text-xs font-semibold text-white shadow-xs hover:bg-blue-700 transition-all cursor-pointer"
+            className="inline-flex items-center gap-1.5 rounded-xl bg-blue-600 px-3.5 py-1.5 text-xs font-bold text-white shadow-xs hover:bg-blue-700 transition-all cursor-pointer"
           >
             <Plus className="h-3.5 w-3.5" />
             <span>Book Lesson</span>
@@ -228,11 +227,11 @@ export const SessionCalendarView: React.FC<SessionCalendarViewProps> = ({
                 : 'bg-slate-50 text-slate-700'
             }`}
           >
-            <p className="text-[11px] font-bold uppercase tracking-wider">
+            <p className="text-[11px] font-bold uppercase tracking-wider text-slate-500">
               {day.dayName}
             </p>
             <p
-              className={`mx-auto mt-0.5 flex h-6 w-6 items-center justify-center rounded-full text-xs font-bold ${
+              className={`mx-auto mt-1 flex h-6 w-6 items-center justify-center rounded-full text-xs font-bold ${
                 day.isToday ? 'bg-blue-600 text-white shadow-xs' : 'text-slate-900'
               }`}
             >
@@ -250,13 +249,13 @@ export const SessionCalendarView: React.FC<SessionCalendarViewProps> = ({
           return (
             <div
               key={day.iso}
-              className={`p-1.5 space-y-2 ${
-                day.isToday ? 'bg-blue-50/15' : 'bg-white'
+              className={`p-2 space-y-2.5 ${
+                day.isToday ? 'bg-blue-50/15' : 'bg-slate-50/30'
               }`}
             >
               {daySessions.length === 0 ? (
                 <div className="h-full min-h-[140px] flex items-center justify-center text-center p-2">
-                  <span className="text-[11px] text-slate-300 font-medium">
+                  <span className="text-xs text-slate-400 font-medium">
                     No lessons
                   </span>
                 </div>
@@ -268,95 +267,90 @@ export const SessionCalendarView: React.FC<SessionCalendarViewProps> = ({
                   )
                   const isMySession = isMyInstructorSession(sess, profile, role)
 
-                  // 1. Highlighted Card for Nimal Jayawardena / Logged-in Instructor
-                  if (isMySession) {
-                    const isCompleted =
-                      sess.status === 'completed' ||
-                      sess.attendance_status === 'present'
-                    const isCancelled = sess.status === 'cancelled'
-                    const isNoShow =
-                      sess.status === 'no_show' ||
-                      sess.attendance_status === 'absent'
+                  const isCompleted =
+                    sess.status === 'completed' ||
+                    sess.attendance_status === 'present'
+                  const isCancelled = sess.status === 'cancelled'
+                  const isNoShow =
+                    sess.status === 'no_show' ||
+                    sess.attendance_status === 'absent'
 
-                    const myThemeClasses = isCompleted
-                      ? 'bg-gradient-to-br from-emerald-800 via-teal-900 to-emerald-950 text-white border-2 border-emerald-400 ring-2 ring-emerald-400/40 shadow-md'
+                  // 1. Executive Modern Card for My Lessons (Nimal Jayawardena)
+                  if (isMySession) {
+                    const cardStyle = isCompleted
+                      ? 'bg-emerald-50/40 border border-emerald-200/80 border-l-4 border-l-emerald-600 hover:border-emerald-300'
                       : isCancelled
-                      ? 'bg-gradient-to-br from-rose-900 via-red-950 to-rose-950 text-white border-2 border-rose-400 ring-2 ring-rose-400/40 shadow-md'
+                      ? 'bg-rose-50/40 border border-rose-200/80 border-l-4 border-l-rose-500 hover:border-rose-300'
                       : isNoShow
-                      ? 'bg-gradient-to-br from-amber-800 via-orange-900 to-amber-950 text-white border-2 border-amber-400 ring-2 ring-amber-400/40 shadow-md'
-                      : 'bg-gradient-to-br from-indigo-800 via-indigo-900 to-blue-950 text-white border-2 border-indigo-400 ring-2 ring-indigo-400/50 shadow-md'
+                      ? 'bg-amber-50/40 border border-amber-200/80 border-l-4 border-l-amber-500 hover:border-amber-300'
+                      : 'bg-indigo-50/40 border border-indigo-200/80 border-l-4 border-l-indigo-600 hover:border-indigo-300 shadow-xs'
 
                     return (
                       <div
                         key={sess.id}
-                        className={`group relative rounded-xl p-2.5 transition-all cursor-pointer transform hover:-translate-y-0.5 hover:brightness-110 ${myThemeClasses}`}
+                        className={`group relative rounded-xl p-2.5 transition-all cursor-pointer hover:shadow-md ${cardStyle}`}
                         onClick={() => onSelectSession(sess)}
                       >
-                        {/* Standout "MY LESSON" badge */}
-                        <div className="mb-1.5 flex flex-wrap items-center justify-between gap-1 border-b border-white/20 pb-1">
-                          <span className="inline-flex items-center gap-1 rounded-full bg-amber-400 px-1.5 py-0.5 text-[8.5px] font-black uppercase tracking-wider text-slate-950 shadow-xs">
-                            <Star className="h-2.5 w-2.5 fill-slate-950 text-slate-950" />
-                            <span>MY LESSON</span>
+                        {/* Top Row: Time, Category & Ownership Tag */}
+                        <div className="flex items-center justify-between gap-1 mb-1.5">
+                          <span className="text-xs font-bold text-slate-900">
+                            {formatTime12Hour(sess.start_time)}
                           </span>
-                          {day.isToday ? (
-                            <span className="inline-flex items-center gap-0.5 rounded-full bg-rose-500 px-1.5 py-0.5 text-[8px] font-black uppercase text-white animate-pulse">
-                              🔥 Today
-                            </span>
-                          ) : (
-                            <span className="text-[8.5px] font-extrabold uppercase tracking-wider text-amber-200 flex items-center gap-0.5">
-                              <Sparkles className="h-2.5 w-2.5" /> Assigned to You
-                            </span>
-                          )}
-                        </div>
 
-                        {/* Time & Licence Category */}
-                        <div className="flex items-center justify-between text-[11px] font-black text-amber-300">
-                          <span>{formatTime12Hour(sess.start_time)}</span>
-                          <span className="rounded bg-amber-400 px-1.5 py-0.2 text-[9px] font-black uppercase text-slate-950 shadow-xs">
-                            Cat {sess.licence_category?.code || 'B'}
-                          </span>
+                          <div className="flex items-center gap-1">
+                            {day.isToday && (
+                              <span className="rounded bg-blue-600 px-1.5 py-0.5 text-[8.5px] font-extrabold text-white uppercase tracking-wider">
+                                Today
+                              </span>
+                            )}
+                            <span className="rounded bg-white px-1.5 py-0.5 text-[9.5px] font-bold text-indigo-700 border border-indigo-200 shadow-2xs uppercase">
+                              Cat {sess.licence_category?.code || 'B'}
+                            </span>
+                          </div>
                         </div>
 
                         {/* Student Name */}
-                        <p className="mt-1 text-xs font-black truncate text-white">
+                        <p className="text-xs font-bold text-slate-900 truncate">
                           {sess.student?.full_name ?? 'Student'}
                         </p>
 
                         {/* Instructor & Vehicle details */}
-                        <div className="mt-1 text-[10px] space-y-0.5 text-indigo-100">
-                          <p className="truncate flex items-center gap-1 font-semibold text-amber-200">
-                            <UserCheck className="h-3 w-3 shrink-0 text-amber-300" />
-                            <span>
-                              ⭐ You ({sess.instructor?.full_name || 'Nimal Jayawardena'})
+                        <div className="mt-1 space-y-0.5 text-[10.5px] text-slate-600">
+                          <div className="flex items-center gap-1 font-semibold text-indigo-700 truncate">
+                            <Star className="h-3 w-3 shrink-0 fill-indigo-600 text-indigo-600" />
+                            <span className="truncate">
+                              You ({sess.instructor?.full_name || 'Nimal Jayasuriya'})
                             </span>
-                          </p>
+                          </div>
                           {sess.vehicle && (
-                            <p className="truncate flex items-center gap-1 text-slate-200">
-                              <Car className="h-3 w-3 shrink-0" />
+                            <p className="truncate flex items-center gap-1 text-slate-500 font-mono text-[10px]">
+                              <Car className="h-3 w-3 shrink-0 text-slate-400" />
                               <span>{sess.vehicle.registration_number}</span>
                             </p>
                           )}
                         </div>
 
-                        {/* Action / Status Footer */}
-                        <div className="mt-2 flex items-center justify-between border-t border-white/20 pt-1.5">
-                          <span className="text-[9px] font-bold uppercase tracking-wider text-indigo-100">
+                        {/* Footer Status / Mark Action */}
+                        <div className="mt-2.5 flex items-center justify-between border-t border-slate-200/60 pt-1.5">
+                          <div className="text-[10px] font-bold uppercase tracking-wider">
                             {isCompleted ? (
-                              <span className="inline-flex items-center gap-0.5 text-emerald-200 font-extrabold">
+                              <span className="inline-flex items-center gap-1 text-emerald-700 font-bold">
                                 <Check className="h-3 w-3" /> Done
                               </span>
                             ) : isCancelled ? (
-                              <span className="inline-flex items-center gap-0.5 text-rose-200 font-extrabold">
+                              <span className="inline-flex items-center gap-1 text-rose-600 font-bold">
                                 <X className="h-3 w-3" /> Cancelled
                               </span>
                             ) : isNoShow ? (
-                              <span className="inline-flex items-center gap-0.5 text-amber-200 font-extrabold">
+                              <span className="inline-flex items-center gap-1 text-amber-700 font-bold">
                                 <X className="h-3 w-3" /> No Show
                               </span>
                             ) : (
-                              duration
+                              <span className="text-slate-500 font-medium">
+                                {duration}
+                              </span>
                             )}
-                          </span>
+                          </div>
 
                           {sess.status === 'scheduled' && (
                             <button
@@ -365,7 +359,7 @@ export const SessionCalendarView: React.FC<SessionCalendarViewProps> = ({
                                 e.stopPropagation()
                                 onOpenAttendance(sess)
                               }}
-                              className="rounded-lg bg-amber-400 px-2 py-0.5 text-[9px] font-black text-slate-950 hover:bg-amber-300 transition-all shadow-xs cursor-pointer"
+                              className="rounded-lg bg-indigo-600 hover:bg-indigo-700 px-2 py-0.5 text-[9.5px] font-bold text-white transition-all shadow-2xs cursor-pointer"
                             >
                               Mark Lesson
                             </button>
@@ -375,42 +369,34 @@ export const SessionCalendarView: React.FC<SessionCalendarViewProps> = ({
                     )
                   }
 
-                  // 2. Other instructors' sessions (Soft / Muted Slate Card)
-                  const isCompleted =
-                    sess.status === 'completed' ||
-                    sess.attendance_status === 'present'
-                  const isCancelled = sess.status === 'cancelled'
-                  const isNoShow =
-                    sess.status === 'no_show' ||
-                    sess.attendance_status === 'absent'
-
+                  // 2. Clean Neutral Card for Other Instructors' Lessons
                   return (
                     <div
                       key={sess.id}
-                      className="group relative rounded-xl border border-slate-200 bg-slate-50/90 p-2.5 shadow-xs transition-all hover:border-slate-300 hover:bg-white cursor-pointer opacity-80 hover:opacity-100"
+                      className="group relative rounded-xl border border-slate-200/90 border-l-2 border-l-slate-300 bg-white p-2.5 shadow-2xs transition-all hover:bg-slate-50/80 hover:border-slate-300 cursor-pointer"
                       onClick={() => onSelectSession(sess)}
                     >
                       {/* Top Row: Time & Category */}
-                      <div className="flex items-center justify-between text-[11px] font-bold text-slate-700">
+                      <div className="flex items-center justify-between text-xs font-semibold text-slate-700 mb-1">
                         <span>{formatTime12Hour(sess.start_time)}</span>
-                        <span className="rounded bg-slate-200/80 px-1 py-0.2 text-[9px] font-bold uppercase text-slate-700">
+                        <span className="rounded bg-slate-100 px-1.5 py-0.5 text-[9.5px] font-semibold uppercase text-slate-600">
                           Cat {sess.licence_category?.code || 'B'}
                         </span>
                       </div>
 
                       {/* Student Name */}
-                      <p className="mt-1 text-xs font-semibold truncate text-slate-800">
+                      <p className="text-xs font-semibold text-slate-800 truncate">
                         {sess.student?.full_name ?? 'Student'}
                       </p>
 
                       {/* Other Instructor & Vehicle */}
-                      <div className="mt-1 text-[10px] space-y-0.5 text-slate-500">
-                        <p className="truncate flex items-center gap-1 font-medium text-slate-600">
+                      <div className="mt-1 space-y-0.5 text-[10.5px] text-slate-500">
+                        <p className="truncate flex items-center gap-1">
                           <UserCheck className="h-3 w-3 shrink-0 text-slate-400" />
                           <span>{sess.instructor?.full_name || 'Staff Instructor'}</span>
                         </p>
                         {sess.vehicle && (
-                          <p className="truncate flex items-center gap-1 text-slate-400">
+                          <p className="truncate flex items-center gap-1 font-mono text-[10px] text-slate-400">
                             <Car className="h-3 w-3 shrink-0" />
                             <span>{sess.vehicle.registration_number}</span>
                           </p>
@@ -418,26 +404,26 @@ export const SessionCalendarView: React.FC<SessionCalendarViewProps> = ({
                       </div>
 
                       {/* Status Footer */}
-                      <div className="mt-2 flex items-center justify-between border-t border-slate-200/50 pt-1.5">
-                        <span className="text-[9px] font-bold uppercase tracking-wider text-slate-500">
+                      <div className="mt-2.5 flex items-center justify-between border-t border-slate-100 pt-1.5">
+                        <span className="text-[10px] font-semibold uppercase tracking-wider">
                           {isCompleted ? (
-                            <span className="inline-flex items-center gap-0.5 text-emerald-700">
+                            <span className="inline-flex items-center gap-1 text-emerald-600">
                               <Check className="h-3 w-3" /> Done
                             </span>
                           ) : isCancelled ? (
-                            <span className="inline-flex items-center gap-0.5 text-red-600 font-bold">
+                            <span className="inline-flex items-center gap-1 text-rose-500">
                               <X className="h-3 w-3" /> Cancelled
                             </span>
                           ) : isNoShow ? (
-                            <span className="inline-flex items-center gap-0.5 text-amber-700 font-bold">
+                            <span className="inline-flex items-center gap-1 text-amber-600">
                               <X className="h-3 w-3" /> No Show
                             </span>
                           ) : (
-                            duration
+                            <span className="text-slate-400">{duration}</span>
                           )}
                         </span>
 
-                        <span className="text-[9px] text-slate-400 font-medium">
+                        <span className="text-[9.5px] text-slate-400 font-medium">
                           Other Staff
                         </span>
                       </div>
@@ -451,31 +437,27 @@ export const SessionCalendarView: React.FC<SessionCalendarViewProps> = ({
       </div>
 
       {/* Calendar Color Legend */}
-      <div className="flex flex-wrap items-center justify-between border-t border-slate-200 bg-slate-50/80 px-4 py-2.5 text-[11px] text-slate-600">
-        <div className="flex flex-wrap items-center gap-4">
-          <span className="font-semibold text-slate-700">Calendar Legend:</span>
-          <div className="flex items-center gap-1.5">
-            <span className="h-3 w-3 rounded-md bg-indigo-700 border border-indigo-500 shadow-xs" />
-            <span className="font-bold text-indigo-900">
-              ⭐ My Assigned Lessons (High Contrast Indigo / Emerald)
+      <div className="flex flex-wrap items-center justify-between border-t border-slate-200 bg-slate-50/80 px-4 py-3 text-xs text-slate-600">
+        <div className="flex flex-wrap items-center gap-5">
+          <span className="font-bold text-slate-800">Legend:</span>
+          <div className="flex items-center gap-2">
+            <span className="h-3 w-3 rounded border-l-4 border-l-indigo-600 bg-indigo-50 border border-indigo-200" />
+            <span className="font-semibold text-slate-900">
+              My Assigned Lessons (Indigo Accent)
             </span>
           </div>
-          <div className="flex items-center gap-1.5">
-            <span className="h-3 w-3 rounded-md bg-slate-100 border border-slate-300" />
+          <div className="flex items-center gap-2">
+            <span className="h-3 w-3 rounded border-l-4 border-l-emerald-600 bg-emerald-50 border border-emerald-200" />
+            <span>My Completed Lessons (Emerald Accent)</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="h-3 w-3 rounded border-l-2 border-l-slate-300 bg-white border border-slate-200" />
             <span>Other Instructors' Lessons</span>
-          </div>
-          <div className="flex items-center gap-1.5">
-            <span className="h-3 w-3 rounded-md bg-emerald-700 border border-emerald-500" />
-            <span>My Completed Lessons</span>
-          </div>
-          <div className="flex items-center gap-1.5">
-            <span className="h-3 w-3 rounded-md bg-red-700 border border-red-500" />
-            <span>Cancelled Lessons</span>
           </div>
         </div>
 
-        <div className="text-[11px] font-bold text-indigo-700">
-          Viewing schedule as {profile?.full_name || 'Nimal Jayawardena (INS-WP-001)'}
+        <div className="text-xs font-semibold text-indigo-700">
+          Instructor: {profile?.full_name || 'Nimal Jayasuriya (INS-WP-001)'}
         </div>
       </div>
     </div>
