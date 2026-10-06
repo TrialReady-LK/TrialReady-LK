@@ -228,6 +228,7 @@ Test Files  15 passed (15)
 | Document | Format | Description |
 | :--- | :--- | :--- |
 | **[Full Demonstration Script & Viva Defense](docs/FULL_DEMONSTRATION_SCRIPT.md)** | `Markdown` | Minute-by-minute demonstration script with spoken narrative, screen actions, and 10 examiner Q&A answers. |
+| **[Backend, Security & AI Master Guide](docs/BACKEND_ARCHITECTURE_SECURITY_AI_GUIDE.md)** | `Markdown` | Complete technical architecture, PostgreSQL BaaS flow, RLS security defenses, and AI scoring formulations. |
 | **[AI Trial Readiness Evaluation Algorithm](docs/TRIAL_READINESS_AI_EVALUATION_PROCESS.md)** | `Markdown` | Comprehensive mathematical formulation and algorithmic breakdown of the 6-factor AI evaluation engine. |
 | **[System Architecture Specification](docs/ARCHITECTURE.md)** | `Markdown` | Comprehensive system architecture, C4 models, ERD, 18-table dictionary, security, and algorithms. |
 | **[Slide 5: High-Level Architecture Guide](docs/SLIDE_5_HIGH_LEVEL_ARCHITECTURE.md)** | `Markdown + SVG` | Exact Slide 5 diagram, 6-component rubric, external APIs, and word-for-word viva presentation script. |
