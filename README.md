@@ -6,8 +6,8 @@
 > **AI-Assisted Driving Academy Management & DMT Practical Trial Readiness System**  
 > *Engineered for Sri Lankan Driving Schools & Motor Traffic Regulatory Compliance*
 
-[![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)](https://github.com/ravishkarathnayaka/TrialReady-LK)
-[![Tests](https://img.shields.io/badge/tests-53%20passed-success.svg)](https://github.com/ravishkarathnayaka/TrialReady-LK)
+[![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)](https://github.com/TrialReady-LK/TrialReady-LK)
+[![Tests](https://img.shields.io/badge/tests-61%20passed-success.svg)](https://github.com/TrialReady-LK/TrialReady-LK)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue.svg)](https://www.typescriptlang.org/)
 [![React](https://img.shields.io/badge/React-19.x-61dafb.svg)](https://react.dev/)
 [![TailwindCSS](https://img.shields.io/badge/Tailwind-4.x-38b2ac.svg)](https://tailwindcss.com/)
@@ -201,23 +201,24 @@ Click the **`🌱 Demo Data`** button in the top navigation header to populate c
 The project maintains an automated unit & integration test suite using **Vitest**:
 
 ```text
- ✓ src/features/ai/utils/adaptiveDiagnostic.test.ts (2 tests)
  ✓ src/features/readiness/utils/readinessEngine.test.ts (6 tests)
- ✓ src/features/financials/utils/financialUtils.test.ts (7 tests)
+ ✓ src/features/vehicles/services/vehicleDefectService.test.ts (3 tests)
  ✓ src/components/ErrorBoundary.test.tsx (2 tests)
  ✓ src/features/theory/context/TheoryLanguageContext.test.tsx (3 tests)
- ✓ src/features/analytics/utils/analyticsEngine.test.ts (4 tests)
- ✓ src/features/students/services/studentEnrolmentService.test.ts (3 tests)
- ✓ src/features/journey/utils/journeyUtils.test.ts (8 tests)
+ ✓ src/features/financials/utils/financialUtils.test.ts (7 tests)
+ ✓ src/features/ai/services/geminiChatService.test.ts (5 tests)
+ ✓ src/features/logbook/types/logbook.test.ts (2 tests)
  ✓ src/features/notifications/utils/alertEngine.test.ts (6 tests)
+ ✓ src/features/journey/utils/journeyUtils.test.ts (8 tests)
+ ✓ src/features/students/services/studentEnrolmentService.test.ts (3 tests)
+ ✓ src/features/analytics/utils/analyticsEngine.test.ts (4 tests)
+ ✓ src/features/ai/utils/adaptiveDiagnostic.test.ts (2 tests)
  ✓ src/features/ai/utils/predictiveModel.test.ts (3 tests)
  ✓ src/features/auth/authTestAccounts.test.ts (5 tests)
- ✓ src/features/logbook/types/logbook.test.ts (2 tests)
  ✓ src/features/ai/utils/feedbackGenerator.test.ts (2 tests)
 
-Test Files  13 passed (13)
-     Tests  53 passed (53)
-  Duration  1.82s
+Test Files  15 passed (15)
+     Tests  61 passed (61)
 ```
 
 ---
@@ -226,13 +227,15 @@ Test Files  13 passed (13)
 
 | Document | Format | Description |
 | :--- | :--- | :--- |
+| **[Full Demonstration Script & Viva Defense](docs/FULL_DEMONSTRATION_SCRIPT.md)** | `Markdown` | Minute-by-minute demonstration script with spoken narrative, screen actions, and 10 examiner Q&A answers. |
+| **[AI Trial Readiness Evaluation Algorithm](docs/TRIAL_READINESS_AI_EVALUATION_PROCESS.md)** | `Markdown` | Comprehensive mathematical formulation and algorithmic breakdown of the 6-factor AI evaluation engine. |
 | **[System Architecture Specification](docs/ARCHITECTURE.md)** | `Markdown` | Comprehensive system architecture, C4 models, ERD, 18-table dictionary, security, and algorithms. |
 | **[Slide 5: High-Level Architecture Guide](docs/SLIDE_5_HIGH_LEVEL_ARCHITECTURE.md)** | `Markdown + SVG` | Exact Slide 5 diagram, 6-component rubric, external APIs, and word-for-word viva presentation script. |
 | **[TCC User Manual (PDF)](docs/Group03_UserManual.pdf)** | `PDF (3 Pages)` | Official submission-ready User Manual adhering strictly to TCC preparation guidelines. |
 | **[TCC User Manual (Markdown)](docs/Group03_UserManual.md)** | `Markdown` | Complete plain-text documentation of system workflows, AI/ML features, and troubleshooting. |
 | **[Final Project Report](docs/TCC_Final_Project_Report_TrialReady_LK.md)** | `Markdown` | Comprehensive academic & technical report for final evaluation. |
 | **[DMT Regulatory Compliance](docs/DMT_REGULATORY_COMPLIANCE.md)** | `Markdown` | Motor Traffic Act No. 14 of 1951 & NTMI statutory compliance specifications. |
-| **[Viva Examiner Guide](docs/VIVA_EXAMINER_GUIDE.md)** | `Markdown` | Comprehensive examiner defense and demonstration script. |
+| **[Viva Examiner Guide](docs/VIVA_EXAMINER_GUIDE.md)** | `Markdown` | Quick examiner defense and demonstration outline. |
 
 ---
 

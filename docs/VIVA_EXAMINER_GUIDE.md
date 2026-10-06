@@ -8,6 +8,8 @@
 
 ## 🎯 1. Demonstration Outline (10-Minute Walkthrough)
 
+> 📖 **Comprehensive Full Script & Examiner Q&A Matrix:** For an exhaustive scene-by-scene script with exact presenter speaking prompts and 10 viva defense questions/answers, refer to [`docs/FULL_DEMONSTRATION_SCRIPT.md`](./FULL_DEMONSTRATION_SCRIPT.md).
+
 This guide provides a structured walkthrough for the viva examination panel, demonstrating all core system capabilities across the three distinct user personas.
 
 ---
@@ -87,5 +89,5 @@ When presenting **Slide 5 (High-Level System Architecture)** to the judge panel,
 2. **Defensive CSV Sanitization**: Protection against Spreadsheet Formula Injection (`CSV Injection`) by sanitizing cells starting with `=`, `+`, `-`, or `@`.
 3. **Automated Unit & Integration Testing**:
    - Run in terminal: `npm test`
-   - Show **53 tests passing across 13 test suites** in under 5 seconds using Vitest.
+   - Show **61 tests passing across 15 test suites** in under 5 seconds using Vitest.
 4. **Browser-Native A4 Print Layout**: Zero reliance on third-party PDF server rendering engines, eliminating server-side rendering attack vectors.
