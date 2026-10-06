@@ -1,179 +1,174 @@
-<p align="center">
-  <img src="assets/logo.png" alt="TrialReady LK Official Logo" width="180" />
-</p>
-
 # TrialReady LK — User Manual
-**AI-Assisted Driving School ERP & Statutory DMT Regulatory Compliance Platform**
+**AI-Assisted Driving School Management & Statutory DMT Regulatory Compliance Platform**
 
 ---
 
 ## 1. Cover Page
 
-* **Application Name:** TrialReady LK (Cloud-Native Driving School ERP & Statutory Regulatory Compliance Platform)
-* **Group Identification:** Group 03
-* **Academic Module:** Technology Challenge Competition (TCC) Module (CCS2360 / CCS3361)
-* **Degree Specialization:** BSc (Hons) in Cyber Security
+* **Project / Application Name:** TrialReady LK (AI-Assisted Driving Academy Management & Regulatory Compliance System)
+* **Group Number:** Group 03
+* **Academic Module:** Technology Challenges and Competitions (TCC) Module (CCS2360 / CCS3361)
+* **Degree Program:** BSc (Hons) in Cyber Security
 * **Faculty & Institution:** Faculty of Computing and IT, Sri Lanka Technology Campus (SLTC), Padukka
 * **Academic Year:** 2026
-* **Application Version:** v1.0.0 (Production Release)
-* **Target Submission Document:** `Group03_UserManual.pdf`
+* **Application Version:** v1.0.2 (Production Release)
+* **Submission File Reference:** `Group03_UserManual.pdf`
 
-### Project Team Members & Registration Details
-| Student Full Name | Student Registration No. | Project Assignment & Focus |
+### Student Names & Registration Details
+| Student Full Name | Student Registration No. | Role / Specialization |
 | :--- | :--- | :--- |
-| **Loshan Mihisara** | CIT-24-01-0249 | Group Leader / System Analyst & Requirements Lead |
-| **Ravishka Rathnayake** | CIT-24-01-0251 | Lead Full-Stack Engineer & Cyber Security Architect |
-| **Lasindu Dilshan** | CIT-24-01-0488 | Frontend UI/UX & Responsive Experience Specialist |
-| **Manura Anuhas** | CIT-24-01-0075 | QA Test Automation & Database Systems Engineer |
+| **Loshan Mihisara** | CIT-24-01-0249 | Group Leader / System Analyst |
+| **Ravishka Rathnayake** | CIT-24-01-0251 | Lead Full-Stack Architect & Cyber Security Lead |
+| **Lasindu Dilshan** | CIT-24-01-0488 | Frontend UI/UX Specialist |
+| **Manura Anuhas** | CIT-24-01-0075 | QA Automation & Database Systems Engineer |
 
 ---
 
 ## 2. System Overview
 
-### 2.1 What the Application Does
-**TrialReady LK** is a centralized, enterprise-grade cloud ERP platform purpose-built for Sri Lankan driving schools to streamline student management, automate compliance tracking with the Department of Motor Traffic (DMT) and National Transport Medical Institute (NTMI), manage dual-control training fleets, and predict practical trial readiness using artificial intelligence.
+### What the Application Does
+**TrialReady LK** is a centralized cloud management platform engineered for Sri Lankan driving schools to digitize student records, automate statutory compliance under the **Motor Traffic Act No. 14 of 1951**, manage dual-control training vehicles, and predict practical driving trial exam readiness using artificial intelligence.
 
-### 2.2 Target Users
-1. **Driving School Administrators:** Manage operations, multi-branch fleets, billing/packages, DMT statutory audit exports, and instructor scheduling.
-2. **Driving Instructors:** View daily lesson timetables, track student practical skills progress, record lesson attendance, and generate AI student session feedback.
-3. **Learner Drivers (Students):** Monitor their 7-stage DMT journey, track learner permit expiry, take trilingual computerized theory mock exams, review their AI trial readiness score, and view official logbooks.
+### Target Users
+1. **Driving School Administrators:** Oversee branch operations, student enrolments, vehicle fleet compliance, tuition billing, and DMT audit log exports.
+2. **Driving Instructors:** Access daily in-car lesson agendas, log odometer distances, record student attendance, evaluate maneuver mastery, and generate AI pedagogical feedback.
+3. **Learner Drivers (Students):** Track personal 7-stage compliance progress, monitor 6-month learner permit expiry countdowns, practice trilingual mock theory exams, view AI readiness scores, and print official logbooks.
 
-### 2.3 Main Features
-* **Statutory 7-Stage Journey Pipeline:** Automatic milestone progression from NTMI medical and 3-month learner permit maturation to practical trials.
-* **Conflict-Free Fleet & Lesson Scheduling:** Real-time scheduling preventing overlapping instructor and vehicle allocations.
-* **Financial Ledger & Tiered Packages:** Automated fee installments, invoice balances, payment receipts, and balance alerts.
-* **Trilingual Computerized Theory Exam Simulator:** Authentic DMT exam simulation with timed tests, road sign flashcards, and instant explanations in English, Sinhala (සිංහල), and Tamil (தமிழ்).
-* **Official DMT Logbook & Admission Slip Generator:** Automated 1-click printable government compliance documents.
+### Main Features
+* **7-Stage DMT Compliance Pipeline:** Enforces statutory prerequisites: NTMI medical clearance, 6-month learner permit countdown, computerized theory exam, practical lessons, and trial day admission.
+* **Collision-Free Practical Session Calendar:** Prevents double-booking instructors or vehicles with real-time overlap validation.
+* **Trilingual Highway Code & Mock Exam Simulator:** 40-question timed practice tests with instant switching between English, Sinhala (සිංහල), and Tamil (தமிழ்).
+* **Official A4 DMT Document Synthesis:** 1-click browser-native printing of the Practical Training Logbook (`DMT/SL/LOG-01`) and Trial Day Admission Slip (`DMT/SL/ADM-PASS`).
+* **Multi-Instalment Tuition Ledger:** Tracks student fees in Sri Lankan Rupees (LKR) with automated balance calculations and payment receipts.
 
-### 2.4 AI/ML Functionality
-* **Multi-Factor Practical Trial Readiness Predictor:** Synthesizes completed practical hours, 3-month permit maturation, medical clearance, mock theory exam history, and instructor continuous rating scores to output an objective trial success probability (0–100%) and readiness classification tier.
-* **Adaptive AI Remedial Quiz Generator:** Automatically analyzes past mock exam mistakes and generates focused remedial question sets targeting student-specific weaknesses.
-* **Intelligent AI Academy Copilot:** Provides instant operational summaries, scheduling assistance, and regulatory advisory via an interactive chat widget.
+### AI/ML Functionality
+* **6-Factor Composite Trial Readiness Predictor:** Calculates candidate trial success probability (0–100%) and assigns a readiness tier (`🏆 Trial Ready`, `⚡ Nearly Ready`, `🚗 Needs Practice`, `⚠️ Not Ready`).
+* **Regulatory Hard Veto Classifier:** Automatically blocks exam scheduling if a candidate's 6-month DMT Learner's Permit or NTMI medical certificate has expired.
+* **Maneuver Failure Risk Forecaster:** Analyzes session telemetry to predict failure probabilities for high-stakes maneuvers (Hill Start rollback, Reverse S-Bend curb clash).
+* **Adaptive Cognitive Theory Remedial Generator:** Generates custom 10-question drills targeting specific student weaknesses in road signs or traffic rules.
 
 ---
 
 ## 3. System Requirements & Access
 
-### 3.1 Technical Requirements
-* **Supported Operating Systems:** Windows 10/11, macOS 12+, Linux (Ubuntu 20.04+), Android 11+, iOS 15+.
-* **Recommended Web Browsers:** Google Chrome (v110+), Microsoft Edge (v110+), Mozilla Firefox (v110+), Apple Safari (v16+).
-* **Internet Connection:** Minimum 2 Mbps stable broadband or 4G/5G mobile connection.
-* **Hardware Requirements:** Minimum 2 GB RAM, 1280x720 display resolution (fully responsive on mobile, tablet, and desktop).
-* **Dependencies (Local Run):** Node.js v20+, modern package manager (`npm`), and modern browser.
+### Technical Requirements
+* **Operating System:** Windows 10/11, macOS 12+, Linux (Ubuntu 22.04+), Android 11+, or iOS 15+.
+* **Supported Web Browsers:** Google Chrome (v110+), Microsoft Edge (v110+), Mozilla Firefox (v110+), Safari (v16+).
+* **Internet Connection:** Stable broadband or 4G/5G mobile connection ($\ge 2\text{ Mbps}$).
+* **Hardware:** Any PC, laptop, tablet, or smartphone (minimum 2 GB RAM, 1280x720 display recommended).
+* **Local Run Dependencies (Optional):** Node.js v20+, npm v10+.
 
-### 3.2 Access URL & Demo Login Credentials
-* **Application Access URL:** `http://localhost:5173/` (or hosted production URL).
-* **Quick Demo Access:** The Login screen provides **1-Click Quick Demo Login** buttons for all three roles.
+### Application Access URL & Demo Credentials
+* **Live Production URL:** [https://trial-ready-lk-pi.vercel.app](https://trial-ready-lk-pi.vercel.app)
+* **Localhost URL:** `http://localhost:5173`
+* **1-Click Seed Button:** Click **`🌱 Demo Data`** on the top navigation bar to populate the complete Sri Lankan Driving Academy dataset (*Royal Driving Academy*).
 
-| Role | Login Email | Password | Assigned Landing Portal |
+| Role | Email | Password | Primary Accessible Portals |
 | :--- | :--- | :--- | :--- |
-| **Administrator** | `admin@drivingschool.lk` | `Admin@123` | `/dashboard` (Executive Command Center) |
-| **Instructor** | `instructor@drivingschool.lk` | `Instructor@123` | `/instructor/portal` (Instructor Daily Agenda) |
-| **Student (Learner)** | `student@drivingschool.lk` | `Student@123` | `/student/portal` (Learner Progress Hub) |
+| **Administrator** | `admin@trialready.lk` | `admin123` | Executive Dashboard (`/`), Compliance Pipeline (`/journey`), Analytics (`/analytics`) |
+| **Instructor** | `instructor@trialready.lk` | `inst123` | Practical Sessions Calendar (`/sessions`), Instructor Portal (`/instructor/portal`) |
+| **Student** | `student@trialready.lk` | `student123` | Student Dashboard (`/student/portal`), Theory Hub (`/theory`), Payments (`/student/payments`) |
 
 ---
 
 ## 4. How to Use the System
 
-### 4.1 Logging In & Role Navigation
-1. Open the browser and visit the application URL.
-2. In the **Sign In** screen, enter your assigned email and password, or click one of the **Quick Demo Login** badges (`Admin`, `Instructor`, or `Student`).
-3. Click **Sign In to Academy**. The system validates your credentials and redirects you directly to your role-specific dashboard.
-4. To switch profiles or log out, click your avatar on the top navigation bar and select **Sign Out**.
+### 4.1 Logging In & Switching Roles
+1. Open your browser and navigate to the application URL: [https://trial-ready-lk-pi.vercel.app](https://trial-ready-lk-pi.vercel.app).
+2. Enter your assigned **Email** and **Password**, or use the top-bar **Role Selector** to instantly switch between **Admin**, **Instructor**, and **Student** personas.
+3. The system validates your session and routes you to your role-specific dashboard.
 
 ---
 
-### 4.2 Learner Registration & Journey Tracking (Admin)
-1. From the left navigation menu, click **Students** or **Learner Journey**.
-2. To register a new learner, click **+ Add Student**, fill in personal details, NIC/Passport, phone number, branch, and licence category (e.g., *Class B — Auto/Manual*), then click **Save**.
-3. In the **Learner Journey Pipeline**, monitor student progress across all 7 statutory stages:
-   * **Stage 1:** Student Enrolled & Registered
-   * **Stage 2:** NTMI Medical Certificate Cleared
-   * **Stage 3:** DMT Learner Permit Issued & 3-Month Countdown Active
-   * **Stage 4:** Computerized Theory Exam Cleared
-   * **Stage 5:** Practical Driving Lessons Completed (Minimum 20 Hours)
-   * **Stage 6:** AI Trial Readiness Verified (Score ≥ 80%)
-   * **Stage 7:** DMT Practical Trial Passed & Driving Licence Issued
-4. To update a document (e.g., Medical or Learner Permit), click on the student row, select **Update Permit** or **Update Medical**, enter the certificate number and issue/expiry dates, and click **Save Details**.
+### 4.2 Complete AI/ML Workflow: Trial Readiness Prediction & Action Plan
+*(Demonstrating: Input $\rightarrow$ Processing / Prediction $\rightarrow$ Output $\rightarrow$ Interpretation)*
+
+```mermaid
+flowchart LR
+    A["1. Ingest Candidate Telemetry<br/>(Hours, Maneuvers, Permit, Medical)"] --> B["2. AI Composite Engine & Veto Check<br/>(S = Σ Wi · si)"]
+    B --> C["3. Generated Result<br/>(Score: 88% | Tier: 🏆 Trial Ready)"]
+    C --> D["4. Actionable Output<br/>(Print A4 DMT Logbook & Trial Pass)"]
+```
+
+#### Step 1: Provide Input Data
+1. Log in as an **Administrator** or **Instructor**.
+2. Navigate to **Trial Readiness** (`/readiness`) from the sidebar.
+3. Candidate training records are automatically ingested:
+   * **NTMI Medical Fitness:** Certificate validity date.
+   * **DMT 6-Month Learner's Permit:** Active days remaining (180-day countdown).
+   * **Theory Exam Status:** Mock exam pass score ($\ge 30/40$).
+   * **Practical Hours:** Logged road lessons ($14 / 15\text{ hours}$).
+   * **7 Core Maneuvers:** Mastery checklist (*Hill Start, S-Bend, Parallel Parking, 3-Point Turn*).
+   * **Instructor Star Rating:** Rolling average rating ($4.7 / 5.0\text{ stars}$).
+
+#### Step 2: Execute the AI Prediction Function
+* The AI engine executes automatically upon opening the student scorecard or when an instructor saves a practical session evaluation.
+* Alternatively, select any candidate (e.g., *Kavindu Dilshan* or *Chamari Perera*) from the student list to recalculate instant telemetry.
+
+#### Step 3: View the Generated Output
+The system generates a comprehensive prediction scorecard:
+* **Composite Readiness Score:** An objective percentage from **$0\%$ to $100\%$** (e.g., **$88\%$**).
+* **Readiness Classification Tier:**
+  * `🏆 Trial Ready` ($\ge 80\%$): Fully prepared for practical trial examination.
+  * `⚡ Nearly Ready` ($70\%\text{--}79\%$): Requires 1–2 polish sessions on specific maneuvers.
+  * `🚗 Needs Practice` ($50\%\text{--}69\%$): Requires additional road hours and clutch control work.
+  * `⚠️ Not Ready` ($< 50\%$): Deficient in statutory prerequisites or road hours.
+* **Maneuver Failure Risk Forecast:** Specific risk probabilities (e.g., *Hill Start Rollback Risk: 14% — Low*).
+* **Regulatory Hard Veto Flag:** If the 6-month permit has expired, the score is locked to **$0\%$** with a red warning blocker: *Trial Registration Blocked: Permit Expired*.
+
+#### Step 4: Interpret and Use the Output
+* **If Candidate is `🏆 Trial Ready`:** Click **`📄 View DMT Logbook`** and **`🎫 Print Trial Pass`** to generate the official A4 examination documents for the DMT Werahera test ground.
+* **If Candidate `🚗 Needs Practice`:** Review the highlighted weak maneuvers, click **`📅 Schedule Lesson`**, and assign targeted practice.
+* **If Theory is Deficient:** Direct the student to **`Theory Hub`** to launch the adaptive diagnostic drill.
 
 ---
 
-### 4.3 Practical Training Scheduling & Attendance Marking (Admin & Instructor)
-1. Select **Practical Sessions** from the sidebar.
-2. Toggle between **Calendar View** and **List View** to view booked training sessions.
-3. To schedule a new driving lesson:
-   * Click **+ Schedule Lesson**.
-   * Select the **Student**, **Licence Category**, **Instructor**, **Vehicle**, **Date**, and **Time Slot**.
-   * *Conflict Protection:* The system automatically validates schedules in real time. If the selected instructor or dual-control vehicle is already booked during that hour, a high-priority warning will prevent double-booking.
-   * Select practical skills to cover (e.g., *Clutch Control, Hill Start, Parallel Parking*) and click **Confirm Booking**.
-4. To record lesson attendance and instructor feedback:
-   * On the session card, click **Mark Attendance**.
-   * Select status (**Present**, **Late**, or **Absent**).
-   * Check off skills mastered during the drive.
-   * Award an **Instructor Performance Rating** (1 to 5 Stars).
-   * Enter instructor remarks and click **Save Evaluation**.
+### 4.3 Practical Training Scheduling & Attendance Marking (Instructor)
+1. Navigate to **Practical Sessions** (`/sessions`).
+2. View assigned lessons in the **Calendar View** (Nimal's lessons are highlighted with crisp **Indigo Left-Accent Borders**).
+3. To schedule a new lesson, click **+ Schedule Lesson**, select Student, Instructor, Vehicle, Date, and Time.
+   * *Collision Protection:* The system automatically alerts and blocks bookings if an instructor or vehicle is double-booked.
+4. To evaluate a completed lesson:
+   * Click the session card $\rightarrow$ Mark attendance as **`Present`**.
+   * Enter odometer start/end readings and check off mastered maneuvers (*Hill Start, Parallel Parking*).
+   * Award a **1 to 5 Star Rating** and click **`💾 Save Evaluation`**.
+   * *Result:* The student's AI Readiness Score updates immediately in real time.
 
 ---
 
-### 4.4 Trilingual Theory Exam Simulator & Road Signs (Student & Admin)
-1. Navigate to **Theory Hub** from the sidebar menu.
-2. Select your preferred examination language using the trilingual toggle: **English**, **සිංහල (Sinhala)**, or **தமிழ் (Tamil)**.
-3. Click **Start Mock Exam** to launch the official 40-question computerized exam.
-4. An automated 45-minute exam timer begins. Answer multiple-choice questions and navigate between questions using the bottom Question Palette.
-5. Click **Finish & Submit Test** to view immediate evaluation:
-   * Percentage score, correct/incorrect count, and official DMT pass/fail status (Pass standard: ≥ 75%).
-   * Click **Review All Questions & Explanations** to inspect official Highway Code rationales for any incorrect answers.
-6. Under **Road Signs Flashcards**, flip through interactive vector regulatory, warning, and priority traffic signs to review meanings.
+### 4.4 Trilingual Theory Practice & Timed Mock Exam (Student)
+1. Navigate to **Theory Hub** (`/theory`).
+2. Click the language toggle to switch between **English**, **සිංහල (Sinhala)**, and **தமிழ் (Tamil)**.
+3. Click **Start Mock Exam** to begin the authentic 40-question computerized exam.
+4. Complete questions against the **45-minute countdown clock**.
+5. Click **Submit Exam** to view your score, pass/fail certificate, and detailed Highway Code explanations.
 
 ---
 
-### 4.5 AI/ML Trial Readiness Evaluation (Main AI Workflow Flowchart)
-This is the core predictive machine learning feature of TrialReady LK that prevents premature student trial failures. The flowchart below illustrates the complete ISO/ANSI process flow from candidate input through multi-factor ML scoring to the decision gate and actionable remediation/qualification branches:
-
-![TrialReady LK — AI Trial Readiness Evaluation Flowchart](assets/ai_workflow_diagram.svg)
-
-#### Step-by-Step AI Execution Instructions:
-1. Navigate to **Trial Readiness** from the sidebar (or view the student's detail profile).
-2. The system automatically ingests the student's latest training history, test scores, and compliance dates.
-3. Click on the student name to inspect the **AI Evaluation Modal**:
-   * **Required Input Data:** Accumulated practical hours, medical status, permit issue date, mock exam average, and maneuver ratings.
-   * **Generated Output:** A visual circular gauge displays the **Readiness Score (e.g., 88%)** alongside the **Readiness Tier** badge:
-     * **Trial Ready (≥ 80%):** Candidate is fully prepared for official DMT practical driving test.
-     * **Nearly Ready (65%–79%):** Minor polish needed (1–2 extra sessions recommended).
-     * **Needs Practice (40%–64%):** Candidate requires additional road hours.
-     * **Not Ready (< 40%):** Essential statutory milestones (medical/permit/theory) missing.
-   * **Actionable Next Steps:**
-     * If deficient in road signs or theory, click **Launch AI Remedial Quiz** to generate a personalized practice session.
-     * If qualified, click **Generate DMT Logbook** or **Print Trial Pass** to print official statutory documentation for the DMT test ground.
+### 4.5 Generating Official DMT Logbooks & Trial Passes (Admin & Student)
+1. Navigate to **Learner Journey** (`/journey`) and select a qualified student.
+2. Click **`📄 View DMT Logbook`**:
+   * *Output:* Pixel-perfect official A4 training logbook (`DMT/SL/LOG-01`) complete with academy seal, vehicle registration, session history, and instructor signature block.
+3. Click **`🎫 Print Trial Pass`**:
+   * *Output:* Candidate trial day admission slip (`DMT/SL/ADM-PASS`) detailing test center location, reporting time, and the **DMT Examiner 8-Maneuver Scorecard**.
+4. Press `Ctrl + P` to print directly to paper or save as a vector PDF.
 
 ---
 
-### 4.6 Financial Billing & Tuition Packages (Admin)
-1. Select **Financials** from the sidebar menu.
-2. View academy cash flow, pending balances, collected revenue, and overdue tuition accounts.
-3. To assign a training package to a student, click **Packages**, select a package (e.g., *Standard Light Vehicle B — LKR 48,000*), and assign it to the student.
-4. To record fee collections:
-   * Click **Record Payment**.
-   * Select the student, enter amount paid (e.g., *LKR 20,000*), payment method (*Cash, Bank Transfer, Card*), and enter receipt remarks.
-   * Click **Save Payment**.
-   * Click **View Receipt** to generate a printable payment receipt with remaining balance breakdown.
+## 5. Screenshots & User Interface Reference
 
----
-
-## 5. Screen Layouts & User Interface Reference
-
-* **Figure 1: Role-Based Authentication & Quick Login Screen**
-  * *Description:* Secure login portal featuring multi-branch selection, credentials authentication, and instant 1-click test account buttons for Administrator, Senior Instructor, and Learner Student.
-* **Figure 2: Executive Driving Academy Operations Dashboard**
-  * *Description:* Real-time KPI summary showing active student count, fleet operational vehicles, practical sessions scheduled today, tuition revenue collected, and quick navigation shortcuts.
-* **Figure 3: Learner Journey Pipeline & Statutory DMT Tracker**
-  * *Description:* 7-stage visual milestone pipeline displaying NTMI medical status, 3-month permit maturation countdown, theory test status, and completed practical driving hours.
-* **Figure 4: AI Practical Trial Readiness Predictor Screen**
-  * *Description:* Predictive evaluation display presenting the composite Readiness Score (0–100%), Readiness Tier classification, dynamic risk checklist, and 1-click AI Remedial Quiz generator.
-* **Figure 5: Computerized Trilingual Theory Exam Simulator & Result View**
-  * *Description:* Realistic 40-question computerized test interface with synchronized 45-minute countdown clock, trilingual language switcher (EN/SI/TA), SVG road sign illustrations, and post-exam explanation modal.
-* **Figure 6: Conflict-Aware Practical Session Scheduler**
-  * *Description:* Interactive weekly calendar view showing booked training sessions, real-time vehicle/instructor conflict alerts, and fast attendance grading modal.
+* **Figure 1: Role Authentication & Quick Persona Switcher (`/login`)**  
+  * *Caption:* Secure login portal featuring single-click persona switching between Administrator, Instructor, and Student.
+* **Figure 2: Executive Driving Academy Dashboard (`/`)**  
+  * *Caption:* Real-time KPI command center displaying active students, pass rates, fleet utilization, and 6-month permit alert feeds.
+* **Figure 3: Learner Journey Compliance Pipeline (`/journey`)**  
+  * *Caption:* 7-stage visual tracker showing NTMI medical clearance, 6-month permit countdown badge, and practical training progress.
+* **Figure 4: AI Practical Trial Readiness Scorecard & Radar (`/readiness`)**  
+  * *Caption:* Real-time AI evaluation presenting the 6-factor composite score, readiness tier (`🏆 Trial Ready`), and maneuver risk breakdown.
+* **Figure 5: Official Print-Ready A4 DMT Practical Logbook (`DMT/SL/LOG-01`)**  
+  * *Caption:* Browser-native vector print layout formatted to statutory DMT specifications with session logs and signature dockets.
+* **Figure 6: Trilingual Computerized Theory Exam Simulator (`/theory`)**  
+  * *Caption:* 40-question timed exam interface with instant language switching across English, Sinhala, and Tamil.
 
 ---
 
@@ -181,15 +176,17 @@ This is the core predictive machine learning feature of TrialReady LK that preve
 
 | Common Problem | Root Cause | Recommended Solution |
 | :--- | :--- | :--- |
-| **Invalid Login / Access Denied** | Incorrect email or password entered. | Double-check credentials. For quick testing, click one of the 1-Click Demo Login buttons (`Admin`, `Instructor`, or `Student`) on the login screen. |
-| **Schedule Conflict Detected** | The requested instructor or vehicle is already booked for another driving session during the chosen time. | The system prevents overlapping bookings. Choose an alternative time slot, select another available vehicle, or assign a different certified instructor. |
-| **Trial Booking Blocked (Missing Milestones)** | Student has not completed minimum 20 practical hours, medical is missing, or learner permit has not reached 3 months. | Check the **Learner Journey** tab. Complete pending statutory requirements, record practical lesson attendance, or wait for the legal permit wait period to mature. |
-| **Theory Exam Interruption / Refresh** | Accidental browser refresh or momentary internet disconnect during mock exam. | TrialReady LK automatically saves test state in browser storage. Reopen `/theory/exam` and click **Resume Exam** to continue without losing your answers or elapsed time. |
+| **Invalid Login / Access Denied** | Incorrect credentials or unauthorized portal URL entered. | Double-check credentials. Click the 1-Click Role Switcher on the top bar or use `admin@trialready.lk` / `admin123`. |
+| **Schedule Conflict Alert** | Requested instructor or vehicle is already assigned to a concurrent lesson. | Choose an alternative time slot, select a different available vehicle, or assign another certified instructor. |
+| **Trial Booking Blocked (Hard Veto)** | Student's 6-month DMT Learner's Permit has expired ($\le 0\text{ days}$) or medical is missing. | Navigate to **Learner Journey**, log a renewed permit or valid NTMI certificate. The AI engine will unblock booking once prerequisites are valid. |
+| **Missing Input in Registration** | Sri Lankan NIC entered in an invalid format. | Ensure the NIC matches 12 modern digits (e.g., `200012345678`) or 9 legacy digits followed by 'V' or 'X' (e.g., `991234567V`). |
+| **Printed Document Has Extra Margins** | Browser default print settings include headers, footers, or non-A4 page scaling. | In the print preview dialog (`Ctrl + P`), select **Paper Size: A4**, set **Margins: None / Minimum**, and uncheck **Headers and Footers**. |
 
 ---
 
-### Submission Verification Checklist
-* [x] Strictly conforms to the 2–3 page concise preparation guidelines.
-* [x] Formatted with all 6 required sections (Cover, Overview, Requirements, Instructions, Screens, Troubleshooting).
-* [x] Comprehensive AI/ML workflow clearly explained with user input, processing, output, and interpretation.
-* [x] Ready for export and submission under the required filename: **`Group03_UserManual.pdf`**.
+### 📋 Submission Verification Summary
+* [x] **Strict Length Control:** 2–3 pages concise format focused entirely on user actions and system outputs.
+* [x] **No Code/Technical Clutter:** Zero source code, database schemas, or UML diagrams.
+* [x] **Complete AI/ML Workflow:** Step-by-step demonstration from input to processing, output, and interpretation.
+* [x] **Required Sections Included:** Cover Page, System Overview, System Requirements & Access, How to Use, Screenshots, Troubleshooting.
+* [x] **Target Submission File:** `Group03_UserManual.pdf` (Deadline: 9th October 2026).
